@@ -1,0 +1,59 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "env": {
+      "node": true,
+      "mocha": true
+    },
+    "rules": {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "no-console": 2,
+      "no-constant-condition": ["warn", { "checkLoops": false }],
+      "no-undef": "error",
+      "no-unused-vars": "off",
+      "semi": [
+        2,
+        "always"
+      ],
+      "indent": [
+        2,
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "max-len": [
+        2,
+        {
+          "code": 1000 // prettier handles this
+        }
+      ],
+      // Prevent TypeScript-specific constructs from being erroneously flagged as unused
+      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_"}],
+      // Require PascalCased class and interface names
+      // "@typescript-eslint/class-name-casing": "error",
+      // Require a specific member delimiter style for interfaces and type literals
+      // Default Semicolon style
+      "@typescript-eslint/member-delimiter-style": "error",
+      // Require a consistent member declaration order
+      "@typescript-eslint/member-ordering": "error",
+      // Require consistent spacing around type annotations
+      "@typescript-eslint/type-annotation-spacing": "error",
+      "quotes": [2, "single", "avoid-escape"],
+      "no-duplicate-imports": "error",
+      "curly": ["error", "multi-or-nest"],
+      "no-else-return": "error",
+      "no-trailing-spaces": "error"
+    }
+  }

@@ -1,0 +1,68 @@
+{
+  "name": "more-node-fs",
+  "version": "2.0.1",
+  "description": "A utility which adds some more File System functions for Node.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": "12.x"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "lint": "eslint --ignore-path .eslintignore . --ext .ts",
+    "format": "prettier-eslint --ignore .gitignore --write \"**/*.+(ts|json)\"",
+    "test": "ts-mocha test/**.test.ts --reporter list",
+    "v-patch": "npm version patch -m \"Upgrade package version to v%s\"",
+    "v-minor": "npm version minor -m \"Upgrade package version to v%s\"",
+    "v-major": "npm version major -m \"Upgrade package version to v%s\"",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run lint",
+    "preversion": "npm run lint",
+    "postversion": "git push --follow-tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danieloakman/More-Node-FS.git"
+  },
+  "author": "Daniel Oakman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danieloakman/More-Node-FS/issues"
+  },
+  "homepage": "https://github.com/danieloakman/More-Node-FS#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/mocha": "^8.0.0",
+    "@types/node": "^14.0.23",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "eslint": "^8.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^4.2.5",
+    "mocha": "^8.2.1",
+    "ts-mocha": "^9.0.2",
+    "typescript": "^4.6.3",
+    "prettier": "^2.6.2",
+    "prettier-eslint": "^15.0.1",
+    "prettier-eslint-cli": "^6.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run test"
+    }
+  },
+  "keywords": [
+    "fs",
+    "file system",
+    "utils",
+    "node-fs",
+    "recursive",
+    "readdir",
+    "recursive readdir",
+    "walkdir",
+    "os.walk"
+  ]
+}
