@@ -16,7 +16,7 @@ function* nums(size: number) {
   for (let i = 0; i < size; i++) yield i;
 }
 
-for (const size of [1e4, 1e5, 1e6]) {
+for (const size of [1e4/* , 1e5, 1e6 */]) {
   suite.add(`IteratorWithOperators ${size}`, () => {
     new IteratorWithOperators(nums(size))
       .map(x => x * x)
@@ -29,7 +29,7 @@ for (const size of [1e4, 1e5, 1e6]) {
       .map(x => x * x)
       // .filter(x => x % 2 !== 0)
       .map(x => x.toString())
-      .collect;
+      .toArray();
   });
   suite.add(`iterplus ${size}`, () => {
     iterplus(nums(size))
@@ -38,19 +38,13 @@ for (const size of [1e4, 1e5, 1e6]) {
       .map(x => x.toString())
       .collect();
   });
-  // bm.add(`iterate2.map2 ${size}`, () => {
-  //     const a = iterate2(nums(size))
-  //         .map2(x => x * x)
-  //         .map2(x => x.toString())
-  //         .toArray();
-  // });
-  // bm.add(`iterate2.map3 ${size}`, () => {
-  //     const a = iterate2(nums(size))
-  //         .map3(x => x * x)
-  //         .map3(x => x.toString())
-  //         .toArray();
-  // });
+  suite.add('for of loop', () => {
+    const arr: string[] = [];
+    for (const x of nums(size))
+      arr.push((x * x).toString());
+  });
 }
+
 suite.run({
   async: true,
 });
