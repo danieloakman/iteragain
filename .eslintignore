@@ -1,6 +1,1 @@
-./errors
-./models
-./services
-./spatialSearcher
-./utils
-./node_modules
+dist
