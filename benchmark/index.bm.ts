@@ -6,7 +6,7 @@ import { setupSuite } from './bm-util';
 //     return Math.floor(Math.random() * (max - min + 1)) + min;
 // }
 
-const suite = setupSuite('iter');
+const suite = setupSuite(__filename.split(/[\\/]/).pop());
 // import { range, iterate, iterate2, ExtendedIterator, IteratorWithOperators } from '../../utils/iterutil';
 import ExtendedIterator from '../src/ExtendedIterator';
 import { IteratorWithOperators } from 'iterare/lib/iterate';
@@ -17,15 +17,20 @@ function* nums(size: number) {
 }
 
 for (const size of [1e4/* , 1e5, 1e6 */]) {
-  suite.add(`IteratorWithOperators ${size}`, () => {
-    new IteratorWithOperators(nums(size))
+  suite.add(`for of loop ${1e4}`, () => {
+    const arr: string[] = [];
+    for (const x of nums(size))
+      arr.push((x * x).toString());
+  });
+  suite.add(`iteragain ${size}`, () => {
+    new ExtendedIterator(nums(size))
       .map(x => x * x)
       // .filter(x => x % 2 !== 0)
       .map(x => x.toString())
       .toArray();
   });
-  suite.add(`ExtendedIterator ${size}`, () => {
-    new ExtendedIterator(nums(size))
+  suite.add(`iterare ${size}`, () => {
+    new IteratorWithOperators(nums(size))
       .map(x => x * x)
       // .filter(x => x % 2 !== 0)
       .map(x => x.toString())
@@ -37,11 +42,6 @@ for (const size of [1e4/* , 1e5, 1e6 */]) {
       // .filter(x => x % 2 !== 0)
       .map(x => x.toString())
       .collect();
-  });
-  suite.add('for of loop', () => {
-    const arr: string[] = [];
-    for (const x of nums(size))
-      arr.push((x * x).toString());
   });
 }
 

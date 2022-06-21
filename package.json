@@ -1,5 +1,5 @@
 {
-  "name": "iterutil",
+  "name": "iteragain",
   "version": "0.0.2",
   "description": "Javascript ES6 Iterable/Iterator utilities.",
   "main": "dist/index.js",
@@ -48,12 +48,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danieloakman/iterutil.git"
+    "url": "git+https://github.com/danieloakman/iteragain.git"
   },
   "author": "Daniel Oakman",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/danieloakman/iterutil/issues"
+    "url": "https://github.com/danieloakman/iteragain/issues"
   },
-  "homepage": "https://github.com/danieloakman/iterutil#readme"
+  "homepage": "https://github.com/danieloakman/iteragain#readme"
 }
