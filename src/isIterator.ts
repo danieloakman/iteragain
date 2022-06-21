@@ -4,5 +4,5 @@
  */
 export function isIterator(arg: any): arg is Iterator<any> {
   return typeof arg?.next === 'function';
-};
+}
 export default isIterator;

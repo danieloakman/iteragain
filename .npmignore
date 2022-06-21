@@ -1,0 +1,12 @@
+.husky
+.vscode
+benchmark
+node_modules
+src
+test
+.eslintignore
+.eslintrc.json
+.gitignore
+.npmignore
+.prettierrc
+tsconfig.json

@@ -6,7 +6,7 @@
     "target": "es6",
     "moduleResolution": "node",
     "sourceMap": false,
-    "outDir": "dist",
+    "outDir": "./",
     "declaration": true,
     "alwaysStrict": true,
     "checkJs": false,

@@ -7,16 +7,12 @@
   "engines": {
     "node": "12.x"
   },
-  "files": [
-    "dist",
-    "LICENSE"
-  ],
   "scripts": {
     "build": "tsc --build",
     "build:clean": "tsc --build --clean",
     "build:watch": "npm run build:clean && tsc --watch",
-    "lint": "eslint --ignore-path .eslintignore . --ext .ts",
-    "format": "prettier-eslint --ignore .gitignore --write \"**/*.+(ts|json)\"",
+    "lint": "eslint --ignore-path .eslintignore ./src --ext .ts",
+    "format": "prettier-eslint --ignore .gitignore --write \"./src/**/*\"",
     "test": "ts-mocha test/**.test.ts --reporter list",
     "v:patch": "npm version patch -m \"Upgrade package version to v%s\"",
     "v:minor": "npm version minor -m \"Upgrade package version to v%s\"",
