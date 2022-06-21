@@ -29,7 +29,7 @@ const nums = iter([1, 2, 3])
 
 ## Benchmark
 
-`
+```
 
 Starting benchmark suite: index.bm.ts
   for of loop 10000 x 1,198 ops/sec, ±35 ops/sec or ±2.94% (88 runs sampled)
@@ -38,4 +38,4 @@ Starting benchmark suite: index.bm.ts
   iterplus 10000 x 547 ops/sec, ±8 ops/sec or ±1.43% (92 runs sampled)
 Fastest is for of loop 10000
 
-`
+```
