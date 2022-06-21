@@ -51,5 +51,17 @@
   "bugs": {
     "url": "https://github.com/danieloakman/iteragain/issues"
   },
-  "homepage": "https://github.com/danieloakman/iteragain#readme"
+  "homepage": "https://github.com/danieloakman/iteragain#readme",
+  "keywords": [
+    "iterator",
+    "iterable",
+    "itertools",
+    "iteration",
+    "iter",
+    "generator",
+    "iterutil",
+    "iteragain",
+    "es6",
+    "es2015"
+  ]
 }
