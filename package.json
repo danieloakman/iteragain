@@ -1,6 +1,6 @@
 {
   "name": "iterutil",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Javascript ES6 Iterable/Iterator utilities.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
