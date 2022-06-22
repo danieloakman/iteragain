@@ -1,5 +1,5 @@
 import { ok as assert, deepStrictEqual as equal, notDeepStrictEqual as notEqual } from 'assert';
-import { isIterable, isIterator, iter, concat, range } from '../src/index';
+import { isIterable, isIterator, iter, concat, range, enumerate } from '../src/index';
 
 describe('ExtendedIterator', function () {
   it('map', async function () {
@@ -122,6 +122,7 @@ it('range', async function () {
   equal(range(-Infinity).take(10).toArray(), [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]);
   equal(range(1, 0).toArray(), [1]);
   equal(range(10, 0, 1).toArray(), []);
+  equal(range(10).nth(-1), 9);
 
   for (const args of [[10], [-10], [0, 10, 2], [0, -10, -2], [2, 10, 3], [-10, 0], [10, 0], [10, 0, 1]] as [number, number, number][]) {
     const r = range(...args);
@@ -130,5 +131,7 @@ it('range', async function () {
     assert(!r.includes(Math.min(...nums) - 1));
     assert(!r.includes(Math.max(...nums) + 1));
     equal(nums.length, r.length, `[${nums}] should have the same length as ${r}`);
+    assert(nums.every((n, i) => n === r.nth(i)));
+    assert(enumerate(r).map(n => [-n[0], n[0]]).toArray().every(i => r.nth(i[0]) === nums[i[1]]));
   }
 });

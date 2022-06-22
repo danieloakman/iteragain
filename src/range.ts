@@ -45,6 +45,11 @@ class Range extends ExtendedIterator<number> {
     return this.stepSign > 0 ? n >= this.start && n < this.stop : n <= this.start && n > this.stop;
   }
 
+  /** Returns the number at `index` in this range. */
+  nth(index: number): number {
+    return index >= 0 ? this.start + index * this.step : this.stop + index * this.step;
+  }
+
   /** Returns true if this range is equal to another. */
   equal(other: Range) {
     return this.start === other.start && this.stop === other.stop && this.step === other.step;
