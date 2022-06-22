@@ -61,9 +61,9 @@ class Range extends ExtendedIterator<number> {
 }
 
 /**
- * Returns an `ExtendedIterator` for all numbers starting at the start index and one step before
- * the stop index.
- * @note This functionaly behaves the same as Python 3's `range` builtin, with the exception of here:
+ * Returns a `Range` object (that extends ExtendedIterator) for all numbers starting at the start index and one step
+ * before the stop index.
+ * @note This functionally behaves the same as Python 3's `range` builtin, with the exception of here:
  * `range(1, 0) === [1]`, whereas in Python, it returns an empty iterator.
  * @param start The start index (inclusive) (default: 0).
  * @param stop The stop index (exclusive).
