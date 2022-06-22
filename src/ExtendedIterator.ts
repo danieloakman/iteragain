@@ -67,19 +67,32 @@ export class ExtendedIterator<T> {
   }
 
   /**
-   * Take the first `n` elements from this iterator.
-   * @param n The number of elements to take.
+   * Works like `Array.prototype.slice`, returns a new slice of this iterator.
+   * @note This does not support negative `start` and `end` indices, as it's not possible to know the length of the
+   * iterator while iterating.
+   * @param start The index to start at (inclusive).
+   * @param end The index to end at (exclusive).
+   * @returns A new ExtendedIterator that only includes the elements between `start` and `end`.
    */
-  public take(n: number) {
+  public slice(start = 0, end = Infinity) {
+    let i = 0;
     return new ExtendedIterator({
       iterator: this.iterator,
       next() {
         let result: IteratorResult<T>;
-        do result = this.iterator.next();
-        while (!result.done && --n > 0);
-        return result;
-      },
+        while (!(result = this.iterator.next()).done && i++ < start);
+        if (i <= end) return result;
+        return { done: true, value: undefined };
+      }
     });
+  }
+
+  /**
+   * Take the first `n` elements from this iterator.
+   * @param n The number of elements to take.
+   */
+  public take(n: number) {
+    return this.slice(0, n);
   }
 
   public toArray(): T[] {
