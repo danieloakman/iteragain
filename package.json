@@ -14,6 +14,7 @@
     "lint": "eslint --ignore-path .eslintignore ./src --ext .ts",
     "format": "prettier-eslint --ignore .gitignore --write \"./src/**/*\"",
     "test": "ts-mocha test/**.test.ts --reporter list",
+    "bm": "ts-node benchmark/index.bm.ts",
     "v:patch": "npm version patch -m \"Upgrade package version to v%s\"",
     "v:minor": "npm version minor -m \"Upgrade package version to v%s\"",
     "v:major": "npm version major -m \"Upgrade package version to v%s\"",

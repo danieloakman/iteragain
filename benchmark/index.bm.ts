@@ -16,32 +16,40 @@ function* nums(size: number) {
   for (let i = 0; i < size; i++) yield i;
 }
 
-for (const size of [1e4/* , 1e5, 1e6 */]) {
-  suite.add(`for of loop ${1e4}`, () => {
+for (const size of [1e4 /*, 1e5, 1e6 */]) {
+  // suite.add(`for of loop ${1e4}`, () => {
+  //   const arr: string[] = [];
+  //   for (const x of nums(size))
+  //     arr.push((x * x).toString());
+  // });
+  // suite.add(`iteragain ${size}`, () => {
+  //   new ExtendedIterator(nums(size))
+  //     .map(x => x * x)
+  //     // .filter(x => x % 2 !== 0)
+  //     .map(x => x.toString())
+  //     .toArray();
+  // });
+  // suite.add(`iterare ${size}`, () => {
+  //   new IteratorWithOperators(nums(size))
+  //     .map(x => x * x)
+  //     // .filter(x => x % 2 !== 0)
+  //     .map(x => x.toString())
+  //     .toArray();
+  // });
+  // suite.add(`iterplus ${size}`, () => {
+  //   iterplus(nums(size))
+  //     .map(x => x * x)
+  //     // .filter(x => x % 2 !== 0)
+  //     .map(x => x.toString())
+  //     .collect();
+  // });
+  suite.add('for of', () => {
     const arr: string[] = [];
-    for (const x of nums(size))
-      arr.push((x * x).toString());
+    for (const x of new ExtendedIterator(nums(size)).map(x => x * x).map(x => x.toString())) arr.push(x);
   });
-  suite.add(`iteragain ${size}`, () => {
-    new ExtendedIterator(nums(size))
-      .map(x => x * x)
-      // .filter(x => x % 2 !== 0)
-      .map(x => x.toString())
-      .toArray();
-  });
-  suite.add(`iterare ${size}`, () => {
-    new IteratorWithOperators(nums(size))
-      .map(x => x * x)
-      // .filter(x => x % 2 !== 0)
-      .map(x => x.toString())
-      .toArray();
-  });
-  suite.add(`iterplus ${size}`, () => {
-    iterplus(nums(size))
-      .map(x => x * x)
-      // .filter(x => x % 2 !== 0)
-      .map(x => x.toString())
-      .collect();
+  suite.add('for of 2', () => {
+    const arr: string[] = [];
+    for (const x of new ExtendedIterator(nums(size)).map(x => x * x).map(x => x.toString())) arr.push(x);
   });
 }
 

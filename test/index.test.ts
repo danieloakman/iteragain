@@ -1,9 +1,9 @@
 import { ok as assert, deepStrictEqual as equals } from 'assert';
-import { isIterable, isIterator, iter } from '../src/index';
+import { isIterable, isIterator, iter, concat } from '../src/index';
 
 describe('ExtendedIterator', function () {
   it('map', async function () {
-    equals(iter([1, 2, 3].map(n => n * n)).toArray(), [1, 4, 9]);
+    equals(iter([1, 2, 3]).map(n => n * n).map(n => n.toString()).toArray(), ['1', '4', '9']);
   });
 
   it('filter', async function () {
@@ -27,6 +27,10 @@ describe('ExtendedIterator', function () {
     equals(iter([1, 2, 3]).reduce(sum, 0), 6);
     equals(iter([1, 2, 3, 4]).reduce(sum), 10);
     equals(iter([1, 2, 3]).reduce(sum, ''), '123');
+  });
+
+  it('concat', async function () {
+    equals(iter([1, 2, 3]).concat(iter([4, 5, 6])).toArray(), [1, 2, 3, 4, 5, 6]);
   });
 });
 
@@ -72,5 +76,12 @@ it('iter', async function () {
       ['b', 4],
       ['c', 6],
     ],
+  );
+});
+
+it('concat', async function () {
+  equals(
+    concat([1, 2, 3], [], [4, 5, 6]).toArray(),
+    [1, 2, 3, 4, 5, 6],
   );
 });
