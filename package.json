@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc --build",
-    "build:clean": "tsc --build --clean",
+    "build:clean": "ts-node ./scripts/build-clean.ts",
     "build:watch": "npm run build:clean && tsc --watch",
     "lint": "eslint --ignore-path .eslintignore ./src --ext .ts",
     "format": "prettier-eslint --ignore .gitignore --write \"./src/**/*\"",
@@ -23,6 +23,7 @@
     "preversion": "npm run lint",
     "postversion": "git push --follow-tags"
   },
+  "dependencies": {},
   "devDependencies": {
     "@types/benchmark": "^2.1.1",
     "@types/mocha": "^8.0.0",
@@ -36,6 +37,7 @@
     "iterare": "^1.2.1",
     "iterplus": "^3.0.2",
     "mocha": "^8.2.1",
+    "more-node-fs": "^2.0.1",
     "prettier": "^2.6.2",
     "prettier-eslint": "^15.0.1",
     "prettier-eslint-cli": "^6.0.1",
