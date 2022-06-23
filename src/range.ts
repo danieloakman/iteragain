@@ -47,7 +47,8 @@ class Range extends ExtendedIterator<number> {
 
   /** Returns the number at `index` in this range. */
   nth(index: number): number {
-    return index >= 0 ? this.start + index * this.step : this.stop + index * this.step;
+    const num = index >= 0 ? this.start + index * this.step : this.stop + index * this.step;
+    return this.includes(num) ? num : undefined;
   }
 
   /** Returns true if this range is equal to another. */

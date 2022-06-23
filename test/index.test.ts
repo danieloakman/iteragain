@@ -123,6 +123,10 @@ it('range', async function () {
   equal(range(1, 0).toArray(), [1]);
   equal(range(10, 0, 1).toArray(), []);
   equal(range(10).nth(-1), 9);
+  equal(range(10).nth(10), undefined);
+  equal(range(10).nth(Infinity), undefined);
+  equal(range(10).nth(-10), 0);
+  equal(range(10).nth(-11), undefined);
 
   for (const args of [[10], [-10], [0, 10, 2], [0, -10, -2], [2, 10, 3], [-10, 0], [10, 0], [10, 0, 1]] as [number, number, number][]) {
     const r = range(...args);

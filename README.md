@@ -19,12 +19,24 @@ There is also other utility functions like `range`, `enumerate`, etc.
 import { iter } from 'iteragain';
 // Or from the file itself (tree shakable):
 import iter from 'iteragain/iter';
-
 const nums = iter([1, 2, 3])
   .map(n => n ** n)
   .filter(n => n % 2 === 0)
   .toArray();
   // [1, 4, 9]
+
+import range from 'iteragain/range';
+range(10).toArray(); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+range(10, 0).toArray(); // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+range(0, -10).toArray(); // [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]
+range(0, 10, 2).toArray(); // [0, 2, 4, 6, 8]
+// The following methods won't deplete or even access the range's internal iterator:
+const r = range(10);
+r.length; // 10, (a readonly property)
+r.includes(5); // true
+r.nth(-1); // 9 (the last element)
+r.nth(1); // 1 (the second element)
+r.nth(10); // undefined (the 10th element doesn't exist)
 ```
 
 ## Benchmark
