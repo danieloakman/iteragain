@@ -47,10 +47,12 @@ export class ExtendedIterator<T> {
     });
   }
 
+  /** Iterate over this iterator using the `array.protype.forEach` style of method. */
   public forEach(callback: (value: T) => void) {
     for (const value of this) callback(value);
   }
 
+  /** Reduces this iterator to a single value. */
   public reduce(reducer: (accumulator: T, value: T) => T): T;
   public reduce<R>(reducer: (accumulator: R, value: T) => R, initialValue: R): R;
   public reduce<R>(reducer: (accumulator: R | T, value: T) => R, initialValue?: R): R {
@@ -85,6 +87,11 @@ export class ExtendedIterator<T> {
         return { done: true, value: undefined };
       }
     });
+  }
+
+  /** Attaches the index to each value as a pair like: `[0, value], [1, value]`, etc. */
+  public enumerate(): ExtendedIterator<[number, T]> {
+    return this.map(((count = 0) => v => [count++, v])()); // prettier-ignore
   }
 
   /**
