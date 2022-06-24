@@ -26,6 +26,7 @@ class Range extends ExtendedIterator<number> {
       next () {
         const next = this.iterator.next();
         if (next.done)
+          // Re-initialise the iterator if we've reached the end.
           this.iterator = Range.iterator(start, stop, step, stepSign);
         return next;
       }
