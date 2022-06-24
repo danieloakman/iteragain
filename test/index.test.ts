@@ -66,7 +66,12 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).every(n => n % 2 === 0), false);
     equal(iter([2, 4, 6]).every(n => n % 2 === 0), true);
     equal(iter([1, 2, 3]).some(n => n % 2 === 0), true);
-    equal(iter([1, 2, 3]).some(n => n % 2 !== 0), true);
+    equal(iter([1, 2, 3]).some(n => n > 3), false);
+  });
+
+  it('zip & zipLongest', async function() {
+    equal(iter([1, 2, 3]).zip(iter([4, 5])).toArray(), [[1, 4], [2, 5]]);
+    equal(iter([1, 2, 3]).zipLongest(iter([4, 5])).toArray(), [[1, 4], [2, 5], [3, undefined]]);
   });
 
   it('take', async function () {

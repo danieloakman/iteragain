@@ -1,4 +1,3 @@
-import concat from './concat';
 import {
   FlattenDeep,
   FlattenDepth1,
@@ -8,7 +7,10 @@ import {
   FlattenDepth4,
   FlattenDepth5,
 } from './types';
+import concat from './concat';
 import flatten from './flatten';
+import zip from './zip';
+import zipLongest from './zipLongest';
 
 export class ExtendedIterator<T> {
   protected readonly iterator: Iterator<T>;
@@ -78,7 +80,7 @@ export class ExtendedIterator<T> {
   public concat<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<T | A | B>;
   public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any>;
   public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any> {
-    return concat(this, ...args);
+    return concat(this.iterator, ...args);
   }
 
   /**
@@ -134,6 +136,22 @@ export class ExtendedIterator<T> {
   /** Attaches the index to each value as a pair like: `[0, value], [1, value]`, etc. */
   public enumerate(): ExtendedIterator<[number, T]> {
     return this.map(((count = 0) => v => [count++, v])()); // prettier-ignore
+  }
+
+  /** Aggregates this iterator and any number of others into one. Stops when one of the iterables is empty. */
+  public zip<U>(other: IteratorOrIterable<U>): ExtendedIterator<[T, U]>
+  public zip<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<[T, A, B]>
+  public zip(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]>
+  public zip(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]> {
+    return zip(this.iterator, ...args);
+  }
+
+  /** Aggregates this iterator and any number of others into one. Stops when all of the iterables is empty. */
+  public zipLongest<U>(other: IteratorOrIterable<U>): ExtendedIterator<[T, U]>
+  public zipLongest<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<[T, A, B]>
+  public zipLongest(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]>
+  public zipLongest(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]> {
+    return zipLongest(this.iterator, ...args);
   }
 
   /**
