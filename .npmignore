@@ -10,3 +10,4 @@ test
 .npmignore
 .prettierrc
 tsconfig.json
+.nyc_output
