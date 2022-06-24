@@ -29,6 +29,10 @@ export class ExtendedIterator<T> {
     return this.iterator;
   }
 
+  public toString() {
+    return 'ExtendedIterator';
+  }
+
   /** Returns a new ExtendedIterator that maps each element in this iterator to a new value. */
   public map<R>(iteratee: (value: T) => R) {
     return new ExtendedIterator<R>({

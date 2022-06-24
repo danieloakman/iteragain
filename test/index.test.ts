@@ -1,7 +1,11 @@
 import { ok as assert, deepStrictEqual as equal, notDeepStrictEqual as notEqual, throws } from 'assert';
-import { isIterable, isIterator, iter, concat, range, enumerate, flatten, toIterator } from '../src/index';
+import { isIterable, isIterator, iter, concat, range, enumerate, flatten, toIterator, zip, zipLongest } from '../src/index';
 
 describe('ExtendedIterator', function () {
+  it('toString', async function () {
+    equal(iter([]).toString(), 'ExtendedIterator');
+  });
+
   it('map', async function () {
     equal(
       iter([1, 2, 3])
@@ -49,6 +53,13 @@ describe('ExtendedIterator', function () {
     equal(iter(arr).slice(2, 4).toArray(), arr.slice(2, 4));
     equal(iter(arr).slice(2).toArray(), arr.slice(2));
     notEqual(iter(arr).slice(2, -1).toArray(), arr.slice(2, -1));
+    equal(iter(arr).slice().toArray(), arr.slice());
+  });
+
+  it('flatten', async function () {
+    equal(iter([1, [2], [[3]]]).flatten(1).toArray(), [1, 2, [3]]);
+    equal(iter([1, [2], [[3]]]).flatten(2).toArray(), [1, 2, 3]);
+    equal(iter([[[1, [2], [[3]]]]]).flatten().toArray(), [1, 2, 3]);
   });
 
   it('take', async function () {
@@ -86,6 +97,7 @@ it('isIterable', async function () {
   );
   assert(isIterable(new Int8Array([1, 2, 3])));
   assert(isIterable(Buffer.from('abc')));
+  assert(!isIterable(null));
 });
 
 it('isIterator', async function () {
@@ -97,11 +109,23 @@ it('isIterator', async function () {
     ),
   );
   assert(isIterator({ next() {} }));
+  assert(!isIterator(null));
 });
 
 it('toIterator', async function () {
   const i = toIterator([1, 2, 3]);
   assert(isIterator(i));
+  throws(() => toIterator(null));
+});
+
+it('zip', async function () {
+  equal(zip([1, 2, 3], ['4', '5', '6']).toArray(), [[1, '4'], [2, '5'], [3, '6']]);
+  equal(zip([1, 2, 3], ['4', '5']).toArray(), [[1, '4'], [2, '5']]);
+});
+
+it('zipLongest', async function () {
+  equal(zipLongest([1, 2, 3], ['4', '5', '6']).toArray(), [[1, '4'], [2, '5'], [3, '6']]);
+  equal(zipLongest([1, 2, 3], ['4', '5']).toArray(), [[1, '4'], [2, '5'], [3, undefined]]);
 });
 
 it('iter', async function () {
@@ -152,6 +176,9 @@ it('range', async function () {
   equal(range(10).nth(-11), undefined);
   let r = range(3);
   equal([...r, ...r], [0, 1, 2, 0, 1, 2]);
+  assert(range(3).equal(range(0, 3, 1)));
+  // @ts-ignore
+  assert(range().toArray(), []);
 
   for (const args of [[10], [-10], [0, 10, 2], [0, -10, -2], [2, 10, 3], [-10, 0], [10, 0], [10, 0, 1]] as [
     number,
@@ -177,4 +204,8 @@ it('flatten', async function () {
   equal(flatten([[1], [[2], 3]], 2).toArray(), [1, 2, 3]);
   equal(flatten([[1], [[2], 3]], 1).toArray(), [1, [2], 3]);
   equal(flatten([[1], [[2], 3]], 0).toArray(), [[1], [[2], 3]]);
+});
+
+it('enumerate', async function () {
+  equal(enumerate([{ a: 1 }, { b: 2 }]).toArray(), [[0, { a: 1 }], [1, { b: 2 }]]);
 });
