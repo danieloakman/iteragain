@@ -1,5 +1,13 @@
 import concat from './concat';
-import { FlattenDeep, FlattenDepth1, IteratorOrIterable, FlattenDepth2, FlattenDepth3, FlattenDepth4, FlattenDepth5 } from './types';
+import {
+  FlattenDeep,
+  FlattenDepth1,
+  IteratorOrIterable,
+  FlattenDepth2,
+  FlattenDepth3,
+  FlattenDepth4,
+  FlattenDepth5,
+} from './types';
 import flatten from './flatten';
 
 export class ExtendedIterator<T> {
@@ -118,7 +126,7 @@ export class ExtendedIterator<T> {
     return this.slice(0, n);
   }
 
-  /** Iterates and collects all values into an Array. */
+  /** Iterates and collects all values into an Array. This essentially invokes this iterator to start iterating. */
   public toArray(): T[] {
     const result: T[] = [];
     let next: IteratorResult<T>;
@@ -126,12 +134,19 @@ export class ExtendedIterator<T> {
     return result;
   }
 
+  /** Shorthand for `new Set(this)`. */
   public toSet() {
-    return new Set(this.toArray());
+    return new Set(this);
   }
 
-  public toMap<K, V>(this: ExtendedIterator<[K, V]>): Map<K, V> {
-    return new Map<K, V>(this.toArray());
+  /**
+   * Shorthand for `new Map<K, V>(this)`. Must specify the types to get the correct type back,
+   * e.g. `iterator.toMap<string, number>();`
+   */
+  public toMap<K, V>(): Map<K, V>;
+  public toMap<KV>(): Map<KV, KV>;
+  public toMap<K, V>() {
+    return new Map<K, V>(this as any);
   }
 }
 

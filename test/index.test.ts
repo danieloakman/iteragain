@@ -55,6 +55,17 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).take(2).toArray(), [1, 2]);
     equal(iter([1, 2, 3]).take(0).toArray(), []);
   });
+
+  it('toSet', async function () {
+    const nums = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const set = iter(nums).filter(n => n % 2 === 0).toSet();
+    assert(nums.filter(n => n % 2 === 0).every(n => set.has(n)));
+  });
+
+  it('toMap', async function () {
+    const map = range(10).map(n => [n, n * 2]).toMap();
+    range(10).forEach(n => assert(map.get(n) === n * 2));
+  });
 });
 
 it('isIterable', async function () {
