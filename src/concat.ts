@@ -4,9 +4,9 @@ import toIterator from './toIterator';
 
 function* concatGen(...args: IteratorOrIterable<any>[]) {
   let next: IteratorResult<any>;
-  for (let arg of args) {
-    arg = toIterator(arg);
-    while (!(next = arg.next()).done) yield next.value;
+  for (const arg of args) {
+    const iterator = toIterator(arg);
+    while (!(next = iterator.next()).done) yield next.value;
   }
 }
 
@@ -21,3 +21,5 @@ export function concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any
 export function concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any> {
   return new ExtendedIterator(concatGen(...args));
 }
+
+export default concat;
