@@ -21,7 +21,15 @@ class Range extends ExtendedIterator<number> {
     if (typeof step !== 'number') step = Math.sign(stop - start);
     const stepSign = Math.sign(step);
 
-    super(Range.iterator(start, stop, step, stepSign));
+    super({
+      iterator: Range.iterator(start, stop, step, stepSign),
+      next () {
+        const next = this.iterator.next();
+        if (next.done)
+          this.iterator = Range.iterator(start, stop, step, stepSign);
+        return next;
+      }
+    });
 
     this.start = start;
     this.stop = stop;
@@ -36,10 +44,7 @@ class Range extends ExtendedIterator<number> {
     for (let i = start; Math.sign(stop - i) === stepSign; i += step) yield i;
   }
 
-  /**
-   * Returns true if `n` is inside of this range. Note that this does not deplete the internal iterator, so it can be
-   * called as much as needed.
-   */
+  /** Returns true if `n` is inside of this range. */
   includes(n: number): boolean {
     if ((n - this.start) % this.step !== 0) return false;
     return this.stepSign > 0 ? n >= this.start && n < this.stop : n <= this.start && n > this.stop;
