@@ -7,7 +7,6 @@ export function enumerate<T>(arg: IteratorOrIterable<T>): ExtendedIterator<[numb
 export function enumerate<T>(arg: T): ExtendedIterator<[number, [keyof T, T[keyof T]]]>;
 export function enumerate<K, V>(arg: any): ExtendedIterator<[number, [K, V]]>;
 export function enumerate(arg: any): ExtendedIterator<[number, any]> {
-  return iter(arg)
-    .map(((count = 0) => v => [count++, v])()); // prettier-ignore
+  return iter(arg).enumerate();
 }
 export default enumerate;
