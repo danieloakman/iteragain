@@ -1,5 +1,5 @@
 import concat from './concat';
-import { FlattenDeep, FlattenDepth1, IteratorOrIterable } from './types';
+import { FlattenDeep, FlattenDepth1, IteratorOrIterable, FlattenDepth2, FlattenDepth3, FlattenDepth4, FlattenDepth5 } from './types';
 import flatten from './flatten';
 
 export class ExtendedIterator<T> {
@@ -95,6 +95,10 @@ export class ExtendedIterator<T> {
    * @param depth The number of levels to flatten (default: Infinity, i.e. deeply).
    */
   public flatten(depth: 1): ExtendedIterator<FlattenDepth1<T>>;
+  public flatten(depth: 2): ExtendedIterator<FlattenDepth2<T>>;
+  public flatten(depth: 3): ExtendedIterator<FlattenDepth3<T>>;
+  public flatten(depth: 4): ExtendedIterator<FlattenDepth4<T>>;
+  public flatten(depth: 5): ExtendedIterator<FlattenDepth5<T>>;
   public flatten(): ExtendedIterator<FlattenDeep<T>>;
   public flatten(depth: number): ExtendedIterator<any>;
   public flatten(depth = Infinity) {
