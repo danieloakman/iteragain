@@ -29,3 +29,5 @@ export function zipLongest(...args: IteratorOrIterable<any>[]): ExtendedIterator
 export function zipLongest(...args: IteratorOrIterable<any>[]) {
   return new ExtendedIterator(zipLongestGen(...args));
 }
+
+export default zipLongest;

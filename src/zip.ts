@@ -2,7 +2,7 @@ import ExtendedIterator from './ExtendedIterator';
 import toIterator from './toIterator';
 import { IteratorOrIterable } from './types';
 
-function* zipGen (...args: IteratorOrIterable<any>[]) {
+function* zipGen(...args: IteratorOrIterable<any>[]) {
   const iterators = args.map(toIterator);
   loop: while (true) {
     const values = [];
@@ -26,3 +26,5 @@ export function zip(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]>
 export function zip(...args: IteratorOrIterable<any>[]) {
   return new ExtendedIterator(zipGen(...args));
 }
+
+export default zip;
