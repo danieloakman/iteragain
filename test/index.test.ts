@@ -62,6 +62,13 @@ describe('ExtendedIterator', function () {
     equal(iter([[[1, [2], [[3]]]]]).flatten().toArray(), [1, 2, 3]);
   });
 
+  it('every & some', async function () {
+    equal(iter([1, 2, 3]).every(n => n % 2 === 0), false);
+    equal(iter([2, 4, 6]).every(n => n % 2 === 0), true);
+    equal(iter([1, 2, 3]).some(n => n % 2 === 0), true);
+    equal(iter([1, 2, 3]).some(n => n % 2 !== 0), true);
+  });
+
   it('take', async function () {
     equal(iter([1, 2, 3]).take(2).toArray(), [1, 2]);
     equal(iter([1, 2, 3]).take(0).toArray(), []);

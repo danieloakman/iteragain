@@ -117,6 +117,20 @@ export class ExtendedIterator<T> {
     return flatten<T>(this, depth);
   }
 
+  /** Return true if every element in this iterator matches the predicate. */
+  public every(predicate: (value: T) => boolean): boolean {
+    let next: IteratorResult<T>;
+    while (!(next = this.iterator.next()).done) if (!predicate(next.value)) return false;
+    return true;
+  }
+
+  /** Return true if only one element in this iterator matches the predicate. */
+  public some(predicate: (value: T) => boolean): boolean {
+    let next: IteratorResult<T>;
+    while (!(next = this.iterator.next()).done) if (predicate(next.value)) return true;
+    return false;
+  }
+
   /** Attaches the index to each value as a pair like: `[0, value], [1, value]`, etc. */
   public enumerate(): ExtendedIterator<[number, T]> {
     return this.map(((count = 0) => v => [count++, v])()); // prettier-ignore
