@@ -155,6 +155,23 @@ export class ExtendedIterator<T> {
   }
 
   /**
+   * Return a new iterator of pairs (tuples) of the values in this one.
+   * @example
+   * iter([1,2,3]).pairs().toArray() // [[1,2], [2,3]]
+   */
+  public pairwise(): ExtendedIterator<[T, T]> {
+    return new ExtendedIterator({
+      iterator: this.iterator,
+      next () {
+        const a = this.iterator.next();
+        if (a.done) return { done: true, value: [a.value, undefined] };
+        const b = this.iterator.next();
+        return { done: b.done, value: [a.value, b.value] };
+      }
+    });
+  }
+
+  /**
    * Take the first `n` elements from this iterator.
    * @param n The number of elements to take.
    */
