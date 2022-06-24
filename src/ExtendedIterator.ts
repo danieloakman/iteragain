@@ -1,5 +1,6 @@
-import { concat } from './concat';
-import { IteratorOrIterable } from './types';
+import concat from './concat';
+import { FlattenDeep, FlattenDepth1, IteratorOrIterable } from './types';
+import flatten from './flatten';
 
 export class ExtendedIterator<T> {
   protected readonly iterator: Iterator<T>;
@@ -63,9 +64,9 @@ export class ExtendedIterator<T> {
 
   public concat<A>(other: IteratorOrIterable<A>): ExtendedIterator<T | A>;
   public concat<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<T | A | B>;
-  public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any>
+  public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any>;
   public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any> {
-    return new ExtendedIterator(concat(this, ...args));
+    return concat(this, ...args);
   }
 
   /**
@@ -85,8 +86,19 @@ export class ExtendedIterator<T> {
         while (!(result = this.iterator.next()).done && i++ < start);
         if (i <= end) return result;
         return { done: true, value: undefined };
-      }
+      },
     });
+  }
+
+  /**
+   * Flatten this iterator.
+   * @param depth The number of levels to flatten (default: Infinity, i.e. deeply).
+   */
+  public flatten(depth: 1): ExtendedIterator<FlattenDepth1<T>>;
+  public flatten(): ExtendedIterator<FlattenDeep<T>>;
+  public flatten(depth: number): ExtendedIterator<any>;
+  public flatten(depth = Infinity) {
+    return flatten<T>(this, depth);
   }
 
   /** Attaches the index to each value as a pair like: `[0, value], [1, value]`, etc. */
@@ -102,6 +114,7 @@ export class ExtendedIterator<T> {
     return this.slice(0, n);
   }
 
+  /** Iterates and collects all values into an Array. */
   public toArray(): T[] {
     const result: T[] = [];
     let next: IteratorResult<T>;

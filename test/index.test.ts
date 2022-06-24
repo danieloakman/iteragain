@@ -1,5 +1,5 @@
-import { ok as assert, deepStrictEqual as equal, notDeepStrictEqual as notEqual } from 'assert';
-import { isIterable, isIterator, iter, concat, range, enumerate } from '../src/index';
+import { ok as assert, deepStrictEqual as equal, notDeepStrictEqual as notEqual, throws } from 'assert';
+import { isIterable, isIterator, iter, concat, range, enumerate, flatten, toIterator } from '../src/index';
 
 describe('ExtendedIterator', function () {
   it('map', async function () {
@@ -81,6 +81,12 @@ it('isIterator', async function () {
       })(),
     ),
   );
+  assert(isIterator({ next() {} }));
+});
+
+it('toIterator', async function () {
+  const i = toIterator([1, 2, 3]);
+  assert(isIterator(i));
 });
 
 it('iter', async function () {
@@ -100,6 +106,8 @@ it('iter', async function () {
       ['c', 6],
     ],
   );
+  // Probably won't end up handling this, as it would slow down `iter` a bit.
+  throws(() => iter({ next() {} }).toArray());
 });
 
 it('concat', async function () {
@@ -128,14 +136,34 @@ it('range', async function () {
   equal(range(10).nth(-10), 0);
   equal(range(10).nth(-11), undefined);
 
-  for (const args of [[10], [-10], [0, 10, 2], [0, -10, -2], [2, 10, 3], [-10, 0], [10, 0], [10, 0, 1]] as [number, number, number][]) {
+  for (const args of [[10], [-10], [0, 10, 2], [0, -10, -2], [2, 10, 3], [-10, 0], [10, 0], [10, 0, 1]] as [
+    number,
+    number,
+    number,
+  ][]) {
     const r = range(...args);
     const nums = r.toArray();
-    assert(nums.every(n => r.includes(n)), `${nums} should be a subset of ${r}`);
+    assert(
+      nums.every(n => r.includes(n)),
+      `${nums} should be a subset of ${r}`,
+    );
     assert(!r.includes(Math.min(...nums) - 1));
     assert(!r.includes(Math.max(...nums) + 1));
     equal(nums.length, r.length, `[${nums}] should have the same length as ${r}`);
     assert(nums.every((n, i) => n === r.nth(i)));
-    assert(enumerate(r).map(n => [-n[0], n[0]]).toArray().every(i => r.nth(i[0]) === nums[i[1]]));
+    assert(
+      enumerate(r)
+        .map(n => [-n[0], n[0]])
+        .toArray()
+        .every(i => r.nth(i[0]) === nums[i[1]]),
+    );
   }
+});
+
+it('flatten', async function () {
+  equal(flatten([[1], [2, 3]]).toArray(), [1, 2, 3]);
+  equal(flatten([[1], [2, 3], [4, 5]]).toArray(), [1, 2, 3, 4, 5]);
+  equal(flatten([[1], [[2], 3]], 2).toArray(), [1, 2, 3]);
+  equal(flatten([[1], [[2], 3]], 1).toArray(), [1, [2], 3]);
+  equal(flatten([[1], [[2], 3]], 0).toArray(), [[1], [[2], 3]]);
 });
