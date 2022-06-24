@@ -17,6 +17,12 @@ function* flattenGen<T>(arg: IteratorOrIterable<T>, depth: number) {
   }
 }
 
+
+/**
+ * Flattens an iterator or iterable.
+ * @param arg The iterator or iterable to flatten.
+ * @param depth The number of levels to flatten (default: Infinity, i.e. deeply).
+ */
 export function flatten<T>(arg: IteratorOrIterable<T>, depth: 1): ExtendedIterator<FlattenDepth1<T>>;
 export function flatten<T>(arg: IteratorOrIterable<T>, depth: 2): ExtendedIterator<FlattenDepth2<T>>;
 export function flatten<T>(arg: IteratorOrIterable<T>, depth: 3): ExtendedIterator<FlattenDepth3<T>>;
