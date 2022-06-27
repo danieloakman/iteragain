@@ -1,5 +1,16 @@
 import { ok as assert, deepStrictEqual as equal, notDeepStrictEqual as notEqual, throws } from 'assert';
-import { isIterable, isIterator, iter, concat, range, enumerate, flatten, toIterator, zip, zipLongest } from '../src/index';
+import {
+  isIterable,
+  isIterator,
+  iter,
+  concat,
+  range,
+  enumerate,
+  flatten,
+  toIterator,
+  zip,
+  zipLongest,
+} from '../src/index';
 
 describe('ExtendedIterator', function () {
   it('toString', async function () {
@@ -57,21 +68,65 @@ describe('ExtendedIterator', function () {
   });
 
   it('flatten', async function () {
-    equal(iter([1, [2], [[3]]]).flatten(1).toArray(), [1, 2, [3]]);
-    equal(iter([1, [2], [[3]]]).flatten(2).toArray(), [1, 2, 3]);
-    equal(iter([[[1, [2], [[3]]]]]).flatten().toArray(), [1, 2, 3]);
+    equal(
+      iter([1, [2], [[3]]])
+        .flatten(1)
+        .toArray(),
+      [1, 2, [3]],
+    );
+    equal(
+      iter([1, [2], [[3]]])
+        .flatten(2)
+        .toArray(),
+      [1, 2, 3],
+    );
+    equal(
+      iter([[[1, [2], [[3]]]]])
+        .flatten()
+        .toArray(),
+      [1, 2, 3],
+    );
   });
 
   it('every & some', async function () {
-    equal(iter([1, 2, 3]).every(n => n % 2 === 0), false);
-    equal(iter([2, 4, 6]).every(n => n % 2 === 0), true);
-    equal(iter([1, 2, 3]).some(n => n % 2 === 0), true);
-    equal(iter([1, 2, 3]).some(n => n > 3), false);
+    equal(
+      iter([1, 2, 3]).every(n => n % 2 === 0),
+      false,
+    );
+    equal(
+      iter([2, 4, 6]).every(n => n % 2 === 0),
+      true,
+    );
+    equal(
+      iter([1, 2, 3]).some(n => n % 2 === 0),
+      true,
+    );
+    equal(
+      iter([1, 2, 3]).some(n => n > 3),
+      false,
+    );
   });
 
-  it('zip & zipLongest', async function() {
-    equal(iter([1, 2, 3]).zip(iter([4, 5])).toArray(), [[1, 4], [2, 5]]);
-    equal(iter([1, 2, 3]).zipLongest(iter([4, 5])).toArray(), [[1, 4], [2, 5], [3, undefined]]);
+  it('zip & zipLongest', async function () {
+    equal(
+      iter([1, 2, 3])
+        .zip(iter([4, 5]))
+        .toArray(),
+      [
+        [1, 4],
+        [2, 5],
+      ],
+    );
+    equal(
+      iter([1, 2, 3])
+        .zipLongest(iter([4, 5]))
+        .toArray(),
+      [
+        [1, 4],
+        [2, 5],
+        [3, undefined],
+      ],
+    );
   });
 
   it('take', async function () {
@@ -80,7 +135,10 @@ describe('ExtendedIterator', function () {
   });
 
   it('pairwise', async function () {
-    equal(iter([1, 2, 3]).pairwise().toArray(), [[1, 2], [2, 3]]);
+    equal(iter([1, 2, 3]).pairwise().toArray(), [
+      [1, 2],
+      [2, 3],
+    ]);
     equal(iter([1, 2]).pairwise().toArray(), [[1, 2]]);
     equal(iter([1]).pairwise().toArray(), []);
     equal(iter([]).pairwise().toArray(), []);
@@ -138,13 +196,28 @@ it('toIterator', async function () {
 });
 
 it('zip', async function () {
-  equal(zip([1, 2, 3], ['4', '5', '6']).toArray(), [[1, '4'], [2, '5'], [3, '6']]);
-  equal(zip([1, 2, 3], ['4', '5']).toArray(), [[1, '4'], [2, '5']]);
+  equal(zip([1, 2, 3], ['4', '5', '6']).toArray(), [
+    [1, '4'],
+    [2, '5'],
+    [3, '6'],
+  ]);
+  equal(zip([1, 2, 3], ['4', '5']).toArray(), [
+    [1, '4'],
+    [2, '5'],
+  ]);
 });
 
 it('zipLongest', async function () {
-  equal(zipLongest([1, 2, 3], ['4', '5', '6']).toArray(), [[1, '4'], [2, '5'], [3, '6']]);
-  equal(zipLongest([1, 2, 3], ['4', '5']).toArray(), [[1, '4'], [2, '5'], [3, undefined]]);
+  equal(zipLongest([1, 2, 3], ['4', '5', '6']).toArray(), [
+    [1, '4'],
+    [2, '5'],
+    [3, '6'],
+  ]);
+  equal(zipLongest([1, 2, 3], ['4', '5']).toArray(), [
+    [1, '4'],
+    [2, '5'],
+    [3, undefined],
+  ]);
 });
 
 it('iter', async function () {
@@ -198,8 +271,10 @@ it('range', async function () {
   assert(range(3).equal(range(0, 3, 1)));
   // @ts-ignore
   assert(range().toArray(), []);
+  // Is still subject to floating numbers rounding errors:
+  throws(() => equal(range(0, 5, 0.3).toArray(), [0, .3, .6, .9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7]));
 
-  for (const args of [[10], [-10], [0, 10, 2], [0, -10, -2], [2, 10, 3], [-10, 0], [10, 0], [10, 0, 1]] as [
+  for (const args of [[10], [-10], [0, 10, 2], [0, -10, -2], [2, 10, 3], [-10, 0], [10, 0], [10, 0, 1], [0, 5, 0.25]] as [
     number,
     number,
     number,
@@ -226,5 +301,8 @@ it('flatten', async function () {
 });
 
 it('enumerate', async function () {
-  equal(enumerate([{ a: 1 }, { b: 2 }]).toArray(), [[0, { a: 1 }], [1, { b: 2 }]]);
+  equal(enumerate([{ a: 1 }, { b: 2 }]).toArray(), [
+    [0, { a: 1 }],
+    [1, { b: 2 }],
+  ]);
 });
