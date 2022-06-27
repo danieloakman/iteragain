@@ -6,7 +6,7 @@ export type FlattenDeep<T> = T extends IteratorOrIterable<infer V>
     : V
   : T;
 
-// TODO: Find a better way to create these types.
+// TODO, Find a better way to create these types:
 export type FlattenDepth1<T> = T extends IteratorOrIterable<infer V> ? V : T;
 export type FlattenDepth2<T> = T extends IteratorOrIterable<infer V> ? FlattenDepth1<V> : T;
 export type FlattenDepth3<T> = T extends IteratorOrIterable<infer V> ? FlattenDepth2<V> : T;
