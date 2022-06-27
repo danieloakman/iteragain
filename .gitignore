@@ -4,4 +4,4 @@ dist
 **.js
 .vscode
 .nyc_output
-internal
+./internal
