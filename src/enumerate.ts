@@ -9,4 +9,5 @@ export function enumerate<K, V>(arg: any): ExtendedIterator<[number, [K, V]]>;
 export function enumerate(arg: any): ExtendedIterator<[number, any]> {
   return iter(arg).enumerate();
 }
+
 export default enumerate;
