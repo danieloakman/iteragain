@@ -166,7 +166,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return accumulator;
   }
 
-  /** Iterate over this iterator using the `array.protype.forEach` style of method. */
+  /** Iterate over this iterator using the `array.prototype.forEach` style of method. */
   public forEach(callback: (value: T) => any) {
     for (const value of this) callback(value);
   }
