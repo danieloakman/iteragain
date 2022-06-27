@@ -1,11 +1,11 @@
 /** Yields numbers inside a range. When `next.done` is true, resets the internal counter back to `start`. */
 export class RangeIterator implements Iterator<number> {
-  private i = this.start;
+  protected i = this.start;
   constructor(
-    private readonly start: number,
-    private readonly stop: number,
-    private readonly step: number,
-    private readonly stepSign: number,
+    protected readonly start: number,
+    protected readonly stop: number,
+    protected readonly step: number,
+    protected readonly stepSign: number,
   ) {}
 
   next(): IteratorResult<number> {

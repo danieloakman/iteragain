@@ -2,8 +2,8 @@
  * An iterator that filters the values from the input Iterator<T>, to only those that return a truthy value in the
  * `predicate`.
  */
-export class FilterIterator<T> {
-  constructor(private readonly iterator: Iterator<T>, private readonly predicate: (value: T) => any) {}
+export class FilterIterator<T> implements Iterator<T> {
+  constructor(protected readonly iterator: Iterator<T>, protected readonly predicate: (value: T) => any) {}
 
   next(): IteratorResult<any> {
     let result: IteratorResult<T>;

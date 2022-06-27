@@ -8,20 +8,18 @@ import {
   FlattenDepth5,
 } from './types';
 import concat from './concat';
-import EmptyIterator from './internal/EmptyIterator';
 import flatten from './flatten';
 import zip from './zip';
 import zipLongest from './zipLongest';
 import MapIterator from './internal/MapIterator';
 import FilterIterator from './internal/FilterIterator';
 import SliceIterator from './internal/SliceIterator';
+import PairwiseIterator from './internal/PairwiseIterator';
 
 export class ExtendedIterator<T> implements IterableIterator<T> {
   protected readonly iterator: Iterator<T>;
 
-  public constructor(iterator: Iterator<T>);
-  public constructor(iterator: { [key: PropertyKey]: any; iterator?: Iterator<any>; next?: () => IteratorResult<any> });
-  public constructor(iterator: any) {
+  public constructor(iterator: Iterator<T>) {
     this.iterator = iterator;
   }
 
@@ -143,18 +141,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * iter([1]).pairwise().toArray() // []
    */
   public pairwise(): ExtendedIterator<[T, T]> {
-    let prev = this.iterator.next();
-    if (prev.done) return new ExtendedIterator(new EmptyIterator());
-    return new ExtendedIterator({
-      iterator: this.iterator,
-      next() {
-        const next = this.iterator.next();
-        if (next.done) return { done: true, value: undefined };
-        const value = [prev.value, next.value];
-        prev = next;
-        return { done: false, value };
-      },
-    });
+    return new ExtendedIterator(new PairwiseIterator(this.iterator));
   }
 
   /**

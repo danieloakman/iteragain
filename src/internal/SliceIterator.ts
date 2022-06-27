@@ -1,7 +1,7 @@
 /** An iterator that only yields values beginning from `start` (inclusive) and ending at `end` (exclusive). */
 export class SliceIterator<T> implements Iterator<T> {
-  private i = 0;
-  constructor(private iterator: Iterator<T>, private start: number, private end: number) {}
+  protected i = 0;
+  constructor(protected iterator: Iterator<T>, protected start: number, protected end: number) {}
   next() {
     let result: IteratorResult<T>;
     while (!(result = this.iterator.next()).done && this.i++ < this.start);
