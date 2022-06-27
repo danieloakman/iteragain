@@ -2,7 +2,7 @@
 export class PairwiseIterator<T> implements Iterator<[T, T]> {
   protected prev: IteratorResult<T> = null;
 
-  constructor(protected readonly iterator: Iterator<T>) {}
+  constructor(protected iterator: Iterator<T>) {}
 
   next(): IteratorResult<[T, T]> {
     if (!this.prev && (this.prev = this.iterator.next()).done) return { done: true, value: undefined };

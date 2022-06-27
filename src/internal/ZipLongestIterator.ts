@@ -1,6 +1,6 @@
 export class ZipLongestIterator implements Iterator<any> {
   protected readonly done = new Set<number>();
-  constructor(protected readonly iterators: Iterator<any>[]) {}
+  constructor(protected iterators: Iterator<any>[]) {}
 
   next(): IteratorResult<any> {
     const values = [];

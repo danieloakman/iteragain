@@ -3,7 +3,7 @@
  * `predicate`.
  */
 export class FilterIterator<T> implements Iterator<T> {
-  constructor(protected readonly iterator: Iterator<T>, protected readonly predicate: (value: T) => any) {}
+  constructor(protected iterator: Iterator<T>, protected predicate: (value: T) => any) {}
 
   next(): IteratorResult<any> {
     let result: IteratorResult<T>;
