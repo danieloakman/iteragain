@@ -144,6 +144,11 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).take(0).toArray(), []);
   });
 
+  it('skip', async function () {
+    equal(iter([1, 2, 3]).skip(2).toArray(), [3]);
+    equal(iter([1, 2, 3]).skip(0).toArray(), [1, 2, 3]);
+  });
+
   it('pairwise', async function () {
     equal(iter([1, 2, 3]).pairwise().toArray(), [
       [1, 2],
