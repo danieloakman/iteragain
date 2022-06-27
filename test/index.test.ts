@@ -298,7 +298,7 @@ it('range', async function () {
     assert(!r.includes(Math.min(...nums) - 1));
     assert(!r.includes(Math.max(...nums) + 1));
     equal(nums.length, r.length, `[${nums}] should have the same length as ${r}`);
-    assert(nums.every((n, i) => n === r.nth(i)));
+    assert(nums.every((n, i) => n === r.nth(i) && r.index(n) === i));
   }
 });
 
