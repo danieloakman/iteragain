@@ -150,12 +150,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public peek(): T | undefined;
   public peek<N extends number>(ahead: N): Tuple<T | undefined, N>;
   public peek(ahead?: number): T | T[] | undefined {
-    const returnArray = ahead > 1;
     const values: T[] = [];
     do values.push(this.iterator.next().value);
     while (--ahead > 0);
     this.iterator = new ConcatIterator([toIterator(values), this.iterator]);
-    return returnArray ? values : values[0];
+    return !isNaN(ahead) ? values : values[0];
   }
 
   /**
