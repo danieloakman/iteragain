@@ -154,6 +154,15 @@ describe('ExtendedIterator', function () {
     equal(iter([]).pairwise().toArray(), []);
   });
 
+  it('peek', async function () {
+    const iterator = iter([1, 2, 3, 4, 5]);
+    equal(iterator.peek(), 1);
+    equal(iterator.peek(3), [1, 2, 3]);
+    equal(iterator.toArray(), [1, 2, 3, 4, 5]);
+    equal(iterator.peek(), undefined);
+    equal(iter([1]).peek(2), [1, undefined]);
+  });
+
   it('toSet', async function () {
     const nums = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const set = iter(nums)

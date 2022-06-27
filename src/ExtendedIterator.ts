@@ -6,6 +6,7 @@ import {
   FlattenDepth3,
   FlattenDepth4,
   FlattenDepth5,
+  Tuple,
 } from './types';
 import toIterator from './toIterator';
 import ConcatIterator from './internal/ConcatIterator';
@@ -18,7 +19,7 @@ import ZipIterator from './internal/ZipIterator';
 import ZipLongestIterator from './internal/ZipLongestIterator';
 
 export class ExtendedIterator<T> implements IterableIterator<T> {
-  protected readonly iterator: Iterator<T>;
+  protected iterator: Iterator<T>;
 
   public constructor(iterator: Iterator<T>) {
     this.iterator = iterator;
@@ -143,6 +144,18 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    */
   public pairwise(): ExtendedIterator<[T, T]> {
     return new ExtendedIterator(new PairwiseIterator(this.iterator));
+  }
+
+  /** Peek ahead of where the current iteration is. */
+  public peek(): T | undefined;
+  public peek<N extends number>(ahead: N): Tuple<T | undefined, N>;
+  public peek(ahead?: number): T | T[] | undefined {
+    const returnArray = ahead > 1;
+    const values: T[] = [];
+    do values.push(this.iterator.next().value);
+    while (--ahead > 0);
+    this.iterator = new ConcatIterator([toIterator(values), this.iterator]);
+    return returnArray ? values : values[0];
   }
 
   /**
