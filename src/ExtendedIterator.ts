@@ -172,6 +172,17 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /**
+   * Finds the first value that passes a truthy value to `predicate`, then returns it. Only consumes the iterator's
+   * values up to the found value, then stops. So if it's not found, then the iterator is exhausted.
+   */
+  public find<V extends T>(predicate: (value: T) => value is V): V | undefined;
+  public find(predicate: (value: T) => any): T | undefined;
+  public find(predicate: (value: T) => any): T | undefined {
+    let next: IteratorResult<T>;
+    while (!(next = this.iterator.next()).done) if (predicate(next.value)) return next.value;
+  }
+
+  /**
    * Peek ahead of where the current iteration is. This doesn't consume any values of the iterator.
    * @param ahead optional, the number of elements to peek ahead.
    */
@@ -196,6 +207,15 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     let next: IteratorResult<T>;
     while (n-- > 0 && !(next = this.iterator.next()).done) values.push(next.value);
     return values;
+  }
+
+  /**
+   * Start iterating through this iterator, but don't return the values from this method.
+   * @param n optional, the number of elements to exhaust.
+   */
+  public exhaust(n?: number): void {
+    if (typeof n !== 'number') while (!this.iterator.next().done);
+    else while (n-- > 0 && !this.iterator.next().done);
   }
 
   /** Iterates and collects all values into an Array. */

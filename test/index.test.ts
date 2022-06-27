@@ -165,6 +165,26 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).join('-'), '1-2-3');
   });
 
+  it('find', async function () {
+    equal(iter([1, 2, 3]).find(n => n > 2), 3);
+    equal(iter([1, 2, 3]).find(n => n > 4), undefined);
+  });
+
+  it('exhaust', async function () {
+    let mapWasCalled = 0;
+    const f = (n: number) => {
+      mapWasCalled++;
+      return n;
+    };
+    equal(iter([1, 2, 3]).map(f).exhaust(), undefined);
+    equal(mapWasCalled, 3);
+    const iterator = iter([1, 2, 3]);
+    mapWasCalled = 0;
+    equal(iterator.map(f).exhaust(2), undefined);
+    equal(mapWasCalled, 2);
+    equal(iterator.toArray(), [3]);
+  });
+
   it('peek', async function () {
     const iterator = iter([1, 2, 3, 4, 5]);
     equal(iterator.peek(), 1);
