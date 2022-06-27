@@ -1,4 +1,25 @@
 import ExtendedIterator from './ExtendedIterator';
+import empty from './empty';
+
+class RangeIterator implements Iterator<number> {
+  private i = this.start;
+  constructor(
+    private readonly start: number,
+    private readonly stop: number,
+    private readonly step: number,
+    private readonly stepSign: number,
+  ) {}
+
+  next(): IteratorResult<number> {
+    if (Math.sign(this.stop - this.i) !== this.stepSign) {
+      this.i = this.start;
+      return { done: true, value: undefined };
+    }
+    const value = this.i;
+    this.i += this.step;
+    return { done: false, value };
+  }
+}
 
 class Range extends ExtendedIterator<number> {
   /** The start of this range of numbers (inclusive). */
@@ -20,17 +41,8 @@ class Range extends ExtendedIterator<number> {
     else if (params.length > 1) [start, stop, step] = params;
     if (typeof step !== 'number') step = Math.sign(stop - start);
     const stepSign = Math.sign(step);
-
-    super({
-      iterator: Range.iterator(start, stop, step, stepSign),
-      next () {
-        const next = this.iterator.next();
-        if (next.done)
-          // Re-initialise the iterator if we've reached the end.
-          this.iterator = Range.iterator(start, stop, step, stepSign);
-        return next;
-      }
-    });
+    if (stepSign === 0) super(empty());
+    else super(new RangeIterator(start, stop, step, stepSign));
 
     this.start = start;
     this.stop = stop;
@@ -38,11 +50,6 @@ class Range extends ExtendedIterator<number> {
     this.stepSign = stepSign;
     // If the start is not in this range, then it's 0, otherwise calc normally.
     this.length = this.includes(start) ? Math.abs(Math.ceil((stop - start) / step)) : 0;
-  }
-
-  protected static *iterator(start: number, stop: number, step: number, stepSign: number) {
-    if (stepSign === 0) return;
-    for (let i = start; Math.sign(stop - i) === stepSign; i += step) yield i;
   }
 
   /** Returns true if `n` is inside of this range. */
