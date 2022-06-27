@@ -8,6 +8,7 @@ import {
   FlattenDepth5,
 } from './types';
 import concat from './concat';
+import empty from './empty';
 import flatten from './flatten';
 import zip from './zip';
 import zipLongest from './zipLongest';
@@ -155,18 +156,23 @@ export class ExtendedIterator<T> {
   }
 
   /**
-   * Return a new iterator of pairs (tuples) of the values in this one.
+   * Return a new iterator of pairs (tuples) of the values in this one. The number of pairs will always be one fewer
+   * than this iterator. Will be empty if this iterator has fewer than two values.
    * @example
-   * iter([1,2,3]).pairs().toArray() // [[1,2], [2,3]]
+   * iter([1,2,3]).pairwise().toArray() // [[1,2], [2,3]]
+   * iter([1]).pairwise().toArray() // []
    */
   public pairwise(): ExtendedIterator<[T, T]> {
+    let prev = this.iterator.next();
+    if (prev.done) return new ExtendedIterator(empty());
     return new ExtendedIterator({
       iterator: this.iterator,
       next () {
-        const a = this.iterator.next();
-        if (a.done) return { done: true, value: [a.value, undefined] };
-        const b = this.iterator.next();
-        return { done: b.done, value: [a.value, b.value] };
+        const next = this.iterator.next();
+        if (next.done) return { done: true, value: undefined };
+        const value = [prev.value, next.value];
+        prev = next;
+        return { done: false, value };
       }
     });
   }

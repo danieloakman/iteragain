@@ -79,6 +79,13 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).take(0).toArray(), []);
   });
 
+  it('pairwise', async function () {
+    equal(iter([1, 2, 3]).pairwise().toArray(), [[1, 2], [2, 3]]);
+    equal(iter([1, 2]).pairwise().toArray(), [[1, 2]]);
+    equal(iter([1]).pairwise().toArray(), []);
+    equal(iter([]).pairwise().toArray(), []);
+  });
+
   it('toSet', async function () {
     const nums = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const set = iter(nums)
@@ -90,7 +97,7 @@ describe('ExtendedIterator', function () {
   it('toMap', async function () {
     const map = range(10)
       .map(n => [n, n * 2])
-      .toMap();
+      .toMap<number, number>();
     range(10).forEach(n => assert(map.get(n) === n * 2));
   });
 });
