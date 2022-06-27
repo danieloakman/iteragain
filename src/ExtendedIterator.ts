@@ -29,7 +29,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /** Implements this as an Iterable so it's allowed to be used with "for of" loops. */
   public [Symbol.iterator]() {
-    return this.iterator as IterableIterator<T>;
+    return this;
   }
 
   public toString() {

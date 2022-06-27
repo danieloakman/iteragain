@@ -13,6 +13,20 @@ import {
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
+  it('does implement IterableIterator', async function () {
+    const iterator = iter([1, 2, 3]);
+    assert(isIterable(iterator) && isIterator(iterator));
+  });
+
+  it('[Symbol.iterator]', async function () {
+    let iterator = iter([1, 2, 3]);
+    equal([...iterator[Symbol.iterator]()], [1, 2, 3]);
+    equal([...iterator[Symbol.iterator]()], []);
+    iterator = iter([1, 2, 3]).map(x => x * x);
+    equal([...iterator[Symbol.iterator]()], [1, 4, 9]);
+    equal([...iterator[Symbol.iterator]()], []);
+  });
+
   it('toString', async function () {
     equal(iter([]).toString(), 'ExtendedIterator');
   });
@@ -113,7 +127,11 @@ describe('ExtendedIterator', function () {
         .enumerate()
         .map(([i, n]) => [i, n * n])
         .toArray(),
-      [[0, 1], [1, 4], [2, 9]],
+      [
+        [0, 1],
+        [1, 4],
+        [2, 9],
+      ],
     );
   });
 
@@ -166,8 +184,14 @@ describe('ExtendedIterator', function () {
   });
 
   it('find', async function () {
-    equal(iter([1, 2, 3]).find(n => n > 2), 3);
-    equal(iter([1, 2, 3]).find(n => n > 4), undefined);
+    equal(
+      iter([1, 2, 3]).find(n => n > 2),
+      3,
+    );
+    equal(
+      iter([1, 2, 3]).find(n => n > 4),
+      undefined,
+    );
   });
 
   it('exhaust & tap', async function () {
@@ -332,13 +356,19 @@ it('range', async function () {
   // @ts-ignore
   assert(range().toArray(), []);
   // Is still subject to floating numbers rounding errors:
-  throws(() => equal(range(0, 5, 0.3).toArray(), [0, .3, .6, .9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7]));
+  throws(() => equal(range(0, 5, 0.3).toArray(), [0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7]));
 
-  for (const args of [[10], [-10], [0, 10, 2], [0, -10, -2], [2, 10, 3], [-10, 0], [10, 0], [10, 0, 1], [0, 5, 0.25]] as [
-    number,
-    number,
-    number,
-  ][]) {
+  for (const args of [
+    [10],
+    [-10],
+    [0, 10, 2],
+    [0, -10, -2],
+    [2, 10, 3],
+    [-10, 0],
+    [10, 0],
+    [10, 0, 1],
+    [0, 5, 0.25],
+  ] as [number, number, number][]) {
     r = range(...args);
     const nums = r.toArray();
     assert(
