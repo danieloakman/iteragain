@@ -19,11 +19,7 @@ import ZipIterator from './internal/ZipIterator';
 import ZipLongestIterator from './internal/ZipLongestIterator';
 
 export class ExtendedIterator<T> implements IterableIterator<T> {
-  protected iterator: Iterator<T>;
-
-  public constructor(iterator: Iterator<T>) {
-    this.iterator = iterator;
-  }
+  public constructor(protected iterator: Iterator<T>) {}
 
   /** Returns a `{ value, done }` object that adheres to the Iterator interface. */
   public next() {
@@ -146,7 +142,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return new ExtendedIterator(new PairwiseIterator(this.iterator));
   }
 
-  /** Peek ahead of where the current iteration is. */
+  /** Peek ahead of where the current iteration is. This doesn't consume any values of the iterator. */
   public peek(): T | undefined;
   public peek<N extends number>(ahead: N): Tuple<T | undefined, N>;
   public peek(ahead?: number): T | T[] | undefined {
