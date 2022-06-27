@@ -47,7 +47,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param predicate A function that returns a truthy value to indicate to keep that value.
    */
   public filter(predicate: (element: T) => any): ExtendedIterator<T> {
-    return new ExtendedIterator(new FilterIterator(this.iterator, predicate));
+    this.iterator = new FilterIterator(this.iterator, predicate);
+    return this;
   }
 
   /** @lazy Concatenates this iterator with the given iterators, in order of: thisIterator, ...others. */
@@ -68,7 +69,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @returns A new ExtendedIterator that only includes the elements between `start` and `end`.
    */
   public slice(start = 0, end = Infinity): ExtendedIterator<T> {
-    return new ExtendedIterator(new SliceIterator(this.iterator, start, end));
+    this.iterator = new SliceIterator(this.iterator, start, end);
+    return this;
   }
 
   /**
@@ -150,7 +152,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    *    .toArray() // returns [1, 4, 9]
    */
   public tap(func: (value: T) => any): ExtendedIterator<T> {
-    return new ExtendedIterator(new TapIterator(this.iterator, func));
+    this.iterator = new TapIterator(this.iterator, func);
+    return this;
   }
 
   /** Reduces this iterator to a single value. */
