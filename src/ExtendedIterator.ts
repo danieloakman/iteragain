@@ -7,14 +7,15 @@ import {
   FlattenDepth4,
   FlattenDepth5,
 } from './types';
-import concat from './concat';
-import flatten from './flatten';
-import zip from './zip';
-import zipLongest from './zipLongest';
-import MapIterator from './internal/MapIterator';
+import toIterator from './toIterator';
+import ConcatIterator from './internal/ConcatIterator';
 import FilterIterator from './internal/FilterIterator';
-import SliceIterator from './internal/SliceIterator';
+import FlattenIterator from './internal/FlattenIterator';
+import MapIterator from './internal/MapIterator';
 import PairwiseIterator from './internal/PairwiseIterator';
+import SliceIterator from './internal/SliceIterator';
+import ZipIterator from './internal/ZipIterator';
+import ZipLongestIterator from './internal/ZipLongestIterator';
 
 export class ExtendedIterator<T> implements IterableIterator<T> {
   protected readonly iterator: Iterator<T>;
@@ -68,7 +69,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public concat<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<T | A | B>;
   public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any>;
   public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any> {
-    return concat(this.iterator, ...args);
+    return new ExtendedIterator(new ConcatIterator([this.iterator, ...args.map(toIterator)]));
   }
 
   /**
@@ -95,7 +96,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public flatten(): ExtendedIterator<FlattenDeep<T>>;
   public flatten(depth: number): ExtendedIterator<any>;
   public flatten(depth = Infinity) {
-    return flatten<T>(this, depth);
+    return new ExtendedIterator(new FlattenIterator(this, depth));
   }
 
   /** Return true if every element in this iterator matches the predicate. */
@@ -122,7 +123,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public zip<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<[T, A, B]>;
   public zip(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]>;
   public zip(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]> {
-    return zip(this.iterator, ...args);
+    return new ExtendedIterator(new ZipIterator([this.iterator, ...args.map(toIterator)]));
   }
 
   /** Aggregates this iterator and any number of others into one. Stops when all of the iterables is empty. */
@@ -130,7 +131,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public zipLongest<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<[T, A, B]>;
   public zipLongest(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]>;
   public zipLongest(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]> {
-    return zipLongest(this.iterator, ...args);
+    return new ExtendedIterator(new ZipLongestIterator([this.iterator, ...args.map(toIterator)]));
   }
 
   /**

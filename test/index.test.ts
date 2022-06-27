@@ -107,6 +107,16 @@ describe('ExtendedIterator', function () {
     );
   });
 
+  it('enumerate', async function () {
+    equal(
+      iter([1, 2, 3])
+        .enumerate()
+        .map(([i, n]) => [i, n * n])
+        .toArray(),
+      [[0, 1], [1, 4], [2, 9]],
+    );
+  });
+
   it('zip & zipLongest', async function () {
     equal(
       iter([1, 2, 3])
