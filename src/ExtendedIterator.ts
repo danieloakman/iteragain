@@ -22,7 +22,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public constructor(protected iterator: Iterator<T>) {}
 
   /** Returns a `{ value, done }` object that adheres to the Iterator interface. */
-  public next() {
+  public next(): IteratorResult<T> {
     return this.iterator.next();
   }
 
@@ -142,23 +142,33 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return new ExtendedIterator(new PairwiseIterator(this.iterator));
   }
 
-  /** Peek ahead of where the current iteration is. This doesn't consume any values of the iterator. */
-  public peek(): T | undefined;
-  public peek<N extends number>(ahead: N): Tuple<T | undefined, N>;
-  public peek(ahead?: number): T | T[] | undefined {
-    const values: T[] = [];
-    do values.push(this.iterator.next().value);
-    while (--ahead > 0);
-    this.iterator = new ConcatIterator([toIterator(values), this.iterator]);
-    return !isNaN(ahead) ? values : values[0];
-  }
-
   /**
    * Take the first `n` elements from this iterator.
    * @param n The number of elements to take.
    */
   public take(n: number) {
     return this.slice(0, n);
+  }
+
+  /** Peek ahead of where the current iteration is. This doesn't consume any values of the iterator. */
+  public peek(): T | undefined;
+  public peek<N extends number>(ahead: N): Tuple<T, N>;
+  public peek(ahead?: number): T | T[] | undefined {
+    const values = this.yield(ahead);
+    const valuesAsArray = Array.isArray(values) ? values : [values];
+    if (values && valuesAsArray.length) this.iterator = new ConcatIterator([toIterator(valuesAsArray), this.iterator]);
+    return values;
+  }
+
+  /** Yield any number of values from this iterator. */
+  public yield(): T | undefined;
+  public yield<N extends number>(numOfValues: N): Tuple<T, N>;
+  public yield(numOfValues?: number): T | T[] | undefined {
+    if (!numOfValues) return this.iterator.next().value;
+    const values: T[] = [];
+    let next: IteratorResult<T>;
+    while (numOfValues-- > 0 && !(next = this.iterator.next()).done) values.push(next.value);
+    return values;
   }
 
   /** Iterates and collects all values into an Array. This essentially invokes this iterator to start iterating. */

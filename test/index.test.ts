@@ -157,10 +157,23 @@ describe('ExtendedIterator', function () {
   it('peek', async function () {
     const iterator = iter([1, 2, 3, 4, 5]);
     equal(iterator.peek(), 1);
+    equal(iterator.peek(1), [1]);
     equal(iterator.peek(3), [1, 2, 3]);
     equal(iterator.toArray(), [1, 2, 3, 4, 5]);
     equal(iterator.peek(), undefined);
-    equal(iter([1]).peek(2), [1, undefined]);
+    equal(iterator.peek(3), []);
+    equal(iter([1]).peek(2), [1]);
+  });
+
+  it('yield', async function () {
+    const iterator = iter([1, 2, 3, 4, 5]);
+    equal(iterator.yield(), 1);
+    equal(iterator.yield(2), [2, 3]);
+    equal(iterator.yield(1), [4]);
+    equal(iterator.toArray(), [5]);
+    equal(iterator.yield(), undefined);
+    equal(iterator.yield(3), []);
+    equal(iter([1]).yield(2), [1]);
   });
 
   it('toSet', async function () {
