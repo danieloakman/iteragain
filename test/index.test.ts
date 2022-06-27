@@ -170,17 +170,14 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).find(n => n > 4), undefined);
   });
 
-  it('exhaust', async function () {
+  it('exhaust & tap', async function () {
     let mapWasCalled = 0;
-    const f = (n: number) => {
-      mapWasCalled++;
-      return n;
-    };
-    equal(iter([1, 2, 3]).map(f).exhaust(), undefined);
+    const f = () => mapWasCalled++;
+    equal(iter([1, 2, 3]).tap(f).exhaust(), undefined);
     equal(mapWasCalled, 3);
     const iterator = iter([1, 2, 3]);
     mapWasCalled = 0;
-    equal(iterator.map(f).exhaust(2), undefined);
+    equal(iterator.tap(f).exhaust(2), undefined);
     equal(mapWasCalled, 2);
     equal(iterator.toArray(), [3]);
   });

@@ -17,6 +17,7 @@ import PairwiseIterator from './internal/PairwiseIterator';
 import SliceIterator from './internal/SliceIterator';
 import ZipIterator from './internal/ZipIterator';
 import ZipLongestIterator from './internal/ZipLongestIterator';
+import TapIterator from './internal/TapIterator';
 
 export class ExtendedIterator<T> implements IterableIterator<T> {
   public constructor(protected iterator: Iterator<T>) {}
@@ -135,6 +136,21 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    */
   public skip(n: number): ExtendedIterator<T> {
     return this.slice(n);
+  }
+
+  /**
+   * @lazy
+   * Tap into this iterator by supplying `func` which is passed each value of this iterator. The return value of
+   * func is unused and this method is purely designed for a designated place to perform side effects.
+   * @example
+   *  iter([1,2,3])
+   *    .tap(console.log) // logs 1, 2, 3 to the console
+   *    .map(n => n * n)
+   *    .tap(console.log) // logs 1, 4, 9 to the console
+   *    .toArray() // returns [1, 4, 9]
+   */
+  public tap(func: (value: T) => any): ExtendedIterator<T> {
+    return new ExtendedIterator(new TapIterator(this.iterator, func));
   }
 
   /** Reduces this iterator to a single value. */
