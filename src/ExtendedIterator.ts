@@ -140,6 +140,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   /** Reduces this iterator to a single value. */
   public reduce(reducer: (accumulator: T, value: T) => T): T;
   public reduce<R>(reducer: (accumulator: R, value: T) => R, initialValue: R): R;
+  public reduce<R>(reducer: (accumulator: T | R, value: T) => R): R;
   public reduce<R>(reducer: (accumulator: R | T, value: T) => R, initialValue?: R): R {
     let accumulator = initialValue ?? this.iterator.next().value;
     for (const value of this) accumulator = reducer(accumulator, value);
@@ -163,6 +164,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     let next: IteratorResult<T>;
     while (!(next = this.iterator.next()).done) if (predicate(next.value)) return true;
     return false;
+  }
+
+  /** Returns this iterator as a string with each value joined by `separator`. */
+  public join(separator = ','): string {
+    return this.reduce((str, v) => str + separator + v);
   }
 
   /**

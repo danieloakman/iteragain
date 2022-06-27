@@ -159,6 +159,12 @@ describe('ExtendedIterator', function () {
     equal(iter([]).pairwise().toArray(), []);
   });
 
+  it('join', async function () {
+    equal(iter([1, 2, 3]).join(), '1,2,3');
+    equal(iter([1, 2, 3]).join(''), '123');
+    equal(iter([1, 2, 3]).join('-'), '1-2-3');
+  });
+
   it('peek', async function () {
     const iterator = iter([1, 2, 3, 4, 5]);
     equal(iterator.peek(), 1);
