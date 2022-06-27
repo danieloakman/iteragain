@@ -20,7 +20,7 @@ import { iter } from 'iteragain';
 // Or from the file itself (tree shakable):
 import iter from 'iteragain/iter';
 const nums = iter([1, 2, 3])
-  .map(n => n ** n)
+  .map(n => n * n)
   .filter(n => n % 2 === 0)
   .toArray();
   // [1, 4, 9]
