@@ -1,6 +1,6 @@
 {
   "name": "iteragain",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Javascript ES6 Iterable/Iterator utilities.",
   "main": "index.js",
   "types": "index.d.ts",
