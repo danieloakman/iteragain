@@ -13,7 +13,7 @@
     "build:watch": "npm run build:clean && tsc --watch",
     "lint": "eslint --ignore-path .eslintignore ./src --ext .ts",
     "format": "prettier-eslint --ignore .gitignore --write \"./src/**/*\"",
-    "test": "nyc ts-mocha test/**.test.ts --reporter list",
+    "test": "nyc --skip-full ts-mocha test/**.test.ts --reporter list",
     "bm": "ts-node benchmark/index.bm.ts",
     "bm:prof": "node -r ts-node/register --prof benchmark/index.bm.ts",
     "v:patch": "npm version patch -m \"Upgrade package version to v%s\"",
