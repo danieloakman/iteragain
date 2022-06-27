@@ -1,5 +1,4 @@
 import concat from './concat';
-import empty from './empty';
 import enumerate from './enumerate';
 import ExtendedIterator from './ExtendedIterator';
 import flatten from './flatten';
@@ -13,7 +12,6 @@ import zipLongest from './zipLongest';
 
 export {
   concat,
-  empty,
   enumerate,
   ExtendedIterator,
   flatten,
@@ -27,7 +25,6 @@ export {
 };
 export default {
   concat,
-  empty,
   enumerate,
   ExtendedIterator,
   flatten,

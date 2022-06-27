@@ -1,25 +1,6 @@
 import ExtendedIterator from './ExtendedIterator';
-import empty from './empty';
-
-class RangeIterator implements Iterator<number> {
-  private i = this.start;
-  constructor(
-    private readonly start: number,
-    private readonly stop: number,
-    private readonly step: number,
-    private readonly stepSign: number,
-  ) {}
-
-  next(): IteratorResult<number> {
-    if (Math.sign(this.stop - this.i) !== this.stepSign) {
-      this.i = this.start;
-      return { done: true, value: undefined };
-    }
-    const value = this.i;
-    this.i += this.step;
-    return { done: false, value };
-  }
-}
+import EmptyIterator from './internal/EmptyIterator';
+import RangeIterator from './internal/RangeIterator';
 
 class Range extends ExtendedIterator<number> {
   /** The start of this range of numbers (inclusive). */
@@ -41,7 +22,7 @@ class Range extends ExtendedIterator<number> {
     else if (params.length > 1) [start, stop, step] = params;
     if (typeof step !== 'number') step = Math.sign(stop - start);
     const stepSign = Math.sign(step);
-    if (stepSign === 0) super(empty());
+    if (stepSign === 0) super(new EmptyIterator());
     else super(new RangeIterator(start, stop, step, stepSign));
 
     this.start = start;

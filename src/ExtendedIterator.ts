@@ -8,41 +8,13 @@ import {
   FlattenDepth5,
 } from './types';
 import concat from './concat';
-import empty from './empty';
+import EmptyIterator from './internal/EmptyIterator';
 import flatten from './flatten';
 import zip from './zip';
 import zipLongest from './zipLongest';
-
-class MapIterator<T, R> implements Iterator<R> {
-  constructor(private readonly iterator: Iterator<T>, private readonly iteratee: (value: T) => R) {}
-
-  next(): IteratorResult<R> {
-    const { value, done } = this.iterator.next();
-    return { value: done ? undefined : this.iteratee(value), done };
-  }
-}
-
-class FilterIterator<T> {
-  constructor(private readonly iterator: Iterator<T>, private readonly predicate: (value: T) => boolean) {}
-
-  next(): IteratorResult<any> {
-    let result: IteratorResult<T>;
-    do result = this.iterator.next();
-    while (!result.done && !this.predicate(result.value));
-    return result;
-  }
-}
-
-class SliceIterator<T> implements Iterator<T> {
-  private i = 0;
-  constructor(private iterator: Iterator<T>, private start: number, private end: number) {}
-  next() {
-    let result: IteratorResult<T>;
-    while (!(result = this.iterator.next()).done && this.i++ < this.start);
-    if (this.i <= this.end) return result;
-    return { done: true, value: undefined };
-  }
-}
+import MapIterator from './internal/MapIterator';
+import FilterIterator from './internal/FilterIterator';
+import SliceIterator from './internal/SliceIterator';
 
 export class ExtendedIterator<T> implements IterableIterator<T> {
   protected readonly iterator: Iterator<T>;
@@ -60,7 +32,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /** Implements this as an Iterable so it's allowed to be used with "for of" loops. */
   public [Symbol.iterator]() {
-    return this;
+    return this.iterator as IterableIterator<T>;
   }
 
   public toString() {
@@ -172,7 +144,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    */
   public pairwise(): ExtendedIterator<[T, T]> {
     let prev = this.iterator.next();
-    if (prev.done) return new ExtendedIterator(empty());
+    if (prev.done) return new ExtendedIterator(new EmptyIterator());
     return new ExtendedIterator({
       iterator: this.iterator,
       next() {
