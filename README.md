@@ -3,14 +3,14 @@
 
 Another Javascript library for iterating.
 
-Pure JavaScript, ES6 Iterable/Iterator utilities. No dependencies and shipped with types as is.
+Pure JavaScript, Iterable/Iterator/Generator-function utilities. No dependencies and shipped with types as is.
 
-Inspired by [iterplus](https://www.npmjs.com/package/iterplus), [iterare](https://www.npmjs.com/package/iterare) and the Python [itertools](https://docs.python.org/3/library/itertools.html) module. See benchmark section for performance.
-
-The package is designed around the use of the `ExtendedIterator` class. It's a class that extends the ES6 Iterator with methods like those in `Array` and other iterator methods in python. It's chainable and looks closely like normal Javascript code instead of the more Python `itertools` way of doing things:
+The package is designed around the use of the [ExtendedIterator](https://danieloakman.github.io/iteragain/classes/ExtendedIterator.ExtendedIterator-1.html) class. It's a class that implements and extends the [IterableIterator](https://microsoft.github.io/PowerBI-JavaScript/interfaces/_node_modules_typedoc_node_modules_typescript_lib_lib_es2015_iterable_d_.iterableiterator.html) interface. It provides extra methods like those in the [JS Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) and other iterator methods in Python. It's chainable and looks closely like normal Javascript code instead of the more Python [itertools](https://docs.python.org/3/library/itertools.html) way of doing things:
 `filter(lambda x: x % 2 == 0, map(lambda x: x * x, iterable))`
 
-There is also other utility functions like `range`, `enumerate`, etc.
+There is also other utility functions like `range`, `enumerate`, `zip` etc.
+
+See [documentation](https://danieloakman.github.io/iteragain/).
 
 ## Code demo
 
@@ -32,15 +32,20 @@ range(10).toArray(); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 range(10, 0).toArray(); // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 range(0, -10).toArray(); // [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]
 range(0, 10, 2).toArray(); // [0, 2, 4, 6, 8]
-let r = range(10);
+let r = range(0, 10, 2);
 r.length; // 10, (a readonly property)
-r.includes(5); // true
-r.nth(-1); // 9 (the last element)
-r.nth(1); // 1 (the second element)
+r.includes(4); // true
+r.nth(-1); // 8 (the last element)
+r.nth(1); // 2 (the second element)
 r.nth(10); // undefined (the 10th element doesn't exist)
-let r = range(3);
+r.index(4); // 2 (the index of the value 4)
+r = range(3);
 const nums = [...r, ...r]; // [0, 1, 2, 0, 1, 2], can be reused after a full iteration.
 ```
+
+## Inpired by
+
+[iterplus](https://www.npmjs.com/package/iterplus), [iterare](https://www.npmjs.com/package/iterare), [lodash](https://www.npmjs.com/package/lodash), [rxjs](https://www.npmjs.com/package/rxjs) and the Python [itertools](https://docs.python.org/3/library/itertools.html) module. See benchmark section for performance against some of these.
 
 ## Benchmark
 
