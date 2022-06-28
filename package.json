@@ -16,7 +16,7 @@
     "test": "nyc --skip-full ts-mocha test/**.test.ts --reporter list",
     "bm": "ts-node benchmark/index.bm.ts",
     "bm:prof": "node -r ts-node/register --prof benchmark/index.bm.ts",
-    "typedoc": "typedoc --include-version --entryPointStrategy expand src/",
+    "typedoc": "typedoc --includeVersion --entryPointStrategy expand src/",
     "v:patch": "npm version patch -m \"Upgrade package version to v%s\"",
     "v:minor": "npm version minor -m \"Upgrade package version to v%s\"",
     "v:major": "npm version major -m \"Upgrade package version to v%s\"",
