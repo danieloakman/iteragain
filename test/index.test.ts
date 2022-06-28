@@ -10,6 +10,7 @@ import {
   toIterator,
   zip,
   zipLongest,
+  partition,
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
@@ -65,12 +66,11 @@ describe('ExtendedIterator', function () {
   });
 
   it('concat', async function () {
-    equal(
-      iter([1, 2, 3])
-        .concat(iter([4, 5, 6]))
-        .toArray(),
-      [1, 2, 3, 4, 5, 6],
-    );
+    equal(iter([1, 2, 3]).concat([4, 5, 6]).toArray(), [1, 2, 3, 4, 5, 6]);
+  });
+
+  it('prepend', async function () {
+    equal(iter([1, 2, 3]).prepend([0]).toArray(), [0, 1, 2, 3]);
   });
 
   it('slice', async function () {
@@ -231,7 +231,10 @@ describe('ExtendedIterator', function () {
   it('partition', async function () {
     equal(
       iter([1, 2, 3, 4, 5]).partition(n => n % 2 === 0),
-      [[1, 3, 5], [2, 4]],
+      [
+        [1, 3, 5],
+        [2, 4],
+      ],
     );
   });
 
@@ -330,6 +333,16 @@ it('iter', async function () {
   );
   // Probably won't end up handling this, as it would slow down `iter` a bit.
   throws(() => iter({ next() {} }).toArray());
+});
+
+it('partition', async function () {
+  equal(
+    partition([1, 2, 3, 4, 5], n => n % 2 === 0),
+    [
+      [1, 3, 5],
+      [2, 4],
+    ],
+  );
 });
 
 it('concat', async function () {

@@ -56,12 +56,20 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return this;
   }
 
-  /** @lazy Concatenates this iterator with the given iterators, in order of: thisIterator, ...others. */
+  /** @lazy Concatenates this iterator with the given iterators, in order of: `[this.iterator, ...others]`. */
   public concat<A>(other: IteratorOrIterable<A>): ExtendedIterator<T | A>;
   public concat<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<T | A | B>;
   public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any>;
   public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any> {
     return new ExtendedIterator(new ConcatIterator([this.iterator, ...args.map(toIterator)]));
+  }
+
+  /** @lazy Prepends this iterator with the given iterators, in order of: `[...args, this.iterator]`. */
+  public prepend<A>(other: IteratorOrIterable<A>): ExtendedIterator<A | T>;
+  public prepend<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<A | B | T>;
+  public prepend(...args: IteratorOrIterable<any>[]): ExtendedIterator<any>;
+  public prepend(...args: IteratorOrIterable<any>[]): ExtendedIterator<any> {
+    return new ExtendedIterator(new ConcatIterator([...args.map(toIterator), this.iterator]));
   }
 
   /**
