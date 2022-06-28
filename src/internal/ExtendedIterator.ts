@@ -19,6 +19,11 @@ import ZipIterator from './ZipIterator';
 import ZipLongestIterator from './ZipLongestIterator';
 import TapIterator from './TapIterator';
 
+/**
+ * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
+ * that modify the internal iterator, but don't start iterating. Methods without the `@lazy` prefix do start iterating
+ * some amount, depending on the method.
+ */
 export class ExtendedIterator<T> implements IterableIterator<T> {
   public constructor(protected iterator: Iterator<T>) {}
 

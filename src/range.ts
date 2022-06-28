@@ -45,9 +45,9 @@ class Range extends ExtendedIterator<number> {
     return this.includes(num) ? num : undefined;
   }
 
-  /** Returns the index that this number is at in this range. */
-  index(number: number): number {
-    return (number - this.start) / this.step;
+  /** Returns the index that `n` is at in this range. */
+  index(n: number): number {
+    return (n - this.start) / this.step;
   }
 
   /** Returns true if this range is equal to another. */
