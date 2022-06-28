@@ -11,3 +11,4 @@ test
 .prettierrc
 tsconfig.json
 .nyc_output
+docs
