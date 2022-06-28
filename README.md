@@ -24,7 +24,9 @@ const nums = iter([1, 2, 3])
   .filter(n => n % 2 === 0)
   .toArray();
   // [1, 4, 9]
+```
 
+```js
 import range from 'iteragain/range';
 range(10).toArray(); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 range(10, 0).toArray(); // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
@@ -44,9 +46,8 @@ const nums = [...r, ...r]; // [0, 1, 2, 0, 1, 2], can be reused after a full ite
 
 ```
 Starting benchmark suite: index.bm.ts
-  for of loop 10000 x 1,198 ops/sec, ±35 ops/sec or ±2.94% (88 runs sampled)
-  iteragain 10000 x 856 ops/sec, ±14 ops/sec or ±1.67% (89 runs sampled)
-  iterare 10000 x 747 ops/sec, ±13 ops/sec or ±1.77% (92 runs sampled)
-  iterplus 10000 x 547 ops/sec, ±8 ops/sec or ±1.43% (92 runs sampled)
-Fastest is for of loop 10000
+  for of loop x 2,015 ops/sec, ±47 ops/sec or ±2.33% (90 runs sampled)
+  iteragain x 1,431 ops/sec, ±25 ops/sec or ±1.74% (92 runs sampled)
+  iterare x 1,368 ops/sec, ±20 ops/sec or ±1.48% (95 runs sampled)
+  rxjs x 989 ops/sec, ±10 ops/sec or ±1.05% (93 runs sampled)
 ```
