@@ -242,6 +242,17 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     else while (n-- > 0 && !this.iterator.next().done);
   }
 
+  /**
+   * Partitions this iterator into a tuple of `[falsey, truthy]` corresponding to what `predicate` returns for each
+   * value.
+   */
+  public partition(predicate: (value: T) => any): [T[], T[]] {
+    const falsey: T[] = [];
+    const truthy: T[] = [];
+    this.tap(value => (predicate(value) ? truthy : falsey).push(value)).exhaust();
+    return [falsey, truthy];
+  }
+
   /** Iterates and collects all values into an Array. */
   public toArray(): T[] {
     const result: T[] = [];

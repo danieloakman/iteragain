@@ -228,6 +228,13 @@ describe('ExtendedIterator', function () {
     equal(iter([1]).yield(2), [1]);
   });
 
+  it('partition', async function () {
+    equal(
+      iter([1, 2, 3, 4, 5]).partition(n => n % 2 === 0),
+      [[1, 3, 5], [2, 4]],
+    );
+  });
+
   it('toSet', async function () {
     const nums = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const set = iter(nums)
