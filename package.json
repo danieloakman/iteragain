@@ -1,7 +1,7 @@
 {
   "name": "iteragain",
   "version": "0.12.2",
-  "description": "Javascript ES6 Iterable/Iterator utilities.",
+  "description": "Javascript Iterable/Iterator/Generator-function utilities.",
   "main": "index.js",
   "types": "index.d.ts",
   "engines": {
@@ -60,10 +60,11 @@
   "bugs": {
     "url": "https://github.com/danieloakman/iteragain/issues"
   },
-  "homepage": "https://github.com/danieloakman/iteragain#readme",
+  "homepage": "https://www.npmjs.com/package/iteragain",
   "keywords": [
     "iterator",
     "iterable",
+    "IterableIterator",
     "itertools",
     "iteration",
     "iter",
