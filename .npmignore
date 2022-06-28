@@ -2,6 +2,7 @@
 .vscode
 benchmark
 node_modules
+scripts
 src
 test
 .eslintignore
