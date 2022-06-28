@@ -22,8 +22,8 @@
     "v:major": "npm version major -f -m \"Upgrade package version to v%s\"",
     "prepare": "npm run build && husky install",
     "prepublishOnly": "npm run test && npm run lint",
-    "preversion": "npm run lint && npm run typedoc",
-    "postversion": "git push --follow-tags"
+    "preversion": "npm run lint",
+    "postversion": "&& npm run typedoc && git push --follow-tags"
   },
   "dependencies": {},
   "devDependencies": {
