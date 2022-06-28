@@ -1,13 +1,16 @@
 /** An iterator that concatenates other iterators together, in the order they are in the `iterators` arg. */
 export class ConcatIterator implements Iterator<any> {
+  protected nextIterator = this.iterators.shift();
   constructor(protected iterators: Iterator<any>[]) {}
 
   next(): IteratorResult<any> {
-    if (!this.iterators.length) return { done: true, value: undefined };
-    const next = this.iterators[0].next();
+    const next = this.nextIterator.next();
     if (!next.done) return next;
-    this.iterators.shift();
-    return this.iterators.length ? this.next() : { done: true, value: undefined };
+    if (this.iterators.length) {
+      this.nextIterator = this.iterators.shift();
+      return this.next();
+    }
+    return { done: true, value: undefined };
   }
 }
 
