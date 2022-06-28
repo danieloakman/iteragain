@@ -147,7 +147,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /**
    * @lazy
-   * Take the first `n` elements from this iterator. Equivalent to `iterator.slice(n)`.
+   * Skip the first `n` elements from this iterator. Equivalent to `iterator.slice(n)`.
    * @param n The number of elements to skip.
    */
   public skip(n: number): ExtendedIterator<T> {
@@ -170,7 +170,15 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return this;
   }
 
-  /** @lazy TODO */
+  /**
+   * @lazy
+   * Yields non-overlapping chunks (tuples) of `size` from this iterator.
+   * @param size The size of each chunk.
+   * @param fill Optional, the value to fill the last chunk with if it's not the same size as the rest of the iterator.
+   * @example
+   * iter([1,2,3,4,5,6,7,8,9]).chunk(3).toArray() // [[1,2,3], [4,5,6], [7,8,9]]
+   * iter([1,2,3,4,5,6,7,8,9]).chunk(2, 0).toArray() // [[1,2], [3,4], [5,6], [7,8], [9, 0]]
+   */
   public chunks<N extends number>(size: N, fill?: T): ExtendedIterator<Tuple<T, N>[]> {
     return new ExtendedIterator(new ChunksIterator(this.iterator, size, fill)) as ExtendedIterator<Tuple<T, N>[]>;
   }
