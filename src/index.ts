@@ -4,6 +4,7 @@ import flatten from './flatten';
 import isIterable from './isIterable';
 import isIterator from './isIterator';
 import iter from './iter';
+import partition from './partition';
 import range from './range';
 import toIterator from './toIterator';
 import zip from './zip';
@@ -16,6 +17,7 @@ export {
   isIterable,
   isIterator,
   iter,
+  partition,
   range,
   toIterator,
   zip,
@@ -28,6 +30,7 @@ export default {
   isIterable,
   isIterator,
   iter,
+  partition,
   range,
   toIterator,
   zip,
