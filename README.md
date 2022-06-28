@@ -19,11 +19,11 @@ See [documentation](https://danieloakman.github.io/iteragain/).
 import { iter } from 'iteragain';
 // Or from the file itself (tree shakable):
 import iter from 'iteragain/iter';
-const nums = iter([1, 2, 3])
+const nums = iter([1, 2, 3, 4, 5])
   .map(n => n * n)
   .filter(n => n % 2 === 0)
   .toArray();
-  // [1, 4]
+  // [4, 16]
 ```
 
 ```js
