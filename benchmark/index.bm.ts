@@ -29,11 +29,13 @@ const SIZE = 1e4;
 //   });
 // }
 
-// suite.add('for of loop', () => {
-//   const arr: string[] = [];
-//   for (const x of nums(SIZE))
-//     arr.push((x * x).toString());
-// });
+suite.add('for of loop', () => {
+  const arr: string[] = [];
+  for (const num of nums(SIZE)) {
+    const x = num * num;
+    if (x % 2 !== 0) arr.push(x.toString());
+  }
+});
 suite.add('iteragain', () => {
   new ExtendedIterator(nums(SIZE))
     .map(x => x * x)
