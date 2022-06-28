@@ -4,4 +4,3 @@ dist
 **.js
 .vscode
 .nyc_output
-docs/**/*
