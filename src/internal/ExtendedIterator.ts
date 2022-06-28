@@ -18,6 +18,7 @@ import SliceIterator from './SliceIterator';
 import ZipIterator from './ZipIterator';
 import ZipLongestIterator from './ZipLongestIterator';
 import TapIterator from './TapIterator';
+import ChunksIterator from './ChunksIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -167,6 +168,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public tap(func: (value: T) => any): ExtendedIterator<T> {
     this.iterator = new TapIterator(this.iterator, func);
     return this;
+  }
+
+  /** @lazy TODO */
+  public chunks<N extends number>(size: N, fill?: T): ExtendedIterator<Tuple<T, N>[]> {
+    return new ExtendedIterator(new ChunksIterator(this.iterator, size, fill)) as ExtendedIterator<Tuple<T, N>[]>;
   }
 
   /** Reduces this iterator to a single value. */

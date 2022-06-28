@@ -11,6 +11,7 @@ import {
   zip,
   zipLongest,
   partition,
+  chunks,
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
@@ -175,6 +176,13 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2]).pairwise().toArray(), [[1, 2]]);
     equal(iter([1]).pairwise().toArray(), []);
     equal(iter([]).pairwise().toArray(), []);
+  });
+
+  it('chunks', async function () {
+    equal(iter([1, 2, 3, 4, 5]).chunks(2).toArray(), [[1, 2], [3, 4], [5]]);
+    equal(iter([1, 2, 3, 4, 5]).chunks(3, 0).toArray(), [[1, 2, 3], [4, 5, 0]]);
+    equal(iter([1, 2, 3, 4, 5]).chunks(6).toArray(), [[1, 2, 3, 4, 5]]);
+    equal(iter([]).chunks(5).toArray(), []);
   });
 
   it('join', async function () {
@@ -343,6 +351,10 @@ it('partition', async function () {
       [2, 4],
     ],
   );
+});
+
+it('chunks', async function () {
+  equal(chunks([1, 2, 3, 4, 5], 2).toArray(), [[1, 2], [3, 4], [5]]);
 });
 
 it('concat', async function () {

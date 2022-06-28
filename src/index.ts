@@ -1,3 +1,4 @@
+import chunks from './chunks';
 import concat from './concat';
 import enumerate from './enumerate';
 import flatten from './flatten';
@@ -11,6 +12,7 @@ import zip from './zip';
 import zipLongest from './zipLongest';
 
 export {
+  chunks,
   concat,
   enumerate,
   flatten,
@@ -24,6 +26,7 @@ export {
   zipLongest,
 };
 export default {
+  chunks,
   concat,
   enumerate,
   flatten,
