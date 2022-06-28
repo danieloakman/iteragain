@@ -16,6 +16,7 @@
     "test": "nyc --skip-full ts-mocha test/**.test.ts --reporter list",
     "bm": "ts-node benchmark/index.bm.ts",
     "bm:prof": "node -r ts-node/register --prof benchmark/index.bm.ts",
+    "typedoc": "typedoc --entryPointStrategy expand src/",
     "v:patch": "npm version patch -m \"Upgrade package version to v%s\"",
     "v:minor": "npm version minor -m \"Upgrade package version to v%s\"",
     "v:major": "npm version major -m \"Upgrade package version to v%s\"",
@@ -37,7 +38,7 @@
     "husky": "^8.0.0",
     "iterare": "^1.2.1",
     "iterplus": "^3.0.2",
-    "mocha": "^8.2.1",
+    "mocha": "9.2.2",
     "more-node-fs": "^2.0.1",
     "nyc": "^15.1.0",
     "prettier": "^2.6.2",
@@ -46,6 +47,8 @@
     "rxjs": "^7.5.5",
     "ts-mocha": "^9.0.2",
     "ts-node": "^10.8.1",
+    "typedoc": "^0.23.1",
+    "typedoc-plugin-rename-defaults": "^0.6.1",
     "typescript": "^4.6.3"
   },
   "repository": {
