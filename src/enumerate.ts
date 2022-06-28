@@ -1,4 +1,4 @@
-import ExtendedIterator from './ExtendedIterator';
+import ExtendedIterator from './internal/ExtendedIterator';
 import { IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 import MapIterator from './internal/MapIterator';

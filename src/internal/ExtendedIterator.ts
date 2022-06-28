@@ -7,17 +7,17 @@ import {
   FlattenDepth4,
   FlattenDepth5,
   Tuple,
-} from './types';
-import toIterator from './toIterator';
-import ConcatIterator from './internal/ConcatIterator';
-import FilterIterator from './internal/FilterIterator';
-import FlattenIterator from './internal/FlattenIterator';
-import MapIterator from './internal/MapIterator';
-import PairwiseIterator from './internal/PairwiseIterator';
-import SliceIterator from './internal/SliceIterator';
-import ZipIterator from './internal/ZipIterator';
-import ZipLongestIterator from './internal/ZipLongestIterator';
-import TapIterator from './internal/TapIterator';
+} from '../types';
+import toIterator from '../toIterator';
+import ConcatIterator from './ConcatIterator';
+import FilterIterator from './FilterIterator';
+import FlattenIterator from './FlattenIterator';
+import MapIterator from './MapIterator';
+import PairwiseIterator from './PairwiseIterator';
+import SliceIterator from './SliceIterator';
+import ZipIterator from './ZipIterator';
+import ZipLongestIterator from './ZipLongestIterator';
+import TapIterator from './TapIterator';
 
 export class ExtendedIterator<T> implements IterableIterator<T> {
   public constructor(protected iterator: Iterator<T>) {}

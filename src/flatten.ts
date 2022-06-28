@@ -1,4 +1,4 @@
-import ExtendedIterator from './ExtendedIterator';
+import ExtendedIterator from './internal/ExtendedIterator';
 import { IteratorOrIterable, FlattenDeep, FlattenDepth1, FlattenDepth2, FlattenDepth3, FlattenDepth4, FlattenDepth5 } from './types';
 import FlattenIterator from './internal/FlattenIterator';
 import toIterator from './toIterator';

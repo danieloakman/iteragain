@@ -1,4 +1,4 @@
-import ExtendedIterator from './ExtendedIterator';
+import ExtendedIterator from './internal/ExtendedIterator';
 import toIterator from './toIterator';
 import { IteratorOrIterable } from './types';
 import ZipLongestIterator from './internal/ZipLongestIterator';

@@ -1,4 +1,4 @@
-import ExtendedIterator from './ExtendedIterator';
+import ExtendedIterator from './internal/ExtendedIterator';
 import EmptyIterator from './internal/EmptyIterator';
 import RangeIterator from './internal/RangeIterator';
 
