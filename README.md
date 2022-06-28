@@ -5,7 +5,7 @@ Another Javascript library for iterating.
 
 Pure JavaScript, Iterable/Iterator/Generator-function utilities. No dependencies and shipped with types as is.
 
-The package is designed around the use of the [ExtendedIterator](https://danieloakman.github.io/iteragain/classes/ExtendedIterator.ExtendedIterator-1.html) class through calling [iter](https://danieloakman.github.io/iteragain/functions/iter.iter-1.html). It's a class that implements and extends the [IterableIterator](https://microsoft.github.io/PowerBI-JavaScript/interfaces/_node_modules_typedoc_node_modules_typescript_lib_lib_es2015_iterable_d_.iterableiterator.html) interface. It provides extra methods like those in the [JS Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) and other iterator methods in Python. It's chainable and looks closely like normal Javascript code instead of the more Python [itertools](https://docs.python.org/3/library/itertools.html) way of doing things:
+The package is designed around the use of the [ExtendedIterator](https://danieloakman.github.io/iteragain/classes/internal_ExtendedIterator.ExtendedIterator-1.html) class through calling [iter](https://danieloakman.github.io/iteragain/functions/iter.iter-1.html). It's a class that implements and extends the [IterableIterator](https://microsoft.github.io/PowerBI-JavaScript/interfaces/_node_modules_typedoc_node_modules_typescript_lib_lib_es2015_iterable_d_.iterableiterator.html) interface. It provides extra methods like those in the [JS Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) and other iterator methods in Python. It's chainable and looks closely like normal Javascript code instead of the more Python [itertools](https://docs.python.org/3/library/itertools.html) way of doing things:
 `filter(lambda x: x % 2 == 0, map(lambda x: x * x, iterable))`
 
 There is also other utility functions like `range`, `enumerate`, `zip` etc.
@@ -23,7 +23,7 @@ const nums = iter([1, 2, 3])
   .map(n => n * n)
   .filter(n => n % 2 === 0)
   .toArray();
-  // [1, 4, 9]
+  // [1, 4]
 ```
 
 ```js
