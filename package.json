@@ -16,14 +16,14 @@
     "test": "nyc --skip-full ts-mocha test/**.test.ts --reporter list",
     "bm": "ts-node benchmark/index.bm.ts",
     "bm:prof": "node -r ts-node/register --prof benchmark/index.bm.ts",
-    "typedoc": "typedoc --plugin typedoc-plugin-remove-references --includeVersion --entryPointStrategy expand src/ && git add docs && git commit -m \"Update docs\"",
+    "typedoc": "typedoc --plugin typedoc-plugin-remove-references --includeVersion --entryPointStrategy expand src/ && git add docs",
     "v:patch": "npm version patch -f -m \"Upgrade package version to v%s\"",
     "v:minor": "npm version minor -f -m \"Upgrade package version to v%s\"",
     "v:major": "npm version major -f -m \"Upgrade package version to v%s\"",
     "prepare": "npm run build && husky install",
     "prepublishOnly": "npm run test && npm run lint",
     "preversion": "npm run lint",
-    "postversion": "npm run typedoc && git push --follow-tags"
+    "postversion": "git push --follow-tags"
   },
   "dependencies": {},
   "devDependencies": {
