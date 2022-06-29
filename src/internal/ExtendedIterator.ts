@@ -138,6 +138,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return new ExtendedIterator(new PairwiseIterator(this.iterator));
   }
 
+  /**
+   * @lazy
+   * Returns a new iterator of triplets (tuples) of the values in this one. The number of triplets will always be two
+   * fewer than the number of values in this iterator. Will be empty if this iterator has fewer than three values.
+   */
   public triplewise(): ExtendedIterator<[T, T, T]> {
     return new ExtendedIterator(new TriplewiseIterator(this.iterator));
   }

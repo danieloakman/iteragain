@@ -184,6 +184,7 @@ describe('ExtendedIterator', function () {
 
   it('triplewise', async function () {
     equal(range(5).triplewise().toArray(), [[0, 1, 2], [1, 2, 3], [2, 3, 4]]);
+    equal(iter([]).triplewise().toArray(), []);
   });
 
   it('chunks', async function () {
