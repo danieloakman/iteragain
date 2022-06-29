@@ -182,6 +182,10 @@ describe('ExtendedIterator', function () {
     equal(iter([]).pairwise().toArray(), []);
   });
 
+  it('triplewise', async function () {
+    equal(range(5).triplewise().toArray(), [[0, 1, 2], [1, 2, 3], [2, 3, 4]]);
+  });
+
   it('chunks', async function () {
     equal(iter([1, 2, 3, 4, 5]).chunks(2).toArray(), [[1, 2], [3, 4], [5]]);
     equal(iter([1, 2, 3, 4, 5]).chunks(3, 0).toArray(), [

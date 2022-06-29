@@ -19,6 +19,7 @@ import SliceIterator from './SliceIterator';
 import ZipIterator from './ZipIterator';
 import ZipLongestIterator from './ZipLongestIterator';
 import TapIterator from './TapIterator';
+import TriplewiseIterator from './TripleWiseIterator';
 import ChunksIterator from './ChunksIterator';
 
 /**
@@ -135,6 +136,10 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    */
   public pairwise(): ExtendedIterator<[T, T]> {
     return new ExtendedIterator(new PairwiseIterator(this.iterator));
+  }
+
+  public triplewise(): ExtendedIterator<[T, T, T]> {
+    return new ExtendedIterator(new TriplewiseIterator(this.iterator));
   }
 
   /**
