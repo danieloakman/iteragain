@@ -200,6 +200,7 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).windows(4, 1).toArray(), []);
     equal(iter([]).windows(5, 1).toArray(), []);
     equal(iter([1, 2, 3, 4, 5]).windows(2, 3).toArray(), [[1, 2], [4, 5]]);
+    equal(iter([1, 2, 3, 4, 5]).windows(3, 4, 0).toArray(), [[1, 2, 3], [5, 0, 0]]);
   });
 
   it('join', async function () {
