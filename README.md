@@ -5,7 +5,7 @@ Another Javascript library for iterating.
 
 Pure JavaScript, Iterable/Iterator/Generator-function utilities. No dependencies and shipped with types as is.
 
-Iterators or Iterables in Javascript has basically no supporting methods or functions. This package provides easy to use, lazy evaluation methods to save on memory and unnecessary processing. Support with using the already existing `next()` method and usage in "for of" loops, this makes using Iterators as easy as using an Array.
+Iterators and Iterables in Javascript has basically no supporting methods or functions. This package provides easy to use, lazy evaluation methods to save on memory and unnecessary processing. Support with using the already existing `next()` method and usage in "for of" loops, this makes using Iterators as easy as using an Array.
 
 The package is designed around the use of the [ExtendedIterator](https://danieloakman.github.io/iteragain/classes/internal_ExtendedIterator.ExtendedIterator.html) class through calling [iter()](https://danieloakman.github.io/iteragain/functions/iter.iter.html). It's a class that implements and extends the [IterableIterator](https://microsoft.github.io/PowerBI-JavaScript/interfaces/_node_modules_typedoc_node_modules_typescript_lib_lib_es2015_iterable_d_.iterableiterator.html) interface. Methods in this class are designed to provide all of what you can do in the normal [JS Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) and the iterator methods in Python. This class is chainable and looks closely like normal Javascript code instead of the more Python [itertools](https://docs.python.org/3/library/itertools.html) way of doing things:
 `filter(lambda x: x % 2 == 0, map(lambda x: x * x, iterable))`
