@@ -1,3 +1,4 @@
+/** An iterator that collects (triplets) from the input `Iterator<T>`, like: [T, T, T]. */
 export class TriplewiseIterator<T> implements Iterator<[T, T, T]> {
   protected prev: T[] = [];
 
