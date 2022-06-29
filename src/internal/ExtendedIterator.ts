@@ -7,12 +7,13 @@ import {
   FlattenDepth4,
   FlattenDepth5,
   Tuple,
-} from '../types';
+} from './types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
 import FilterIterator from './FilterIterator';
 import FlattenIterator from './FlattenIterator';
 import MapIterator from './MapIterator';
+import WindowsIterator from './WindowsIterator';
 import PairwiseIterator from './PairwiseIterator';
 import SliceIterator from './SliceIterator';
 import ZipIterator from './ZipIterator';
@@ -172,15 +173,33 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /**
    * @lazy
-   * Yields non-overlapping chunks (tuples) of `size` from this iterator.
-   * @param size The size of each chunk.
-   * @param fill Optional, the value to fill the last chunk with if it's not the same size as the rest of the iterator.
+   * Yields non-overlapping chunks (tuples) of `length` from this iterator.
+   * @param length The length of each chunk, must be greater than 0.
+   * @param fill Optional, the value to fill the last chunk with if it's not the same length as the rest of the iterator.
    * @example
    * iter([1,2,3,4,5,6,7,8,9]).chunk(3).toArray() // [[1,2,3], [4,5,6], [7,8,9]]
    * iter([1,2,3,4,5,6,7,8,9]).chunk(2, 0).toArray() // [[1,2], [3,4], [5,6], [7,8], [9, 0]]
    */
-  public chunks<N extends number>(size: N, fill?: T): ExtendedIterator<Tuple<T, N>[]> {
-    return new ExtendedIterator(new ChunksIterator(this.iterator, size, fill)) as ExtendedIterator<Tuple<T, N>[]>;
+  public chunks<N extends number>(length: N, fill?: T): ExtendedIterator<Tuple<T, N>[]> {
+    return new ExtendedIterator(new ChunksIterator(this.iterator, length, fill)) as ExtendedIterator<Tuple<T, N>[]>;
+  }
+
+  /**
+   * @lazy
+   * Yields sliding windows (tuples) of `length` from this iterator. Each window is separated by `offset` number of
+   * elements.
+   * @param length The length of each window, must be greater than 0.
+   * @param offset The offset of each window from each other. Must be greater than 0.
+   * @param fill Optional, the value to fill the last window with if it's not the same length as the rest of the iterator.
+   * @example
+   * iter([1,2,3,4,5]).windows(2, 1).toArray() // [[1,2], [2,3], [3,4], [4,5]]
+   * iter([1,2,3,4,5]).windows(2, 3).toArray() // [[1,2], [4,5]]
+   * iter([1,2,3,4,5]).windows(3, 3, 0).toArray() // [[1,2,3], [4,5,0]]
+   */
+  public windows<Length extends number>(length: Length, offset: number, fill?: T): ExtendedIterator<Tuple<T, Length>> {
+    return new ExtendedIterator(new WindowsIterator(this.iterator, length, offset, fill)) as ExtendedIterator<
+      Tuple<T, Length>
+    >;
   }
 
   /** Reduces this iterator to a single value. */

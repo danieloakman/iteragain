@@ -1,4 +1,4 @@
-import { IteratorOrIterable } from './types';
+import { IteratorOrIterable } from './internal/types';
 import ExtendedIterator from './internal/ExtendedIterator';
 import toIterator from './toIterator';
 import ConcatIterator from './internal/ConcatIterator';

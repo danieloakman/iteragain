@@ -1,7 +1,7 @@
 import { setupSuite } from './bm-util';
 
 const suite = setupSuite(__filename.split(/[\\/]/).pop());
-import ExtendedIterator from '../src/ExtendedIterator';
+import ExtendedIterator from '../src/internal/ExtendedIterator';
 import { IteratorWithOperators } from 'iterare/lib/iterate';
 import { from } from 'rxjs';
 import { map, filter/* , skip */ } from 'rxjs/operators';

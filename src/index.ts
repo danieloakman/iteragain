@@ -8,6 +8,7 @@ import iter from './iter';
 import partition from './partition';
 import range from './range';
 import toIterator from './toIterator';
+import windows from './windows';
 import zip from './zip';
 import zipLongest from './zipLongest';
 
@@ -22,6 +23,7 @@ export {
   partition,
   range,
   toIterator,
+  windows,
   zip,
   zipLongest,
 };
@@ -36,6 +38,7 @@ export default {
   partition,
   range,
   toIterator,
+  windows,
   zip,
   zipLongest,
 };

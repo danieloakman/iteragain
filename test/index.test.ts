@@ -12,6 +12,7 @@ import {
   zipLongest,
   partition,
   chunks,
+  windows,
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
@@ -180,9 +181,25 @@ describe('ExtendedIterator', function () {
 
   it('chunks', async function () {
     equal(iter([1, 2, 3, 4, 5]).chunks(2).toArray(), [[1, 2], [3, 4], [5]]);
-    equal(iter([1, 2, 3, 4, 5]).chunks(3, 0).toArray(), [[1, 2, 3], [4, 5, 0]]);
+    equal(iter([1, 2, 3, 4, 5]).chunks(3, 0).toArray(), [
+      [1, 2, 3],
+      [4, 5, 0],
+    ]);
     equal(iter([1, 2, 3, 4, 5]).chunks(6).toArray(), [[1, 2, 3, 4, 5]]);
+    equal(iter([1, 2, 3, 4, 5]).chunks(6, 0).toArray(), [[1, 2, 3, 4, 5, 0]]);
     equal(iter([]).chunks(5).toArray(), []);
+  });
+
+  it('windows', async function () {
+    equal(iter([1, 2, 3]).windows(1, 1).toArray(), [[1], [2], [3]]);
+    equal(iter([1, 2, 3]).windows(2, 1).toArray(), [
+      [1, 2],
+      [2, 3],
+    ]);
+    equal(iter([1, 2, 3]).windows(3, 1).toArray(), [[1, 2, 3]]);
+    equal(iter([1, 2, 3]).windows(4, 1).toArray(), []);
+    equal(iter([]).windows(5, 1).toArray(), []);
+    equal(iter([1, 2, 3, 4, 5]).windows(2, 3).toArray(), [[1, 2], [4, 5]]);
   });
 
   it('join', async function () {
@@ -297,6 +314,10 @@ it('toIterator', async function () {
   throws(() => toIterator(null));
 });
 
+it('windows', async function () {
+  equal(windows([1, 2, 3], 2, 1).toArray(), [[1, 2], [2, 3]]);
+});
+
 it('zip', async function () {
   equal(zip([1, 2, 3], ['4', '5', '6']).toArray(), [
     [1, '4'],
@@ -355,6 +376,10 @@ it('partition', async function () {
 
 it('chunks', async function () {
   equal(chunks([1, 2, 3, 4, 5], 2).toArray(), [[1, 2], [3, 4], [5]]);
+});
+
+it('tuples', async function () {
+  // equal(tuples([1, 2, 3, 4, 5], 2).toArray(), [[1, 2], [3, 4], [5]]);
 });
 
 it('concat', async function () {

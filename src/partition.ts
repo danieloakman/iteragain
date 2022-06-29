@@ -1,4 +1,4 @@
-import { IteratorOrIterable } from './types';
+import { IteratorOrIterable } from './internal/types';
 import toIterator from './toIterator';
 
 export function partition<T>(arg: IteratorOrIterable<T>, predicate: (value: T) => any): [T[], T[]] {
