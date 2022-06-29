@@ -73,6 +73,12 @@
     "iterutil",
     "iteragain",
     "es6",
-    "es2015"
+    "es2015",
+    "map",
+    "filter",
+    "reduce",
+    "lazy",
+    "array",
+    "utility"
   ]
 }
