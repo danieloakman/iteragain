@@ -22,12 +22,15 @@ describe('ExtendedIterator', function () {
   });
 
   it('[Symbol.iterator]', async function () {
-    let iterator = iter([1, 2, 3]);
-    equal([...iterator[Symbol.iterator]()], [1, 2, 3]);
-    equal([...iterator[Symbol.iterator]()], []);
-    iterator = iter([1, 2, 3]).map(x => x * x);
-    equal([...iterator[Symbol.iterator]()], [1, 4, 9]);
-    equal([...iterator[Symbol.iterator]()], []);
+    const iterator1 = iter([1, 2, 3]);
+    equal([...iterator1[Symbol.iterator]()], [1, 2, 3]);
+    equal([...iterator1[Symbol.iterator]()], []);
+    const iterator2 = iter([1, 2, 3]).map(x => x * x);
+    equal([...iterator2[Symbol.iterator]()], [1, 4, 9]);
+    equal([...iterator2[Symbol.iterator]()], []);
+    const iterator3 = iter([1, 2, 3]);
+    for (const x of iterator3) if (x === 2) break;
+    equal([...iterator3], [3]);
   });
 
   it('toString', async function () {
@@ -199,8 +202,14 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).windows(3, 1).toArray(), [[1, 2, 3]]);
     equal(iter([1, 2, 3]).windows(4, 1).toArray(), []);
     equal(iter([]).windows(5, 1).toArray(), []);
-    equal(iter([1, 2, 3, 4, 5]).windows(2, 3).toArray(), [[1, 2], [4, 5]]);
-    equal(iter([1, 2, 3, 4, 5]).windows(3, 4, 0).toArray(), [[1, 2, 3], [5, 0, 0]]);
+    equal(iter([1, 2, 3, 4, 5]).windows(2, 3).toArray(), [
+      [1, 2],
+      [4, 5],
+    ]);
+    equal(iter([1, 2, 3, 4, 5]).windows(3, 4, 0).toArray(), [
+      [1, 2, 3],
+      [5, 0, 0],
+    ]);
   });
 
   it('join', async function () {
@@ -316,7 +325,10 @@ it('toIterator', async function () {
 });
 
 it('windows', async function () {
-  equal(windows([1, 2, 3], 2, 1).toArray(), [[1, 2], [2, 3]]);
+  equal(windows([1, 2, 3], 2, 1).toArray(), [
+    [1, 2],
+    [2, 3],
+  ]);
 });
 
 it('zip', async function () {
