@@ -228,7 +228,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public tee<N extends number>(n: N): Tuple<ExtendedIterator<T>, N> {
     const cachedIterator = new CachedIterator(this.iterator);
     const indices = new Array(n).fill(0);
-    let currentLow = 0;
+    // let currentLow = 0;
     return Array.from(
       { length: n },
       (_, i) =>
@@ -237,14 +237,14 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
             while (!cachedIterator.cache.has(indices[i]) && !cachedIterator.next().done);
             const value = cachedIterator.cache.get(indices[i]);
             if(value === undefined) return { done: true, value: undefined };
-            const low = Math.min(...indices) - 1;
-            if (low > currentLow) {
-              currentLow = low;
-              for (let i = currentLow; i > -1; i--) {
-                if (!cachedIterator.cache.has(i)) break;
-                cachedIterator.cache.delete(i);
-              }
-            }
+            // const low = Math.min(...indices) - 1;
+            // if (low > currentLow) {
+            //   currentLow = low;
+            //   for (let i = currentLow; i > -1; i--) {
+            //     if (!cachedIterator.cache.has(i)) break;
+            //     cachedIterator.cache.delete(i);
+            //   }
+            // }
             indices[i]++;
             return { done: false, value };
           },

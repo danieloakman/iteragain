@@ -338,14 +338,14 @@ it('windows', async function () {
 });
 
 it('tee', async function () {
-  this.timeout(60000);
+  // this.timeout(60000);
   let [a, b] = iter([1, 2, 3]).tee(2);
   a = a.map(x => x * x);
   b = b.map(x => x + x);
   equal(a.yield(), 1);
-  equal(b.yield(), 2);
+  equal(b.yield(2), [2, 4]);
   equal(a.toArray(), [4, 9]);
-  equal(b.toArray(), [4, 6]);
+  equal(b.toArray(), [6]);
   // const suite = setupSuite('tee');
   // const SIZE = 1e1;
   // suite.add('no clear', () => {
