@@ -14,6 +14,7 @@ import {
   chunks,
   windows,
 } from '../src/index';
+import { setupSuite } from '../benchmark/bm-util';
 
 describe('ExtendedIterator', function () {
   it('does implement IterableIterator', async function () {
@@ -334,6 +335,52 @@ it('windows', async function () {
     [1, 2],
     [2, 3],
   ]);
+});
+
+it('tee', async function () {
+  this.timeout(60000);
+  let [a, b] = iter([1, 2, 3]).tee(2);
+  a = a.map(x => x * x);
+  b = b.map(x => x + x);
+  equal(a.yield(), 1);
+  equal(b.yield(), 2);
+  equal(a.toArray(), [4, 9]);
+  equal(b.toArray(), [4, 6]);
+  // const suite = setupSuite('tee');
+  // const SIZE = 1e1;
+  // suite.add('no clear', () => {
+  //   const [a, b] = range(SIZE).tee(2);
+  //   a.map(x => x * x).toArray();
+  //   b.map(x => x + x).toArray();
+  // });
+  // suite.add('clear', () => {
+  //   const [a, b] = range(SIZE).tee(2, true);
+  //   a.map(x => x * x).toArray();
+  //   b.map(x => x + x).toArray();
+  // });
+  // suite.add('no clear, parallel', () => {
+  //   let [a, b] = range(SIZE).tee(2);
+  //   a = a.map(x => x * x);
+  //   b = b.map(x => x + x);
+  //   while (true) {
+  //     const values: any[] = [];
+  //     for (const i of [a, b])
+  //       values.push(i.yield());
+  //     if (values.every(v => v === undefined)) break;
+  //   }
+  // });
+  // suite.add('clear, parallel', () => {
+  //   let [a, b] = range(SIZE).tee(2, true);
+  //   a = a.map(x => x * x);
+  //   b = b.map(x => x + x);
+  //   while (true) {
+  //     const values: any[] = [];
+  //     for (const i of [a, b])
+  //       values.push(i.yield());
+  //     if (values.every(v => v === undefined)) break;
+  //   }
+  // });
+  // suite.run();
 });
 
 it('zip', async function () {

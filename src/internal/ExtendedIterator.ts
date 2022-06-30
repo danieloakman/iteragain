@@ -21,6 +21,7 @@ import ZipLongestIterator from './ZipLongestIterator';
 import TapIterator from './TapIterator';
 import TriplewiseIterator from './TripleWiseIterator';
 import ChunksIterator from './ChunksIterator';
+import CachedIterator from './CachedIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -210,6 +211,45 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return new ExtendedIterator(new WindowsIterator(this.iterator, length, offset, fill)) as ExtendedIterator<
       Tuple<T, Length>
     >;
+  }
+
+  /**
+   * @lazy
+   * Returns `n` independent iterators, each of which is a copy of this iterator at the time of calling `tee`. Once
+   * `tee` has made a split, do not modify or call upon the original iterator, as the new iterators will not be
+   * updated/informed.
+   * This caches the original iterator's values as the new iterators are iterated through. So
+   * depending on the size of the orignal iterator, there could be signaficant memory overhead in using `tee`.
+   * `tee`'s intended use is to iterator over the returned iterators in parallel, or at least somewhat in parallel. In
+   * general, if one returned iterator consumes most or all of it's values, then it is faster to just
+   * use `toArray` and then iterate over that.
+   * @param n The number of independent iterators to create.
+   */
+  public tee<N extends number>(n: N, clear?: boolean): Tuple<ExtendedIterator<T>, N> {
+    const cachedIterator = new CachedIterator(this.iterator);
+    const indices = new Array(n).fill(0);
+    let currentLow = 0;
+    return Array.from(
+      { length: n },
+      (_, i) =>
+        new ExtendedIterator({
+          next(): IteratorResult<T> {
+            while (!cachedIterator.cache.has(indices[i]) && !cachedIterator.next().done);
+            const value = cachedIterator.cache.get(indices[i]);
+            if(value === undefined) return { done: true, value: undefined };
+            const low = Math.min(...indices) - 1;
+            if (low > currentLow && clear) {
+              currentLow = low;
+              for (let i = currentLow; i > -1; i--) {
+                if (!cachedIterator.cache.has(i)) break;
+                cachedIterator.cache.delete(i);
+              }
+            }
+            indices[i]++;
+            return { done: false, value };
+          },
+        }),
+    ) as Tuple<ExtendedIterator<T>, N>;
   }
 
   /** Reduces this iterator to a single value. */
