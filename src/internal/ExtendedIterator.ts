@@ -225,7 +225,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * use `toArray` and then iterate over that.
    * @param n The number of independent iterators to create.
    */
-  public tee<N extends number>(n: N, clear?: boolean): Tuple<ExtendedIterator<T>, N> {
+  public tee<N extends number>(n: N): Tuple<ExtendedIterator<T>, N> {
     const cachedIterator = new CachedIterator(this.iterator);
     const indices = new Array(n).fill(0);
     let currentLow = 0;
@@ -238,7 +238,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
             const value = cachedIterator.cache.get(indices[i]);
             if(value === undefined) return { done: true, value: undefined };
             const low = Math.min(...indices) - 1;
-            if (low > currentLow && clear) {
+            if (low > currentLow) {
               currentLow = low;
               for (let i = currentLow; i > -1; i--) {
                 if (!cachedIterator.cache.has(i)) break;
