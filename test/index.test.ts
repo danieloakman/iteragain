@@ -443,10 +443,6 @@ it('chunks', async function () {
   equal(chunks([1, 2, 3, 4, 5], 2).toArray(), [[1, 2], [3, 4], [5]]);
 });
 
-it('tuples', async function () {
-  // equal(tuples([1, 2, 3, 4, 5], 2).toArray(), [[1, 2], [3, 4], [5]]);
-});
-
 it('concat', async function () {
   equal(concat([1, 2, 3], [], [4, 5, 6]).toArray(), [1, 2, 3, 4, 5, 6]);
 });
