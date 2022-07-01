@@ -13,3 +13,4 @@ test
 .prettierrc
 tsconfig.json
 .nyc_output
+.nojekyll
