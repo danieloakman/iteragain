@@ -14,7 +14,6 @@ import {
   chunks,
   windows,
 } from '../src/index';
-import { setupSuite } from '../benchmark/bm-util';
 
 describe('ExtendedIterator', function () {
   it('does implement IterableIterator', async function () {
@@ -169,9 +168,24 @@ describe('ExtendedIterator', function () {
   });
 
   it('takeWhile', async function () {
-    equal(iter([1, 4, 6, 4, 1]).takeWhile(n => n < 5).toArray(), [1, 4]);
-    equal(iter([1, 2, 3]).takeWhile(n => n < 2).toArray(), [1]);
-    equal(iter([1, 2, 3]).takeWhile(n => n > 2).toArray(), []);
+    equal(
+      iter([1, 4, 6, 4, 1])
+        .takeWhile(n => n < 5)
+        .toArray(),
+      [1, 4],
+    );
+    equal(
+      iter([1, 2, 3])
+        .takeWhile(n => n < 2)
+        .toArray(),
+      [1],
+    );
+    equal(
+      iter([1, 2, 3])
+        .takeWhile(n => n > 2)
+        .toArray(),
+      [],
+    );
   });
 
   it('skip', async function () {
@@ -180,9 +194,24 @@ describe('ExtendedIterator', function () {
   });
 
   it('skipWhile', async function () {
-    equal(iter([1, 4, 6, 4, 1]).skipWhile(n => n < 5).toArray(), [6, 4, 1]);
-    equal(iter([1, 2, 3]).skipWhile(n => n < 2).toArray(), [2, 3]);
-    equal(iter([1, 2, 3]).skipWhile(n => n > 2).toArray(), [1, 2, 3]);
+    equal(
+      iter([1, 4, 6, 4, 1])
+        .skipWhile(n => n < 5)
+        .toArray(),
+      [6, 4, 1],
+    );
+    equal(
+      iter([1, 2, 3])
+        .skipWhile(n => n < 2)
+        .toArray(),
+      [2, 3],
+    );
+    equal(
+      iter([1, 2, 3])
+        .skipWhile(n => n > 2)
+        .toArray(),
+      [1, 2, 3],
+    );
   });
 
   it('pairwise', async function () {
@@ -196,7 +225,11 @@ describe('ExtendedIterator', function () {
   });
 
   it('triplewise', async function () {
-    equal(range(5).triplewise().toArray(), [[0, 1, 2], [1, 2, 3], [2, 3, 4]]);
+    equal(range(5).triplewise().toArray(), [
+      [0, 1, 2],
+      [1, 2, 3],
+      [2, 3, 4],
+    ]);
     equal(iter([]).triplewise().toArray(), []);
   });
 
@@ -228,6 +261,20 @@ describe('ExtendedIterator', function () {
       [1, 2, 3],
       [5, 0, 0],
     ]);
+  });
+
+  it('cycle', async function () {
+    equal(iter([1, 2, 3]).cycle(2).toArray(), [1, 2, 3, 1, 2, 3, 1, 2, 3]);
+    equal(iter([1, 2, 3]).cycle().take(7).toArray(), [1, 2, 3, 1, 2, 3, 1]);
+  });
+
+  it('continue', async function () {
+    let iterator = iter([1, 2, 3]).continue(1);
+    equal(iterator.toArray(), [1, 2, 3]);
+    equal(iterator.toArray(), [1, 2, 3]);
+    equal(iterator.toArray(), []);
+    iterator = iter([1, 2, 3]).continue();
+    range(10).forEach(() => equal(iterator.toArray(), [1, 2, 3]));
   });
 
   it('join', async function () {

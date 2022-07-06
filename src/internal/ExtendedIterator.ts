@@ -25,6 +25,8 @@ import TriplewiseIterator from './TripleWiseIterator';
 import ChunksIterator from './ChunksIterator';
 import CachedIterator from './CachedIterator';
 import TakeWhileIterator from './TakeWhileIterator';
+import CycleIterator from './CycleIterator';
+import ContinueIterator from './ContinueIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -271,6 +273,31 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
           },
         }),
     ) as Tuple<ExtendedIterator<T>, N>;
+  }
+
+  /**
+   * @lazy
+   * Makes this iterator cycle infinitely through it's values.
+   * @param times The number of times to cycle through the iterator (default: Infinity).
+   * @example
+   * equal(iter([1,2,3]).cycle().take(5).toArray(), [1,2,3,1,2])
+   */
+  public cycle(times = Infinity): ExtendedIterator<T> {
+    return new ExtendedIterator(new CycleIterator(this.iterator, times));
+  }
+
+  /**
+   * @lazy
+   * Continues this iterator a certain number of times after it's next value returns `{ done: true }`.
+   * @param times The number of times to continue the iterator.
+   * @example
+   * const it = iter([1,2,3]).continue(1);
+   * equal(it.toArray(), [1,2]);
+   * equal(it.toArray(), [1,2]);
+   * equal(it.toArray(), []);
+   */
+  public continue(times = Infinity): ExtendedIterator<T> {
+    return new ExtendedIterator(new ContinueIterator(this.iterator, times));
   }
 
   /** Reduces this iterator to a single value. */
