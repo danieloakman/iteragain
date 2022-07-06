@@ -7,6 +7,7 @@ import {
   FlattenDepth4,
   FlattenDepth5,
   Tuple,
+  Predicate,
 } from './types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
@@ -18,10 +19,12 @@ import PairwiseIterator from './PairwiseIterator';
 import SliceIterator from './SliceIterator';
 import ZipIterator from './ZipIterator';
 import ZipLongestIterator from './ZipLongestIterator';
+import SkipWhileIterator from './SkipWhileIterator';
 import TapIterator from './TapIterator';
 import TriplewiseIterator from './TripleWiseIterator';
 import ChunksIterator from './ChunksIterator';
 import CachedIterator from './CachedIterator';
+import TakeWhileIterator from './TakeWhileIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -159,11 +162,29 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /**
    * @lazy
+   * Take all elements from this iterator while the given `predicate` returns a truthy value.
+   * @param predicate A function to call for each value.
+   */
+  public takeWhile(predicate: Predicate<T>): ExtendedIterator<T> {
+    return new ExtendedIterator(new TakeWhileIterator(this.iterator, predicate));
+  }
+
+  /**
+   * @lazy
    * Skip the first `n` elements from this iterator. Equivalent to `iterator.slice(n)`.
    * @param n The number of elements to skip.
    */
   public skip(n: number): ExtendedIterator<T> {
     return this.slice(n);
+  }
+
+  /**
+   * @lazy
+   * Skip values in this iterator while the passed `predicate` returns a truthy value.
+   * @param predicate The function to call for each value.
+   */
+  public skipWhile(predicate: Predicate<T>): ExtendedIterator<T> {
+    return new ExtendedIterator(new SkipWhileIterator(this.iterator, predicate));
   }
 
   /**
@@ -177,7 +198,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    *    .tap(console.log) // logs 1, 4, 9 to the console
    *    .toArray() // returns [1, 4, 9]
    */
-  public tap(func: (value: T) => any): ExtendedIterator<T> {
+  public tap(func: Predicate<T>): ExtendedIterator<T> {
     this.iterator = new TapIterator(this.iterator, func);
     return this;
   }
@@ -220,7 +241,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * updated/informed.
    * This caches the original iterator's values as the new iterators are iterated through. So
    * depending on the size of the orignal iterator, there could be signaficant memory overhead in using `tee`.
-   * `tee`'s intended use is to iterator over the returned iterators in parallel, or at least somewhat in parallel. In
+   * `tee`'s intended use is to iterate over the returned iterators in parallel, or at least somewhat in parallel. In
    * general, if one returned iterator consumes most or all of it's values, then it is faster to just
    * use `toArray` and then iterate over that.
    * @param n The number of independent iterators to create.
@@ -236,7 +257,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
           next(): IteratorResult<T> {
             while (!cachedIterator.cache.has(indices[i]) && !cachedIterator.next().done);
             const value = cachedIterator.cache.get(indices[i]);
-            if(value === undefined) return { done: true, value: undefined };
+            if (value === undefined) return { done: true, value: undefined };
             // const low = Math.min(...indices) - 1;
             // if (low > currentLow) {
             //   currentLow = low;
@@ -263,19 +284,19 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** Iterate over this iterator using the `array.prototype.forEach` style of method. */
-  public forEach(callback: (value: T) => any) {
+  public forEach(callback: Predicate<T>) {
     for (const value of this) callback(value);
   }
 
   /** Return true if every element in this iterator matches the predicate. */
-  public every(predicate: (value: T) => boolean): boolean {
+  public every(predicate: Predicate<T>): boolean {
     let next: IteratorResult<T>;
     while (!(next = this.iterator.next()).done) if (!predicate(next.value)) return false;
     return true;
   }
 
   /** Return true if only one element in this iterator matches the predicate. */
-  public some(predicate: (value: T) => boolean): boolean {
+  public some(predicate: Predicate<T>): boolean {
     let next: IteratorResult<T>;
     while (!(next = this.iterator.next()).done) if (predicate(next.value)) return true;
     return false;
@@ -291,10 +312,15 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * values up to the found value, then stops. So if it's not found, then the iterator is exhausted.
    */
   public find<V extends T>(predicate: (value: T) => value is V): V | undefined;
-  public find(predicate: (value: T) => any): T | undefined;
-  public find(predicate: (value: T) => any): T | undefined {
+  public find(predicate: Predicate<T>): T | undefined;
+  public find(predicate: Predicate<T>): T | undefined {
     let next: IteratorResult<T>;
     while (!(next = this.iterator.next()).done) if (predicate(next.value)) return next.value;
+  }
+
+  /** Returns true if `value` strictly equals some value in this iterator. */
+  public includes(value: T): boolean {
+    return this.some(v => v === value);
   }
 
   /**
@@ -337,7 +363,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * Partitions this iterator into a tuple of `[falsey, truthy]` corresponding to what `predicate` returns for each
    * value.
    */
-  public partition(predicate: (value: T) => any): [T[], T[]] {
+  public partition(predicate: Predicate<T>): [T[], T[]] {
     const falsey: T[] = [];
     const truthy: T[] = [];
     this.tap(value => (predicate(value) ? truthy : falsey).push(value)).exhaust();
