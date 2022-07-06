@@ -168,9 +168,21 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).take(0).toArray(), []);
   });
 
+  it('takeWhile', async function () {
+    equal(iter([1, 4, 6, 4, 1]).takeWhile(n => n < 5).toArray(), [1, 4]);
+    equal(iter([1, 2, 3]).takeWhile(n => n < 2).toArray(), [1]);
+    equal(iter([1, 2, 3]).takeWhile(n => n > 2).toArray(), []);
+  });
+
   it('skip', async function () {
     equal(iter([1, 2, 3]).skip(2).toArray(), [3]);
     equal(iter([1, 2, 3]).skip(0).toArray(), [1, 2, 3]);
+  });
+
+  it('skipWhile', async function () {
+    equal(iter([1, 4, 6, 4, 1]).skipWhile(n => n < 5).toArray(), [6, 4, 1]);
+    equal(iter([1, 2, 3]).skipWhile(n => n < 2).toArray(), [2, 3]);
+    equal(iter([1, 2, 3]).skipWhile(n => n > 2).toArray(), [1, 2, 3]);
   });
 
   it('pairwise', async function () {
@@ -233,6 +245,11 @@ describe('ExtendedIterator', function () {
       iter([1, 2, 3]).find(n => n > 4),
       undefined,
     );
+  });
+
+  it('includes', async function () {
+    equal(iter([1, 2, 3]).includes(2), true);
+    equal(iter([1, 2, 3]).includes(4), false);
   });
 
   it('exhaust & tap', async function () {
