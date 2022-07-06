@@ -350,6 +350,12 @@ describe('ExtendedIterator', function () {
     );
   });
 
+  it('nth', async function () {
+    equal(iter([1, 2, 3, 4, 5]).nth(2), 3);
+    equal(iter([1, 2, 3, 4, 5]).nth(5), undefined);
+    equal(iter([1, 2, 3, 4, 5]).nth(-6), undefined);
+  });
+
   it('toSet', async function () {
     const nums = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const set = iter(nums)

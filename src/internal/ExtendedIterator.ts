@@ -403,6 +403,17 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return [falsey, truthy];
   }
 
+  /**
+   * Iterates and finds the element at `index`. Returns undefined if not found.
+   * @param index The index to find. Only supports positive indices.
+   */
+  public nth(index: number): T | undefined {
+    let i = 0;
+    let next: IteratorResult<T>;
+    while (!(next = this.iterator.next()).done && index !== i++);
+    return next.value;
+  }
+
   /** Iterates and collects all values into an Array. */
   public toArray(): T[] {
     const result: T[] = [];
