@@ -8,6 +8,7 @@ import {
   FlattenDepth5,
   Tuple,
   Predicate,
+  Iteratee,
 } from './types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
@@ -51,7 +52,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** @lazy Returns a new ExtendedIterator that maps each element in this iterator to a new value. */
-  public map<R>(iteratee: (value: T) => R): ExtendedIterator<R> {
+  public map<R>(iteratee: Iteratee<T, R>): ExtendedIterator<R> {
     return new ExtendedIterator(new MapIterator(this.iterator, iteratee));
   }
 
@@ -60,7 +61,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * Returns a new ExtendedIterator that filters each element in this iterator.
    * @param predicate A function that returns a truthy value to indicate to keep that value.
    */
-  public filter(predicate: (element: T) => any): ExtendedIterator<T> {
+  public filter(predicate: Predicate<T>): ExtendedIterator<T> {
     this.iterator = new FilterIterator(this.iterator, predicate);
     return this;
   }
@@ -308,6 +309,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     let accumulator = initialValue ?? this.iterator.next().value;
     for (const value of this) accumulator = reducer(accumulator, value);
     return accumulator;
+  }
+
+  /** Returns the number of times the `predicate` returns a truthy value. */
+  public quantify(predicate: Predicate<T>): number {
+    return this.reduce((acc, v) => acc + (predicate(v) ? 1 : 0), 0);
   }
 
   /** Iterate over this iterator using the `array.prototype.forEach` style of method. */

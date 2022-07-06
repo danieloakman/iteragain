@@ -73,6 +73,10 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).reduce(sum, ''), '123');
   });
 
+  it('quantify', async function () {
+    equal(iter([1, 2, 3]).quantify(n => n > 1), 2);
+  });
+
   it('concat', async function () {
     equal(iter([1, 2, 3]).concat([4, 5, 6]).toArray(), [1, 2, 3, 4, 5, 6]);
   });

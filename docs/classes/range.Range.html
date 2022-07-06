@@ -66,6 +66,7 @@
 <a href="range.Range.html#partition" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>partition</span></a>
 <a href="range.Range.html#peek" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>peek</span></a>
 <a href="range.Range.html#prepend" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>prepend</span></a>
+<a href="range.Range.html#quantify" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>quantify</span></a>
 <a href="range.Range.html#reduce" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>reduce</span></a>
 <a href="range.Range.html#skip" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>skip</span></a>
 <a href="range.Range.html#skipWhile" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>skip<wbr/>While</span></a>
@@ -140,42 +141,42 @@
 <div class="tsd-signature">iterator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Iterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
 <p>Inherited from <a href="internal_ExtendedIterator.ExtendedIterator.html">ExtendedIterator</a>.<a href="internal_ExtendedIterator.ExtendedIterator.html#iterator">iterator</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/44bb071/src/internal/ExtendedIterator.ts#L37">internal/ExtendedIterator.ts:37</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/7123c52/src/internal/ExtendedIterator.ts#L38">internal/ExtendedIterator.ts:38</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="length" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>length</span><a href="#length" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">length<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>The length of this range of numbers.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/44bb071/src/range.ts#L14">range.ts:14</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/7123c52/src/range.ts#L14">range.ts:14</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="start" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>start</span><a href="#start" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>The start of this range of numbers (inclusive).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/44bb071/src/range.ts#L8">range.ts:8</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/7123c52/src/range.ts#L8">range.ts:8</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="step" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>step</span><a href="#step" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">step<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>Each iteration is increased by this amount.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/44bb071/src/range.ts#L12">range.ts:12</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/7123c52/src/range.ts#L12">range.ts:12</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="stepSign" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>step<wbr/>Sign</span><a href="#stepSign" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">step<wbr/>Sign<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>The sign of <code>step</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/44bb071/src/range.ts#L16">range.ts:16</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/7123c52/src/range.ts#L16">range.ts:16</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="stop" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>stop</span><a href="#stop" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">stop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>The stop/end point of this range of numbers (exclusive).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/44bb071/src/range.ts#L10">range.ts:10</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/7123c52/src/range.ts#L10">range.ts:10</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="_iterator_" class="tsd-anchor"></a>
@@ -368,7 +369,7 @@
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="filter" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>filter</span><a href="#filter" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-<li class="tsd-signature" id="filter.filter-1">filter<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li></ul>
+<li class="tsd-signature" id="filter.filter-1">filter<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="../types/internal_types.Predicate.html" class="tsd-signature-type" data-tsd-kind="Type alias">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li></ul>
 <ul class="tsd-descriptions">
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography">
@@ -378,21 +379,9 @@
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>predicate: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span></h5>
+<h5>predicate: <a href="../types/internal_types.Predicate.html" class="tsd-signature-type" data-tsd-kind="Type alias">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h5>
 <div class="tsd-comment tsd-typography"><p>A function that returns a truthy value to indicate to keep that value.</p>
-</div>
-<ul class="tsd-parameters">
-<li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal">
-<li class="tsd-signature"><span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li></ul>
-<ul class="tsd-descriptions">
-<li class="tsd-description">
-<div class="tsd-parameters">
-<h4 class="tsd-parameters-title">Parameters</h4>
-<ul class="tsd-parameter-list">
-<li>
-<h5>element: <span class="tsd-signature-type">number</span></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4></li></ul></li></ul></li></ul></div>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="internal_ExtendedIterator.ExtendedIterator.html">ExtendedIterator</a>.<a href="internal_ExtendedIterator.ExtendedIterator.html#filter">filter</a></p></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="find" class="tsd-anchor"></a>
@@ -566,7 +555,7 @@ values up to the found value, then stops. So if it&#39;s not found, then the ite
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="map" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>map</span><a href="#map" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-<li class="tsd-signature" id="map.map-1">map<span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span>iteratee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">&gt;</span></li></ul>
+<li class="tsd-signature" id="map.map-1">map<span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span>iteratee<span class="tsd-signature-symbol">: </span><a href="../types/internal_types.Iteratee.html" class="tsd-signature-type" data-tsd-kind="Type alias">Iteratee</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">&gt;</span></li></ul>
 <ul class="tsd-descriptions">
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography">
@@ -581,19 +570,7 @@ values up to the found value, then stops. So if it&#39;s not found, then the ite
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>iteratee: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">)</span></h5>
-<ul class="tsd-parameters">
-<li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal">
-<li class="tsd-signature"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span></li></ul>
-<ul class="tsd-descriptions">
-<li class="tsd-description">
-<div class="tsd-parameters">
-<h4 class="tsd-parameters-title">Parameters</h4>
-<ul class="tsd-parameter-list">
-<li>
-<h5>value: <span class="tsd-signature-type">number</span></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span></h4></li></ul></li></ul></li></ul></div>
+<h5>iteratee: <a href="../types/internal_types.Iteratee.html" class="tsd-signature-type" data-tsd-kind="Type alias">Iteratee</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="internal_ExtendedIterator.ExtendedIterator.html">ExtendedIterator</a>.<a href="internal_ExtendedIterator.ExtendedIterator.html#map">map</a></p></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="next" class="tsd-anchor"></a>
@@ -723,6 +700,21 @@ value.</p>
 <h5><code class="tsd-tag ts-flagRest">Rest</code> <span class="tsd-signature-symbol">...</span>args: <a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="internal_ExtendedIterator.ExtendedIterator.html">ExtendedIterator</a>.<a href="internal_ExtendedIterator.ExtendedIterator.html#prepend">prepend</a></p></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="quantify" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>quantify</span><a href="#quantify" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature" id="quantify.quantify-1">quantify<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="../types/internal_types.Predicate.html" class="tsd-signature-type" data-tsd-kind="Type alias">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li></ul>
+<ul class="tsd-descriptions">
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Returns the number of times the <code>predicate</code> returns a truthy value.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>predicate: <a href="../types/internal_types.Predicate.html" class="tsd-signature-type" data-tsd-kind="Type alias">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="internal_ExtendedIterator.ExtendedIterator.html">ExtendedIterator</a>.<a href="internal_ExtendedIterator.ExtendedIterator.html#quantify">quantify</a></p></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="reduce" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>reduce</span><a href="#reduce" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -1290,6 +1282,7 @@ elements.</p>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="range.Range.html#partition" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>partition</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="range.Range.html#peek" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>peek</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="range.Range.html#prepend" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>prepend</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="range.Range.html#quantify" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>quantify</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="range.Range.html#reduce" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>reduce</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="range.Range.html#skip" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>skip</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="range.Range.html#skipWhile" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>skip<wbr/>While</a></li>
