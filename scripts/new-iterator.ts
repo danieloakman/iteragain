@@ -5,6 +5,7 @@
  */
 import { promises, existsSync } from 'fs';
 import { join } from 'path';
+import { execSync } from 'child_process';
 
 (async () => {
   process.argv[2];
@@ -34,4 +35,5 @@ export default ${fileName};
   `.trim() + '\n',
   );
   console.log(`Created "${filePath}"`);
+  execSync(`code ${filePath}`);
 })();
