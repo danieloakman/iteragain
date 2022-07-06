@@ -13,6 +13,9 @@ import {
   partition,
   chunks,
   windows,
+  repeat,
+  cycle,
+  count,
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
@@ -562,6 +565,19 @@ it('range', async function () {
     equal(nums.length, r.length, `[${nums}] should have the same length as ${r}`);
     assert(nums.every((n, i) => n === r.nth(i) && r.index(n) === i));
   }
+});
+
+it('repeat', async function () {
+  equal(repeat(1).yield(5), [1, 1, 1, 1, 1]);
+  equal(repeat(1, 5).toArray(), [1, 1, 1, 1, 1]);
+});
+
+it('cycle', async function () {
+  equal(cycle([1, 2, 3]).take(10).toArray(), [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]);
+});
+
+it('count', async function () {
+  equal(count().take(10).toArray(), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 });
 
 it('flatten', async function () {
