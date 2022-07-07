@@ -304,8 +304,14 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /**
    * @lazy
-   * @param size
-   * @returns
+   * Returns all successive `size` length permutations of this iterator. The permutations are emitted in lexicographic
+   * ordering according to this iterator. So if this iterator is sorted, the permutations will be in sorted order.
+   * Elements in the permutations are treated as unique based on their position in the iterator, not on their value. So
+   * if the input iterator is unique, then there will be no repeat values.
+   * @see https://docs.python.org/3/library/itertools.html#itertools.permutations for more info, as it does the same
+   * thing.
+   * @param size The size of each permutation, must be greater than 0 and less than or equal to the length of this
+   * iterator.
    */
   public permutations<Size extends number>(size?: Size): ExtendedIterator<Tuple<T, Size>> {
     return new ExtendedIterator(new PermutationsIterator(this.iterator, size));
