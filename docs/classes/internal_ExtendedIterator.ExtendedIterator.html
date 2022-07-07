@@ -69,6 +69,7 @@ some amount, depending on the method.</p>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#pairwise" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>pairwise</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#partition" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>partition</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#peek" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>peek</span></a>
+<a href="internal_ExtendedIterator.ExtendedIterator.html#permutations" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>permutations</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#prepend" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>prepend</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#quantify" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>quantify</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#reduce" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>reduce</span></a>
@@ -115,7 +116,7 @@ some amount, depending on the method.</p>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>iterator</span><a href="#iterator" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">iterator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Iterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/7cc0c4f/src/internal/ExtendedIterator.ts#L38">internal/ExtendedIterator.ts:38</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/2c7cf7c/src/internal/ExtendedIterator.ts#L39">internal/ExtendedIterator.ts:39</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="_iterator_" class="tsd-anchor"></a>
@@ -538,6 +539,26 @@ value.</p>
 <li>
 <h5>ahead: <span class="tsd-signature-type" data-tsd-kind="Type parameter">N</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="../types/internal_types.Tuple.html" class="tsd-signature-type" data-tsd-kind="Type alias">Tuple</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">N</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="permutations" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>permutations</span><a href="#permutations" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature" id="permutations.permutations-1">permutations<span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">Size</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span>size<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">Size</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><a href="../types/internal_types.Tuple.html" class="tsd-signature-type" data-tsd-kind="Type alias">Tuple</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">Size</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li></ul>
+<ul class="tsd-descriptions">
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography">
+<h3>Lazy</h3>
+<h3>Returns</h3></div>
+<div class="tsd-type-parameters">
+<h4 class="tsd-type-parameters-title">Type Parameters</h4>
+<ul class="tsd-type-parameters">
+<li>
+<h4>Size<span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">number</span></h4></li></ul></div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> size: <span class="tsd-signature-type" data-tsd-kind="Type parameter">Size</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><a href="../types/internal_types.Tuple.html" class="tsd-signature-type" data-tsd-kind="Type alias">Tuple</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">Size</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="prepend" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>prepend</span><a href="#prepend" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1083,6 +1104,7 @@ elements.</p>
 <li class="tsd-kind-module"><a href="../modules/internal_FlattenIterator.html">internal/<wbr/>Flatten<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_MapIterator.html">internal/<wbr/>Map<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_PairwiseIterator.html">internal/<wbr/>Pairwise<wbr/>Iterator</a></li>
+<li class="tsd-kind-module"><a href="../modules/internal_PermutationsIterator.html">internal/<wbr/>Permutations<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_RangeIterator.html">internal/<wbr/>Range<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_RepeatIterator.html">internal/<wbr/>Repeat<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_RoundrobinIterator.html">internal/<wbr/>Roundrobin<wbr/>Iterator</a></li>
@@ -1102,6 +1124,7 @@ elements.</p>
 <li class="tsd-kind-module"><a href="../modules/range.html">range</a></li>
 <li class="tsd-kind-module"><a href="../modules/repeat.html">repeat</a></li>
 <li class="tsd-kind-module"><a href="../modules/roundrobin.html">roundrobin</a></li>
+<li class="tsd-kind-module"><a href="../modules/toArray.html">to<wbr/>Array</a></li>
 <li class="tsd-kind-module"><a href="../modules/toIterator.html">to<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/windows.html">windows</a></li>
 <li class="tsd-kind-module"><a href="../modules/zip.html">zip</a></li>
@@ -1132,6 +1155,7 @@ elements.</p>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#pairwise" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>pairwise</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#partition" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>partition</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#peek" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>peek</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#permutations" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>permutations</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#prepend" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>prepend</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#quantify" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>quantify</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#reduce" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>reduce</a></li>

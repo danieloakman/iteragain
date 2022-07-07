@@ -11,6 +11,7 @@ import partition from './partition';
 import range from './range';
 import repeat from './repeat';
 import roundrobin from './roundrobin';
+import toArray from './toArray';
 import toIterator from './toIterator';
 import windows from './windows';
 import zip from './zip';
@@ -30,6 +31,7 @@ export {
   range,
   repeat,
   roundrobin,
+  toArray,
   toIterator,
   windows,
   zip,
@@ -49,6 +51,7 @@ export default {
   range,
   repeat,
   roundrobin,
+  toArray,
   toIterator,
   windows,
   zip,
