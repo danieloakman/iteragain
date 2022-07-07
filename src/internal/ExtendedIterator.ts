@@ -28,6 +28,7 @@ import CachedIterator from './CachedIterator';
 import TakeWhileIterator from './TakeWhileIterator';
 import CycleIterator from './CycleIterator';
 import ContinueIterator from './ContinueIterator';
+import PermutationsIterator from './PermutationsIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -299,6 +300,15 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    */
   public continue(times = Infinity): ExtendedIterator<T> {
     return new ExtendedIterator(new ContinueIterator(this.iterator, times));
+  }
+
+  /**
+   * @lazy
+   * @param size
+   * @returns
+   */
+  public permutations<Size extends number>(size?: Size): ExtendedIterator<Tuple<T, Size>> {
+    return new ExtendedIterator(new PermutationsIterator(this.iterator, size));
   }
 
   /** Reduces this iterator to a single value. */

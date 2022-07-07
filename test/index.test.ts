@@ -75,7 +75,10 @@ describe('ExtendedIterator', function () {
   });
 
   it('quantify', async function () {
-    equal(iter([1, 2, 3]).quantify(n => n > 1), 2);
+    equal(
+      iter([1, 2, 3]).quantify(n => n > 1),
+      2,
+    );
   });
 
   it('concat', async function () {
@@ -283,6 +286,32 @@ describe('ExtendedIterator', function () {
     equal(iterator.toArray(), []);
     iterator = iter([1, 2, 3]).continue();
     range(10).forEach(() => equal(iterator.toArray(), [1, 2, 3]));
+  });
+
+  it('permutations', async function () {
+    equal(iter([0, 1, 2]).permutations().toArray(), [
+      [0, 1, 2],
+      [0, 2, 1],
+      [1, 0, 2],
+      [1, 2, 0],
+      [2, 0, 1],
+      [2, 1, 0],
+    ]);
+    equal(iter('abcd').permutations(2).toArray(), [
+      ['a', 'b'],
+      ['a', 'c'],
+      ['a', 'd'],
+      ['b', 'a'],
+      ['b', 'c'],
+      ['b', 'd'],
+      ['c', 'a'],
+      ['c', 'b'],
+      ['c', 'd'],
+      ['d', 'a'],
+      ['d', 'b'],
+      ['d', 'c'],
+    ]);
+    equal(iter('abc').permutations(4).toArray(), []);
   });
 
   it('join', async function () {
