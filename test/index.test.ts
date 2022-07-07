@@ -16,6 +16,7 @@ import {
   repeat,
   cycle,
   count,
+  roundrobin,
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
@@ -603,4 +604,8 @@ it('enumerate', async function () {
     [0, { a: 1 }],
     [1, { b: 2 }],
   ]);
+});
+
+it('roundrobin', async function () {
+  equal(roundrobin('abc', 'd', 'ef').toArray(), ['a', 'd', 'e', 'b', 'f', 'c']);
 });

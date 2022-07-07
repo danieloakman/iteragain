@@ -10,6 +10,7 @@ import iter from './iter';
 import partition from './partition';
 import range from './range';
 import repeat from './repeat';
+import roundrobin from './roundrobin';
 import toIterator from './toIterator';
 import windows from './windows';
 import zip from './zip';
@@ -28,6 +29,7 @@ export {
   partition,
   range,
   repeat,
+  roundrobin,
   toIterator,
   windows,
   zip,
@@ -46,6 +48,7 @@ export default {
   partition,
   range,
   repeat,
+  roundrobin,
   toIterator,
   windows,
   zip,
