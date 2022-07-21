@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "tsc --build",
+    "build:es": "tsc -p tsconfig.es.json",
     "build:clean": "ts-node ./scripts/build-clean.ts",
     "build:watch": "npm run build:clean && tsc --watch",
     "lint": "eslint --ignore-path .eslintignore ./src --ext .ts",
