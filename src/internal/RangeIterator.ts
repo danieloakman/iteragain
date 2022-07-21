@@ -5,7 +5,7 @@ export class RangeIterator implements Iterator<number> {
     protected readonly start: number,
     protected readonly stop: number,
     protected readonly step: number,
-    protected readonly stepSign: number,
+    protected readonly stepSign: number = Math.sign(step),
   ) {}
 
   next(): IteratorResult<number> {

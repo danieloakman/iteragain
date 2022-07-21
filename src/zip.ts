@@ -1,6 +1,6 @@
 import ExtendedIterator from './internal/ExtendedIterator';
 import toIterator from './toIterator';
-import { IteratorOrIterable } from './types';
+import { IteratorOrIterable } from './internal/types';
 import ZipIterator from './internal/ZipIterator';
 
 /** Aggregates any number of iterables into one. Stops when one of the iterables is empty. */

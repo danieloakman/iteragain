@@ -10,6 +10,10 @@ import {
   toIterator,
   zip,
   zipLongest,
+  partition,
+  repeat,
+  cycle,
+  count,
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
@@ -19,12 +23,15 @@ describe('ExtendedIterator', function () {
   });
 
   it('[Symbol.iterator]', async function () {
-    let iterator = iter([1, 2, 3]);
-    equal([...iterator[Symbol.iterator]()], [1, 2, 3]);
-    equal([...iterator[Symbol.iterator]()], []);
-    iterator = iter([1, 2, 3]).map(x => x * x);
-    equal([...iterator[Symbol.iterator]()], [1, 4, 9]);
-    equal([...iterator[Symbol.iterator]()], []);
+    const iterator1 = iter([1, 2, 3]);
+    equal([...iterator1[Symbol.iterator]()], [1, 2, 3]);
+    equal([...iterator1[Symbol.iterator]()], []);
+    const iterator2 = iter([1, 2, 3]).map(x => x * x);
+    equal([...iterator2[Symbol.iterator]()], [1, 4, 9]);
+    equal([...iterator2[Symbol.iterator]()], []);
+    const iterator3 = iter([1, 2, 3]);
+    for (const x of iterator3) if (x === 2) break;
+    equal([...iterator3], [3]);
   });
 
   it('toString', async function () {
@@ -64,13 +71,19 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).reduce(sum, ''), '123');
   });
 
-  it('concat', async function () {
+  it('quantify', async function () {
     equal(
-      iter([1, 2, 3])
-        .concat(iter([4, 5, 6]))
-        .toArray(),
-      [1, 2, 3, 4, 5, 6],
+      iter([1, 2, 3]).quantify(n => n > 1),
+      2,
     );
+  });
+
+  it('concat', async function () {
+    equal(iter([1, 2, 3]).concat([4, 5, 6]).toArray(), [1, 2, 3, 4, 5, 6]);
+  });
+
+  it('prepend', async function () {
+    equal(iter([1, 2, 3]).prepend([0]).toArray(), [0, 1, 2, 3]);
   });
 
   it('slice', async function () {
@@ -162,9 +175,51 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).take(0).toArray(), []);
   });
 
+  it('takeWhile', async function () {
+    equal(
+      iter([1, 4, 6, 4, 1])
+        .takeWhile(n => n < 5)
+        .toArray(),
+      [1, 4],
+    );
+    equal(
+      iter([1, 2, 3])
+        .takeWhile(n => n < 2)
+        .toArray(),
+      [1],
+    );
+    equal(
+      iter([1, 2, 3])
+        .takeWhile(n => n > 2)
+        .toArray(),
+      [],
+    );
+  });
+
   it('skip', async function () {
     equal(iter([1, 2, 3]).skip(2).toArray(), [3]);
     equal(iter([1, 2, 3]).skip(0).toArray(), [1, 2, 3]);
+  });
+
+  it('skipWhile', async function () {
+    equal(
+      iter([1, 4, 6, 4, 1])
+        .skipWhile(n => n < 5)
+        .toArray(),
+      [6, 4, 1],
+    );
+    equal(
+      iter([1, 2, 3])
+        .skipWhile(n => n < 2)
+        .toArray(),
+      [2, 3],
+    );
+    equal(
+      iter([1, 2, 3])
+        .skipWhile(n => n > 2)
+        .toArray(),
+      [1, 2, 3],
+    );
   });
 
   it('pairwise', async function () {
@@ -175,6 +230,85 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2]).pairwise().toArray(), [[1, 2]]);
     equal(iter([1]).pairwise().toArray(), []);
     equal(iter([]).pairwise().toArray(), []);
+  });
+
+  it('triplewise', async function () {
+    equal(range(5).triplewise().toArray(), [
+      [0, 1, 2],
+      [1, 2, 3],
+      [2, 3, 4],
+    ]);
+    equal(iter([]).triplewise().toArray(), []);
+  });
+
+  it('chunks', async function () {
+    equal(iter([1, 2, 3, 4, 5]).chunks(2).toArray(), [[1, 2], [3, 4], [5]]);
+    equal(iter([1, 2, 3, 4, 5]).chunks(3, 0).toArray(), [
+      [1, 2, 3],
+      [4, 5, 0],
+    ]);
+    equal(iter([1, 2, 3, 4, 5]).chunks(6).toArray(), [[1, 2, 3, 4, 5]]);
+    equal(iter([1, 2, 3, 4, 5]).chunks(6, 0).toArray(), [[1, 2, 3, 4, 5, 0]]);
+    equal(iter([]).chunks(5).toArray(), []);
+  });
+
+  it('windows', async function () {
+    equal(iter([1, 2, 3]).windows(1, 1).toArray(), [[1], [2], [3]]);
+    equal(iter([1, 2, 3]).windows(2, 1).toArray(), [
+      [1, 2],
+      [2, 3],
+    ]);
+    equal(iter([1, 2, 3]).windows(3, 1).toArray(), [[1, 2, 3]]);
+    equal(iter([1, 2, 3]).windows(4, 1).toArray(), []);
+    equal(iter([]).windows(5, 1).toArray(), []);
+    equal(iter([1, 2, 3, 4, 5]).windows(2, 3).toArray(), [
+      [1, 2],
+      [4, 5],
+    ]);
+    equal(iter([1, 2, 3, 4, 5]).windows(3, 4, 0).toArray(), [
+      [1, 2, 3],
+      [5, 0, 0],
+    ]);
+  });
+
+  it('cycle', async function () {
+    equal(iter([1, 2, 3]).cycle(2).toArray(), [1, 2, 3, 1, 2, 3, 1, 2, 3]);
+    equal(iter([1, 2, 3]).cycle().take(7).toArray(), [1, 2, 3, 1, 2, 3, 1]);
+  });
+
+  it('continue', async function () {
+    let iterator = iter([1, 2, 3]).continue(1);
+    equal(iterator.toArray(), [1, 2, 3]);
+    equal(iterator.toArray(), [1, 2, 3]);
+    equal(iterator.toArray(), []);
+    iterator = iter([1, 2, 3]).continue();
+    range(10).forEach(() => equal(iterator.toArray(), [1, 2, 3]));
+  });
+
+  it('permutations', async function () {
+    equal(iter([0, 1, 2]).permutations().toArray(), [
+      [0, 1, 2],
+      [0, 2, 1],
+      [1, 0, 2],
+      [1, 2, 0],
+      [2, 0, 1],
+      [2, 1, 0],
+    ]);
+    equal(iter('abcd').permutations(2).toArray(), [
+      ['a', 'b'],
+      ['a', 'c'],
+      ['a', 'd'],
+      ['b', 'a'],
+      ['b', 'c'],
+      ['b', 'd'],
+      ['c', 'a'],
+      ['c', 'b'],
+      ['c', 'd'],
+      ['d', 'a'],
+      ['d', 'b'],
+      ['d', 'c'],
+    ]);
+    equal(iter('abc').permutations(4).toArray(), []);
   });
 
   it('join', async function () {
@@ -192,6 +326,11 @@ describe('ExtendedIterator', function () {
       iter([1, 2, 3]).find(n => n > 4),
       undefined,
     );
+  });
+
+  it('includes', async function () {
+    equal(iter([1, 2, 3]).includes(2), true);
+    equal(iter([1, 2, 3]).includes(4), false);
   });
 
   it('exhaust & tap', async function () {
@@ -226,6 +365,22 @@ describe('ExtendedIterator', function () {
     equal(iterator.yield(), undefined);
     equal(iterator.yield(3), []);
     equal(iter([1]).yield(2), [1]);
+  });
+
+  it('partition', async function () {
+    equal(
+      iter([1, 2, 3, 4, 5]).partition(n => n % 2 === 0),
+      [
+        [1, 3, 5],
+        [2, 4],
+      ],
+    );
+  });
+
+  it('nth', async function () {
+    equal(iter([1, 2, 3, 4, 5]).nth(2), 3);
+    equal(iter([1, 2, 3, 4, 5]).nth(5), undefined);
+    equal(iter([1, 2, 3, 4, 5]).nth(-6), undefined);
   });
 
   it('toSet', async function () {
@@ -279,6 +434,52 @@ it('toIterator', async function () {
   throws(() => toIterator(null));
 });
 
+it('tee', async function () {
+  // this.timeout(60000);
+  let [a, b] = iter([1, 2, 3]).tee(2);
+  a = a.map(x => x * x);
+  b = b.map(x => x + x);
+  equal(a.yield(), 1);
+  equal(b.yield(2), [2, 4]);
+  equal(a.toArray(), [4, 9]);
+  equal(b.toArray(), [6]);
+  // const suite = setupSuite('tee');
+  // const SIZE = 1e1;
+  // suite.add('no clear', () => {
+  //   const [a, b] = range(SIZE).tee(2);
+  //   a.map(x => x * x).toArray();
+  //   b.map(x => x + x).toArray();
+  // });
+  // suite.add('clear', () => {
+  //   const [a, b] = range(SIZE).tee(2, true);
+  //   a.map(x => x * x).toArray();
+  //   b.map(x => x + x).toArray();
+  // });
+  // suite.add('no clear, parallel', () => {
+  //   let [a, b] = range(SIZE).tee(2);
+  //   a = a.map(x => x * x);
+  //   b = b.map(x => x + x);
+  //   while (true) {
+  //     const values: any[] = [];
+  //     for (const i of [a, b])
+  //       values.push(i.yield());
+  //     if (values.every(v => v === undefined)) break;
+  //   }
+  // });
+  // suite.add('clear, parallel', () => {
+  //   let [a, b] = range(SIZE).tee(2, true);
+  //   a = a.map(x => x * x);
+  //   b = b.map(x => x + x);
+  //   while (true) {
+  //     const values: any[] = [];
+  //     for (const i of [a, b])
+  //       values.push(i.yield());
+  //     if (values.every(v => v === undefined)) break;
+  //   }
+  // });
+  // suite.run();
+});
+
 it('zip', async function () {
   equal(zip([1, 2, 3], ['4', '5', '6']).toArray(), [
     [1, '4'],
@@ -323,6 +524,16 @@ it('iter', async function () {
   );
   // Probably won't end up handling this, as it would slow down `iter` a bit.
   throws(() => iter({ next() {} }).toArray());
+});
+
+it('partition', async function () {
+  equal(
+    partition([1, 2, 3, 4, 5], n => n % 2 === 0),
+    [
+      [1, 3, 5],
+      [2, 4],
+    ],
+  );
 });
 
 it('concat', async function () {
@@ -380,6 +591,19 @@ it('range', async function () {
     equal(nums.length, r.length, `[${nums}] should have the same length as ${r}`);
     assert(nums.every((n, i) => n === r.nth(i) && r.index(n) === i));
   }
+});
+
+it('repeat', async function () {
+  equal(repeat(1).yield(5), [1, 1, 1, 1, 1]);
+  equal(repeat(1, 5).toArray(), [1, 1, 1, 1, 1]);
+});
+
+it('cycle', async function () {
+  equal(cycle([1, 2, 3]).take(10).toArray(), [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]);
+});
+
+it('count', async function () {
+  equal(count().take(10).toArray(), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 });
 
 it('flatten', async function () {

@@ -1,4 +1,4 @@
-import { IteratorOrIterable } from './types';
+import { IteratorOrIterable } from './internal/types';
 import isIterable from './isIterable';
 import isIterator from './isIterator';
 

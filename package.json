@@ -1,14 +1,15 @@
 {
   "name": "iteragain",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
   "main": "index.js",
   "types": "index.d.ts",
   "engines": {
-    "node": "12.x"
+    "node": "14.x"
   },
   "scripts": {
     "build": "tsc --build",
+    "build:es": "tsc -p tsconfig.es.json",
     "build:clean": "ts-node ./scripts/build-clean.ts",
     "build:watch": "npm run build:clean && tsc --watch",
     "lint": "eslint --ignore-path .eslintignore ./src --ext .ts",
@@ -16,14 +17,16 @@
     "test": "nyc --skip-full ts-mocha test/**.test.ts --reporter list",
     "bm": "ts-node benchmark/index.bm.ts",
     "bm:prof": "node -r ts-node/register --prof benchmark/index.bm.ts",
-    "typedoc": "typedoc --includeVersion --entryPointStrategy expand src/ && git add docs",
+    "new:iterator": "ts-node ./scripts/new-iterator.ts",
+    "typedoc": "typedoc --plugin typedoc-plugin-remove-references --includeVersion --entryPointStrategy expand src/ && git add docs",
     "v:patch": "npm version patch -f -m \"Upgrade package version to v%s\"",
     "v:minor": "npm version minor -f -m \"Upgrade package version to v%s\"",
     "v:major": "npm version major -f -m \"Upgrade package version to v%s\"",
     "prepare": "npm run build && husky install",
     "prepublishOnly": "npm run test && npm run lint",
     "preversion": "npm run lint",
-    "postversion": "&& npm run typedoc && git push --follow-tags"
+    "postversion": "git push --follow-tags",
+    "publish:es": "ts-node ./scripts/publish-es.ts"
   },
   "dependencies": {},
   "devDependencies": {
@@ -48,6 +51,7 @@
     "ts-mocha": "^9.0.2",
     "ts-node": "^10.8.1",
     "typedoc": "^0.23.1",
+    "typedoc-plugin-remove-references": "0.0.6",
     "typedoc-plugin-rename-defaults": "^0.6.1",
     "typescript": "^4.6.3"
   },
@@ -72,6 +76,14 @@
     "iterutil",
     "iteragain",
     "es6",
-    "es2015"
+    "es2015",
+    "modules",
+    "map",
+    "filter",
+    "reduce",
+    "lazy",
+    "array",
+    "utility",
+    "util"
   ]
 }

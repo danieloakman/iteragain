@@ -7,7 +7,7 @@ export class ConcatIterator implements Iterator<any> {
     const next = this.iterators[0].next();
     if (!next.done) return next;
     this.iterators.shift();
-    return this.iterators.length ? this.next() : { done: true, value: undefined };
+    return this.next();
   }
 }
 

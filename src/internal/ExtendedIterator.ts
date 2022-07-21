@@ -7,17 +7,28 @@ import {
   FlattenDepth4,
   FlattenDepth5,
   Tuple,
-} from '../types';
+  Predicate,
+  Iteratee,
+} from './types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
 import FilterIterator from './FilterIterator';
 import FlattenIterator from './FlattenIterator';
 import MapIterator from './MapIterator';
+import WindowsIterator from './WindowsIterator';
 import PairwiseIterator from './PairwiseIterator';
 import SliceIterator from './SliceIterator';
 import ZipIterator from './ZipIterator';
 import ZipLongestIterator from './ZipLongestIterator';
+import SkipWhileIterator from './SkipWhileIterator';
 import TapIterator from './TapIterator';
+import TriplewiseIterator from './TripleWiseIterator';
+import ChunksIterator from './ChunksIterator';
+import CachedIterator from './CachedIterator';
+import TakeWhileIterator from './TakeWhileIterator';
+import CycleIterator from './CycleIterator';
+import ContinueIterator from './ContinueIterator';
+import PermutationsIterator from './PermutationsIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -42,7 +53,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** @lazy Returns a new ExtendedIterator that maps each element in this iterator to a new value. */
-  public map<R>(iteratee: (value: T) => R): ExtendedIterator<R> {
+  public map<R>(iteratee: Iteratee<T, R>): ExtendedIterator<R> {
     return new ExtendedIterator(new MapIterator(this.iterator, iteratee));
   }
 
@@ -51,17 +62,25 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * Returns a new ExtendedIterator that filters each element in this iterator.
    * @param predicate A function that returns a truthy value to indicate to keep that value.
    */
-  public filter(predicate: (element: T) => any): ExtendedIterator<T> {
+  public filter(predicate: Predicate<T>): ExtendedIterator<T> {
     this.iterator = new FilterIterator(this.iterator, predicate);
     return this;
   }
 
-  /** @lazy Concatenates this iterator with the given iterators, in order of: thisIterator, ...others. */
+  /** @lazy Concatenates this iterator with the given iterators, in order of: `[this.iterator, ...others]`. */
   public concat<A>(other: IteratorOrIterable<A>): ExtendedIterator<T | A>;
   public concat<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<T | A | B>;
   public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any>;
   public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any> {
     return new ExtendedIterator(new ConcatIterator([this.iterator, ...args.map(toIterator)]));
+  }
+
+  /** @lazy Prepends this iterator with the given iterators, in order of: `[...args, this.iterator]`. */
+  public prepend<A>(other: IteratorOrIterable<A>): ExtendedIterator<A | T>;
+  public prepend<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<A | B | T>;
+  public prepend(...args: IteratorOrIterable<any>[]): ExtendedIterator<any>;
+  public prepend(...args: IteratorOrIterable<any>[]): ExtendedIterator<any> {
+    return new ExtendedIterator(new ConcatIterator([...args.map(toIterator), this.iterator]));
   }
 
   /**
@@ -129,6 +148,15 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /**
    * @lazy
+   * Returns a new iterator of triplets (tuples) of the values in this one. The number of triplets will always be two
+   * fewer than the number of values in this iterator. Will be empty if this iterator has fewer than three values.
+   */
+  public triplewise(): ExtendedIterator<[T, T, T]> {
+    return new ExtendedIterator(new TriplewiseIterator(this.iterator));
+  }
+
+  /**
+   * @lazy
    * Take the first `n` elements from this iterator. Equivalent to `iterator.slice(0, n)`.
    * @param n The number of elements to take.
    */
@@ -138,11 +166,29 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /**
    * @lazy
-   * Take the first `n` elements from this iterator. Equivalent to `iterator.slice(n)`.
+   * Take all elements from this iterator while the given `predicate` returns a truthy value.
+   * @param predicate A function to call for each value.
+   */
+  public takeWhile(predicate: Predicate<T>): ExtendedIterator<T> {
+    return new ExtendedIterator(new TakeWhileIterator(this.iterator, predicate));
+  }
+
+  /**
+   * @lazy
+   * Skip the first `n` elements from this iterator. Equivalent to `iterator.slice(n)`.
    * @param n The number of elements to skip.
    */
   public skip(n: number): ExtendedIterator<T> {
     return this.slice(n);
+  }
+
+  /**
+   * @lazy
+   * Skip values in this iterator while the passed `predicate` returns a truthy value.
+   * @param predicate The function to call for each value.
+   */
+  public skipWhile(predicate: Predicate<T>): ExtendedIterator<T> {
+    return new ExtendedIterator(new SkipWhileIterator(this.iterator, predicate));
   }
 
   /**
@@ -156,9 +202,119 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    *    .tap(console.log) // logs 1, 4, 9 to the console
    *    .toArray() // returns [1, 4, 9]
    */
-  public tap(func: (value: T) => any): ExtendedIterator<T> {
+  public tap(func: Predicate<T>): ExtendedIterator<T> {
     this.iterator = new TapIterator(this.iterator, func);
     return this;
+  }
+
+  /**
+   * @lazy
+   * Yields non-overlapping chunks (tuples) of `length` from this iterator.
+   * @param length The length of each chunk, must be greater than 0.
+   * @param fill Optional, the value to fill the last chunk with if it's not the same length as the rest of the iterator.
+   * @example
+   * iter([1,2,3,4,5,6,7,8,9]).chunk(3).toArray() // [[1,2,3], [4,5,6], [7,8,9]]
+   * iter([1,2,3,4,5,6,7,8,9]).chunk(2, 0).toArray() // [[1,2], [3,4], [5,6], [7,8], [9, 0]]
+   */
+  public chunks<N extends number>(length: N, fill?: T): ExtendedIterator<Tuple<T, N>[]> {
+    return new ExtendedIterator(new ChunksIterator(this.iterator, length, fill)) as ExtendedIterator<Tuple<T, N>[]>;
+  }
+
+  /**
+   * @lazy
+   * Yields sliding windows (tuples) of `length` from this iterator. Each window is separated by `offset` number of
+   * elements.
+   * @param length The length of each window, must be greater than 0.
+   * @param offset The offset of each window from each other. Must be greater than 0.
+   * @param fill Optional, the value to fill the last window with if it's not the same length as the rest of the iterator.
+   * @example
+   * iter([1,2,3,4,5]).windows(2, 1).toArray() // [[1,2], [2,3], [3,4], [4,5]]
+   * iter([1,2,3,4,5]).windows(2, 3).toArray() // [[1,2], [4,5]]
+   * iter([1,2,3,4,5]).windows(3, 3, 0).toArray() // [[1,2,3], [4,5,0]]
+   */
+  public windows<Length extends number>(length: Length, offset: number, fill?: T): ExtendedIterator<Tuple<T, Length>> {
+    return new ExtendedIterator(new WindowsIterator(this.iterator, length, offset, fill)) as ExtendedIterator<
+      Tuple<T, Length>
+    >;
+  }
+
+  /**
+   * @lazy
+   * Returns `n` independent iterators, each of which is a copy of this iterator at the time of calling `tee`. Once
+   * `tee` has made a split, do not modify or call upon the original iterator, as the new iterators will not be
+   * updated/informed.
+   * This caches the original iterator's values as the new iterators are iterated through. So
+   * depending on the size of the orignal iterator, there could be signaficant memory overhead in using `tee`.
+   * `tee`'s intended use is to iterate over the returned iterators in parallel, or at least somewhat in parallel. In
+   * general, if one returned iterator consumes most or all of it's values, then it is faster to just
+   * use `toArray` and then iterate over that.
+   * @param n The number of independent iterators to create.
+   */
+  public tee<N extends number>(n: N): Tuple<ExtendedIterator<T>, N> {
+    const cachedIterator = new CachedIterator(this.iterator);
+    const indices = new Array(n).fill(0);
+    // let currentLow = 0;
+    return Array.from(
+      { length: n },
+      (_, i) =>
+        new ExtendedIterator({
+          next(): IteratorResult<T> {
+            while (!cachedIterator.cache.has(indices[i]) && !cachedIterator.next().done);
+            const value = cachedIterator.cache.get(indices[i]);
+            if (value === undefined) return { done: true, value: undefined };
+            // const low = Math.min(...indices) - 1;
+            // if (low > currentLow) {
+            //   currentLow = low;
+            //   for (let i = currentLow; i > -1; i--) {
+            //     if (!cachedIterator.cache.has(i)) break;
+            //     cachedIterator.cache.delete(i);
+            //   }
+            // }
+            indices[i]++;
+            return { done: false, value };
+          },
+        }),
+    ) as Tuple<ExtendedIterator<T>, N>;
+  }
+
+  /**
+   * @lazy
+   * Makes this iterator cycle infinitely through it's values.
+   * @param times The number of times to cycle through the iterator (default: Infinity).
+   * @example
+   * equal(iter([1,2,3]).cycle().take(5).toArray(), [1,2,3,1,2])
+   */
+  public cycle(times = Infinity): ExtendedIterator<T> {
+    return new ExtendedIterator(new CycleIterator(this.iterator, times));
+  }
+
+  /**
+   * @lazy
+   * Continues this iterator a certain number of times after it's next value returns `{ done: true }`.
+   * @param times The number of times to continue the iterator.
+   * @example
+   * const it = iter([1,2,3]).continue(1);
+   * equal(it.toArray(), [1,2]);
+   * equal(it.toArray(), [1,2]);
+   * equal(it.toArray(), []);
+   */
+  public continue(times = Infinity): ExtendedIterator<T> {
+    return new ExtendedIterator(new ContinueIterator(this.iterator, times));
+  }
+
+  /**
+   * @lazy
+   * Returns all successive `size` length permutations of this iterator. The permutations are emitted in lexicographic
+   * ordering according to this iterator. So if this iterator is sorted, the permutations will be in sorted order.
+   * Elements in the permutations are treated as unique based on their position in the iterator, not on their value. So
+   * if the input iterator is unique, then there will be no repeat values.
+   * @see https://docs.python.org/3/library/itertools.html#itertools.permutations for more info, as it does the same
+   * thing.
+   * @param size The size of each permutation, must be greater than 0 and less than or equal to the length of this
+   * iterator.
+   */
+  public permutations<Size extends number>(size?: Size): ExtendedIterator<Tuple<T, Size>> {
+    return new ExtendedIterator(new PermutationsIterator(this.iterator, size));
   }
 
   /** Reduces this iterator to a single value. */
@@ -171,20 +327,25 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return accumulator;
   }
 
+  /** Returns the number of times the `predicate` returns a truthy value. */
+  public quantify(predicate: Predicate<T>): number {
+    return this.reduce((acc, v) => acc + (predicate(v) ? 1 : 0), 0);
+  }
+
   /** Iterate over this iterator using the `array.prototype.forEach` style of method. */
-  public forEach(callback: (value: T) => any) {
+  public forEach(callback: Predicate<T>) {
     for (const value of this) callback(value);
   }
 
   /** Return true if every element in this iterator matches the predicate. */
-  public every(predicate: (value: T) => boolean): boolean {
+  public every(predicate: Predicate<T>): boolean {
     let next: IteratorResult<T>;
     while (!(next = this.iterator.next()).done) if (!predicate(next.value)) return false;
     return true;
   }
 
   /** Return true if only one element in this iterator matches the predicate. */
-  public some(predicate: (value: T) => boolean): boolean {
+  public some(predicate: Predicate<T>): boolean {
     let next: IteratorResult<T>;
     while (!(next = this.iterator.next()).done) if (predicate(next.value)) return true;
     return false;
@@ -200,10 +361,15 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * values up to the found value, then stops. So if it's not found, then the iterator is exhausted.
    */
   public find<V extends T>(predicate: (value: T) => value is V): V | undefined;
-  public find(predicate: (value: T) => any): T | undefined;
-  public find(predicate: (value: T) => any): T | undefined {
+  public find(predicate: Predicate<T>): T | undefined;
+  public find(predicate: Predicate<T>): T | undefined {
     let next: IteratorResult<T>;
     while (!(next = this.iterator.next()).done) if (predicate(next.value)) return next.value;
+  }
+
+  /** Returns true if `value` strictly equals some value in this iterator. */
+  public includes(value: T): boolean {
+    return this.some(v => v === value);
   }
 
   /**
@@ -240,6 +406,28 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public exhaust(n?: number): void {
     if (typeof n !== 'number') while (!this.iterator.next().done);
     else while (n-- > 0 && !this.iterator.next().done);
+  }
+
+  /**
+   * Partitions this iterator into a tuple of `[falsey, truthy]` corresponding to what `predicate` returns for each
+   * value.
+   */
+  public partition(predicate: Predicate<T>): [T[], T[]] {
+    const falsey: T[] = [];
+    const truthy: T[] = [];
+    this.tap(value => (predicate(value) ? truthy : falsey).push(value)).exhaust();
+    return [falsey, truthy];
+  }
+
+  /**
+   * Iterates and finds the element at `index`. Returns undefined if not found.
+   * @param index The index to find. Only supports positive indices.
+   */
+  public nth(index: number): T | undefined {
+    let i = 0;
+    let next: IteratorResult<T>;
+    while (!(next = this.iterator.next()).done && index !== i++);
+    return next.value;
   }
 
   /** Iterates and collects all values into an Array. */

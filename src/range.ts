@@ -2,7 +2,8 @@ import ExtendedIterator from './internal/ExtendedIterator';
 import EmptyIterator from './internal/EmptyIterator';
 import RangeIterator from './internal/RangeIterator';
 
-class Range extends ExtendedIterator<number> {
+/** A class for representing a range of numbers and also iterating through them. */
+export class Range extends ExtendedIterator<number> {
   /** The start of this range of numbers (inclusive). */
   public readonly start: number;
   /** The stop/end point of this range of numbers (exclusive). */
@@ -14,6 +15,10 @@ class Range extends ExtendedIterator<number> {
   /** The sign of `step`. */
   private readonly stepSign: number;
 
+  constructor(stop: number);
+  constructor(start: number, stop: number);
+  constructor(start: number, stop: number, step: number);
+  constructor(...params: any[]);
   constructor(...params: any[]) {
     let start = 0,
       stop = 0,
@@ -76,4 +81,5 @@ export function range(start: number, stop: number, step: number): Range;
 export function range(...params: any[]): Range {
   return new Range(...params);
 }
+
 export default range;
