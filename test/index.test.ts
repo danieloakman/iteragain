@@ -11,12 +11,9 @@ import {
   zip,
   zipLongest,
   partition,
-  chunks,
-  windows,
   repeat,
   cycle,
   count,
-  roundrobin,
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
@@ -437,13 +434,6 @@ it('toIterator', async function () {
   throws(() => toIterator(null));
 });
 
-it('windows', async function () {
-  equal(windows([1, 2, 3], 2, 1).toArray(), [
-    [1, 2],
-    [2, 3],
-  ]);
-});
-
 it('tee', async function () {
   // this.timeout(60000);
   let [a, b] = iter([1, 2, 3]).tee(2);
@@ -546,10 +536,6 @@ it('partition', async function () {
   );
 });
 
-it('chunks', async function () {
-  equal(chunks([1, 2, 3, 4, 5], 2).toArray(), [[1, 2], [3, 4], [5]]);
-});
-
 it('concat', async function () {
   equal(concat([1, 2, 3], [], [4, 5, 6]).toArray(), [1, 2, 3, 4, 5, 6]);
 });
@@ -633,8 +619,4 @@ it('enumerate', async function () {
     [0, { a: 1 }],
     [1, { b: 2 }],
   ]);
-});
-
-it('roundrobin', async function () {
-  equal(roundrobin('abc', 'd', 'ef').toArray(), ['a', 'd', 'e', 'b', 'f', 'c']);
 });

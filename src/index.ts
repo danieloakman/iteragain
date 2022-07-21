@@ -1,4 +1,3 @@
-import chunks from './chunks';
 import concat from './concat';
 import count from './count';
 import cycle from './cycle';
@@ -10,15 +9,12 @@ import iter from './iter';
 import partition from './partition';
 import range from './range';
 import repeat from './repeat';
-import roundrobin from './roundrobin';
 import toArray from './toArray';
 import toIterator from './toIterator';
-import windows from './windows';
 import zip from './zip';
 import zipLongest from './zipLongest';
 
 export {
-  chunks,
   concat,
   count,
   cycle,
@@ -30,15 +26,12 @@ export {
   partition,
   range,
   repeat,
-  roundrobin,
   toArray,
   toIterator,
-  windows,
   zip,
   zipLongest,
 };
 export default {
-  chunks,
   concat,
   count,
   cycle,
@@ -50,10 +43,8 @@ export default {
   partition,
   range,
   repeat,
-  roundrobin,
   toArray,
   toIterator,
-  windows,
   zip,
   zipLongest,
 };
