@@ -25,7 +25,8 @@
     "prepare": "npm run build && husky install",
     "prepublishOnly": "npm run test && npm run lint",
     "preversion": "npm run lint",
-    "postversion": "git push --follow-tags"
+    "postversion": "git push --follow-tags",
+    "publish:es": "ts-node ./scripts/publish-es.ts"
   },
   "dependencies": {},
   "devDependencies": {
@@ -76,11 +77,13 @@
     "iteragain",
     "es6",
     "es2015",
+    "modules",
     "map",
     "filter",
     "reduce",
     "lazy",
     "array",
-    "utility"
+    "utility",
+    "util"
   ]
 }

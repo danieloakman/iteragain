@@ -12,5 +12,7 @@ test
 .npmignore
 .prettierrc
 tsconfig.json
+tsconfig.es.json
 .nyc_output
 .nojekyll
+README.es.md
