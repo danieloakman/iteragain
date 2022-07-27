@@ -14,6 +14,8 @@ There is also other standalone utility functions like [range](https://danieloakm
 
 __You can see the full list of modules and the documentation on everything [here](https://danieloakman.github.io/iteragain/modules.html).__
 
+See [iteragain-es](https://www.npmjs.com/package/iteragain-es) for the ES modules exported version of this package.
+
 ## Code examples
 
 ```js
