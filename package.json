@@ -1,6 +1,6 @@
 {
   "name": "iteragain",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -28,7 +28,8 @@
     "prepublishOnly": "npm run test && npm run lint",
     "preversion": "npm run lint",
     "postversion": "git push --follow-tags",
-    "publish:es": "ts-node ./scripts/publish-es.ts"
+    "publish:es": "ts-node ./scripts/publish-es.ts",
+    "publish:all": "npm publish && npm run publish:es"
   },
   "dependencies": {},
   "devDependencies": {
