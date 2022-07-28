@@ -29,6 +29,7 @@ import TakeWhileIterator from './TakeWhileIterator';
 import CycleIterator from './CycleIterator';
 import ContinueIterator from './ContinueIterator';
 import PermutationsIterator from './PermutationsIterator';
+import FilterMapIterator from './FilterMapIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -65,6 +66,15 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public filter(predicate: Predicate<T>): ExtendedIterator<T> {
     this.iterator = new FilterIterator(this.iterator, predicate);
     return this;
+  }
+
+  /**
+   * @lazy
+   * @param iteratee A function that maps each value in this iterator to a new value and also filters out any that
+   * return a nullish value.
+   */
+  public filterMap<R>(iteratee: (value: T) => R): ExtendedIterator<NonNullable<R>> {
+    return new ExtendedIterator(new FilterMapIterator(this.iterator, iteratee));
   }
 
   /** @lazy Concatenates this iterator with the given iterators, in order of: `[this.iterator, ...others]`. */

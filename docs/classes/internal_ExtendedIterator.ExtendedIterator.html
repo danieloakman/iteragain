@@ -58,6 +58,7 @@ some amount, depending on the method.</p>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#every" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>every</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#exhaust" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>exhaust</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#filter" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>filter</span></a>
+<a href="internal_ExtendedIterator.ExtendedIterator.html#filterMap" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>filter<wbr/>Map</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#find" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>find</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#flatten" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>flatten</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#forEach" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>for<wbr/>Each</span></a>
@@ -116,7 +117,7 @@ some amount, depending on the method.</p>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>iterator</span><a href="#iterator" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">iterator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Iterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/58af1ba/src/internal/ExtendedIterator.ts#L39">internal/ExtendedIterator.ts:39</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/8e6c9f5/src/internal/ExtendedIterator.ts#L40">internal/ExtendedIterator.ts:40</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="_iterator_" class="tsd-anchor"></a>
@@ -300,6 +301,40 @@ some amount, depending on the method.</p>
 <div class="tsd-comment tsd-typography"><p>A function that returns a truthy value to indicate to keep that value.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="filterMap" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>filter<wbr/>Map</span><a href="#filterMap" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature" id="filterMap.filterMap-1">filter<wbr/>Map<span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span>iteratee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NonNullable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li></ul>
+<ul class="tsd-descriptions">
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography">
+<h3>Lazy</h3></div>
+<div class="tsd-type-parameters">
+<h4 class="tsd-type-parameters-title">Type Parameters</h4>
+<ul class="tsd-type-parameters">
+<li>
+<h4>R</h4></li></ul></div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>iteratee: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">)</span></h5>
+<div class="tsd-comment tsd-typography"><p>A function that maps each value in this iterator to a new value and also filters out any that
+return a nullish value.</p>
+</div>
+<ul class="tsd-parameters">
+<li class="tsd-parameter-signature">
+<ul class="tsd-signatures tsd-kind-type-literal">
+<li class="tsd-signature"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span></li></ul>
+<ul class="tsd-descriptions">
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>value: <span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span></h4></li></ul></li></ul></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NonNullable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">R</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="find" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>find</span><a href="#find" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1109,6 +1144,7 @@ elements.</p>
 <li class="tsd-kind-module"><a href="../modules/internal_EmptyIterator.html">internal/<wbr/>Empty<wbr/>Iterator</a></li>
 <li class="current tsd-kind-module"><a href="../modules/internal_ExtendedIterator.html">internal/<wbr/>Extended<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_FilterIterator.html">internal/<wbr/>Filter<wbr/>Iterator</a></li>
+<li class="tsd-kind-module"><a href="../modules/internal_FilterMapIterator.html">internal/<wbr/>Filter<wbr/>Map<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_FlattenIterator.html">internal/<wbr/>Flatten<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_MapIterator.html">internal/<wbr/>Map<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_PairwiseIterator.html">internal/<wbr/>Pairwise<wbr/>Iterator</a></li>
@@ -1150,6 +1186,7 @@ elements.</p>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#every" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>every</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#exhaust" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>exhaust</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#filter" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>filter</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#filterMap" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>filter<wbr/>Map</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#find" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>find</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#flatten" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>flatten</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#forEach" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>for<wbr/>Each</a></li>

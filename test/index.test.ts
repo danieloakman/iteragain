@@ -64,6 +64,15 @@ describe('ExtendedIterator', function () {
     equal(iter([]).filter(Boolean).toArray(), []);
   });
 
+  it('filterMap', async function () {
+    equal(
+      iter([1, 2, 3])
+        .filterMap(n => (n % 2 === 0 ? (n * n).toString() : undefined))
+        .toArray(),
+      ['4'],
+    );
+  });
+
   it('reduce', async function () {
     const sum = (a: any, b: any) => a + b;
     equal(iter([1, 2, 3]).reduce(sum, 0), 6);
