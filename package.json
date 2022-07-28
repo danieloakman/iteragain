@@ -12,6 +12,8 @@
     "build:es": "tsc -p tsconfig.es.json",
     "build:clean": "ts-node ./scripts/build-clean.ts",
     "build:watch": "npm run build:clean && tsc --watch",
+    "genasync": "ts-node ./scripts/gen-async.ts",
+    "genasync:watch": "ts-node ./scripts/gen-async.ts -w",
     "lint": "eslint --ignore-path .eslintignore ./src --ext .ts",
     "format": "prettier-eslint --ignore .gitignore --write \"./src/**/*\"",
     "test": "nyc --skip-full ts-mocha test/**.test.ts --reporter list",

@@ -4,3 +4,4 @@ dist
 **.js
 .vscode
 .nyc_output
+src/**/*{async}*.ts
