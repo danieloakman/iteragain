@@ -533,6 +533,7 @@ it('iter', async function () {
   );
   // Probably won't end up handling this, as it would slow down `iter` a bit.
   throws(() => iter({ next() {} }).toArray());
+  // console.log(iter({ a: 1, b: { c: 2 } }).flatten().toArray(), [1, 2, 3]);
 });
 
 it('partition', async function () {
@@ -621,6 +622,7 @@ it('flatten', async function () {
   equal(flatten([[1], [[2], 3]], 2).toArray(), [1, 2, 3]);
   equal(flatten([[1], [[2], 3]], 1).toArray(), [1, [2], 3]);
   equal(flatten([[1], [[2], 3]], 0).toArray(), [[1], [[2], 3]]);
+  equal(flatten('abc').toArray(), ['a', 'b', 'c']);
 });
 
 it('enumerate', async function () {
