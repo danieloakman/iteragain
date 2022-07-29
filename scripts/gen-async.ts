@@ -23,17 +23,24 @@ function asyncifyFile(file: AsyncableFile) {
   const regex = /\/\*[a-z]:[^*/]+\*\/ */g;
   let match: RegExpExecArray | null;
   while ((match = regex.exec(newContents))) {
-    const [command, arg] = match[0].split(':').map(str => str.replace(COMMENT, ''));
+    const [command, argStr] = match[0].split(':').map(str => str.replace(COMMENT, ''));
+    const args = argStr.split(',').map(str => str.trim());
     switch (command) {
       case 'i':
-        newContents = stringSplice(newContents, match.index, match[0].length, arg);
+        newContents = stringSplice(newContents, match.index, match[0].length, args[0]);
         break;
       case 'r': {
         const start = match.index;
         const end = start + match[0].length;
-        const nextWord = newContents.slice(end).match(/[A-z]+/)?.[0] ?? '';
-        if (!nextWord) throw new Error('Could not find next word');
-        newContents = stringSplice(newContents, start, (end + nextWord.length) - start, arg);
+        let sliced = newContents.slice(end);
+        if (args.length > 1) {
+          sliced = sliced.replace(args[0], args[1]);
+          newContents = stringSplice(newContents, start, newContents.length - start, sliced);
+        } else {
+          const nextWord = sliced.match(/[A-z]+/)?.[0] ?? '';
+          if (!nextWord) throw new Error('Could not find next word');
+          newContents = stringSplice(newContents, start, (end + nextWord.length) - start, args[0]);
+        }
         break;
       }
     }
