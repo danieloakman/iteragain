@@ -30,6 +30,7 @@ import CycleIterator from './CycleIterator';
 import ContinueIterator from './ContinueIterator';
 import PermutationsIterator from './PermutationsIterator';
 import FilterMapIterator from './FilterMapIterator';
+import DropWhileIterator from './DropWhileIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -184,6 +185,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /**
+   * @deprecated Use `drop` instead as this is the more used name for this method among the use of iterators.
    * @lazy
    * Skip the first `n` elements from this iterator. Equivalent to `iterator.slice(n)`.
    * @param n The number of elements to skip.
@@ -193,12 +195,31 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /**
+   * @deprecated Use `dropWhile` instead as this is the more used name for this method among the use of iterators.
    * @lazy
    * Skip values in this iterator while the passed `predicate` returns a truthy value.
    * @param predicate The function to call for each value.
    */
   public skipWhile(predicate: Predicate<T>): ExtendedIterator<T> {
     return new ExtendedIterator(new SkipWhileIterator(this.iterator, predicate));
+  }
+
+  /**
+   * @lazy
+   * Drop/skip the first `n` elements from this iterator. Equivalent to `iterator.slice(n)`.
+   * @param n The number of elements to drop.
+   */
+  public drop(n: number): ExtendedIterator<T> {
+    return this.slice(n);
+  }
+
+  /**
+   * @lazy
+   * Drop/skip values in this iterator while the passed `predicate` returns a truthy value.
+   * @param predicate The function to call for each value.
+   */
+  public dropWhile(predicate: Predicate<T>): ExtendedIterator<T> {
+    return new ExtendedIterator(new DropWhileIterator(this.iterator, predicate));
   }
 
   /**

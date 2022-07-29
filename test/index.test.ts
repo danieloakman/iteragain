@@ -205,31 +205,35 @@ describe('ExtendedIterator', function () {
     );
   });
 
-  it('skip', async function () {
-    equal(iter([1, 2, 3]).skip(2).toArray(), [3]);
-    equal(iter([1, 2, 3]).skip(0).toArray(), [1, 2, 3]);
-  });
+  for (const method of ['skip', 'drop'] as const) {
+    it(method, async function () {
+      equal(iter([1, 2, 3])[method](2).toArray(), [3]);
+      equal(iter([1, 2, 3])[method](0).toArray(), [1, 2, 3]);
+    });
+  }
 
-  it('skipWhile', async function () {
-    equal(
-      iter([1, 4, 6, 4, 1])
-        .skipWhile(n => n < 5)
-        .toArray(),
-      [6, 4, 1],
-    );
-    equal(
-      iter([1, 2, 3])
-        .skipWhile(n => n < 2)
-        .toArray(),
-      [2, 3],
-    );
-    equal(
-      iter([1, 2, 3])
-        .skipWhile(n => n > 2)
-        .toArray(),
-      [1, 2, 3],
-    );
-  });
+  for (const method of ['skipWhile', 'dropWhile'] as const) {
+    it(method, async function () {
+      equal(
+        iter([1, 4, 6, 4, 1])
+          [method](n => n < 5)
+          .toArray(),
+        [6, 4, 1],
+      );
+      equal(
+        iter([1, 2, 3])
+          [method](n => n < 2)
+          .toArray(),
+        [2, 3],
+      );
+      equal(
+        iter([1, 2, 3])
+          [method](n => n > 2)
+          .toArray(),
+        [1, 2, 3],
+      );
+    });
+  }
 
   it('pairwise', async function () {
     equal(iter([1, 2, 3]).pairwise().toArray(), [
