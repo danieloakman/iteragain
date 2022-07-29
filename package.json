@@ -26,6 +26,7 @@
     "prepublishOnly": "npm run test && npm run lint",
     "preversion": "npm run lint",
     "postversion": "git push --follow-tags",
+    "publish": "npm publish",
     "publish:es": "ts-node ./scripts/publish-es.ts",
     "publish:all": "npm publish && npm run publish:es"
   },
