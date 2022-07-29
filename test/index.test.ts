@@ -298,6 +298,11 @@ describe('ExtendedIterator', function () {
     range(10).forEach(() => equal(iterator.toArray(), [1, 2, 3]));
   });
 
+  it('compress', async function () {
+    equal(iter([1, 2, 3]).compress([0, 1, 0]).toArray(), [2]);
+    equal(iter('abcdef').compress([1, 0, 1, 0, 1, 1]).join(''), 'acef');
+  });
+
   it('permutations', async function () {
     equal(iter([0, 1, 2]).permutations().toArray(), [
       [0, 1, 2],

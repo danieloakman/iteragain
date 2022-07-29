@@ -31,6 +31,7 @@ import ContinueIterator from './ContinueIterator';
 import PermutationsIterator from './PermutationsIterator';
 import FilterMapIterator from './FilterMapIterator';
 import DropWhileIterator from './DropWhileIterator';
+import CompressIterator from './CompressIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -335,6 +336,16 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /**
    * @lazy
+   * Filters/compresses this iterator to only values that correspond to truthy values in `selectors`.
+   * @param selectors An iterator or iterable of falsey or truthy values to select which values to keep in this
+   * iterator.
+   */
+  public compress(selectors: IteratorOrIterable<any>): ExtendedIterator<T> {
+    return new ExtendedIterator(new CompressIterator(this.iterator, toIterator(selectors)));
+  }
+
+  /**
+   * @lazy
    * Returns all successive `size` length permutations of this iterator. The permutations are emitted in lexicographic
    * ordering according to this iterator. So if this iterator is sorted, the permutations will be in sorted order.
    * Elements in the permutations are treated as unique based on their position in the iterator, not on their value. So
@@ -382,7 +393,10 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return false;
   }
 
-  /** Returns this iterator as a string with each value joined by `separator`. */
+  /**
+   * Returns this iterator as a string with each value joined by `separator`.
+   * @param separator The separator to use between each value (default: ',').
+   */
   public join(separator = ','): string {
     return this.reduce((str, v) => str + separator + v);
   }
