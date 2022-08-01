@@ -3,10 +3,14 @@
  * in JS.
  * @description Skips values in the input `iterator` while the predicate returns a truthy value.
  */
-export class SkipWhileIterator<T> implements Iterator<T> {
+export class SkipWhileIterator<T> implements IterableIterator<T> {
   protected skipped = false;
 
   constructor(protected iterator: Iterator<T>, protected predicate: (value: T) => any) {}
+
+  [Symbol.iterator](): IterableIterator<T> {
+    return this;
+  }
 
   next(): IteratorResult<T> {
     if (this.skipped) return this.iterator.next();

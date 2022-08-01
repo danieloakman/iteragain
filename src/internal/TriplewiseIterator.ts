@@ -1,8 +1,12 @@
 /** An iterator that collects (triplets) from the input `Iterator<T>`, like: [T, T, T]. */
-export class TriplewiseIterator<T> implements Iterator<[T, T, T]> {
+export class TriplewiseIterator<T> implements IterableIterator<[T, T, T]> {
   protected prev: T[] = [];
 
   constructor(protected iterator: Iterator<T>) {}
+
+  [Symbol.iterator](): IterableIterator<[T, T, T]> {
+    return this;
+  }
 
   next(): IteratorResult<[T, T, T]> {
     while (this.prev.length !== 3) {

@@ -1,8 +1,12 @@
 import { IterSource } from './types';
 
 /** An iterator that concatenates other iterators together, in the order they are in the `iterators` arg. */
-export class ConcatIterator<T extends Array<Iterator<any>>> implements Iterator<IterSource<T[number]>> {
+export class ConcatIterator<T extends Array<Iterator<any>>> implements IterableIterator<IterSource<T[number]>> {
   constructor(protected iterators: T) {}
+
+  [Symbol.iterator](): IterableIterator<IterSource<T[number]>> {
+    return this;
+  }
 
   next(): IteratorResult<IterSource<T[number]>> {
     if (!this.iterators.length) return { done: true, value: undefined };

@@ -1,5 +1,9 @@
-export class ZipIterator implements Iterator<any> {
+export class ZipIterator implements IterableIterator<any> {
   constructor(protected iterators: Iterator<any>[]) {}
+
+  [Symbol.iterator](): IterableIterator<any> {
+    return this;
+  }
 
   next(): IteratorResult<any> {
     const values = [];

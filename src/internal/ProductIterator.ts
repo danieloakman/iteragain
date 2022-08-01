@@ -1,7 +1,7 @@
 import toArray from '../toArray';
 
 /** Returns the cartesian product of the input `iterators`. */
-export class ProductIterator<T> implements Iterator<T[]> {
+export class ProductIterator<T> implements IterableIterator<T[]> {
   protected pools: T[][] = [];
   protected indices: number[];
   protected i: number;
@@ -10,6 +10,10 @@ export class ProductIterator<T> implements Iterator<T[]> {
     const iterated = iterators.map(toArray);
     for (let i = 0; i < repeat; i++) this.pools.push(...iterated);
     this.indices = new Array(this.pools.length).fill(0);
+  }
+
+  [Symbol.iterator](): IterableIterator<T[]> {
+    return this;
   }
 
   next(): IteratorResult<T[]> {

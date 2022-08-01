@@ -1,6 +1,10 @@
 /** Maps the input iterator to a new value of type `R` and filters out any values that are nullish. */
-export class FilterMapIterator<T, R> implements Iterator<NonNullable<R>> {
+export class FilterMapIterator<T, R> implements IterableIterator<NonNullable<R>> {
   constructor(protected iterator: Iterator<T>, protected iteratee: (value: T) => R) {}
+
+  [Symbol.iterator](): IterableIterator<NonNullable<R>> {
+    return this;
+  }
 
   next(): IteratorResult<NonNullable<R>> {
     const next = this.iterator.next();

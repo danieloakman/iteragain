@@ -3,7 +3,7 @@ import toArray from '../toArray';
 import { Tuple } from './types';
 
 /** Returns all successive `size` length permutations of the input `iterator`. */
-export class PermutationsIterator<T, Size extends number> implements Iterator<Tuple<T, Size>> {
+export class PermutationsIterator<T, Size extends number> implements IterableIterator<Tuple<T, Size>> {
   protected pool: T[];
   /** Tuple size. */
   protected size: Size;
@@ -21,6 +21,10 @@ export class PermutationsIterator<T, Size extends number> implements Iterator<Tu
 
   protected get value(): Tuple<T, Size> {
     return this.indices.slice(0, this.size).map(i => this.pool[i]) as Tuple<T, Size>;
+  }
+
+  [Symbol.iterator](): IterableIterator<Tuple<T, Size>> {
+    return this;
   }
 
   next(): IteratorResult<Tuple<T, Size>> {

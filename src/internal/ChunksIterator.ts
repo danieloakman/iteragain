@@ -1,6 +1,10 @@
 /** An iterator that yields non-overlapping values in chunks (tuples) of a certain `size`. */
-export class ChunksIterator<T> implements Iterator<T[]> {
+export class ChunksIterator<T> implements IterableIterator<T[]> {
   constructor(protected iterator: Iterator<T>, protected length: number, protected fill?: T | null) {}
+
+  [Symbol.iterator](): IterableIterator<T[]> {
+    return this;
+  }
 
   next(): IteratorResult<T[]> {
     let chunk: T[] = [];

@@ -1,6 +1,11 @@
-export class ZipLongestIterator implements Iterator<any> {
+export class ZipLongestIterator implements IterableIterator<any> {
   protected readonly done = new Set<number>();
+
   constructor(protected iterators: Iterator<any>[]) {}
+
+  [Symbol.iterator](): IterableIterator<any> {
+    return this;
+  }
 
   next(): IteratorResult<any> {
     const values = [];
