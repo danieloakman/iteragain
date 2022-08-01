@@ -30,3 +30,17 @@ export type IterSource<T> = T extends Iterable<infer U>
   : T extends IterableIterator<infer U>
   ? U
   : T;
+
+export type ObjectLeafs<T extends Record<PropertyKey, unknown>, K = keyof T> = K extends PropertyKey
+  ? T[K] extends Record<PropertyKey, unknown>
+    ? ObjectLeafs<T[K], keyof T[K]>
+    : [K, T[K]]
+  : T;
+
+export type ObjectBranches<T extends Record<PropertyKey, unknown>, K = keyof T> = K extends PropertyKey
+  ? T[K] extends Record<PropertyKey, unknown>
+    ? [K, T[K]] | ObjectBranches<T[K], keyof T[K]>
+    : never
+  : T;
+
+export type ObjectEntries<T extends Record<PropertyKey, unknown>> = ObjectLeafs<T> | ObjectBranches<T>;
