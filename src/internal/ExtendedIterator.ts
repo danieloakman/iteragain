@@ -32,6 +32,7 @@ import PermutationsIterator from './PermutationsIterator';
 import FilterMapIterator from './FilterMapIterator';
 import DropWhileIterator from './DropWhileIterator';
 import CompressIterator from './CompressIterator';
+import ProductIterator from './ProductIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -357,6 +358,24 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    */
   public permutations<Size extends number>(size?: Size): ExtendedIterator<Tuple<T, Size>> {
     return new ExtendedIterator(new PermutationsIterator(this.iterator, size));
+  }
+
+  // public combinations<Size extends number>(size?: Size): ExtendedIterator<Tuple<T, Size>> {
+  //   // return new ExtendedIterator(new CombinationsIterator(this.iterator, size));
+  //   return combinations(this.iterator, size);
+  // }
+
+  /**
+   * @lazy
+   * Returns the cartesian product of this iterator with other `iterators` after it.
+   * @param iterators Other iterators.
+   * @param repeat Optional number of times to repeat
+   * @see https://docs.python.org/3/library/itertools.html#itertools.product for more info, as it does the same.
+   */
+  public product(iterators: IteratorOrIterable<T>[], repeat = 1) {
+    return new ExtendedIterator(
+      new ProductIterator([this.iterator, ...(iterators.map(toIterator) as Iterator<T>[])], repeat),
+    );
   }
 
   /** Reduces this iterator to a single value. */

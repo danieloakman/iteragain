@@ -14,7 +14,9 @@ import {
   repeat,
   cycle,
   count,
+  product,
 } from '../src/index';
+import { IterPlus, iterplus } from 'iterplus';
 
 describe('ExtendedIterator', function () {
   it('does implement IterableIterator', async function () {
@@ -304,6 +306,7 @@ describe('ExtendedIterator', function () {
   });
 
   it('permutations', async function () {
+    equal(iter([0, 1]).permutations().toArray(), [[0, 1], [1, 0]]);
     equal(iter([0, 1, 2]).permutations().toArray(), [
       [0, 1, 2],
       [0, 2, 1],
@@ -327,6 +330,19 @@ describe('ExtendedIterator', function () {
       ['d', 'c'],
     ]);
     equal(iter('abc').permutations(4).toArray(), []);
+  });
+
+  it('product', async function () {
+    equal(iter('abcd').product(['xy']).toArray(), [
+      ['a', 'x'],
+      ['a', 'y'],
+      ['b', 'x'],
+      ['b', 'y'],
+      ['c', 'x'],
+      ['c', 'y'],
+      ['d', 'x'],
+      ['d', 'y'],
+    ]);
   });
 
   it('join', async function () {
@@ -553,6 +569,36 @@ it('partition', async function () {
       [2, 4],
     ],
   );
+});
+
+it('product', async function () {
+  equal(IterPlus.product([0, 1], [0, 1]).toArray(), [[0, 0], [0, 1], [1, 0], [1, 1]]);
+  equal(product([range(2)], 2).toArray(), [
+    [0, 0],
+    [0, 1],
+    [1, 0],
+    [1, 1],
+  ]);
+  equal(product(['ABCD', 'xy']).toArray(), [
+    ['A', 'x'],
+    ['A', 'y'],
+    ['B', 'x'],
+    ['B', 'y'],
+    ['C', 'x'],
+    ['C', 'y'],
+    ['D', 'x'],
+    ['D', 'y'],
+  ]);
+  equal(product([range(2)], 3).toArray(), [
+    [0, 0, 0],
+    [0, 0, 1],
+    [0, 1, 0],
+    [0, 1, 1],
+    [1, 0, 0],
+    [1, 0, 1],
+    [1, 1, 0],
+    [1, 1, 1],
+  ]);
 });
 
 it('concat', async function () {

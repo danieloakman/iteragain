@@ -7,6 +7,7 @@ import isIterable from './isIterable';
 import isIterator from './isIterator';
 import iter from './iter';
 import partition from './partition';
+import product from './product';
 import range from './range';
 import repeat from './repeat';
 import toArray from './toArray';
@@ -24,6 +25,7 @@ export {
   isIterator,
   iter,
   partition,
+  product,
   range,
   repeat,
   toArray,
@@ -41,6 +43,7 @@ export default {
   isIterator,
   iter,
   partition,
+  product,
   range,
   repeat,
   toArray,
