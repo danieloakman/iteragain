@@ -23,8 +23,12 @@ import { execSync } from 'child_process';
   await promises.writeFile(
     filePath,
     `
-export class ${fileName}<T> implements Iterator<T> {
+export class ${fileName}<T> implements IterableIterator<T> {
   constructor(protected iterator: Iterator<T>) {}
+
+  [Symbol.iterator](): IterableIterator<T> {
+    return this;
+  }
 
   next(): IteratorResult<T> {
     return this.iterator.next();
