@@ -16,7 +16,6 @@ import {
   count,
   product,
 } from '../src/index';
-import { IterPlus, iterplus } from 'iterplus';
 
 describe('ExtendedIterator', function () {
   it('does implement IterableIterator', async function () {
@@ -603,12 +602,6 @@ it('partition', async function () {
 });
 
 it('product', async function () {
-  equal(IterPlus.product([0, 1], [0, 1]).toArray(), [
-    [0, 0],
-    [0, 1],
-    [1, 0],
-    [1, 1],
-  ]);
   equal(product([range(2)], 2).toArray(), [
     [0, 0],
     [0, 1],
