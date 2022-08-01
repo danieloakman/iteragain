@@ -33,6 +33,7 @@ import FilterMapIterator from './FilterMapIterator';
 import DropWhileIterator from './DropWhileIterator';
 import CompressIterator from './CompressIterator';
 import ProductIterator from './ProductIterator';
+import CombinationsIterator from './CombinationsIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -351,8 +352,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * ordering according to this iterator. So if this iterator is sorted, the permutations will be in sorted order.
    * Elements in the permutations are treated as unique based on their position in the iterator, not on their value. So
    * if the input iterator is unique, then there will be no repeat values.
-   * @see https://docs.python.org/3/library/itertools.html#itertools.permutations for more info, as it does the same
-   * thing.
+   * @see https://docs.python.org/3/library/itertools.html#itertools.permutations for more info.
    * @param size The size of each permutation, must be greater than 0 and less than or equal to the length of this
    * iterator.
    */
@@ -360,17 +360,23 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return new ExtendedIterator(new PermutationsIterator(this.iterator, size));
   }
 
-  // public combinations<Size extends number>(size?: Size): ExtendedIterator<Tuple<T, Size>> {
-  //   // return new ExtendedIterator(new CombinationsIterator(this.iterator, size));
-  //   return combinations(this.iterator, size);
-  // }
+  /**
+   * Returns `size` length subsequences of this iterator.
+   * @see https://docs.python.org/3/library/itertools.html#itertools.combinations for more info.
+   * @see https://docs.python.org/3/library/itertools.html#itertools.combinations_with_replacement for more info.
+   * @param size The size of each combination.
+   * @param withReplacement Whether or not to allow duplicate elements in the combinations.
+   */
+  public combinations<Size extends number>(size: Size, withReplacement = false): ExtendedIterator<Tuple<T, Size>> {
+    return new ExtendedIterator(new CombinationsIterator(this.iterator, size, withReplacement));
+  }
 
   /**
    * @lazy
    * Returns the cartesian product of this iterator with other `iterators` after it.
    * @param iterators Other iterators.
-   * @param repeat Optional number of times to repeat
-   * @see https://docs.python.org/3/library/itertools.html#itertools.product for more info, as it does the same.
+   * @param repeat Optional number of times to repeat.
+   * @see https://docs.python.org/3/library/itertools.html#itertools.product for more info.
    */
   public product(iterators: IteratorOrIterable<T>[], repeat = 1) {
     return new ExtendedIterator(

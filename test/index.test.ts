@@ -306,7 +306,10 @@ describe('ExtendedIterator', function () {
   });
 
   it('permutations', async function () {
-    equal(iter([0, 1]).permutations().toArray(), [[0, 1], [1, 0]]);
+    equal(iter([0, 1]).permutations().toArray(), [
+      [0, 1],
+      [1, 0],
+    ]);
     equal(iter([0, 1, 2]).permutations().toArray(), [
       [0, 1, 2],
       [0, 2, 1],
@@ -330,6 +333,34 @@ describe('ExtendedIterator', function () {
       ['d', 'c'],
     ]);
     equal(iter('abc').permutations(4).toArray(), []);
+  });
+
+  it('combinations', async function () {
+    equal(iter([0, 1]).combinations(2).toArray(), [[0, 1]]);
+    equal(iter('ABCD').combinations(2).toArray(), [
+      ['A', 'B'],
+      ['A', 'C'],
+      ['A', 'D'],
+      ['B', 'C'],
+      ['B', 'D'],
+      ['C', 'D'],
+    ]);
+    equal(iter('ABC').combinations(2, true).toArray(), [
+      ['A', 'A'],
+      ['A', 'B'],
+      ['A', 'C'],
+      ['B', 'B'],
+      ['B', 'C'],
+      ['C', 'C'],
+    ]);
+    equal(iter(range(4)).combinations(3).toArray(), [
+      [0, 1, 2],
+      [0, 1, 3],
+      [0, 2, 3],
+      [1, 2, 3],
+    ]);
+    equal(iter([0, 1]).combinations(1).toArray(), [[0], [1]]);
+    equal(iter(range(2)).combinations(5).toArray(), []);
   });
 
   it('product', async function () {
@@ -572,7 +603,12 @@ it('partition', async function () {
 });
 
 it('product', async function () {
-  equal(IterPlus.product([0, 1], [0, 1]).toArray(), [[0, 0], [0, 1], [1, 0], [1, 1]]);
+  equal(IterPlus.product([0, 1], [0, 1]).toArray(), [
+    [0, 0],
+    [0, 1],
+    [1, 0],
+    [1, 1],
+  ]);
   equal(product([range(2)], 2).toArray(), [
     [0, 0],
     [0, 1],
