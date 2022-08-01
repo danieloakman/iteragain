@@ -9,6 +9,7 @@ import {
   Tuple,
   Predicate,
   Iteratee,
+  IterSource,
 } from './types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
@@ -82,19 +83,17 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** @lazy Concatenates this iterator with the given iterators, in order of: `[this.iterator, ...others]`. */
-  public concat<A>(other: IteratorOrIterable<A>): ExtendedIterator<T | A>;
-  public concat<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<T | A | B>;
-  public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any>;
-  public concat(...args: IteratorOrIterable<any>[]): ExtendedIterator<any> {
-    return new ExtendedIterator(new ConcatIterator([this.iterator, ...args.map(toIterator)]));
+  public concat<U extends IteratorOrIterable<any>[]>(...args: U) {
+    return new ExtendedIterator(
+      new ConcatIterator([this.iterator, ...(args.map(toIterator) as Iterator<IterSource<U[number]>>[])]),
+    );
   }
 
   /** @lazy Prepends this iterator with the given iterators, in order of: `[...args, this.iterator]`. */
-  public prepend<A>(other: IteratorOrIterable<A>): ExtendedIterator<A | T>;
-  public prepend<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<A | B | T>;
-  public prepend(...args: IteratorOrIterable<any>[]): ExtendedIterator<any>;
-  public prepend(...args: IteratorOrIterable<any>[]): ExtendedIterator<any> {
-    return new ExtendedIterator(new ConcatIterator([...args.map(toIterator), this.iterator]));
+  public prepend<U extends IteratorOrIterable<any>[]>(...args: U) {
+    return new ExtendedIterator(
+      new ConcatIterator([...(args.map(toIterator) as Iterator<IterSource<U[number]>>[]), this.iterator]),
+    );
   }
 
   /**
