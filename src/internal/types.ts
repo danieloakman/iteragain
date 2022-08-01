@@ -21,3 +21,12 @@ export type Predicate<T> = (value: T) => any;
 
 /** A function that does something with value of type `T` and transforms it into type `R`. */
 export type Iteratee<T, R> = (value: T) => R;
+
+/** Returns the source of the generic Iterable, Iterator or IterableIterator */
+export type IterSource<T> = T extends Iterable<infer U>
+  ? U
+  : T extends Iterator<infer U>
+  ? U
+  : T extends IterableIterator<infer U>
+  ? U
+  : T;
