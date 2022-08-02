@@ -22,7 +22,7 @@ export class FlattenIterator implements IterableIterator<any> {
         return this.next();
       }
     } else next = this.iterator.next();
-    if (typeof next.value !== 'string' && isIterable(next.value) || isIterator(next.value)) {
+    if (typeof next.value !== 'string' && (isIterable(next.value) || isIterator(next.value))) {
       this.inner = new FlattenIterator(toIterator(next.value), this.depth - 1);
       return this.inner.next();
     }

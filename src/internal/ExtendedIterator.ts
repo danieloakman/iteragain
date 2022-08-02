@@ -277,7 +277,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * `tee` has made a split, do not modify or call upon the original iterator, as the new iterators will not be
    * updated/informed.
    * This caches the original iterator's values as the new iterators are iterated through. So
-   * depending on the size of the orignal iterator, there could be signaficant memory overhead in using `tee`.
+   * depending on the size of the original iterator, there could be significant memory overhead in using `tee`.
    * `tee`'s intended use is to iterate over the returned iterators in parallel, or at least somewhat in parallel. In
    * general, if one returned iterator consumes most or all of it's values, then it is faster to just
    * use `toArray` and then iterate over that.
