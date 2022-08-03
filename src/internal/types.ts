@@ -31,16 +31,18 @@ export type IterSource<T> = T extends Iterable<infer U>
   ? U
   : T;
 
-export type ObjectLeafs<T extends Record<PropertyKey, unknown>, K = keyof T> = K extends PropertyKey
-  ? T[K] extends Record<PropertyKey, unknown>
+export type ObjectLeafs<T extends Record<string, unknown>, K = keyof T> = K extends string
+  ? T[K] extends Record<string, unknown>
     ? ObjectLeafs<T[K], keyof T[K]>
     : [K, T[K]]
   : T;
 
-export type ObjectBranches<T extends Record<PropertyKey, unknown>, K = keyof T> = K extends PropertyKey
-  ? T[K] extends Record<PropertyKey, unknown>
+export type ObjectBranches<T extends Record<string, unknown>, K = keyof T> = K extends string
+  ? T[K] extends Record<string, unknown>
     ? [K, T[K]] | ObjectBranches<T[K], keyof T[K]>
     : never
   : T;
 
-export type ObjectEntries<T extends Record<PropertyKey, unknown>> = ObjectLeafs<T> | ObjectBranches<T>;
+export type ObjectEntries<T extends Record<string, unknown>> = ObjectLeafs<T> | ObjectBranches<T>;
+
+export type ObjectEntry<T = any> = [string, T, any];
