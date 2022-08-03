@@ -16,18 +16,8 @@ import {
   count,
   product,
   take,
+  chunks,
 } from '../src/index';
-import CachedIterator from '../src/internal/CachedIterator';
-import ChunksIterator from '../src/internal/ChunksIterator';
-import CombinationsIterator from '../src/internal/CombinationsIterator';
-import CompressIterator from '../src/internal/CompressIterator';
-import ConcatIterator from '../src/internal/ConcatIterator';
-import ContinueIterator from '../src/internal/ContinueIterator';
-import CycleIterator from '../src/internal/CycleIterator';
-import DropWhileIterator from '../src/internal/DropWhileIterator';
-import EmptyIterator from '../src/internal/EmptyIterator';
-import FilterIterator from '../src/internal/FilterIterator';
-import ProductIterator from '../src/internal/ProductIterator';
 
 describe('ExtendedIterator', function () {
   it('does implement IterableIterator', async function () {
@@ -475,41 +465,6 @@ describe('ExtendedIterator', function () {
   });
 });
 
-it('isIterable', async function () {
-  assert(isIterable([1, 2, 3]));
-  assert(isIterable('abc'));
-  assert(isIterable(new Set([1, 2, 3])));
-  assert(
-    isIterable(
-      new Map([
-        [1, 2],
-        [3, 4],
-      ]),
-    ),
-  );
-  assert(isIterable(new Int8Array([1, 2, 3])));
-  assert(isIterable(Buffer.from('abc')));
-  assert(!isIterable(null));
-});
-
-it('isIterator', async function () {
-  assert(
-    isIterator(
-      (function* () {
-        yield 1;
-      })(),
-    ),
-  );
-  assert(isIterator({ next() {} }));
-  assert(!isIterator(null));
-});
-
-it('toIterator', async function () {
-  const i = toIterator([1, 2, 3]);
-  assert(isIterator(i));
-  throws(() => toIterator(null));
-});
-
 it('tee', async function () {
   // this.timeout(60000);
   let [a, b] = iter([1, 2, 3]).tee(2);
@@ -556,29 +511,76 @@ it('tee', async function () {
   // suite.run();
 });
 
-it('zip', async function () {
-  equal([...zip([1, 2, 3], ['4', '5', '6'])], [
-    [1, '4'],
-    [2, '5'],
-    [3, '6'],
-  ]);
-  equal([...zip([1, 2, 3], ['4', '5'])], [
-    [1, '4'],
-    [2, '5'],
-  ]);
+it('chunks', async function () {
+  equal([...chunks([1, 2, 3, 4, 5], 2)], [[1, 2], [3, 4], [5]]);
+  // equal(iter([1, 2, 3, 4, 5]).chunks(3, 0).toArray(), [
+  //   [1, 2, 3],
+  //   [4, 5, 0],
+  // ]);
+  // equal(iter([1, 2, 3, 4, 5]).chunks(6).toArray(), [[1, 2, 3, 4, 5]]);
+  // equal(iter([1, 2, 3, 4, 5]).chunks(6, 0).toArray(), [[1, 2, 3, 4, 5, 0]]);
+  // equal(iter([]).chunks(5).toArray(), []);
 });
 
-it('zipLongest', async function () {
-  equal([...zipLongest([1, 2, 3], ['4', '5', '6'])], [
-    [1, '4'],
-    [2, '5'],
-    [3, '6'],
-  ]);
-  equal([...zipLongest([1, 2, 3], ['4', '5'])], [
-    [1, '4'],
-    [2, '5'],
-    [3, undefined],
-  ]);
+it('concat', async function () {
+  equal([...concat([1, 2, 3], [], range(4, 7))], [1, 2, 3, 4, 5, 6]);
+});
+
+it('count', async function () {
+  equal(count().take(10).toArray(), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+});
+
+it('cycle', async function () {
+  equal(take(cycle([1, 2, 3], 10), 10), [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]);
+  equal(take(cycle(range(3)), 5), [0, 1, 2, 0, 1]);
+});
+
+it('enumerate', async function () {
+  equal(
+    [...enumerate([{ a: 1 }, { b: 2 }])],
+    [
+      [0, { a: 1 }],
+      [1, { b: 2 }],
+    ],
+  );
+});
+
+it('flatten', async function () {
+  equal([...flatten([[1], [2, 3]])], [1, 2, 3]);
+  equal([...flatten([[1], [2, 3], [4, 5]])], [1, 2, 3, 4, 5]);
+  equal([...flatten([[1], [[2], 3]], 2)], [1, 2, 3]);
+  equal([...flatten([[1], [[2], 3]], 1)], [1, [2], 3]);
+  equal([...flatten([[1], [[2], 3]], 0)], [[1], [[2], 3]]);
+  equal([...flatten('abc')], ['a', 'b', 'c']);
+});
+
+it('isIterable', async function () {
+  assert(isIterable([1, 2, 3]));
+  assert(isIterable('abc'));
+  assert(isIterable(new Set([1, 2, 3])));
+  assert(
+    isIterable(
+      new Map([
+        [1, 2],
+        [3, 4],
+      ]),
+    ),
+  );
+  assert(isIterable(new Int8Array([1, 2, 3])));
+  assert(isIterable(Buffer.from('abc')));
+  assert(!isIterable(null));
+});
+
+it('isIterator', async function () {
+  assert(
+    isIterator(
+      (function* () {
+        yield 1;
+      })(),
+    ),
+  );
+  assert(isIterator({ next() {} }));
+  assert(!isIterator(null));
 });
 
 it('iter', async function () {
@@ -628,36 +630,41 @@ it('partition', async function () {
 });
 
 it('product', async function () {
-  equal([...product([range(2)], 2)], [
-    [0, 0],
-    [0, 1],
-    [1, 0],
-    [1, 1],
-  ]);
-  equal([...product(['ABCD', 'xy'])], [
-    ['A', 'x'],
-    ['A', 'y'],
-    ['B', 'x'],
-    ['B', 'y'],
-    ['C', 'x'],
-    ['C', 'y'],
-    ['D', 'x'],
-    ['D', 'y'],
-  ]);
-  equal([...product([range(2)], 3)], [
-    [0, 0, 0],
-    [0, 0, 1],
-    [0, 1, 0],
-    [0, 1, 1],
-    [1, 0, 0],
-    [1, 0, 1],
-    [1, 1, 0],
-    [1, 1, 1],
-  ]);
-});
-
-it('concat', async function () {
-  equal([...concat([1, 2, 3], [], range(4, 7))], [1, 2, 3, 4, 5, 6]);
+  equal(
+    [...product([range(2)], 2)],
+    [
+      [0, 0],
+      [0, 1],
+      [1, 0],
+      [1, 1],
+    ],
+  );
+  equal(
+    [...product(['ABCD', 'xy'])],
+    [
+      ['A', 'x'],
+      ['A', 'y'],
+      ['B', 'x'],
+      ['B', 'y'],
+      ['C', 'x'],
+      ['C', 'y'],
+      ['D', 'x'],
+      ['D', 'y'],
+    ],
+  );
+  equal(
+    [...product([range(2)], 3)],
+    [
+      [0, 0, 0],
+      [0, 0, 1],
+      [0, 1, 0],
+      [0, 1, 1],
+      [1, 0, 0],
+      [1, 0, 1],
+      [1, 1, 0],
+      [1, 1, 1],
+    ],
+  );
 });
 
 it('range', async function () {
@@ -718,88 +725,117 @@ it('repeat', async function () {
   equal([...repeat(1, 5)], [1, 1, 1, 1, 1]);
 });
 
-it('cycle', async function () {
-  equal(take(cycle([1, 2, 3], 10), 10), [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]);
+it('take', async function () {
+  const arr = range(10).toArray();
+  equal(take(arr, 3), [0, 1, 2]);
+  equal(take(arr, 3), [0, 1, 2]);
+  const it = range(10);
+  equal(take(it, 3), [0, 1, 2]);
+  equal(take(it, 3), [3, 4, 5]);
+  equal(take(it), [6]);
 });
 
-it('count', async function () {
-  equal(count().take(10).toArray(), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+it('toIterator', async function () {
+  const i = toIterator([1, 2, 3]);
+  assert(isIterator(i));
+  throws(() => toIterator(null));
 });
 
-it('flatten', async function () {
-  equal([...flatten([[1], [2, 3]])], [1, 2, 3]);
-  equal([...flatten([[1], [2, 3], [4, 5]])], [1, 2, 3, 4, 5]);
-  equal([...flatten([[1], [[2], 3]], 2)], [1, 2, 3]);
-  equal([...flatten([[1], [[2], 3]], 1)], [1, [2], 3]);
-  equal([...flatten([[1], [[2], 3]], 0)], [[1], [[2], 3]]);
-  equal([...flatten('abc')], ['a', 'b', 'c']);
+it('zip', async function () {
+  equal(
+    [...zip([1, 2, 3], ['4', '5', '6'])],
+    [
+      [1, '4'],
+      [2, '5'],
+      [3, '6'],
+    ],
+  );
+  equal(
+    [...zip([1, 2, 3], ['4', '5'])],
+    [
+      [1, '4'],
+      [2, '5'],
+    ],
+  );
 });
 
-it('enumerate', async function () {
-  equal([...enumerate([{ a: 1 }, { b: 2 }])], [
-    [0, { a: 1 }],
-    [1, { b: 2 }],
-  ]);
+it('zipLongest', async function () {
+  equal(
+    [...zipLongest([1, 2, 3], ['4', '5', '6'])],
+    [
+      [1, '4'],
+      [2, '5'],
+      [3, '6'],
+    ],
+  );
+  equal(
+    [...zipLongest([1, 2, 3], ['4', '5'])],
+    [
+      [1, '4'],
+      [2, '5'],
+      [3, undefined],
+    ],
+  );
 });
 
-describe('All "internal/Iterators" are iterable', async function () {
-  it('CachedIterator', async function () {
-    const it = new CachedIterator(range(10));
-    equal([...it], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-  });
+// describe('All "internal/Iterators" are iterable', async function () {
+//   it('CachedIterator', async function () {
+//     const it = new CachedIterator(range(10));
+//     equal([...it], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+//   });
 
-  it('ChunksIterator', async function () {
-    const it = new ChunksIterator(range(10), 3);
-    equal([...it], [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]);
-  });
+//   it('ChunksIterator', async function () {
+//     const it = new ChunksIterator(range(10), 3);
+//     equal([...it], [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]);
+//   });
 
-  it('CombinationsIterator', async function () {
-    const it = new CombinationsIterator(range(3), 2, false);
-    equal([...it], [[0, 1], [0, 2], [1, 2]]);
-  });
+//   it('CombinationsIterator', async function () {
+//     const it = new CombinationsIterator(range(3), 2, false);
+//     equal([...it], [[0, 1], [0, 2], [1, 2]]);
+//   });
 
-  it('CompressIterator', async function () {
-    const it = new CompressIterator(range(10), range(1, 2));
-    equal([...it], [0]);
-  });
+//   it('CompressIterator', async function () {
+//     const it = new CompressIterator(range(10), range(1, 2));
+//     equal([...it], [0]);
+//   });
 
-  it('ConcatIterator', async function () {
-    const it = new ConcatIterator([range(1, 3), range(3, 5)]);
-    equal([...it], [1, 2, 3, 4]);
-  });
+//   it('ConcatIterator', async function () {
+//     const it = new ConcatIterator([range(1, 3), range(3, 5)]);
+//     equal([...it], [1, 2, 3, 4]);
+//   });
 
-  it('ContinueIterator', async function () {
-    const it = new ContinueIterator(range(3), 2);
-    equal([...it, ...it, ...it, ...it], [0, 1, 2, 0, 1, 2, 0, 1, 2]);
-  });
+//   it('ContinueIterator', async function () {
+//     const it = new ContinueIterator(range(3), 2);
+//     equal([...it, ...it, ...it, ...it], [0, 1, 2, 0, 1, 2, 0, 1, 2]);
+//   });
 
-  it('CycleIterator', async function () {
-    const it = new CycleIterator(range(3), 2);
-    equal([...it], [0, 1, 2, 0, 1, 2, 0, 1, 2]);
-  });
+//   it('CycleIterator', async function () {
+//     const it = new CycleIterator(range(3), 2);
+//     equal([...it], [0, 1, 2, 0, 1, 2, 0, 1, 2]);
+//   });
 
-  it('DropWhileIterator', async function () {
-    const it = new DropWhileIterator(range(10), n => n < 5);
-    equal([...it], [5, 6, 7, 8, 9]);
-  });
+//   it('DropWhileIterator', async function () {
+//     const it = new DropWhileIterator(range(10), n => n < 5);
+//     equal([...it], [5, 6, 7, 8, 9]);
+//   });
 
-  it('EmptyIterator', async function () {
-    const it = new EmptyIterator();
-    equal([...it], []);
-  });
+//   it('EmptyIterator', async function () {
+//     const it = new EmptyIterator();
+//     equal([...it], []);
+//   });
 
-  it('FilterIterator', async function () {
-    const it = new FilterIterator(range(10), n => n % 2 === 0);
-    equal([...it], [0, 2, 4, 6, 8]);
-  });
+//   it('FilterIterator', async function () {
+//     const it = new FilterIterator(range(10), n => n % 2 === 0);
+//     equal([...it], [0, 2, 4, 6, 8]);
+//   });
 
-  // it('FilterMapIterator', async function () {
-  //   const it = new FilterMapIterator(range(10), n => n % 2 === 0 ? n * 2 : undefined);
-  //   equal([...it], [0, 4, 8]);
-  // });
+//   // it('FilterMapIterator', async function () {
+//   //   const it = new FilterMapIterator(range(10), n => n % 2 === 0 ? n * 2 : undefined);
+//   //   equal([...it], [0, 4, 8]);
+//   // });
 
-  // it('ProductIterator', async function () {
-  //   const it = new ProductIterator([range(3), range(2)], 2);
-  //   equal([...it], [[0, 0], [0, 1], [1, 0], [1, 1], [2, 0], [2, 1]]);
-  // });
-});
+//   // it('ProductIterator', async function () {
+//   //   const it = new ProductIterator([range(3), range(2)], 2);
+//   //   equal([...it], [[0, 0], [0, 1], [1, 0], [1, 1], [2, 0], [2, 1]]);
+//   // });
+// });
