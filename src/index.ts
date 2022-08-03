@@ -1,3 +1,4 @@
+import chunks from './chunks';
 import concat from './concat';
 import count from './count';
 import cycle from './cycle';
@@ -10,12 +11,14 @@ import partition from './partition';
 import product from './product';
 import range from './range';
 import repeat from './repeat';
+import take from './take';
 import toArray from './toArray';
 import toIterator from './toIterator';
 import zip from './zip';
 import zipLongest from './zipLongest';
 
 export {
+  chunks,
   concat,
   count,
   cycle,
@@ -28,12 +31,14 @@ export {
   product,
   range,
   repeat,
+  take,
   toArray,
   toIterator,
   zip,
   zipLongest,
 };
 export default {
+  chunks,
   concat,
   count,
   cycle,
@@ -46,6 +51,7 @@ export default {
   product,
   range,
   repeat,
+  take,
   toArray,
   toIterator,
   zip,
