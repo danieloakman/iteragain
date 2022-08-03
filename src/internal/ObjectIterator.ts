@@ -1,31 +1,40 @@
-/** @todo Fully implement this Iterator. */
-export class ObjectIterator implements IterableIterator<[any, PropertyKey, any]> {
-  protected arr: ([any, PropertyKey, any]|[any, PropertyKey, any, boolean])[] = [];
+import { ObjectEntry } from './types';
+import ConcatIterator from './ConcatIterator';
+import RepeatIterator from './RepeatIterator';
 
-  constructor(object: any, protected reverse = false) {
-    this.unshift(object);
+/**
+ * Iterates through all keys in an object. Optionally provides traversal order.
+ * @todo // TODO: Add support for other traversal orders.
+ */
+export class ObjectIterator<T extends Record<PropertyKey, any>> implements IterableIterator<ObjectEntry> {
+  protected inner: Iterator<ObjectEntry> = null;
+  protected arr: ObjectEntry[] = [];
+
+  constructor(object: T, protected traversal: 'post-order-DFS' | 'pre-order-DFS' | 'BFS' = 'post-order-DFS') {
+    this.push(object);
   }
 
-  [Symbol.iterator](): IterableIterator<any> {
+  [Symbol.iterator](): IterableIterator<ObjectEntry> {
     return this;
   }
 
-  public next(): IteratorResult<[any, PropertyKey, any]> {
+  public next(): IteratorResult<ObjectEntry> {
+    if (this.inner) {
+      const next = this.inner.next();
+      if (!next.done) return next;
+      this.inner = null;
+      return this.next();
+    }
     if (this.arr.length) {
-      if (!this.reverse) {
-        const value = this.arr.pop() as [any, PropertyKey, any];
-        if (this.isObject(value[0])) this.unshift(value[0]);
-        return { done: false, value };
-      }
-      const value = this.arr.shift();
-      if (value.length === 4)
-        return { done: false, value: value.slice(0, 2) as [any, PropertyKey, any] };
-      if (this.isObject(value[0])) {
-        this.arr.unshift([...value, true]);
-        this.unshift(value[0]);
+      const next = this.arr.shift();
+      if (this.isObject(next[1])) {
+        this.inner = new ConcatIterator([
+          new ObjectIterator(next[1]),
+          new RepeatIterator(next, 1),
+        ]);
         return this.next();
       }
-      return { done: false, value };
+      return { value: next, done: false };
     }
     return { done: true, value: undefined };
   }
@@ -35,25 +44,12 @@ export class ObjectIterator implements IterableIterator<[any, PropertyKey, any]>
   }
 
   protected push(obj: any) {
-    for (const key of Object.keys(obj)) this.arr.push([obj[key], key, obj]);
+    for (const key of Object.keys(obj)) this.arr.push([key, obj[key], obj]);
   }
 
   protected unshift(obj: any) {
-    for (const key of Object.keys(obj)) this.arr.unshift([obj[key], key, obj]);
+    for (const key of Object.keys(obj)) this.arr.unshift([key, obj[key], obj]);
   }
 }
 
 export default ObjectIterator;
-
-/**
- * Iterates over `Object.keys(object)` and recursively any nested objects within `object`. This is similar to
- * `forEachObject` except this utilises Generators and the 'iterare' package instead of just callbacks.
- * @param object Any object or array.
- * @note Traverses in DFS order.
- */
-export function* iterateObject(object: any): IterableIterator<{ value: any; key: PropertyKey; object: any }> {
-  for (const key of Object.keys(object)) {
-    if (typeof object[key] === 'object' && object[key] !== null) yield* iterateObject(object[key]);
-    yield { value: object[key], key, object };
-  }
-}
