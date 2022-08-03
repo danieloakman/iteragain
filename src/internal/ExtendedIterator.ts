@@ -21,7 +21,6 @@ import PairwiseIterator from './PairwiseIterator';
 import SliceIterator from './SliceIterator';
 import ZipIterator from './ZipIterator';
 import ZipLongestIterator from './ZipLongestIterator';
-import SkipWhileIterator from './SkipWhileIterator';
 import TapIterator from './TapIterator';
 import TriplewiseIterator from './TripleWiseIterator';
 import ChunksIterator from './ChunksIterator';
@@ -170,49 +169,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /**
    * @lazy
-   * Take the first `n` elements from this iterator. Equivalent to `iterator.slice(0, n)`.
-   * @param n The number of elements to take.
-   */
-  public take(n: number): ExtendedIterator<T> {
-    return this.slice(0, n);
-  }
-
-  /**
-   * @lazy
    * Take all elements from this iterator while the given `predicate` returns a truthy value.
    * @param predicate A function to call for each value.
    */
   public takeWhile(predicate: Predicate<T>): ExtendedIterator<T> {
     return new ExtendedIterator(new TakeWhileIterator(this.iterator, predicate));
-  }
-
-  /**
-   * @deprecated Use `drop` instead as this is the more used name for this method among the use of iterators.
-   * @lazy
-   * Skip the first `n` elements from this iterator. Equivalent to `iterator.slice(n)`.
-   * @param n The number of elements to skip.
-   */
-  public skip(n: number): ExtendedIterator<T> {
-    return this.slice(n);
-  }
-
-  /**
-   * @deprecated Use `dropWhile` instead as this is the more used name for this method among the use of iterators.
-   * @lazy
-   * Skip values in this iterator while the passed `predicate` returns a truthy value.
-   * @param predicate The function to call for each value.
-   */
-  public skipWhile(predicate: Predicate<T>): ExtendedIterator<T> {
-    return new ExtendedIterator(new SkipWhileIterator(this.iterator, predicate));
-  }
-
-  /**
-   * @lazy
-   * Drop/skip the first `n` elements from this iterator. Equivalent to `iterator.slice(n)`.
-   * @param n The number of elements to drop.
-   */
-  public drop(n: number): ExtendedIterator<T> {
-    return this.slice(n);
   }
 
   /**
@@ -448,19 +409,19 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public peek(): T | undefined;
   public peek<N extends number>(ahead: N): Tuple<T, N>;
   public peek(ahead?: number): T | T[] | undefined {
-    const values = this.yield(ahead);
+    const values = this.take(ahead);
     const valuesAsArray = Array.isArray(values) ? values : [values];
     if (values && valuesAsArray.length) this.iterator = new ConcatIterator([toIterator(valuesAsArray), this.iterator]);
     return values;
   }
 
   /**
-   * Yield `n` number of values from this iterator.
-   * @param n The number of values to yield.
+   * Take `n` number of values from this iterator.
+   * @param n The number of values to take.
    */
-  public yield(): T | undefined;
-  public yield<N extends number>(numOfValues: N): Tuple<T, N>;
-  public yield(n?: number): T | T[] | undefined {
+  public take(): T | undefined;
+  public take<N extends number>(numOfValues: N): Tuple<T, N>;
+  public take(n?: number): T | T[] | undefined {
     if (!n) return this.iterator.next().value;
     const values: T[] = [];
     let next: IteratorResult<T>;
