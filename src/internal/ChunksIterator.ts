@@ -1,15 +1,17 @@
+import { Tuple } from './types';
+
 /** An iterator that yields non-overlapping values in chunks (tuples) of a certain `size`. */
-export class ChunksIterator<T> implements IterableIterator<T[]> {
+export class ChunksIterator<T, Size extends number> implements IterableIterator<Tuple<T, Size>> {
   protected done = false;
   protected chunk: T[] = [];
 
-  constructor(protected iterator: Iterator<T>, protected length: number, protected fill?: T | null) {}
+  constructor(protected iterator: Iterator<T>, protected length: Size, protected fill?: T | null) {}
 
-  [Symbol.iterator](): IterableIterator<T[]> {
+  [Symbol.iterator](): IterableIterator<Tuple<T, Size>> {
     return this;
   }
 
-  next(): IteratorResult<T[]> {
+  next(): IteratorResult<Tuple<T, Size>> {
     if (this.done) return { done: true, value: undefined };
     for (let i = 0; i < this.length; i++) {
       const next = this.iterator.next();
@@ -24,7 +26,7 @@ export class ChunksIterator<T> implements IterableIterator<T[]> {
       }
       this.chunk.push(next.value);
     }
-    return { done: false, value: this.chunk.splice(0, this.length) };
+    return { done: false, value: this.chunk.splice(0, this.length) as Tuple<T, Size> };
   }
 }
 
