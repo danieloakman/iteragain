@@ -10,12 +10,12 @@ import { execSync } from 'child_process';
 (async () => {
   process.argv[2];
   if (process.argv.length < 3) {
-    console.error('Usage: new:iterator <file-name>');
+    console.error('Usage: new:function <file-name>');
     process.exit(1);
   }
 
-  const fileName = process.argv[2].replace(/(\..+|iterator)$/gi, '').replace(/^./, c => c.toUpperCase()) + 'Iterator';
-  const filePath = join(__dirname, `../src/internal/${fileName}.ts`);
+  const fileName = process.argv[2].replace(/\.ts$/gi, '');
+  const filePath = join(__dirname, `../src/${fileName}.ts`);
   if (existsSync(filePath)) {
     console.error(`File ${fileName}.ts already exists.`);
     process.exit(1);
@@ -23,16 +23,11 @@ import { execSync } from 'child_process';
   await promises.writeFile(
     filePath,
     `
-export class ${fileName}<T> implements IterableIterator<T> {
-  constructor(protected iterator: Iterator<T>) {}
+import { IteratorOrIterable } from './internal/types';
 
-  [Symbol.iterator](): IterableIterator<T> {
-    return this;
-  }
-
-  next(): IteratorResult<T> {
-    return this.iterator.next();
-  }
+/** @todo // TODO: Implement */
+export function ${fileName}<T>(arg: IteratorOrIterable<T>): IterableIterator<T> {
+  throw new Error(\`Not implemented, typeof arg: \${typeof arg}\`);
 }
 
 export default ${fileName};
@@ -40,4 +35,6 @@ export default ${fileName};
   );
   console.log(`Created "${filePath}"`);
   execSync(`code ${filePath}`);
+
+  // TODO: add to index.ts as well.
 })();
