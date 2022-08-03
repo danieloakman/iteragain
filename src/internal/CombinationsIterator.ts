@@ -13,6 +13,7 @@ export class CombinationsIterator<T, Size extends number> implements IterableIte
     this.n = this.pool.length;
     if (this.n < this.size) this.next = () => ({ done: true, value: undefined });
     this.indices = this.withReplacement ? new Array(this.size).fill(0) : Array.from({ length: this.size }, (_, i) => i);
+    this.indices[this.indices.length - 1]--; // So that the first combination will start at the correct spot.
   }
 
   protected get value() {
@@ -24,26 +25,22 @@ export class CombinationsIterator<T, Size extends number> implements IterableIte
   }
 
   next(): IteratorResult<Tuple<T, Size>> {
-    this.next = this.withReplacement
-      ? () => {
-        for (this.i = this.size - 1; this.i > -1; this.i--) if (this.indices[this.i] !== this.n - 1) break;
-        // If the previous for loop finished without breaking, then we've exhausted all combinations:
-        if (this.i === -1) return { done: true, value: undefined };
-        const v = this.indices[this.i] + 1;
-        for (let j = this.i; j < this.size; j++)
-          this.indices[j] = v;
-        return { done: false, value: this.value };
-      }
-      : () => {
-        for (this.i = this.size - 1; this.i > -1; this.i--)
-          if (this.indices[this.i] !== this.i + this.n - this.size) break;
-        // If the previous for loop finished without breaking, then we've exhausted all combinations:
-        if (this.i === -1) return { done: true, value: undefined };
-        this.indices[this.i]++;
-        for (let j = this.i + 1; j < this.size; j++)
-          this.indices[j] = this.indices[j - 1] + 1;
-        return { done: false, value: this.value };
-      };
+    if (this.withReplacement) {
+      for (this.i = this.size - 1; this.i > -1; this.i--) if (this.indices[this.i] !== this.n - 1) break;
+      // If the previous for loop finished without breaking, then we've exhausted all combinations:
+      if (this.i === -1) return { done: true, value: undefined };
+      const v = this.indices[this.i] + 1;
+      for (let j = this.i; j < this.size; j++)
+        this.indices[j] = v;
+      return { done: false, value: this.value };
+    }
+    for (this.i = this.size - 1; this.i > -1; this.i--)
+      if (this.indices[this.i] !== this.i + this.n - this.size) break;
+    // If the previous for loop finished without breaking, then we've exhausted all combinations:
+    if (this.i === -1) return { done: true, value: undefined };
+    this.indices[this.i]++;
+    for (let j = this.i + 1; j < this.size; j++)
+      this.indices[j] = this.indices[j - 1] + 1;
     return { done: false, value: this.value };
   }
 }
