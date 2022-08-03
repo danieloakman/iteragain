@@ -2,6 +2,7 @@ import toArray from '../toArray';
 
 /** Returns the cartesian product of the input `iterators`. */
 export class ProductIterator<T> implements IterableIterator<T[]> {
+  protected done = false;
   protected pools: T[][] = [];
   protected indices: number[];
   protected i: number;
@@ -17,6 +18,7 @@ export class ProductIterator<T> implements IterableIterator<T[]> {
   }
 
   next(): IteratorResult<T[]> {
+    if (this.done) return { done: true, value: undefined };
     const value = this.indices.map((v, i) => this.pools[i][v]);
     for (this.i = 0; this.i < this.indices.length; this.i++) {
       if (this.indices[this.pools.length - this.i - 1] < this.pools[this.pools.length - this.i - 1].length - 1) {
@@ -25,7 +27,7 @@ export class ProductIterator<T> implements IterableIterator<T[]> {
       }
     }
     if (this.i === this.indices.length) {
-      this.next = () => ({ done: true, value: undefined });
+      this.done = true;
       return { done: false, value };
     }
     this.i--;
