@@ -588,7 +588,14 @@ it('iter', async function () {
   );
   // Probably won't end up handling this, as it would slow down `iter` a bit.
   throws(() => iter({ next() {} }).toArray());
-  // console.log(iter({ a: 1, b: { c: 2 } }).flatten().toArray(), [1, 2, 3]);
+  /** @returns post-order-DFS traversal of `obj` by using the `reviver` cb of `JSON.parse`. */
+  function jsonStrParse(obj: any): [string, any][] {
+    const result: any[] = [];
+    JSON.parse(JSON.stringify(obj), (k, v) => (result.push([k, v]), v));
+    return result.slice(0, result.length - 1);
+  }
+  const obj = { a: 1, b: { c: 2, d: { e: 3 } }, f: 4 };
+  equal(iter(obj).map(v => v[0]).toArray(), iter(jsonStrParse(obj)).map(v => v[0]).toArray());
 });
 
 it('partition', async function () {
