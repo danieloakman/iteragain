@@ -59,6 +59,15 @@ r.nth(10); // undefined (the 10th element doesn't exist)
 r.index(4); // 2 (the index of the value 4)
 ```
 
+```js
+import iter from 'iteragain/iter';
+const obj = { a: 1, b: { c: 2, d: { e: 3 }, f: 4 } };
+const keys = iter(obj)
+  .map(([key, _value, _parent]) => key)
+  .toArray();
+  // ['a', 'c', 'e', 'd', 'b', 'f'] Post-order depth first search traversal of `obj`.
+```
+
 ## Inpired by
 
 [iterplus](https://www.npmjs.com/package/iterplus), [iterare](https://www.npmjs.com/package/iterare), [lodash](https://www.npmjs.com/package/lodash), [rxjs](https://www.npmjs.com/package/rxjs) and the Python [itertools](https://docs.python.org/3/library/itertools.html) module. See benchmark section for performance against some of these.
