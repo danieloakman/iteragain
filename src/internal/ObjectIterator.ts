@@ -4,7 +4,7 @@ import RepeatIterator from './RepeatIterator';
 
 /**
  * Iterates through all keys in an object. Optionally provides traversal order.
- * @todo // TODO: Add support for other traversal orders.
+ * @todo // TODO: Add support for BFS traversal order.
  */
 export class ObjectIterator<T extends Record<PropertyKey, any>> implements IterableIterator<ObjectEntry> {
   protected inner: Iterator<ObjectEntry> = null;
@@ -25,18 +25,17 @@ export class ObjectIterator<T extends Record<PropertyKey, any>> implements Itera
       this.inner = null;
       return this.next();
     }
-    if (this.arr.length) {
-      const next = this.arr.shift();
-      if (this.isObject(next[1])) {
-        this.inner = new ConcatIterator([
-          new ObjectIterator(next[1]),
-          new RepeatIterator(next, 1),
-        ]);
-        return this.next();
-      }
-      return { value: next, done: false };
+    if (!this.arr.length) return { done: true, value: undefined };
+    const next = this.arr.shift();
+    if (this.isObject(next[1])) {
+      this.inner = new ConcatIterator(
+        this.traversal === 'post-order-DFS'
+          ? [new ObjectIterator(next[1]), new RepeatIterator(next, 1)]
+          : [new RepeatIterator(next, 1), new ObjectIterator(next[1])],
+      );
+      return this.next();
     }
-    return { done: true, value: undefined };
+    return { value: next, done: false };
   }
 
   protected isObject(value: any): value is NonNullable<object> {
