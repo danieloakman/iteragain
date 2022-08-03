@@ -9,10 +9,6 @@ export class ChunksIterator<T> implements IterableIterator<T[]> {
     return this;
   }
 
-  return(value?: any): IteratorResult<T[], any> {
-    return value;
-  }
-
   next(): IteratorResult<T[]> {
     if (this.done) return { done: true, value: undefined };
     for (let i = 0; i < this.length; i++) {
