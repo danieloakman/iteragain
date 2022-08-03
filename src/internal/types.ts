@@ -45,4 +45,5 @@ export type ObjectBranches<T extends Record<string, unknown>, K = keyof T> = K e
 
 export type ObjectEntries<T extends Record<string, unknown>> = ObjectLeafs<T> | ObjectBranches<T>;
 
+/** A tuple representing the key, value and parent object (in that order) of an entry/key-value pair in an object. */
 export type ObjectEntry<T = any> = [string, T, any];
