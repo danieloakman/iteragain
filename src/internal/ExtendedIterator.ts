@@ -27,7 +27,7 @@ import ChunksIterator from './ChunksIterator';
 import CachedIterator from './CachedIterator';
 import TakeWhileIterator from './TakeWhileIterator';
 import CycleIterator from './CycleIterator';
-import ContinueIterator from './ContinueIterator';
+import ResumeIterator from './ResumeIterator';
 import PermutationsIterator from './PermutationsIterator';
 import FilterMapIterator from './FilterMapIterator';
 import DropWhileIterator from './DropWhileIterator';
@@ -284,16 +284,16 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /**
    * @lazy
-   * Continues this iterator a certain number of times after it's next value returns `{ done: true }`.
-   * @param times The number of times to continue the iterator.
+   * Resumes this iterator a certain number of times after it's next value returns `{ done: true }`.
+   * @param times The number of times to resume the iterator (default: Infinity).
    * @example
-   * const it = iter([1,2,3]).continue(1);
+   * const it = iter([1,2,3]).resume(1);
    * equal(it.toArray(), [1,2]);
    * equal(it.toArray(), [1,2]);
    * equal(it.toArray(), []);
    */
-  public continue(times = Infinity): ExtendedIterator<T> {
-    return new ExtendedIterator(new ContinueIterator(this.iterator, times));
+  public resume(times = Infinity): ExtendedIterator<T> {
+    return new ExtendedIterator(new ResumeIterator(this.iterator, times));
   }
 
   /**

@@ -2,6 +2,7 @@ import chunks from './chunks';
 import combinations from './combinations';
 import compress from './compress';
 import concat from './concat';
+import resume from './resume';
 import count from './count';
 import cycle from './cycle';
 import enumerate from './enumerate';
@@ -24,6 +25,7 @@ export {
   combinations,
   compress,
   concat,
+  resume,
   count,
   cycle,
   enumerate,
@@ -46,6 +48,7 @@ export default {
   combinations,
   compress,
   concat,
+  resume,
   count,
   cycle,
   enumerate,
