@@ -7,10 +7,7 @@ Pure JavaScript, Iterable/Iterator/Generator-function utilities. No dependencies
 
 Iterators and Iterables in Javascript has basically no supporting methods or functions. This package provides easy to use, lazy evaluation methods to save on memory and unnecessary processing. Support with using the already existing `next()` method and usage in "for of" loops, this makes using Iterators as easy as using an Array.
 
-The package is designed around the use of the [ExtendedIterator](https://danieloakman.github.io/iteragain/classes/internal_ExtendedIterator.ExtendedIterator.html) class through calling [iter()](https://danieloakman.github.io/iteragain/functions/iter.iter.html). It's a class that implements and extends the [IterableIterator](https://microsoft.github.io/PowerBI-JavaScript/interfaces/_node_modules_typedoc_node_modules_typescript_lib_lib_es2015_iterable_d_.iterableiterator.html) interface. Methods in this class are designed to provide all of what you can do in the normal [JS Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) and the iterator methods in Python. This class is chainable and looks closely like normal Javascript code instead of the more Python [itertools](https://docs.python.org/3/library/itertools.html) way of doing things:
-`filter(lambda x: x % 2 == 0, map(lambda x: x * x, iterable))`
-
-There is also other standalone utility functions like [range](https://danieloakman.github.io/iteragain/functions/range.range.html), [enumerate](https://danieloakman.github.io/iteragain/functions/enumerate.enumerate.html), [zip](https://danieloakman.github.io/iteragain/functions/zip.zip.html)...
+This package can be used like in Python with standalone functions like [map](https://danieloakman.github.io/iteragain/functions/map.map.html), [filter](https://danieloakman.github.io/iteragain/functions/filter.filter.html), etc. Or be used with method chaining by calling [iter](https://danieloakman.github.io/iteragain/functions/iter.iter.html) which returns an instance of the [ExtendedIterator](https://danieloakman.github.io/iteragain/classes/internal_ExtendedIterator.ExtendedIterator.html) class. Either is supported for however you want to handle iterators.
 
 __You can see the full list of modules and the documentation on everything [here](https://danieloakman.github.io/iteragain/modules.html).__
 
@@ -32,13 +29,16 @@ equal(result1, result2); // Asserts that the results are the same.
 ```js
 // Import from the root index
 import { iter } from 'iteragain';
-// Or from the file itself (tree shakable):
+// Or from the file itself (tree shakeable):
 import iter from 'iteragain/iter';
-const nums = iter([1, 2, 3, 4, 5])
+let nums = iter([1, 2, 3, 4, 5])
   .map(n => n * n)
   .filter(n => n % 2 === 0)
   .toArray();
   // [4, 16]
+// Or use the standalone functions instead of `iter`:
+import { map, filter, toArray } from 'iteragain';
+nums = toArray(filter(map([1, 2, 3, 4, 5], n => n * n), n => n % 2 === 0)); // [4, 16]
 ```
 
 ```js
