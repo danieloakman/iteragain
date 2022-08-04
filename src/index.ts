@@ -31,6 +31,10 @@ import tap from './tap';
 import triplewise from './triplewise';
 import windows from './windows';
 import tee from './tee';
+import reduce from './reduce';
+import quantify from './quantify';
+import every from './every';
+import some from './some';
 
 export {
   chunks,
@@ -42,6 +46,7 @@ export {
   cycle,
   dropWhile,
   enumerate,
+  every,
   filter,
   filterMap,
   flatten,
@@ -53,9 +58,12 @@ export {
   partition,
   permutations,
   product,
+  quantify,
   range,
+  reduce,
   repeat,
   slice,
+  some,
   take,
   takeWhile,
   tap,
@@ -77,6 +85,7 @@ export default {
   cycle,
   dropWhile,
   enumerate,
+  every,
   filter,
   filterMap,
   flatten,
@@ -88,9 +97,12 @@ export default {
   partition,
   permutations,
   product,
+  quantify,
   range,
+  reduce,
   repeat,
   slice,
+  some,
   take,
   takeWhile,
   tap,
