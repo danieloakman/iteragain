@@ -24,6 +24,12 @@ import filter from './filter';
 import filterMap from './filterMap';
 import pairwise from './pairwise';
 import permutations from './permutations';
+import slice from './slice';
+import takeWhile from './takeWhile';
+import map from './map';
+import tap from './tap';
+import triplewise from './triplewise';
+import windows from './windows';
 
 export {
   chunks,
@@ -41,15 +47,21 @@ export {
   isIterable,
   isIterator,
   iter,
+  map,
   pairwise,
   partition,
   permutations,
   product,
   range,
   repeat,
+  slice,
   take,
+  takeWhile,
+  tap,
   toArray,
   toIterator,
+  triplewise,
+  windows,
   zip,
   zipLongest,
 };
@@ -69,15 +81,21 @@ export default {
   isIterable,
   isIterator,
   iter,
+  map,
   pairwise,
   partition,
   permutations,
   product,
   range,
   repeat,
+  slice,
   take,
+  takeWhile,
+  tap,
   toArray,
   toIterator,
+  triplewise,
+  windows,
   zip,
   zipLongest,
 };

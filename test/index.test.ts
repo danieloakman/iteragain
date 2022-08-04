@@ -25,7 +25,14 @@ import {
   filterMap,
   pairwise,
   permutations,
+  slice,
+  takeWhile,
+  map,
+  tap,
+  triplewise,
+  windows,
 } from '../src/index';
+import CachedIterator from '../src/internal/CachedIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
 
 describe('internal', function () {
@@ -461,6 +468,12 @@ describe('internal', function () {
     });
   });
 
+  it('CachedIterator', async function () {
+    const it = new CachedIterator(range(10));
+    equal([...it], [...range(10)]);
+    assert(it.cache.has(3) && it.cache.has(7));
+  });
+
   it('ObjectIterator', async function () {
     const obj = { a: 1 };
     equal([...new ObjectIterator(obj)], [['a', 1, obj]]);
@@ -644,6 +657,13 @@ it('iter', async function () {
   );
 });
 
+it('map', async function () {
+  equal(
+    [...map(range(10), n => n * n)],
+    [0, 1, 4, 9, 16, 25, 36, 49, 64, 81],
+  );
+});
+
 // test pairwise:
 it('pairwise', async function () {
   equal(
@@ -779,6 +799,10 @@ it('resume', async function () {
   equal([...it], [0, 1]);
 });
 
+it('slice', async function () {
+  equal([...slice([1, 2, 3, 4, 5], 1, 3)], [2, 3]);
+});
+
 it('take', async function () {
   const arr = range(10).toArray();
   equal(take(arr, 3), [0, 1, 2]);
@@ -789,10 +813,29 @@ it('take', async function () {
   equal(take(it), [6]);
 });
 
+it('takeWhile', async function () {
+  equal([...takeWhile([1, 2, 3, 4, 5], n => n < 3)], [1, 2]);
+});
+
+it('tap', async function () {
+  const arr: number[] = [];
+  const it = tap([1, 2, 3], n => arr.push(n * 2));
+  equal([...it], [1, 2, 3]);
+  equal(arr, [2, 4, 6]);
+});
+
 it('toIterator', async function () {
   const it = toIterator([1, 2, 3]);
   assert(isIterator(it));
   throws(() => toIterator(null));
+});
+
+it('triplewise', async function () {
+  equal([...triplewise([1, 2, 3, 4, 5])], [[1, 2, 3], [2, 3, 4], [3, 4, 5]]);
+});
+
+it('windows', async function () {
+  equal([...windows([1, 2, 3, 4, 5], 3, 1)], [[1, 2, 3], [2, 3, 4], [3, 4, 5]]);
 });
 
 it('zip', async function () {
