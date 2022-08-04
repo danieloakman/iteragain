@@ -7,7 +7,7 @@ import toIterator from './toIterator';
  * @param arg The input iterator or iterable.
  * @param predicate The function to call for each value.
  */
-export function dropWhile<T>(arg: IteratorOrIterable<T>, predicate: Predicate<T>): IterableIterator<T> {
+export function dropWhile<T>(arg: IteratorOrIterable<T>, predicate: Predicate<T>) {
   return new DropWhileIterator(toIterator(arg), predicate);
 }
 
