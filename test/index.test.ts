@@ -24,436 +24,446 @@ import {
   filter,
   filterMap,
 } from '../src/index';
+import ObjectIterator from '../src/internal/ObjectIterator';
 
-describe('ExtendedIterator', function () {
-  it('does implement IterableIterator', async function () {
-    const iterator = iter([1, 2, 3]);
-    assert(isIterable(iterator) && isIterator(iterator));
-  });
+describe('internal', function () {
+  describe('ExtendedIterator', function () {
+    it('does implement IterableIterator', async function () {
+      const iterator = iter([1, 2, 3]);
+      assert(isIterable(iterator) && isIterator(iterator));
+    });
 
-  it('[Symbol.iterator]', async function () {
-    const iterator1 = iter([1, 2, 3]);
-    equal([...iterator1[Symbol.iterator]()], [1, 2, 3]);
-    equal([...iterator1[Symbol.iterator]()], []);
-    const iterator2 = iter([1, 2, 3]).map(x => x * x);
-    equal([...iterator2[Symbol.iterator]()], [1, 4, 9]);
-    equal([...iterator2[Symbol.iterator]()], []);
-    const iterator3 = iter([1, 2, 3]);
-    for (const x of iterator3) if (x === 2) break;
-    equal([...iterator3], [3]);
-  });
+    it('[Symbol.iterator]', async function () {
+      const iterator1 = iter([1, 2, 3]);
+      equal([...iterator1[Symbol.iterator]()], [1, 2, 3]);
+      equal([...iterator1[Symbol.iterator]()], []);
+      const iterator2 = iter([1, 2, 3]).map(x => x * x);
+      equal([...iterator2[Symbol.iterator]()], [1, 4, 9]);
+      equal([...iterator2[Symbol.iterator]()], []);
+      const iterator3 = iter([1, 2, 3]);
+      for (const x of iterator3) if (x === 2) break;
+      equal([...iterator3], [3]);
+    });
 
-  it('toString', async function () {
-    equal(iter([]).toString(), 'ExtendedIterator');
-  });
+    it('toString', async function () {
+      equal(iter([]).toString(), 'ExtendedIterator');
+    });
 
-  it('map', async function () {
-    equal(
-      iter([1, 2, 3])
-        .map(n => n * n)
-        .map(n => n.toString())
-        .toArray(),
-      ['1', '4', '9'],
-    );
-  });
+    it('map', async function () {
+      equal(
+        iter([1, 2, 3])
+          .map(n => n * n)
+          .map(n => n.toString())
+          .toArray(),
+        ['1', '4', '9'],
+      );
+    });
 
-  it('filter', async function () {
-    equal(
-      iter([1, 2, 3])
-        .filter(n => n % 2 === 0)
-        .toArray(),
-      [2],
-    );
-    equal(
-      iter([1, 2, 3])
-        .filter(n => n < 0)
-        .toArray(),
-      [],
-    );
-    equal(iter([]).filter(Boolean).toArray(), []);
-  });
+    it('filter', async function () {
+      equal(
+        iter([1, 2, 3])
+          .filter(n => n % 2 === 0)
+          .toArray(),
+        [2],
+      );
+      equal(
+        iter([1, 2, 3])
+          .filter(n => n < 0)
+          .toArray(),
+        [],
+      );
+      equal(iter([]).filter(Boolean).toArray(), []);
+    });
 
-  it('filterMap', async function () {
-    equal(
-      iter([1, 2, 3])
-        .filterMap(n => (n % 2 === 0 ? (n * n).toString() : undefined))
-        .toArray(),
-      ['4'],
-    );
-  });
+    it('filterMap', async function () {
+      equal(
+        iter([1, 2, 3])
+          .filterMap(n => (n % 2 === 0 ? (n * n).toString() : undefined))
+          .toArray(),
+        ['4'],
+      );
+    });
 
-  it('reduce', async function () {
-    const sum = (a: any, b: any) => a + b;
-    equal(iter([1, 2, 3]).reduce(sum, 0), 6);
-    equal(iter([1, 2, 3, 4]).reduce(sum), 10);
-    equal(iter([1, 2, 3]).reduce(sum, ''), '123');
-  });
+    it('reduce', async function () {
+      const sum = (a: any, b: any) => a + b;
+      equal(iter([1, 2, 3]).reduce(sum, 0), 6);
+      equal(iter([1, 2, 3, 4]).reduce(sum), 10);
+      equal(iter([1, 2, 3]).reduce(sum, ''), '123');
+    });
 
-  it('quantify', async function () {
-    equal(
-      iter([1, 2, 3]).quantify(n => n > 1),
-      2,
-    );
-  });
+    it('quantify', async function () {
+      equal(
+        iter([1, 2, 3]).quantify(n => n > 1),
+        2,
+      );
+    });
 
-  it('concat', async function () {
-    equal(iter([1, 2, 3]).concat([4, 5, 6]).toArray(), [1, 2, 3, 4, 5, 6]);
-  });
+    it('concat', async function () {
+      equal(iter([1, 2, 3]).concat([4, 5, 6]).toArray(), [1, 2, 3, 4, 5, 6]);
+    });
 
-  it('prepend', async function () {
-    equal(iter([1, 2, 3]).prepend([0]).toArray(), [0, 1, 2, 3]);
-  });
+    it('prepend', async function () {
+      equal(iter([1, 2, 3]).prepend([0]).toArray(), [0, 1, 2, 3]);
+    });
 
-  it('slice', async function () {
-    const arr = [1, 2, 3, 4, 5];
-    equal(iter(arr).slice(2, 4).toArray(), arr.slice(2, 4));
-    equal(iter(arr).slice(2).toArray(), arr.slice(2));
-    notEqual(iter(arr).slice(2, -1).toArray(), arr.slice(2, -1));
-    equal(iter(arr).slice().toArray(), arr.slice());
-  });
+    it('slice', async function () {
+      const arr = [1, 2, 3, 4, 5];
+      equal(iter(arr).slice(2, 4).toArray(), arr.slice(2, 4));
+      equal(iter(arr).slice(2).toArray(), arr.slice(2));
+      notEqual(iter(arr).slice(2, -1).toArray(), arr.slice(2, -1));
+      equal(iter(arr).slice().toArray(), arr.slice());
+    });
 
-  it('flatten', async function () {
-    equal(
-      iter([1, [2], [[3]]])
-        .flatten(1)
-        .toArray(),
-      [1, 2, [3]],
-    );
-    equal(
-      iter([1, [2], [[3]]])
-        .flatten(2)
-        .toArray(),
-      [1, 2, 3],
-    );
-    equal(
-      iter([[[1, [2], [[3]]]]])
-        .flatten()
-        .toArray(),
-      [1, 2, 3],
-    );
-  });
+    it('flatten', async function () {
+      equal(
+        iter([1, [2], [[3]]])
+          .flatten(1)
+          .toArray(),
+        [1, 2, [3]],
+      );
+      equal(
+        iter([1, [2], [[3]]])
+          .flatten(2)
+          .toArray(),
+        [1, 2, 3],
+      );
+      equal(
+        iter([[[1, [2], [[3]]]]])
+          .flatten()
+          .toArray(),
+        [1, 2, 3],
+      );
+    });
 
-  it('every & some', async function () {
-    equal(
-      iter([1, 2, 3]).every(n => n % 2 === 0),
-      false,
-    );
-    equal(
-      iter([2, 4, 6]).every(n => n % 2 === 0),
-      true,
-    );
-    equal(
-      iter([1, 2, 3]).some(n => n % 2 === 0),
-      true,
-    );
-    equal(
-      iter([1, 2, 3]).some(n => n > 3),
-      false,
-    );
-  });
+    it('every & some', async function () {
+      equal(
+        iter([1, 2, 3]).every(n => n % 2 === 0),
+        false,
+      );
+      equal(
+        iter([2, 4, 6]).every(n => n % 2 === 0),
+        true,
+      );
+      equal(
+        iter([1, 2, 3]).some(n => n % 2 === 0),
+        true,
+      );
+      equal(
+        iter([1, 2, 3]).some(n => n > 3),
+        false,
+      );
+    });
 
-  it('enumerate', async function () {
-    equal(
-      iter([1, 2, 3])
-        .enumerate()
-        .map(([i, n]) => [i, n * n])
-        .toArray(),
-      [
+    it('enumerate', async function () {
+      equal(
+        iter([1, 2, 3])
+          .enumerate()
+          .map(([i, n]) => [i, n * n])
+          .toArray(),
+        [
+          [0, 1],
+          [1, 4],
+          [2, 9],
+        ],
+      );
+    });
+
+    it('zip & zipLongest', async function () {
+      equal(
+        iter([1, 2, 3])
+          .zip(iter([4, 5]))
+          .toArray(),
+        [
+          [1, 4],
+          [2, 5],
+        ],
+      );
+      equal(
+        iter([1, 2, 3])
+          .zipLongest(iter([4, 5]))
+          .toArray(),
+        [
+          [1, 4],
+          [2, 5],
+          [3, undefined],
+        ],
+      );
+    });
+
+    it('takeWhile', async function () {
+      equal(
+        iter([1, 4, 6, 4, 1])
+          .takeWhile(n => n < 5)
+          .toArray(),
+        [1, 4],
+      );
+      equal(
+        iter([1, 2, 3])
+          .takeWhile(n => n < 2)
+          .toArray(),
+        [1],
+      );
+      equal(
+        iter([1, 2, 3])
+          .takeWhile(n => n > 2)
+          .toArray(),
+        [],
+      );
+    });
+
+    it('dropWhile', async function () {
+      equal(
+        iter([1, 4, 6, 4, 1])
+          .dropWhile(n => n < 5)
+          .toArray(),
+        [6, 4, 1],
+      );
+      equal(
+        iter([1, 2, 3])
+          .dropWhile(n => n < 2)
+          .toArray(),
+        [2, 3],
+      );
+      equal(
+        iter([1, 2, 3])
+          .dropWhile(n => n > 2)
+          .toArray(),
+        [1, 2, 3],
+      );
+    });
+
+    it('pairwise', async function () {
+      equal(iter([1, 2, 3]).pairwise().toArray(), [
+        [1, 2],
+        [2, 3],
+      ]);
+      equal(iter([1, 2]).pairwise().toArray(), [[1, 2]]);
+      equal(iter([1]).pairwise().toArray(), []);
+      equal(iter([]).pairwise().toArray(), []);
+    });
+
+    it('triplewise', async function () {
+      equal(iter(range(5)).triplewise().toArray(), [
+        [0, 1, 2],
+        [1, 2, 3],
+        [2, 3, 4],
+      ]);
+      equal(iter([]).triplewise().toArray(), []);
+    });
+
+    it('chunks', async function () {
+      equal(iter([1, 2, 3, 4, 5]).chunks(2).toArray(), [[1, 2], [3, 4], [5]]);
+      equal(iter([1, 2, 3, 4, 5]).chunks(3, 0).toArray(), [
+        [1, 2, 3],
+        [4, 5, 0],
+      ]);
+      equal(iter([1, 2, 3, 4, 5]).chunks(6).toArray(), [[1, 2, 3, 4, 5]]);
+      equal(iter([1, 2, 3, 4, 5]).chunks(6, 0).toArray(), [[1, 2, 3, 4, 5, 0]]);
+      equal(iter([]).chunks(5).toArray(), []);
+    });
+
+    it('windows', async function () {
+      equal(iter([1, 2, 3]).windows(1, 1).toArray(), [[1], [2], [3]]);
+      equal(iter([1, 2, 3]).windows(2, 1).toArray(), [
+        [1, 2],
+        [2, 3],
+      ]);
+      equal(iter([1, 2, 3]).windows(3, 1).toArray(), [[1, 2, 3]]);
+      equal(iter([1, 2, 3]).windows(4, 1).toArray(), []);
+      equal(iter([]).windows(5, 1).toArray(), []);
+      equal(iter([1, 2, 3, 4, 5]).windows(2, 3).toArray(), [
+        [1, 2],
+        [4, 5],
+      ]);
+      equal(iter([1, 2, 3, 4, 5]).windows(3, 4, 0).toArray(), [
+        [1, 2, 3],
+        [5, 0, 0],
+      ]);
+    });
+
+    it('cycle', async function () {
+      equal(iter([1, 2, 3]).cycle(2).toArray(), [1, 2, 3, 1, 2, 3, 1, 2, 3]);
+      equal(iter([1, 2, 3]).cycle().take(7), [1, 2, 3, 1, 2, 3, 1]);
+    });
+
+    it('resume', async function () {
+      let iterator = iter([1, 2, 3]).resume(1);
+      equal(iterator.toArray(), [1, 2, 3]);
+      equal(iterator.toArray(), [1, 2, 3]);
+      equal(iterator.toArray(), []);
+      iterator = iter([1, 2, 3]).resume();
+      iter(range(10)).forEach(() => equal(iterator.toArray(), [1, 2, 3]));
+    });
+
+    it('compress', async function () {
+      equal(iter([1, 2, 3]).compress([0, 1, 0]).toArray(), [2]);
+      equal(iter('abcdef').compress([1, 0, 1, 0, 1, 1]).join(''), 'acef');
+    });
+
+    it('permutations', async function () {
+      equal(iter([0, 1]).permutations().toArray(), [
         [0, 1],
-        [1, 4],
-        [2, 9],
-      ],
-    );
+        [1, 0],
+      ]);
+      equal(iter([0, 1, 2]).permutations().toArray(), [
+        [0, 1, 2],
+        [0, 2, 1],
+        [1, 0, 2],
+        [1, 2, 0],
+        [2, 0, 1],
+        [2, 1, 0],
+      ]);
+      equal(iter('abcd').permutations(2).toArray(), [
+        ['a', 'b'],
+        ['a', 'c'],
+        ['a', 'd'],
+        ['b', 'a'],
+        ['b', 'c'],
+        ['b', 'd'],
+        ['c', 'a'],
+        ['c', 'b'],
+        ['c', 'd'],
+        ['d', 'a'],
+        ['d', 'b'],
+        ['d', 'c'],
+      ]);
+      equal(iter('abc').permutations(4).toArray(), []);
+    });
+
+    it('combinations', async function () {
+      equal(iter([0, 1]).combinations(2).toArray(), [[0, 1]]);
+      equal(iter('ABCD').combinations(2).toArray(), [
+        ['A', 'B'],
+        ['A', 'C'],
+        ['A', 'D'],
+        ['B', 'C'],
+        ['B', 'D'],
+        ['C', 'D'],
+      ]);
+      equal(iter('ABC').combinations(2, true).toArray(), [
+        ['A', 'A'],
+        ['A', 'B'],
+        ['A', 'C'],
+        ['B', 'B'],
+        ['B', 'C'],
+        ['C', 'C'],
+      ]);
+      equal(iter(range(4)).combinations(3).toArray(), [
+        [0, 1, 2],
+        [0, 1, 3],
+        [0, 2, 3],
+        [1, 2, 3],
+      ]);
+      equal(iter([0, 1]).combinations(1).toArray(), [[0], [1]]);
+      equal([...iter(range(2)).combinations(5)], []);
+    });
+
+    it('product', async function () {
+      equal(iter('abcd').product(['xy']).toArray(), [
+        ['a', 'x'],
+        ['a', 'y'],
+        ['b', 'x'],
+        ['b', 'y'],
+        ['c', 'x'],
+        ['c', 'y'],
+        ['d', 'x'],
+        ['d', 'y'],
+      ]);
+    });
+
+    it('join', async function () {
+      equal(iter([1, 2, 3]).join(), '1,2,3');
+      equal(iter([1, 2, 3]).join(''), '123');
+      equal(iter([1, 2, 3]).join('-'), '1-2-3');
+    });
+
+    it('find', async function () {
+      equal(
+        iter([1, 2, 3]).find(n => n > 2),
+        3,
+      );
+      equal(
+        iter([1, 2, 3]).find(n => n > 4),
+        undefined,
+      );
+    });
+
+    it('includes', async function () {
+      equal(iter([1, 2, 3]).includes(2), true);
+      equal(iter([1, 2, 3]).includes(4), false);
+    });
+
+    it('exhaust & tap', async function () {
+      let mapWasCalled = 0;
+      const f = () => mapWasCalled++;
+      equal(iter([1, 2, 3]).tap(f).exhaust(), undefined);
+      equal(mapWasCalled, 3);
+      const iterator = iter([1, 2, 3]);
+      mapWasCalled = 0;
+      equal(iterator.tap(f).exhaust(2), undefined);
+      equal(mapWasCalled, 2);
+      equal(iterator.toArray(), [3]);
+    });
+
+    it('peek', async function () {
+      const iterator = iter([1, 2, 3, 4, 5]);
+      equal(iterator.peek(), 1);
+      equal(iterator.peek(1), [1]);
+      equal(iterator.peek(3), [1, 2, 3]);
+      equal(iterator.toArray(), [1, 2, 3, 4, 5]);
+      equal(iterator.peek(), undefined);
+      equal(iterator.peek(3), []);
+      equal(iter([1]).peek(2), [1]);
+    });
+
+    it('take', async function () {
+      const iterator = iter([1, 2, 3, 4, 5]);
+      equal(iterator.take(), 1);
+      equal(iterator.take(2), [2, 3]);
+      equal(iterator.take(1), [4]);
+      equal(iterator.toArray(), [5]);
+      equal(iterator.take(), undefined);
+      equal(iterator.take(3), []);
+      equal(iter([1]).take(2), [1]);
+    });
+
+    it('partition', async function () {
+      equal(
+        iter([1, 2, 3, 4, 5]).partition(n => n % 2 === 0),
+        [
+          [1, 3, 5],
+          [2, 4],
+        ],
+      );
+    });
+
+    it('nth', async function () {
+      equal(iter([1, 2, 3, 4, 5]).nth(2), 3);
+      equal(iter([1, 2, 3, 4, 5]).nth(5), undefined);
+      equal(iter([1, 2, 3, 4, 5]).nth(-6), undefined);
+    });
+
+    it('toSet', async function () {
+      const nums = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      const set = iter(nums)
+        .filter(n => n % 2 === 0)
+        .toSet();
+      assert(nums.filter(n => n % 2 === 0).every(n => set.has(n)));
+    });
+
+    it('toMap', async function () {
+      const map = iter(range(10))
+        .map(n => [n, n * 2])
+        .toMap<number, number>();
+      iter(range(10)).forEach(n => assert(map.get(n) === n * 2));
+    });
   });
 
-  it('zip & zipLongest', async function () {
-    equal(
-      iter([1, 2, 3])
-        .zip(iter([4, 5]))
-        .toArray(),
-      [
-        [1, 4],
-        [2, 5],
-      ],
-    );
-    equal(
-      iter([1, 2, 3])
-        .zipLongest(iter([4, 5]))
-        .toArray(),
-      [
-        [1, 4],
-        [2, 5],
-        [3, undefined],
-      ],
-    );
-  });
-
-  it('takeWhile', async function () {
-    equal(
-      iter([1, 4, 6, 4, 1])
-        .takeWhile(n => n < 5)
-        .toArray(),
-      [1, 4],
-    );
-    equal(
-      iter([1, 2, 3])
-        .takeWhile(n => n < 2)
-        .toArray(),
-      [1],
-    );
-    equal(
-      iter([1, 2, 3])
-        .takeWhile(n => n > 2)
-        .toArray(),
-      [],
-    );
-  });
-
-  it('dropWhile', async function () {
-    equal(
-      iter([1, 4, 6, 4, 1])
-        .dropWhile(n => n < 5)
-        .toArray(),
-      [6, 4, 1],
-    );
-    equal(
-      iter([1, 2, 3])
-        .dropWhile(n => n < 2)
-        .toArray(),
-      [2, 3],
-    );
-    equal(
-      iter([1, 2, 3])
-        .dropWhile(n => n > 2)
-        .toArray(),
-      [1, 2, 3],
-    );
-  });
-
-  it('pairwise', async function () {
-    equal(iter([1, 2, 3]).pairwise().toArray(), [
-      [1, 2],
-      [2, 3],
-    ]);
-    equal(iter([1, 2]).pairwise().toArray(), [[1, 2]]);
-    equal(iter([1]).pairwise().toArray(), []);
-    equal(iter([]).pairwise().toArray(), []);
-  });
-
-  it('triplewise', async function () {
-    equal(iter(range(5)).triplewise().toArray(), [
-      [0, 1, 2],
-      [1, 2, 3],
-      [2, 3, 4],
-    ]);
-    equal(iter([]).triplewise().toArray(), []);
-  });
-
-  it('chunks', async function () {
-    equal(iter([1, 2, 3, 4, 5]).chunks(2).toArray(), [[1, 2], [3, 4], [5]]);
-    equal(iter([1, 2, 3, 4, 5]).chunks(3, 0).toArray(), [
-      [1, 2, 3],
-      [4, 5, 0],
-    ]);
-    equal(iter([1, 2, 3, 4, 5]).chunks(6).toArray(), [[1, 2, 3, 4, 5]]);
-    equal(iter([1, 2, 3, 4, 5]).chunks(6, 0).toArray(), [[1, 2, 3, 4, 5, 0]]);
-    equal(iter([]).chunks(5).toArray(), []);
-  });
-
-  it('windows', async function () {
-    equal(iter([1, 2, 3]).windows(1, 1).toArray(), [[1], [2], [3]]);
-    equal(iter([1, 2, 3]).windows(2, 1).toArray(), [
-      [1, 2],
-      [2, 3],
-    ]);
-    equal(iter([1, 2, 3]).windows(3, 1).toArray(), [[1, 2, 3]]);
-    equal(iter([1, 2, 3]).windows(4, 1).toArray(), []);
-    equal(iter([]).windows(5, 1).toArray(), []);
-    equal(iter([1, 2, 3, 4, 5]).windows(2, 3).toArray(), [
-      [1, 2],
-      [4, 5],
-    ]);
-    equal(iter([1, 2, 3, 4, 5]).windows(3, 4, 0).toArray(), [
-      [1, 2, 3],
-      [5, 0, 0],
-    ]);
-  });
-
-  it('cycle', async function () {
-    equal(iter([1, 2, 3]).cycle(2).toArray(), [1, 2, 3, 1, 2, 3, 1, 2, 3]);
-    equal(iter([1, 2, 3]).cycle().take(7), [1, 2, 3, 1, 2, 3, 1]);
-  });
-
-  it('resume', async function () {
-    let iterator = iter([1, 2, 3]).resume(1);
-    equal(iterator.toArray(), [1, 2, 3]);
-    equal(iterator.toArray(), [1, 2, 3]);
-    equal(iterator.toArray(), []);
-    iterator = iter([1, 2, 3]).resume();
-    iter(range(10)).forEach(() => equal(iterator.toArray(), [1, 2, 3]));
-  });
-
-  it('compress', async function () {
-    equal(iter([1, 2, 3]).compress([0, 1, 0]).toArray(), [2]);
-    equal(iter('abcdef').compress([1, 0, 1, 0, 1, 1]).join(''), 'acef');
-  });
-
-  it('permutations', async function () {
-    equal(iter([0, 1]).permutations().toArray(), [
-      [0, 1],
-      [1, 0],
-    ]);
-    equal(iter([0, 1, 2]).permutations().toArray(), [
-      [0, 1, 2],
-      [0, 2, 1],
-      [1, 0, 2],
-      [1, 2, 0],
-      [2, 0, 1],
-      [2, 1, 0],
-    ]);
-    equal(iter('abcd').permutations(2).toArray(), [
-      ['a', 'b'],
-      ['a', 'c'],
-      ['a', 'd'],
-      ['b', 'a'],
-      ['b', 'c'],
-      ['b', 'd'],
-      ['c', 'a'],
-      ['c', 'b'],
-      ['c', 'd'],
-      ['d', 'a'],
-      ['d', 'b'],
-      ['d', 'c'],
-    ]);
-    equal(iter('abc').permutations(4).toArray(), []);
-  });
-
-  it('combinations', async function () {
-    equal(iter([0, 1]).combinations(2).toArray(), [[0, 1]]);
-    equal(iter('ABCD').combinations(2).toArray(), [
-      ['A', 'B'],
-      ['A', 'C'],
-      ['A', 'D'],
-      ['B', 'C'],
-      ['B', 'D'],
-      ['C', 'D'],
-    ]);
-    equal(iter('ABC').combinations(2, true).toArray(), [
-      ['A', 'A'],
-      ['A', 'B'],
-      ['A', 'C'],
-      ['B', 'B'],
-      ['B', 'C'],
-      ['C', 'C'],
-    ]);
-    equal(iter(range(4)).combinations(3).toArray(), [
-      [0, 1, 2],
-      [0, 1, 3],
-      [0, 2, 3],
-      [1, 2, 3],
-    ]);
-    equal(iter([0, 1]).combinations(1).toArray(), [[0], [1]]);
-    equal([...iter(range(2)).combinations(5)], []);
-  });
-
-  it('product', async function () {
-    equal(iter('abcd').product(['xy']).toArray(), [
-      ['a', 'x'],
-      ['a', 'y'],
-      ['b', 'x'],
-      ['b', 'y'],
-      ['c', 'x'],
-      ['c', 'y'],
-      ['d', 'x'],
-      ['d', 'y'],
-    ]);
-  });
-
-  it('join', async function () {
-    equal(iter([1, 2, 3]).join(), '1,2,3');
-    equal(iter([1, 2, 3]).join(''), '123');
-    equal(iter([1, 2, 3]).join('-'), '1-2-3');
-  });
-
-  it('find', async function () {
-    equal(
-      iter([1, 2, 3]).find(n => n > 2),
-      3,
-    );
-    equal(
-      iter([1, 2, 3]).find(n => n > 4),
-      undefined,
-    );
-  });
-
-  it('includes', async function () {
-    equal(iter([1, 2, 3]).includes(2), true);
-    equal(iter([1, 2, 3]).includes(4), false);
-  });
-
-  it('exhaust & tap', async function () {
-    let mapWasCalled = 0;
-    const f = () => mapWasCalled++;
-    equal(iter([1, 2, 3]).tap(f).exhaust(), undefined);
-    equal(mapWasCalled, 3);
-    const iterator = iter([1, 2, 3]);
-    mapWasCalled = 0;
-    equal(iterator.tap(f).exhaust(2), undefined);
-    equal(mapWasCalled, 2);
-    equal(iterator.toArray(), [3]);
-  });
-
-  it('peek', async function () {
-    const iterator = iter([1, 2, 3, 4, 5]);
-    equal(iterator.peek(), 1);
-    equal(iterator.peek(1), [1]);
-    equal(iterator.peek(3), [1, 2, 3]);
-    equal(iterator.toArray(), [1, 2, 3, 4, 5]);
-    equal(iterator.peek(), undefined);
-    equal(iterator.peek(3), []);
-    equal(iter([1]).peek(2), [1]);
-  });
-
-  it('take', async function () {
-    const iterator = iter([1, 2, 3, 4, 5]);
-    equal(iterator.take(), 1);
-    equal(iterator.take(2), [2, 3]);
-    equal(iterator.take(1), [4]);
-    equal(iterator.toArray(), [5]);
-    equal(iterator.take(), undefined);
-    equal(iterator.take(3), []);
-    equal(iter([1]).take(2), [1]);
-  });
-
-  it('partition', async function () {
-    equal(
-      iter([1, 2, 3, 4, 5]).partition(n => n % 2 === 0),
-      [
-        [1, 3, 5],
-        [2, 4],
-      ],
-    );
-  });
-
-  it('nth', async function () {
-    equal(iter([1, 2, 3, 4, 5]).nth(2), 3);
-    equal(iter([1, 2, 3, 4, 5]).nth(5), undefined);
-    equal(iter([1, 2, 3, 4, 5]).nth(-6), undefined);
-  });
-
-  it('toSet', async function () {
-    const nums = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const set = iter(nums)
-      .filter(n => n % 2 === 0)
-      .toSet();
-    assert(nums.filter(n => n % 2 === 0).every(n => set.has(n)));
-  });
-
-  it('toMap', async function () {
-    const map = iter(range(10))
-      .map(n => [n, n * 2])
-      .toMap<number, number>();
-    iter(range(10)).forEach(n => assert(map.get(n) === n * 2));
+  it('ObjectIterator', async function () {
+    const obj = { a: 1 };
+    equal([...new ObjectIterator(obj)], [['a', 1, obj]]);
+    const obj2 = { a: 1, b: { c: 2, d: { e: 3 } }, f: 4 };
+    equal([...new ObjectIterator(obj2, 'pre-order-DFS')].map(([k]) => k), ['a', 'b', 'c', 'e', 'd', 'f']);
   });
 });
 
@@ -622,9 +632,7 @@ it('iter', async function () {
   }
   const obj = { a: 1, b: { c: 2, d: { e: 3 } }, f: 4 };
   equal(
-    iter(obj)
-      .map(v => v[0])
-      .toArray(),
+    [...iter(obj).map(v => v[0])],
     iter(jsonStrParse(obj))
       .map(v => v[0])
       .toArray(),
@@ -755,8 +763,8 @@ it('take', async function () {
 });
 
 it('toIterator', async function () {
-  const i = toIterator([1, 2, 3]);
-  assert(isIterator(i));
+  const it = toIterator([1, 2, 3]);
+  assert(isIterator(it));
   throws(() => toIterator(null));
 });
 

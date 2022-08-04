@@ -46,9 +46,9 @@ export class ObjectIterator<T extends Record<PropertyKey, any>> implements Itera
     for (const key of Object.keys(obj)) this.arr.push([key, obj[key], obj]);
   }
 
-  protected unshift(obj: any) {
-    for (const key of Object.keys(obj)) this.arr.unshift([key, obj[key], obj]);
-  }
+  // protected unshift(obj: any) {
+  //   for (const key of Object.keys(obj)) this.arr.unshift([key, obj[key], obj]);
+  // }
 }
 
 export default ObjectIterator;
