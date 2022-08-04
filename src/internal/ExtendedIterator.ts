@@ -288,8 +288,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param times The number of times to resume the iterator (default: Infinity).
    * @example
    * const it = iter([1,2,3]).resume(1);
-   * equal(it.toArray(), [1,2]);
-   * equal(it.toArray(), [1,2]);
+   * equal(it.toArray(), [1,2,3]);
+   * equal(it.toArray(), [1,2,3]);
    * equal(it.toArray(), []);
    */
   public resume(times = Infinity): ExtendedIterator<T> {

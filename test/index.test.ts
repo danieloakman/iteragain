@@ -19,6 +19,7 @@ import {
   chunks,
   combinations,
   compress,
+  resume,
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
@@ -280,7 +281,7 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).cycle().take(7), [1, 2, 3, 1, 2, 3, 1]);
   });
 
-  it('continue', async function () {
+  it('resume', async function () {
     let iterator = iter([1, 2, 3]).resume(1);
     equal(iterator.toArray(), [1, 2, 3]);
     equal(iterator.toArray(), [1, 2, 3]);
@@ -527,8 +528,8 @@ it('count', async function () {
 });
 
 it('cycle', async function () {
-  equal(take(cycle([1, 2, 3], 10), 10), [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]);
-  equal(take(cycle(range(3)), 5), [0, 1, 2, 0, 1]);
+  equal(take(cycle([1, 2, 3]), 10), [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]);
+  equal([...cycle(range(3), 1)], [0, 1, 2, 0, 1, 2]);
 });
 
 it('enumerate', async function () {
@@ -719,6 +720,13 @@ it('range', async function () {
 it('repeat', async function () {
   equal(take(repeat(1), 5), [1, 1, 1, 1, 1]);
   equal([...repeat(1, 5)], [1, 1, 1, 1, 1]);
+});
+
+it('resume', async function () {
+  let it = resume(range(2), 1);
+  equal([...it, ...it, ...it], [0, 1, 0, 1]);
+  it = resume(range(2));
+  equal([...it], [0, 1]);
 });
 
 it('take', async function () {
