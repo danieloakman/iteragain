@@ -30,6 +30,7 @@ import map from './map';
 import tap from './tap';
 import triplewise from './triplewise';
 import windows from './windows';
+import tee from './tee';
 
 export {
   chunks,
@@ -58,6 +59,7 @@ export {
   take,
   takeWhile,
   tap,
+  tee,
   toArray,
   toIterator,
   triplewise,
@@ -92,6 +94,7 @@ export default {
   take,
   takeWhile,
   tap,
+  tee,
   toArray,
   toIterator,
   triplewise,

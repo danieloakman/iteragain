@@ -24,7 +24,6 @@ import ZipLongestIterator from './ZipLongestIterator';
 import TapIterator from './TapIterator';
 import TriplewiseIterator from './TripleWiseIterator';
 import ChunksIterator from './ChunksIterator';
-import CachedIterator from './CachedIterator';
 import TakeWhileIterator from './TakeWhileIterator';
 import CycleIterator from './CycleIterator';
 import ResumeIterator from './ResumeIterator';
@@ -34,6 +33,7 @@ import DropWhileIterator from './DropWhileIterator';
 import CompressIterator from './CompressIterator';
 import ProductIterator from './ProductIterator';
 import CombinationsIterator from './CombinationsIterator';
+import tee from '../tee';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -246,30 +246,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param n The number of independent iterators to create.
    */
   public tee<N extends number>(n: N): Tuple<ExtendedIterator<T>, N> {
-    const cachedIterator = new CachedIterator(this.iterator);
-    const indices = new Array(n).fill(0);
-    // let currentLow = 0;
-    return Array.from(
-      { length: n },
-      (_, i) =>
-        new ExtendedIterator({
-          next(): IteratorResult<T> {
-            while (!cachedIterator.cache.has(indices[i]) && !cachedIterator.next().done);
-            const value = cachedIterator.cache.get(indices[i]);
-            if (value === undefined) return { done: true, value: undefined };
-            // const low = Math.min(...indices) - 1;
-            // if (low > currentLow) {
-            //   currentLow = low;
-            //   for (let i = currentLow; i > -1; i--) {
-            //     if (!cachedIterator.cache.has(i)) break;
-            //     cachedIterator.cache.delete(i);
-            //   }
-            // }
-            indices[i]++;
-            return { done: false, value };
-          },
-        }),
-    ) as Tuple<ExtendedIterator<T>, N>;
+    return tee(this.iterator, n).map(it => new ExtendedIterator(it)) as Tuple<ExtendedIterator<T>, N>;
   }
 
   /**

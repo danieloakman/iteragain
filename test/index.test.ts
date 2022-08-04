@@ -31,6 +31,7 @@ import {
   tap,
   triplewise,
   windows,
+  tee,
 } from '../src/index';
 import CachedIterator from '../src/internal/CachedIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -290,6 +291,12 @@ describe('internal', function () {
       ]);
     });
 
+    it('tee', async function () {
+      const [a, b] = iter([1, 2, 3]).tee(2);
+      equal(a.toArray(), [1, 2, 3]);
+      equal(b.toArray(), [1, 2, 3]);
+    });
+
     it('cycle', async function () {
       equal(iter([1, 2, 3]).cycle(2).toArray(), [1, 2, 3, 1, 2, 3, 1, 2, 3]);
       equal(iter([1, 2, 3]).cycle().take(7), [1, 2, 3, 1, 2, 3, 1]);
@@ -483,52 +490,6 @@ describe('internal', function () {
       ['a', 'b', 'c', 'e', 'd', 'f'],
     );
   });
-});
-
-it('tee', async function () {
-  // this.timeout(60000);
-  let [a, b] = iter([1, 2, 3]).tee(2);
-  a = a.map(x => x * x);
-  b = b.map(x => x + x);
-  equal(a.take(), 1);
-  equal(b.take(2), [2, 4]);
-  equal(a.toArray(), [4, 9]);
-  equal(b.toArray(), [6]);
-  // const suite = setupSuite('tee');
-  // const SIZE = 1e1;
-  // suite.add('no clear', () => {
-  //   const [a, b] = range(SIZE).tee(2);
-  //   a.map(x => x * x).toArray();
-  //   b.map(x => x + x).toArray();
-  // });
-  // suite.add('clear', () => {
-  //   const [a, b] = range(SIZE).tee(2, true);
-  //   a.map(x => x * x).toArray();
-  //   b.map(x => x + x).toArray();
-  // });
-  // suite.add('no clear, parallel', () => {
-  //   let [a, b] = range(SIZE).tee(2);
-  //   a = a.map(x => x * x);
-  //   b = b.map(x => x + x);
-  //   while (true) {
-  //     const values: any[] = [];
-  //     for (const i of [a, b])
-  //       values.push(i.yield());
-  //     if (values.every(v => v === undefined)) break;
-  //   }
-  // });
-  // suite.add('clear, parallel', () => {
-  //   let [a, b] = range(SIZE).tee(2, true);
-  //   a = a.map(x => x * x);
-  //   b = b.map(x => x + x);
-  //   while (true) {
-  //     const values: any[] = [];
-  //     for (const i of [a, b])
-  //       values.push(i.yield());
-  //     if (values.every(v => v === undefined)) break;
-  //   }
-  // });
-  // suite.run();
 });
 
 it('chunks', async function () {
@@ -822,6 +783,53 @@ it('tap', async function () {
   const it = tap([1, 2, 3], n => arr.push(n * 2));
   equal([...it], [1, 2, 3]);
   equal(arr, [2, 4, 6]);
+});
+
+it('tee', async function () {
+  // this.timeout(60000);
+  let [a, b] = tee([1, 2, 3], 2).map(v => iter(v));
+  a = a.map(x => x * x);
+  b = b.map(x => x + x);
+  equal(a.take(), 1);
+  equal(b.take(2), [2, 4]);
+  equal(a.toArray(), [4, 9]);
+  equal(b.toArray(), [6]);
+  equal([...tee([1, 2, 3], 1)[0]], [1, 2, 3]);
+  // const suite = setupSuite('tee');
+  // const SIZE = 1e1;
+  // suite.add('no clear', () => {
+  //   const [a, b] = range(SIZE).tee(2);
+  //   a.map(x => x * x).toArray();
+  //   b.map(x => x + x).toArray();
+  // });
+  // suite.add('clear', () => {
+  //   const [a, b] = range(SIZE).tee(2, true);
+  //   a.map(x => x * x).toArray();
+  //   b.map(x => x + x).toArray();
+  // });
+  // suite.add('no clear, parallel', () => {
+  //   let [a, b] = range(SIZE).tee(2);
+  //   a = a.map(x => x * x);
+  //   b = b.map(x => x + x);
+  //   while (true) {
+  //     const values: any[] = [];
+  //     for (const i of [a, b])
+  //       values.push(i.yield());
+  //     if (values.every(v => v === undefined)) break;
+  //   }
+  // });
+  // suite.add('clear, parallel', () => {
+  //   let [a, b] = range(SIZE).tee(2, true);
+  //   a = a.map(x => x * x);
+  //   b = b.map(x => x + x);
+  //   while (true) {
+  //     const values: any[] = [];
+  //     for (const i of [a, b])
+  //       values.push(i.yield());
+  //     if (values.every(v => v === undefined)) break;
+  //   }
+  // });
+  // suite.run();
 });
 
 it('toIterator', async function () {
