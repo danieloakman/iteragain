@@ -17,6 +17,8 @@ import {
   product,
   take,
   chunks,
+  combinations,
+  compress,
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
@@ -182,11 +184,6 @@ describe('ExtendedIterator', function () {
     );
   });
 
-  it('take', async function () {
-    equal(iter([1, 2, 3]).take(2).toArray(), [1, 2]);
-    equal(iter([1, 2, 3]).take(0).toArray(), []);
-  });
-
   it('takeWhile', async function () {
     equal(
       iter([1, 4, 6, 4, 1])
@@ -208,35 +205,26 @@ describe('ExtendedIterator', function () {
     );
   });
 
-  for (const method of ['skip', 'drop'] as const) {
-    it(method, async function () {
-      equal(iter([1, 2, 3])[method](2).toArray(), [3]);
-      equal(iter([1, 2, 3])[method](0).toArray(), [1, 2, 3]);
-    });
-  }
-
-  for (const method of ['skipWhile', 'dropWhile'] as const) {
-    it(method, async function () {
-      equal(
-        iter([1, 4, 6, 4, 1])
-          [method](n => n < 5)
-          .toArray(),
-        [6, 4, 1],
-      );
-      equal(
-        iter([1, 2, 3])
-          [method](n => n < 2)
-          .toArray(),
-        [2, 3],
-      );
-      equal(
-        iter([1, 2, 3])
-          [method](n => n > 2)
-          .toArray(),
-        [1, 2, 3],
-      );
-    });
-  }
+  it('dropWhile', async function () {
+    equal(
+      iter([1, 4, 6, 4, 1])
+        .dropWhile(n => n < 5)
+        .toArray(),
+      [6, 4, 1],
+    );
+    equal(
+      iter([1, 2, 3])
+        .dropWhile(n => n < 2)
+        .toArray(),
+      [2, 3],
+    );
+    equal(
+      iter([1, 2, 3])
+        .dropWhile(n => n > 2)
+        .toArray(),
+      [1, 2, 3],
+    );
+  });
 
   it('pairwise', async function () {
     equal(iter([1, 2, 3]).pairwise().toArray(), [
@@ -249,7 +237,7 @@ describe('ExtendedIterator', function () {
   });
 
   it('triplewise', async function () {
-    equal(range(5).triplewise().toArray(), [
+    equal(iter(range(5)).triplewise().toArray(), [
       [0, 1, 2],
       [1, 2, 3],
       [2, 3, 4],
@@ -289,7 +277,7 @@ describe('ExtendedIterator', function () {
 
   it('cycle', async function () {
     equal(iter([1, 2, 3]).cycle(2).toArray(), [1, 2, 3, 1, 2, 3, 1, 2, 3]);
-    equal(iter([1, 2, 3]).cycle().take(7).toArray(), [1, 2, 3, 1, 2, 3, 1]);
+    equal(iter([1, 2, 3]).cycle().take(7), [1, 2, 3, 1, 2, 3, 1]);
   });
 
   it('continue', async function () {
@@ -298,7 +286,7 @@ describe('ExtendedIterator', function () {
     equal(iterator.toArray(), [1, 2, 3]);
     equal(iterator.toArray(), []);
     iterator = iter([1, 2, 3]).continue();
-    range(10).forEach(() => equal(iterator.toArray(), [1, 2, 3]));
+    iter(range(10)).forEach(() => equal(iterator.toArray(), [1, 2, 3]));
   });
 
   it('compress', async function () {
@@ -422,15 +410,15 @@ describe('ExtendedIterator', function () {
     equal(iter([1]).peek(2), [1]);
   });
 
-  it('yield', async function () {
+  it('take', async function () {
     const iterator = iter([1, 2, 3, 4, 5]);
-    equal(iterator.yield(), 1);
-    equal(iterator.yield(2), [2, 3]);
-    equal(iterator.yield(1), [4]);
+    equal(iterator.take(), 1);
+    equal(iterator.take(2), [2, 3]);
+    equal(iterator.take(1), [4]);
     equal(iterator.toArray(), [5]);
-    equal(iterator.yield(), undefined);
-    equal(iterator.yield(3), []);
-    equal(iter([1]).yield(2), [1]);
+    equal(iterator.take(), undefined);
+    equal(iterator.take(3), []);
+    equal(iter([1]).take(2), [1]);
   });
 
   it('partition', async function () {
@@ -458,10 +446,10 @@ describe('ExtendedIterator', function () {
   });
 
   it('toMap', async function () {
-    const map = range(10)
+    const map = iter(range(10))
       .map(n => [n, n * 2])
       .toMap<number, number>();
-    range(10).forEach(n => assert(map.get(n) === n * 2));
+    iter(range(10)).forEach(n => assert(map.get(n) === n * 2));
   });
 });
 
@@ -470,8 +458,8 @@ it('tee', async function () {
   let [a, b] = iter([1, 2, 3]).tee(2);
   a = a.map(x => x * x);
   b = b.map(x => x + x);
-  equal(a.yield(), 1);
-  equal(b.yield(2), [2, 4]);
+  equal(a.take(), 1);
+  equal(b.take(2), [2, 4]);
   equal(a.toArray(), [4, 9]);
   equal(b.toArray(), [6]);
   // const suite = setupSuite('tee');
@@ -522,12 +510,20 @@ it('chunks', async function () {
   // equal(iter([]).chunks(5).toArray(), []);
 });
 
+it('combinations', async function () {
+  equal([...combinations([0, 1], 2)], [[0, 1]]);
+});
+
+it('compress', async function () {
+  equal([...compress([1, 2, 3, 4, 5], [1, 1, 0, 0, 1])], [1, 2, 5]);
+});
+
 it('concat', async function () {
   equal([...concat([1, 2, 3], [], range(4, 7))], [1, 2, 3, 4, 5, 6]);
 });
 
 it('count', async function () {
-  equal(count().take(10).toArray(), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  equal(take(count(), 10), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 });
 
 it('cycle', async function () {
@@ -678,10 +674,10 @@ it('range', async function () {
   equal([...range(10, 10)], []);
   equal([...range(10)], [...range(0, 10, 1)]);
   equal([...range(10)], range(10).toArray());
-  equal(range(2, 1, 1).toArray(), []);
-  equal(range(Infinity).take(10).toArray(), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-  equal(range(-Infinity).take(10).toArray(), [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]);
-  equal(range(1, 0).toArray(), [1]);
+  equal([...range(2, 1, 1)], []);
+  equal(take(range(Infinity), 10), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  equal(take(range(-Infinity), 10), [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]);
+  equal([...range(1, 0)], [1]);
   equal(range(10, 0, 1).toArray(), []);
   equal(range(10).nth(-1), 9);
   equal(range(10).nth(10), undefined);

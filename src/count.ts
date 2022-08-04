@@ -1,4 +1,4 @@
-import { Range } from './range';
+import RangeIterator from './internal/RangeIterator';
 
 /**
  * Creates an infinite iterator that returns numbers starting from `start` with `step` added to each iteration.
@@ -6,7 +6,7 @@ import { Range } from './range';
  * @param step The number to add to each iteration (default: 1)
  */
 export function count(start = 0, step = 1) {
-  return new Range(start, Infinity, step);
+  return new RangeIterator(start, Infinity, step);
 }
 
 export default count;

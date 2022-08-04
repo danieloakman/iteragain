@@ -15,7 +15,7 @@ export class PermutationsIterator<T, Size extends number> implements IterableIte
     this.pool = toArray(iterator);
     this.size = size ?? this.pool.length as Size;
     if (this.size > this.pool.length) this.next = () => ({ done: true, value: undefined });
-    this.indices = toArray(new RangeIterator(0, this.pool.length, 1, 1));
+    this.indices = toArray(new RangeIterator(0, this.pool.length));
     this.cycles = toArray(new RangeIterator(this.pool.length, this.pool.length - this.size, -1));
   }
 

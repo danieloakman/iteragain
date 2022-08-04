@@ -1,4 +1,6 @@
 import chunks from './chunks';
+import combinations from './combinations';
+import compress from './compress';
 import concat from './concat';
 import count from './count';
 import cycle from './cycle';
@@ -19,6 +21,8 @@ import zipLongest from './zipLongest';
 
 export {
   chunks,
+  combinations,
+  compress,
   concat,
   count,
   cycle,
@@ -39,6 +43,8 @@ export {
 };
 export default {
   chunks,
+  combinations,
+  compress,
   concat,
   count,
   cycle,
