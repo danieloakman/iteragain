@@ -20,6 +20,8 @@ import toArray from './toArray';
 import toIterator from './toIterator';
 import zip from './zip';
 import zipLongest from './zipLongest';
+import filter from './filter';
+import filterMap from './filterMap';
 
 export {
   chunks,
@@ -31,6 +33,8 @@ export {
   cycle,
   dropWhile,
   enumerate,
+  filter,
+  filterMap,
   flatten,
   isIterable,
   isIterator,
@@ -55,6 +59,8 @@ export default {
   cycle,
   dropWhile,
   enumerate,
+  filter,
+  filterMap,
   flatten,
   isIterable,
   isIterator,

@@ -74,10 +74,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /**
    * @lazy
+   * Maps and filters the input iterator in the same `iteratee` function.
    * @param iteratee A function that maps each value in this iterator to a new value and also filters out any that
    * return a nullish value.
    */
-  public filterMap<R>(iteratee: (value: T) => R): ExtendedIterator<NonNullable<R>> {
+  public filterMap<R>(iteratee: Iteratee<T, R>): ExtendedIterator<NonNullable<R>> {
     return new ExtendedIterator(new FilterMapIterator(this.iterator, iteratee));
   }
 

@@ -21,6 +21,8 @@ import {
   compress,
   resume,
   dropWhile,
+  filter,
+  filterMap,
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
@@ -545,6 +547,14 @@ it('enumerate', async function () {
       [1, { b: 2 }],
     ],
   );
+});
+
+it('filter', async function () {
+  equal([...filter(range(10), n => n % 2 === 0)], [0, 2, 4, 6, 8]);
+});
+
+it('filterMap', async function () {
+  equal([...filterMap(range(10), n => (n % 2 === 0 ? n : null))], [0, 2, 4, 6, 8]);
 });
 
 it('flatten', async function () {
