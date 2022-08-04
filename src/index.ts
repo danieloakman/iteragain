@@ -22,6 +22,8 @@ import zip from './zip';
 import zipLongest from './zipLongest';
 import filter from './filter';
 import filterMap from './filterMap';
+import pairwise from './pairwise';
+import permutations from './permutations';
 
 export {
   chunks,
@@ -39,7 +41,9 @@ export {
   isIterable,
   isIterator,
   iter,
+  pairwise,
   partition,
+  permutations,
   product,
   range,
   repeat,
@@ -65,7 +69,9 @@ export default {
   isIterable,
   isIterator,
   iter,
+  pairwise,
   partition,
+  permutations,
   product,
   range,
   repeat,

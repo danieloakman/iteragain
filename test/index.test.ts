@@ -23,6 +23,8 @@ import {
   dropWhile,
   filter,
   filterMap,
+  pairwise,
+  permutations,
 } from '../src/index';
 import ObjectIterator from '../src/internal/ObjectIterator';
 
@@ -463,7 +465,10 @@ describe('internal', function () {
     const obj = { a: 1 };
     equal([...new ObjectIterator(obj)], [['a', 1, obj]]);
     const obj2 = { a: 1, b: { c: 2, d: { e: 3 } }, f: 4 };
-    equal([...new ObjectIterator(obj2, 'pre-order-DFS')].map(([k]) => k), ['a', 'b', 'c', 'e', 'd', 'f']);
+    equal(
+      [...new ObjectIterator(obj2, 'pre-order-DFS')].map(([k]) => k),
+      ['a', 'b', 'c', 'e', 'd', 'f'],
+    );
   });
 });
 
@@ -639,6 +644,24 @@ it('iter', async function () {
   );
 });
 
+// test pairwise:
+it('pairwise', async function () {
+  equal(
+    [...pairwise(range(10))],
+    [
+      [0, 1],
+      [1, 2],
+      [2, 3],
+      [3, 4],
+      [4, 5],
+      [5, 6],
+      [6, 7],
+      [7, 8],
+      [8, 9],
+    ],
+  );
+});
+
 it('partition', async function () {
   equal(
     partition([1, 2, 3, 4, 5], n => n % 2 === 0),
@@ -647,6 +670,10 @@ it('partition', async function () {
       [2, 4],
     ],
   );
+});
+
+it('permutations', async function () {
+  equal([...permutations([1, 2, 3], 3)], [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]);
 });
 
 it('product', async function () {
