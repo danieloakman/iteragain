@@ -20,6 +20,7 @@ import {
   combinations,
   compress,
   resume,
+  dropWhile,
 } from '../src/index';
 
 describe('ExtendedIterator', function () {
@@ -530,6 +531,10 @@ it('count', async function () {
 it('cycle', async function () {
   equal(take(cycle([1, 2, 3]), 10), [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]);
   equal([...cycle(range(3), 1)], [0, 1, 2, 0, 1, 2]);
+});
+
+it('dropWhile', async function () {
+  equal([...dropWhile(range(10), n => n < 5)], [5, 6, 7, 8, 9]);
 });
 
 it('enumerate', async function () {

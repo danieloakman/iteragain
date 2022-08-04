@@ -5,6 +5,7 @@ import concat from './concat';
 import resume from './resume';
 import count from './count';
 import cycle from './cycle';
+import dropWhile from './dropWhile';
 import enumerate from './enumerate';
 import flatten from './flatten';
 import isIterable from './isIterable';
@@ -28,6 +29,7 @@ export {
   resume,
   count,
   cycle,
+  dropWhile,
   enumerate,
   flatten,
   isIterable,
@@ -51,6 +53,7 @@ export default {
   resume,
   count,
   cycle,
+  dropWhile,
   enumerate,
   flatten,
   isIterable,
