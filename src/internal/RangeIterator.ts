@@ -89,11 +89,6 @@ export class RangeIterator implements IterableIterator<number> {
   toArray() {
     return toArray(this);
   }
-
-  /** Shorthand for `new Set(this)`. */
-  toSet() {
-    return new Set(this);
-  }
 }
 
 export default RangeIterator;
