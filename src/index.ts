@@ -35,6 +35,7 @@ import reduce from './reduce';
 import quantify from './quantify';
 import every from './every';
 import some from './some';
+import forEach from './forEach';
 
 export {
   chunks,
@@ -50,6 +51,7 @@ export {
   filter,
   filterMap,
   flatten,
+  forEach,
   isIterable,
   isIterator,
   iter,
@@ -89,6 +91,7 @@ export default {
   filter,
   filterMap,
   flatten,
+  forEach,
   isIterable,
   isIterator,
   iter,
