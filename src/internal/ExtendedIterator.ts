@@ -10,6 +10,7 @@ import {
   Predicate,
   Iteratee,
   IterSource,
+  Callback,
 } from './types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
@@ -344,7 +345,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** Iterate over this iterator using the `array.prototype.forEach` style of method. */
-  public forEach(callback: Predicate<T>) {
+  public forEach(callback: Callback<T>) {
     for (const value of this) callback(value);
   }
 
