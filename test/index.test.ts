@@ -32,6 +32,12 @@ import {
   triplewise,
   windows,
   tee,
+  every,
+  forEach,
+  nth,
+  quantify,
+  reduce,
+  some,
 } from '../src/index';
 import CachedIterator from '../src/internal/CachedIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -538,6 +544,11 @@ it('enumerate', async function () {
   );
 });
 
+it('every', async function () {
+  equal(every(range(10), n => n < 10), true);
+  equal(every(range(10), n => n < 5), false);
+});
+
 it('filter', async function () {
   equal([...filter(range(10), n => n % 2 === 0)], [0, 2, 4, 6, 8]);
 });
@@ -553,6 +564,12 @@ it('flatten', async function () {
   equal([...flatten([[1], [[2], 3]], 1)], [1, [2], 3]);
   equal([...flatten([[1], [[2], 3]], 0)], [[1], [[2], 3]]);
   equal([...flatten('abc')], ['a', 'b', 'c']);
+});
+
+it('forEach', async function () {
+  const arr: number[] = [];
+  forEach(range(10), n => arr.push(n));
+  equal(arr, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 });
 
 it('isIterable', async function () {
@@ -625,6 +642,12 @@ it('map', async function () {
   );
 });
 
+it('nth', async function () {
+  equal(nth(range(10), 3), 3);
+  equal(nth(range(10), -3), undefined);
+  equal(nth(toIterator({ a: 1, b: 2 }), 1), ['b', 2, { a: 1, b: 2 }]);
+});
+
 // test pairwise:
 it('pairwise', async function () {
   equal(
@@ -695,6 +718,10 @@ it('product', async function () {
   );
 });
 
+it('quantify', async function () {
+  equal(quantify(range(10), n => n % 2 === 0), 5);
+});
+
 it('range', async function () {
   equal([...range(5, 10, 2)], [5, 7, 9]);
   equal([...range(5, 10)], [5, 6, 7, 8, 9]);
@@ -748,6 +775,10 @@ it('range', async function () {
   }
 });
 
+it('reduce', async function () {
+  equal(reduce(range(10), (acc, n) => acc + n), 45);
+});
+
 it('repeat', async function () {
   equal(take(repeat(1), 5), [1, 1, 1, 1, 1]);
   equal([...repeat(1, 5)], [1, 1, 1, 1, 1]);
@@ -762,6 +793,11 @@ it('resume', async function () {
 
 it('slice', async function () {
   equal([...slice([1, 2, 3, 4, 5], 1, 3)], [2, 3]);
+});
+
+it('some', async function () {
+  equal(some([1, 2, 3], n => n > 2), true);
+  equal(some([1, 2, 3], n => n > 4), false);
 });
 
 it('take', async function () {
