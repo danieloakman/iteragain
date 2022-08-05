@@ -33,7 +33,8 @@ import DropWhileIterator from './DropWhileIterator';
 import CompressIterator from './CompressIterator';
 import ProductIterator from './ProductIterator';
 import CombinationsIterator from './CombinationsIterator';
-import tee from '../tee';
+import CachedIterator from './CachedIterator';
+import TeedIterator from './TeedIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -246,7 +247,12 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param n The number of independent iterators to create.
    */
   public tee<N extends number>(n: N): Tuple<ExtendedIterator<T>, N> {
-    return tee(this.iterator, n).map(it => new ExtendedIterator(it)) as Tuple<ExtendedIterator<T>, N>;
+    const cachedIterator = new CachedIterator(toIterator(this.iterator));
+    const indices = new Array(n).fill(0);
+    return Array.from(
+      { length: n },
+      (_, i) => new ExtendedIterator(new TeedIterator(i, cachedIterator, indices)),
+    ) as Tuple<ExtendedIterator<T>, N>;
   }
 
   /**
