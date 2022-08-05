@@ -36,6 +36,7 @@ import quantify from './quantify';
 import every from './every';
 import some from './some';
 import forEach from './forEach';
+import nth from './nth';
 
 export {
   chunks,
@@ -56,6 +57,7 @@ export {
   isIterator,
   iter,
   map,
+  nth,
   pairwise,
   partition,
   permutations,
@@ -96,6 +98,7 @@ export default {
   isIterator,
   iter,
   map,
+  nth,
   pairwise,
   partition,
   permutations,
