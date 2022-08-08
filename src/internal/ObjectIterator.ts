@@ -3,7 +3,8 @@ import ConcatIterator from './ConcatIterator';
 import RepeatIterator from './RepeatIterator';
 
 /**
- * Iterates through all keys in an object. Optionally provides traversal order.
+ * Iterates through all keys in an object. Optionally provides traversal order. Does not support circular references and
+ * will throw a RangeError with max call stack exceeded.
  * @todo // TODO: Add support for BFS traversal order.
  */
 export class ObjectIterator<T extends Record<PropertyKey, any>> implements IterableIterator<ObjectEntry> {
