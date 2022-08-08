@@ -306,6 +306,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /**
+   * @lazy
    * Returns `size` length subsequences of this iterator.
    * @see https://docs.python.org/3/library/itertools.html#itertools.combinations for more info.
    * @see https://docs.python.org/3/library/itertools.html#itertools.combinations_with_replacement for more info.
