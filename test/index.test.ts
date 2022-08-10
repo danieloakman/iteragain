@@ -38,6 +38,7 @@ import {
   quantify,
   reduce,
   some,
+  roundrobin,
 } from '../src/index';
 import CachedIterator from '../src/internal/CachedIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -266,6 +267,12 @@ describe('internal', function () {
       ]);
       equal(iter([]).triplewise().toArray(), []);
     });
+
+    // it('uniqueEverSeen', async function () {
+    //   equal(iter([1, 2, 3, 1, 2, 3]).uniqueEverSeen().toArray(), [1, 2, 3]);
+    //   equal(iter('AAAABBBcCDAaBBB').uniqueEverSeen().toArray(), ['A', 'B', 'c', 'C', 'D', 'a']);
+    //   equal(iter('AAAABBBcCDAaBBB').uniqueEverSeen(v => v.toLowerCase()).toArray(), ['A', 'B', 'C', 'D']);
+    // });
 
     it('chunks', async function () {
       equal(iter([1, 2, 3, 4, 5]).chunks(2).toArray(), [[1, 2], [3, 4], [5]]);
@@ -496,7 +503,7 @@ describe('internal', function () {
       [...new ObjectIterator(obj2, 'pre-order-DFS')].map(([k]) => k),
       ['a', 'b', 'c', 'e', 'd', 'f'],
     );
-    const obj3 = { a: 1, b: { c: 2 }} as Record<string, any>;
+    const obj3 = { a: 1, b: { c: 2 } } as Record<string, any>;
     const obj4 = { circle: obj3 } as Record<string, any>;
     obj3.b.circle = obj4;
     // const str = JSON.stringify(obj3);
@@ -551,8 +558,14 @@ it('enumerate', async function () {
 });
 
 it('every', async function () {
-  equal(every(range(10), n => n < 10), true);
-  equal(every(range(10), n => n < 5), false);
+  equal(
+    every(range(10), n => n < 10),
+    true,
+  );
+  equal(
+    every(range(10), n => n < 5),
+    false,
+  );
 });
 
 it('filter', async function () {
@@ -642,10 +655,7 @@ it('iter', async function () {
 });
 
 it('map', async function () {
-  equal(
-    [...map(range(10), n => n * n)],
-    [0, 1, 4, 9, 16, 25, 36, 49, 64, 81],
-  );
+  equal([...map(range(10), n => n * n)], [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]);
 });
 
 it('nth', async function () {
@@ -683,7 +693,17 @@ it('partition', async function () {
 });
 
 it('permutations', async function () {
-  equal([...permutations([1, 2, 3], 3)], [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]);
+  equal(
+    [...permutations([1, 2, 3], 3)],
+    [
+      [1, 2, 3],
+      [1, 3, 2],
+      [2, 1, 3],
+      [2, 3, 1],
+      [3, 1, 2],
+      [3, 2, 1],
+    ],
+  );
 });
 
 it('product', async function () {
@@ -725,7 +745,10 @@ it('product', async function () {
 });
 
 it('quantify', async function () {
-  equal(quantify(range(10), n => n % 2 === 0), 5);
+  equal(
+    quantify(range(10), n => n % 2 === 0),
+    5,
+  );
 });
 
 it('range', async function () {
@@ -782,7 +805,10 @@ it('range', async function () {
 });
 
 it('reduce', async function () {
-  equal(reduce(range(10), (acc, n) => acc + n), 45);
+  equal(
+    reduce(range(10), (acc, n) => acc + n),
+    45,
+  );
 });
 
 it('repeat', async function () {
@@ -797,13 +823,30 @@ it('resume', async function () {
   equal([...it], [0, 1]);
 });
 
+it('roundrobin', async function () {
+  equal(
+    [...roundrobin([1, 2, 3], [4, 5, 6])],
+    [1, 4, 2, 5, 3, 6],
+  );
+  equal(
+    [...roundrobin('ABC', 'D', 'EF')],
+    ['A', 'D', 'E', 'B', 'F', 'C'],
+  );
+});
+
 it('slice', async function () {
   equal([...slice([1, 2, 3, 4, 5], 1, 3)], [2, 3]);
 });
 
 it('some', async function () {
-  equal(some([1, 2, 3], n => n > 2), true);
-  equal(some([1, 2, 3], n => n > 4), false);
+  equal(
+    some([1, 2, 3], n => n > 2),
+    true,
+  );
+  equal(
+    some([1, 2, 3], n => n > 4),
+    false,
+  );
 });
 
 it('take', async function () {
@@ -881,11 +924,37 @@ it('toIterator', async function () {
 });
 
 it('triplewise', async function () {
-  equal([...triplewise([1, 2, 3, 4, 5])], [[1, 2, 3], [2, 3, 4], [3, 4, 5]]);
+  equal(
+    [...triplewise([1, 2, 3, 4, 5])],
+    [
+      [1, 2, 3],
+      [2, 3, 4],
+      [3, 4, 5],
+    ],
+  );
 });
 
+// it('uniqueEverSeen', async function () {
+//   equal([...uniqueEverSeen([1, 2, 3, 4, 5])], [1, 2, 3, 4, 5]);
+//   equal([...uniqueEverSeen([1, 2, 3, 4, 5], (a, b) => a === b)], [1, 2, 3, 4, 5]);
+//   equal([...uniqueEverSeen([1, 2, 3, 4, 5], (a, b) => a === b, (a, b) => a + b)], [1, 2, 3, 4, 5]);
+// });
+
+// it('uniqueJustSeen', async function () {
+//   equal([...uniqueJustSeen([1, 2, 3, 4, 5])], [1, 2, 3, 4, 5]);
+//   equal([...uniqueJustSeen([1, 2, 3, 4, 5]], [1, 2, 3, 4, 5]);
+//   equal([...uniqueJustSeen([1, 2, 3, 4, 5]], [1, 2, 3, 4, 5]);
+// });
+
 it('windows', async function () {
-  equal([...windows([1, 2, 3, 4, 5], 3, 1)], [[1, 2, 3], [2, 3, 4], [3, 4, 5]]);
+  equal(
+    [...windows([1, 2, 3, 4, 5], 3, 1)],
+    [
+      [1, 2, 3],
+      [2, 3, 4],
+      [3, 4, 5],
+    ],
+  );
 });
 
 it('zip', async function () {

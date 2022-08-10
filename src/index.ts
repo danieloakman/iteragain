@@ -37,13 +37,13 @@ import every from './every';
 import some from './some';
 import forEach from './forEach';
 import nth from './nth';
+import roundrobin from './roundrobin';
 
 export {
   chunks,
   combinations,
   compress,
   concat,
-  resume,
   count,
   cycle,
   dropWhile,
@@ -66,6 +66,8 @@ export {
   range,
   reduce,
   repeat,
+  resume,
+  roundrobin,
   slice,
   some,
   take,
@@ -84,7 +86,6 @@ export default {
   combinations,
   compress,
   concat,
-  resume,
   count,
   cycle,
   dropWhile,
@@ -107,6 +108,8 @@ export default {
   range,
   reduce,
   repeat,
+  resume,
+  roundrobin,
   slice,
   some,
   take,
