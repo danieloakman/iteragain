@@ -39,6 +39,7 @@ import forEach from './forEach';
 import nth from './nth';
 import roundrobin from './roundrobin';
 import distribute from './distribute';
+import divide from './divide';
 
 export {
   chunks,
@@ -48,6 +49,7 @@ export {
   count,
   cycle,
   distribute,
+  divide,
   dropWhile,
   enumerate,
   every,
@@ -91,6 +93,7 @@ export default {
   count,
   cycle,
   distribute,
+  divide,
   dropWhile,
   enumerate,
   every,
