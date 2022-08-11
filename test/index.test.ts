@@ -319,6 +319,12 @@ describe('internal', function () {
       equal(iter([1, 2, 3]).cycle().take(7), [1, 2, 3, 1, 2, 3, 1]);
     });
 
+    it('divide', async function () {
+      equal(iter(range(3)).divide(2).map(v => v.toArray()), [[0, 1], [2]]);
+      equal(iter(range(10)).divide(3).map(v => v.toArray()), [[0, 1, 2, 3], [4, 5, 6], [7, 8, 9]]);
+      equal(iter([]).divide(3).map(v => v.toArray()), [[], [], []]);
+    });
+
     it('resume', async function () {
       let iterator = iter([1, 2, 3]).resume(1);
       equal(iterator.toArray(), [1, 2, 3]);

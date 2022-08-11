@@ -470,6 +470,21 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return [falsey, truthy];
   }
 
+  public divide<Size extends number>(n: Size): Tuple<ExtendedIterator<T>, Size> {
+    const array = this.toArray();
+    const result: ExtendedIterator<T>[] = [];
+    const quotient = Math.floor(array.length / n);
+    const remainder = array.length % n;
+    let stop = 0;
+    let start = 0;
+    for (let i = 1; i < n + 1; i++) {
+      start = stop;
+      stop += i <= remainder ? quotient + 1 : quotient;
+      result.push(new ExtendedIterator(toIterator(array.slice(start, stop))));
+    }
+    return result as Tuple<ExtendedIterator<T>, Size>;
+  }
+
   /**
    * Iterates and finds the element at `index`. Returns undefined if not found.
    * @param index The index to find. Only supports positive indices.
