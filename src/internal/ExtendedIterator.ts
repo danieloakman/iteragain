@@ -330,6 +330,41 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     );
   }
 
+  // /**
+  //  * @lazy
+  //  * Filters out all repeated values. As in, two consecutive values will never be equal.
+  //  * @param iteratee Optional iteratee to use to transform each value before being tested for uniqueness.
+  //  */
+  // public uniqueJustSeen(iteratee: Iteratee<T, T> = v => v): ExtendedIterator<T> {
+  //   let lastValue: T;
+  //   this.iterator = new FilterMapIterator(this.iterator, value => {
+  //     value = iteratee(value);
+  //     if (!lastValue || value !== lastValue) {
+  //       lastValue = value;
+  //       return true;
+  //     }
+  //     return false;
+  //   });
+  //   return this.iterator;
+  // }
+
+  // /**
+  //  * @lazy
+  //  * Filters this iterator so every value will be unique.
+  //  * @param iteratee Optional iteratee to use to transform each value before being tested for uniqueness.
+  //  */
+  // public uniqueEverSeen(iteratee: Iteratee<T, any> = v => v): ExtendedIterator<T> {
+  //   const seen = new Set<T>();
+  //   this.iterator = new FilterIterator(this.iterator, value => {
+  //     if (!seen.has(iteratee(value))) {
+  //       seen.add(value);
+  //       return true;
+  //     }
+  //     return false;
+  //   });
+  //   return this;
+  // }
+
   /** Reduces this iterator to a single value. */
   public reduce(reducer: (accumulator: T, value: T) => T): T;
   public reduce<R>(reducer: (accumulator: R, value: T) => R, initialValue: R): R;

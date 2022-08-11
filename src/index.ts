@@ -38,6 +38,7 @@ import some from './some';
 import forEach from './forEach';
 import nth from './nth';
 import roundrobin from './roundrobin';
+import distribute from './distribute';
 
 export {
   chunks,
@@ -46,6 +47,7 @@ export {
   concat,
   count,
   cycle,
+  distribute,
   dropWhile,
   enumerate,
   every,
@@ -88,6 +90,7 @@ export default {
   concat,
   count,
   cycle,
+  distribute,
   dropWhile,
   enumerate,
   every,

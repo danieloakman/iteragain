@@ -39,6 +39,8 @@ import {
   reduce,
   some,
   roundrobin,
+  distribute,
+  toArray,
 } from '../src/index';
 import CachedIterator from '../src/internal/CachedIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -541,6 +543,13 @@ it('count', async function () {
 it('cycle', async function () {
   equal(take(cycle([1, 2, 3]), 10), [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]);
   equal([...cycle(range(3), 1)], [0, 1, 2, 0, 1, 2]);
+});
+
+it('distribute', async function () {
+  const a = [...distribute(range(1, 4), 3)].map(v => toArray(v));
+  const b = take(map(count(), v => ((v + 0) % 3 === 0 ? 1 : 0)), 10);
+  equal([...distribute(range(1, 4), 3)].map(v => toArray(v)), [[1], [2], [3]]);
+  equal([...distribute(range(1, 7), 3)].map(v => toArray(v)), [[1], [2], [3]]);
 });
 
 it('dropWhile', async function () {
