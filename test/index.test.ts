@@ -553,12 +553,10 @@ it('cycle', async function () {
   equal([...cycle(range(3), 1)], [0, 1, 2, 0, 1, 2]);
 });
 
-// it('distribute', async function () {
-//   const a = [...distribute(range(1, 4), 3)].map(v => toArray(v));
-//   const b = take(map(count(), v => ((v + 0) % 3 === 0 ? 1 : 0)), 10);
-//   equal([...distribute(range(1, 4), 3)].map(v => toArray(v)), [[1], [2], [3]]);
-//   equal([...distribute(range(1, 7), 3)].map(v => toArray(v)), [[1], [2], [3]]);
-// });
+it('distribute', async function () {
+  equal([...distribute(range(3), 3)].map(v => toArray(v)), [[0], [1], [2]]);
+  equal([...distribute(range(6), 2)].map(v => toArray(v)), [[0, 2, 4], [1, 3, 5]]);
+});
 
 it('divide', async function () {
   equal(divide(range(1, 4), 3).map(v => toArray(v)), [[1], [2], [3]]);

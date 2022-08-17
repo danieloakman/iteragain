@@ -12,7 +12,7 @@ export function distribute<T, Size extends number>(
   return Array.from({ length: n }, (_, i) =>
     compress(
       iterators[i],
-      map(count(), v => ((v + i) % n === 0 ? 1 : 0)),
+      map(count(), v => (v - i) % n === 0),
     ),
   ) as Tuple<IterableIterator<T>, Size>;
 }
