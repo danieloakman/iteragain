@@ -40,6 +40,7 @@ import nth from './nth';
 import roundrobin from './roundrobin';
 import distribute from './distribute';
 import divide from './divide';
+import unique from './unique';
 
 export {
   chunks,
@@ -81,6 +82,7 @@ export {
   toArray,
   toIterator,
   triplewise,
+  unique,
   windows,
   zip,
   zipLongest,
@@ -125,6 +127,7 @@ export default {
   toArray,
   toIterator,
   triplewise,
+  unique,
   windows,
   zip,
   zipLongest,

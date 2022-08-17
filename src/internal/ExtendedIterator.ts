@@ -331,43 +331,35 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     );
   }
 
-  // /**
-  //  * @lazy
-  //  * Filters out all repeated values. As in, two consecutive values will never be equal.
-  //  * @param iteratee Optional iteratee to use to transform each value before being tested for uniqueness.
-  //  */
-  // public uniqueJustSeen(iteratee: Iteratee<T, T> = v => v): ExtendedIterator<T> {
-  //   let lastValue: T;
-  //   this.iterator = new FilterMapIterator(this.iterator, value => {
-  //     value = iteratee(value);
-  //     if (!lastValue || value !== lastValue) {
-  //       lastValue = value;
-  //       return true;
-  //     }
-  //     return false;
-  //   });
-  //   return this.iterator;
-  // }
-
-  // /**
-  //  * @lazy
-  //  * Filters this iterator so every value will be unique.
-  //  * @param iteratee Optional iteratee to use to transform each value before being tested for uniqueness.
-  //  */
-  // public uniqueEverSeen(iteratee: Iteratee<T, any> = v => v): ExtendedIterator<T> {
-  //   const seen = new Set<T>();
-  //   this.iterator = new FilterIterator(this.iterator, value => {
-  //     if (!seen.has(iteratee(value))) {
-  //       seen.add(value);
-  //       return true;
-  //     }
-  //     return false;
-  //   });
-  //   return this;
-  // }
-
-  // /** @lazy */
-  // public unique()
+  /**
+   * @lazy
+   * Filters this iterator to only unique values.
+   * @param iteratee Iteratee to use to transform each value before being tested for uniqueness.
+   * @param justSeen If true, will only test for uniqueness with the last value in the iterator and not all values.
+   */
+  public unique({ iteratee, justSeen }: { iteratee?: Iteratee<T, any>; justSeen?: boolean } = {}): ExtendedIterator<T> {
+    iteratee = iteratee ?? (v => v);
+    if (justSeen) {
+      let lastValue: T;
+      return this.filter(value => {
+        value = iteratee(value);
+        if (!lastValue || value !== lastValue) {
+          lastValue = value;
+          return true;
+        }
+        return false;
+      });
+    }
+    const seen = new Set<T>();
+    return this.filter(value => {
+      value = iteratee(value);
+      if (!seen.has(value)) {
+        seen.add(value);
+        return true;
+      }
+      return false;
+    });
+  }
 
   /** Reduces this iterator to a single value. */
   public reduce(reducer: (accumulator: T, value: T) => T): T;

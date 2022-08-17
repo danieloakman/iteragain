@@ -42,10 +42,10 @@ import {
   distribute,
   toArray,
   divide,
+  unique,
 } from '../src/index';
 import CachedIterator from '../src/internal/CachedIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
-import RangeIterator from '../src/internal/RangeIterator';
 
 describe('internal', function () {
   describe('ExtendedIterator', function () {
@@ -272,11 +272,12 @@ describe('internal', function () {
       equal(iter([]).triplewise().toArray(), []);
     });
 
-    // it('uniqueEverSeen', async function () {
-    //   equal(iter([1, 2, 3, 1, 2, 3]).uniqueEverSeen().toArray(), [1, 2, 3]);
-    //   equal(iter('AAAABBBcCDAaBBB').uniqueEverSeen().toArray(), ['A', 'B', 'c', 'C', 'D', 'a']);
-    //   equal(iter('AAAABBBcCDAaBBB').uniqueEverSeen(v => v.toLowerCase()).toArray(), ['A', 'B', 'C', 'D']);
-    // });
+    it('unique', async function () {
+      equal(iter([1, 1, 3, 3, 2, 2]).unique().toArray(), [1, 3, 2]);
+      equal(iter('AAAABBBCCDAABBB').unique().join(''), 'ABCD');
+      equal(iter('AAAABBBCCDAABBB').unique({ justSeen: true }).join(''), 'ABCDAB');
+      equal(iter('ABBCcAD').unique({ iteratee: v => v.toLowerCase() }).join(''), 'ABCD');
+    });
 
     it('chunks', async function () {
       equal(iter([1, 2, 3, 4, 5]).chunks(2).toArray(), [[1, 2], [3, 4], [5]]);
@@ -961,17 +962,12 @@ it('triplewise', async function () {
   );
 });
 
-// it('uniqueEverSeen', async function () {
-//   equal([...uniqueEverSeen([1, 2, 3, 4, 5])], [1, 2, 3, 4, 5]);
-//   equal([...uniqueEverSeen([1, 2, 3, 4, 5], (a, b) => a === b)], [1, 2, 3, 4, 5]);
-//   equal([...uniqueEverSeen([1, 2, 3, 4, 5], (a, b) => a === b, (a, b) => a + b)], [1, 2, 3, 4, 5]);
-// });
-
-// it('uniqueJustSeen', async function () {
-//   equal([...uniqueJustSeen([1, 2, 3, 4, 5])], [1, 2, 3, 4, 5]);
-//   equal([...uniqueJustSeen([1, 2, 3, 4, 5]], [1, 2, 3, 4, 5]);
-//   equal([...uniqueJustSeen([1, 2, 3, 4, 5]], [1, 2, 3, 4, 5]);
-// });
+it('unique', async function () {
+  equal([...unique([1, 1, 3, 3, 2, 2])], [1, 3, 2]);
+  equal([...unique('AAAABBBCCDAABBB')].join(''), 'ABCD');
+  equal([...unique('AAAABBBCCDAABBB', { justSeen: true })].join(''), 'ABCDAB');
+  equal([...unique('ABBCcAD', { iteratee: v => v.toLowerCase() })].join(''), 'ABCD');
+});
 
 it('windows', async function () {
   equal(
