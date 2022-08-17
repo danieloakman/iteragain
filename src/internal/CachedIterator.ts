@@ -2,6 +2,7 @@
 export class CachedIterator<T> implements IterableIterator<T> {
   public readonly cache = new Map<number, T>();
   protected i = 0;
+  protected done = false;
 
   constructor(protected iterator: Iterator<T>) {}
 
@@ -10,8 +11,9 @@ export class CachedIterator<T> implements IterableIterator<T> {
   }
 
   next(): IteratorResult<T> {
+    if (this.done) return { done: true, value: undefined };
     const next = this.iterator.next();
-    if (next.done) return next;
+    if ((this.done = next.done)) return next;
     this.cache.set(this.i++, next.value);
     return next;
   }
