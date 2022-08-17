@@ -15,6 +15,7 @@ try {
   packageJSON.type = 'module';
   packageJSON.scripts.prepare = packageJSON.scripts.prepare.replace('npm run build', 'npm run build:es');
   packageJSON.homepage += '-es';
+  packageJSON.sideEffects = false;
   writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
   writeFileSync(packageLockJSONPath, JSON.stringify(packageLockJSON, null, 2));
   writeFileSync(readmePath, readFileSync(readmeESPath, 'utf8'));
