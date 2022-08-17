@@ -366,6 +366,9 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   //   return this;
   // }
 
+  // /** @lazy */
+  // public unique()
+
   /** Reduces this iterator to a single value. */
   public reduce(reducer: (accumulator: T, value: T) => T): T;
   public reduce<R>(reducer: (accumulator: R, value: T) => R, initialValue: R): R;
@@ -472,6 +475,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /**
+   * @lazy
    * Distributes this iterator's values among `n` amount of smaller iterators. Does not maintain order so if order is
    * important, use `divide` instead.
    */
