@@ -319,6 +319,12 @@ describe('internal', function () {
       equal(iter([1, 2, 3]).cycle().take(7), [1, 2, 3, 1, 2, 3, 1]);
     });
 
+    it('distribute', async function () {
+      equal(iter(range(3)).distribute(2).map(v => v.toArray()), [[0, 2], [1]]);
+      equal(iter(range(6)).distribute(2).map(v => v.toArray()), [[0, 2, 4], [1, 3, 5]]);
+      equal(iter(range(6)).distribute(3).map(v => v.toArray()), [[0, 3], [1, 4], [2, 5]]);
+    });
+
     it('divide', async function () {
       equal(iter(range(3)).divide(2).map(v => v.toArray()), [[0, 1], [2]]);
       equal(iter(range(10)).divide(3).map(v => v.toArray()), [[0, 1, 2, 3], [4, 5, 6], [7, 8, 9]]);
@@ -561,7 +567,7 @@ it('distribute', async function () {
 it('divide', async function () {
   equal(divide(range(1, 4), 3).map(v => toArray(v)), [[1], [2], [3]]);
   equal(divide(range(1, 7), 3).map(v => toArray(v)), [[1, 2], [3, 4], [5, 6]]);
-  equal(divide(range(1, 4), 5).map(v => toArray(v)), [[1], [2], [3], [], []]);
+  equal(divide(range(1, 4), 5).map(v => [...v]), [[1], [2], [3], [], []]);
 });
 
 it('dropWhile', async function () {

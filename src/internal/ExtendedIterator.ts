@@ -36,6 +36,7 @@ import ProductIterator from './ProductIterator';
 import CombinationsIterator from './CombinationsIterator';
 import CachedIterator from './CachedIterator';
 import TeedIterator from './TeedIterator';
+import count from '../count';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -470,6 +471,22 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return [falsey, truthy];
   }
 
+  /**
+   * Distributes this iterator's values among `n` amount of smaller iterators. Does not maintain order so if order is
+   * important, use `divide` instead.
+   */
+  public distribute<Size extends number>(n: Size): Tuple<ExtendedIterator<T>, Size> {
+    return this.tee(n).map((it, i) => it.compress(new ExtendedIterator(count()).map(v => (v - i) % n === 0))) as Tuple<
+      ExtendedIterator<T>,
+      Size
+    >;
+  }
+
+  /**
+   * Divides this iterator into `n` amount of smaller iterators while maintaining order. Note, this method will fully
+   * iterate through this iterator before returning a result. If you don't want this behavior and don't care about
+   * order then use `distribute` instead.
+   */
   public divide<Size extends number>(n: Size): Tuple<ExtendedIterator<T>, Size> {
     const array = this.toArray();
     const result: ExtendedIterator<T>[] = [];
