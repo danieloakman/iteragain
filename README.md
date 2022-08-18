@@ -70,7 +70,7 @@ const keys = iter(obj)
 
 ## Inpired by
 
-[iterplus](https://www.npmjs.com/package/iterplus), [iterare](https://www.npmjs.com/package/iterare), [lodash](https://www.npmjs.com/package/lodash), [rxjs](https://www.npmjs.com/package/rxjs) and the Python [itertools](https://docs.python.org/3/library/itertools.html) module. See benchmark section for performance against some of these.
+[iterplus](https://www.npmjs.com/package/iterplus), [iterare](https://www.npmjs.com/package/iterare), [lodash](https://www.npmjs.com/package/lodash), [rxjs](https://www.npmjs.com/package/rxjs) and the Python [itertools](https://docs.python.org/3/library/itertools.html) and [more-itertools](https://pypi.org/project/more-itertools/) modules. See benchmark section for performance against some of these.
 
 ## Benchmark
 
