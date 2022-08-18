@@ -43,6 +43,7 @@ import {
   toArray,
   divide,
   unique,
+  spy,
 } from '../src/index';
 import CachedIterator from '../src/internal/CachedIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -875,6 +876,12 @@ it('some', async function () {
     some([1, 2, 3], n => n > 4),
     false,
   );
+});
+
+it('spy', async function () {
+  const [value, it] = spy(range(10));
+  equal(value, 0);
+  equal(spy(it, 10)[0], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 });
 
 it('take', async function () {

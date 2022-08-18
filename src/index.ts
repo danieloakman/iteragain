@@ -41,6 +41,7 @@ import roundrobin from './roundrobin';
 import distribute from './distribute';
 import divide from './divide';
 import unique from './unique';
+import spy from './spy';
 
 export {
   chunks,
@@ -75,6 +76,7 @@ export {
   roundrobin,
   slice,
   some,
+  spy,
   take,
   takeWhile,
   tap,
@@ -120,6 +122,7 @@ export default {
   roundrobin,
   slice,
   some,
+  spy,
   take,
   takeWhile,
   tap,
