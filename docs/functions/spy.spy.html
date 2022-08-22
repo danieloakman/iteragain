@@ -16,8 +16,7 @@
 <h1>Function spy</h1></div>
 <section class="tsd-panel">
 <ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-<li class="tsd-signature" id="spy">spy<span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span>iterator<span class="tsd-signature-symbol">: </span><a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></li>
-<li class="tsd-signature" id="spy-1">spy<span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span>iterator<span class="tsd-signature-symbol">: </span><a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span>, ahead<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></li></ul>
+<li class="tsd-signature" id="spy">spy<span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">TAhead</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span>iterator<span class="tsd-signature-symbol">: </span><a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span>, ahead<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">TAhead</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="../types/internal_types.Tuple.html" class="tsd-signature-type" data-tsd-kind="Type alias">Tuple</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">TAhead</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></li></ul>
 <ul class="tsd-descriptions">
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Returns a 2 length tuple containing the head of the input <code>iterator</code> and a new iterator containing the same
@@ -27,27 +26,17 @@ values as <code>iterator</code>.</p>
 <h4 class="tsd-type-parameters-title">Type Parameters</h4>
 <ul class="tsd-type-parameters">
 <li>
-<h4>T</h4></li></ul></div>
-<div class="tsd-parameters">
-<h4 class="tsd-parameters-title">Parameters</h4>
-<ul class="tsd-parameter-list">
+<h4>T</h4></li>
 <li>
-<h5>iterator: <a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></h4></li>
-<li class="tsd-description">
-<div class="tsd-type-parameters">
-<h4 class="tsd-type-parameters-title">Type Parameters</h4>
-<ul class="tsd-type-parameters">
-<li>
-<h4>T</h4></li></ul></div>
+<h4>TAhead<span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">number</span> = <span class="tsd-signature-type">1</span></h4></li></ul></div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
 <h5>iterator: <a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h5></li>
 <li>
-<h5>ahead: <span class="tsd-signature-type">number</span></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></h4></li></ul></section></div>
+<h5>ahead: <span class="tsd-signature-type" data-tsd-kind="Type parameter">TAhead</span><span class="tsd-signature-symbol"> = ...</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">[</span><a href="../types/internal_types.Tuple.html" class="tsd-signature-type" data-tsd-kind="Type alias">Tuple</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">TAhead</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></h4></li></ul></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -141,6 +130,7 @@ values as <code>iterator</code>.</p>
 <li class="tsd-kind-module"><a href="../modules/toIterator.html">to<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/triplewise.html">triplewise</a></li>
 <li class="tsd-kind-module"><a href="../modules/unique.html">unique</a></li>
+<li class="tsd-kind-module"><a href="../modules/unzip.html">unzip</a></li>
 <li class="tsd-kind-module"><a href="../modules/windows.html">windows</a></li>
 <li class="tsd-kind-module"><a href="../modules/zip.html">zip</a></li>
 <li class="tsd-kind-module"><a href="../modules/zipLongest.html">zip<wbr/>Longest</a></li></ul></li></ul></div></details></nav>

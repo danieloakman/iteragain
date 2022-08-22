@@ -43,6 +43,7 @@ import {
   toArray,
   divide,
   unique,
+  unzip,
   spy,
 } from '../src/index';
 import CachedIterator from '../src/internal/CachedIterator';
@@ -280,6 +281,17 @@ describe('internal', function () {
       equal(iter('ABBCcAD').unique({ iteratee: v => v.toLowerCase() }).join(''), 'ABCD');
     });
 
+    it('unzip', async function () {
+      equal(
+        iter([
+          ['a', 1],
+          ['b', 2],
+        ]).unzip().map(v => v.toArray()),
+        [['a', 'b'], [1, 2]],
+      );
+      equal(iter([1, 2, 3]).unzip().map(v => v.toArray()), [[1, 2, 3]]);
+    });
+
     it('chunks', async function () {
       equal(iter([1, 2, 3, 4, 5]).chunks(2).toArray(), [[1, 2], [3, 4], [5]]);
       equal(iter([1, 2, 3, 4, 5]).chunks(3, 0).toArray(), [
@@ -453,23 +465,26 @@ describe('internal', function () {
     });
 
     it('peek', async function () {
-      const iterator = iter([1, 2, 3, 4, 5]);
-      equal(iterator.peek(), 1);
-      equal(iterator.peek(1), [1]);
-      equal(iterator.peek(3), [1, 2, 3]);
-      equal(iterator.toArray(), [1, 2, 3, 4, 5]);
-      equal(iterator.peek(), undefined);
-      equal(iterator.peek(3), []);
+      const itA = iter([1, 2, 3, 4, 5]);
+      equal(itA.peek(), [1]);
+      equal(itA.peek(1), [1]);
+      equal(itA.peek(3), [1, 2, 3]);
+      equal(itA.toArray(), [1, 2, 3, 4, 5]);
+      equal(itA.peek(), []);
+      equal(itA.peek(3), []);
       equal(iter([1]).peek(2), [1]);
+      const itB = iter(zip('abc', 'abc'));
+      equal(itB.peek(), [['a', 'a']]);
+      equal(itB.peek(1), [['a', 'a']]);
     });
 
     it('take', async function () {
       const iterator = iter([1, 2, 3, 4, 5]);
-      equal(iterator.take(), 1);
+      equal(iterator.take(), [1]);
       equal(iterator.take(2), [2, 3]);
       equal(iterator.take(1), [4]);
       equal(iterator.toArray(), [5]);
-      equal(iterator.take(), undefined);
+      equal(iterator.take(), []);
       equal(iterator.take(3), []);
       equal(iter([1]).take(2), [1]);
     });
@@ -880,7 +895,7 @@ it('some', async function () {
 
 it('spy', async function () {
   const [value, it] = spy(range(10));
-  equal(value, 0);
+  equal(value, [0]);
   equal(spy(it, 10)[0], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 });
 
@@ -910,7 +925,7 @@ it('tee', async function () {
   let [a, b] = tee([1, 2, 3], 2).map(v => iter(v));
   a = a.map(x => x * x);
   b = b.map(x => x + x);
-  equal(a.take(), 1);
+  equal(a.take(), [1]);
   equal(b.take(2), [2, 4]);
   equal(a.toArray(), [4, 9]);
   equal(b.toArray(), [6]);
@@ -974,6 +989,13 @@ it('unique', async function () {
   equal([...unique('AAAABBBCCDAABBB')].join(''), 'ABCD');
   equal([...unique('AAAABBBCCDAABBB', { justSeen: true })].join(''), 'ABCDAB');
   equal([...unique('ABBCcAD', { iteratee: v => v.toLowerCase() })].join(''), 'ABCD');
+});
+
+it('unzip', async function () {
+  equal(unzip([['a', 1], ['b', 2], ['c', 3]]).map(toArray), [['a', 'b', 'c'], [1, 2, 3]]);
+  equal(unzip(zip('abc', [1, 2])).map(toArray), [['a', 'b'], [1, 2]]);
+  // @ts-expect-error
+  equal([...unzip([0, 1, 2])[0]], [0, 1, 2]);
 });
 
 it('windows', async function () {

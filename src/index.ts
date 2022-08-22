@@ -42,6 +42,7 @@ import distribute from './distribute';
 import divide from './divide';
 import unique from './unique';
 import spy from './spy';
+import unzip from './unzip';
 
 export {
   chunks,
@@ -85,6 +86,7 @@ export {
   toIterator,
   triplewise,
   unique,
+  unzip,
   windows,
   zip,
   zipLongest,
@@ -131,6 +133,7 @@ export default {
   toIterator,
   triplewise,
   unique,
+  unzip,
   windows,
   zip,
   zipLongest,

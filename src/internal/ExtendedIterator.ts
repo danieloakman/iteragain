@@ -134,6 +134,19 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return this.map(((count = 0) => v => [count++, v])()); // prettier-ignore
   }
 
+  /**
+   * @lazy
+   * The inverse of `zip` and `zipLongest`. This method disaggregates the elements of this iterator. The nth iterator
+   * in the returned tuple contains the nth element of each value in this iterator. The length of the returned tuple is
+   * determined by the length of the first value in this iterator.
+   */
+  public unzip(): ExtendedIterator<T>[] {
+    const [head] = this.peek();
+    const n = Array.isArray(head) ? head.length : 1;
+    if (n < 2) return [this];
+    return this.tee(n).map((it, i) => it.map(v => v[i]));
+  }
+
   /** @lazy Aggregates this iterator and any number of others into one. Stops when one of the iterables is empty. */
   public zip<U>(other: IteratorOrIterable<U>): ExtendedIterator<[T, U]>;
   public zip<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<[T, A, B]>;
@@ -378,7 +391,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /** Iterate over this iterator using the `array.prototype.forEach` style of method. */
   public forEach(callback: Callback<T>) {
-    for (const value of this) callback(value);
+    let next: IteratorResult<T>;
+    while(!(next = this.iterator.next()).done) callback(next.value);
   }
 
   /** Return true if every element in this iterator matches the predicate. */
@@ -423,12 +437,9 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * Peek ahead of where the current iteration is. This doesn't consume any values of the iterator.
    * @param ahead optional, the number of elements to peek ahead.
    */
-  public peek(): T | undefined;
-  public peek<N extends number>(ahead: N): Tuple<T, N>;
-  public peek(ahead?: number): T | T[] | undefined {
+  public peek<N extends number = 1>(ahead: N = 1 as N): Tuple<T, N> {
     const values = this.take(ahead);
-    const valuesAsArray = Array.isArray(values) ? values : [values];
-    if (values && valuesAsArray.length) this.iterator = new ConcatIterator([toIterator(valuesAsArray), this.iterator]);
+    if (values.length) this.iterator = new ConcatIterator([toIterator(values), this.iterator]);
     return values;
   }
 
@@ -436,14 +447,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * Take `n` number of values from this iterator.
    * @param n The number of values to take.
    */
-  public take(): T | undefined;
-  public take<N extends number>(numOfValues: N): Tuple<T, N>;
-  public take(n?: number): T | T[] | undefined {
-    if (!n) return this.iterator.next().value;
+  public take<N extends number = 1>(n: N = 1 as N): Tuple<T, N> {
     const values: T[] = [];
     let next: IteratorResult<T>;
     while (n-- > 0 && !(next = this.iterator.next()).done) values.push(next.value);
-    return values;
+    return values as Tuple<T, N>;
   }
 
   /**
