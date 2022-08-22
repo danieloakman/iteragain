@@ -45,6 +45,7 @@ import {
   unique,
   unzip,
   spy,
+  consume,
 } from '../src/index';
 import CachedIterator from '../src/internal/CachedIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -455,11 +456,11 @@ describe('internal', function () {
     it('exhaust & tap', async function () {
       let mapWasCalled = 0;
       const f = () => mapWasCalled++;
-      equal(iter([1, 2, 3]).tap(f).exhaust(), undefined);
+      equal(iter([1, 2, 3]).tap(f).consume(), undefined);
       equal(mapWasCalled, 3);
       const iterator = iter([1, 2, 3]);
       mapWasCalled = 0;
-      equal(iterator.tap(f).exhaust(2), undefined);
+      equal(iterator.tap(f).consume(2), undefined);
       equal(mapWasCalled, 2);
       equal(iterator.toArray(), [3]);
     });
@@ -565,6 +566,12 @@ it('compress', async function () {
 
 it('concat', async function () {
   equal([...concat([1, 2, 3], [], range(4, 7))], [1, 2, 3, 4, 5, 6]);
+});
+
+it('consume', async function () {
+  const arr: number[] = [];
+  equal(consume(tap(range(3), n => arr.push(n))), undefined);
+  equal(arr, [0, 1, 2]);
 });
 
 it('count', async function () {

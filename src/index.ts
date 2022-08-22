@@ -43,12 +43,14 @@ import divide from './divide';
 import unique from './unique';
 import spy from './spy';
 import unzip from './unzip';
+import consume from './consume';
 
 export {
   chunks,
   combinations,
   compress,
   concat,
+  consume,
   count,
   cycle,
   distribute,
@@ -96,6 +98,7 @@ export default {
   combinations,
   compress,
   concat,
+  consume,
   count,
   cycle,
   distribute,

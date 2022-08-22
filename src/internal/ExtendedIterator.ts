@@ -466,12 +466,20 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /**
+   * @deprecated Use `consume` instead, as this is the more standard name for this type of method.
    * Start iterating through this iterator, but don't return the values from this method.
    * @param n optional, the number of elements to exhaust.
    */
-  public exhaust(n?: number): void {
-    if (typeof n !== 'number') while (!this.iterator.next().done);
-    else while (n-- > 0 && !this.iterator.next().done);
+  public exhaust(n = Infinity): void {
+    this.consume(n);
+  }
+
+  /**
+   * Start iterating through this iterator, but don't return the values from this method.
+   * @param n optional, the number of elements to consume (default: Infinity).
+   */
+  public consume(n = Infinity): void {
+    while (n-- > 0 && !this.iterator.next().done);
   }
 
   /**
@@ -481,7 +489,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public partition(predicate: Predicate<T>): [T[], T[]] {
     const falsey: T[] = [];
     const truthy: T[] = [];
-    this.tap(value => (predicate(value) ? truthy : falsey).push(value)).exhaust();
+    this.tap(value => (predicate(value) ? truthy : falsey).push(value)).consume();
     return [falsey, truthy];
   }
 
