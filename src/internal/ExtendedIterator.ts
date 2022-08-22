@@ -62,7 +62,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /** @lazy Returns a new ExtendedIterator that maps each element in this iterator to a new value. */
   public map<R>(iteratee: Iteratee<T, R>): ExtendedIterator<R> {
-    return new ExtendedIterator(new MapIterator(this.iterator, iteratee));
+    this.iterator = new MapIterator(this.iterator, iteratee) as any;
+    return this as any;
   }
 
   /**
@@ -82,21 +83,20 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * return a nullish value.
    */
   public filterMap<R>(iteratee: Iteratee<T, R>): ExtendedIterator<NonNullable<R>> {
-    return new ExtendedIterator(new FilterMapIterator(this.iterator, iteratee));
+    this.iterator = new FilterMapIterator(this.iterator, iteratee) as any;
+    return this as any;
   }
 
   /** @lazy Concatenates this iterator with the given iterators, in order of: `[this.iterator, ...others]`. */
   public concat<U extends IteratorOrIterable<any>[]>(...args: U) {
-    return new ExtendedIterator(
-      new ConcatIterator([this.iterator, ...(args.map(toIterator) as Iterator<IterSource<U[number]>>[])]),
-    );
+    this.iterator = new ConcatIterator([this.iterator, ...(args.map(toIterator) as Iterator<IterSource<U[number]>>[])]);
+    return this;
   }
 
   /** @lazy Prepends this iterator with the given iterators, in order of: `[...args, this.iterator]`. */
   public prepend<U extends IteratorOrIterable<any>[]>(...args: U) {
-    return new ExtendedIterator(
-      new ConcatIterator([...(args.map(toIterator) as Iterator<IterSource<U[number]>>[]), this.iterator]),
-    );
+    this.iterator = new ConcatIterator([...(args.map(toIterator) as Iterator<IterSource<U[number]>>[]), this.iterator]);
+    return this;
   }
 
   /**
@@ -125,8 +125,9 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public flatten(depth: 5): ExtendedIterator<FlattenDepth5<T>>;
   public flatten(): ExtendedIterator<FlattenDeep<T>>;
   public flatten(depth: number): ExtendedIterator<any>;
-  public flatten(depth = Infinity) {
-    return new ExtendedIterator(new FlattenIterator(this, depth));
+  public flatten(depth = Infinity): ExtendedIterator<any> {
+    this.iterator = new FlattenIterator(this.iterator, depth) as any;
+    return this as any;
   }
 
   /** @lazy Attaches the index to each value as a pair like: `[0, value], [1, value]`, etc. */
@@ -152,7 +153,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public zip<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<[T, A, B]>;
   public zip(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]>;
   public zip(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]> {
-    return new ExtendedIterator(new ZipIterator([this.iterator, ...args.map(toIterator)]));
+    this.iterator = new ZipIterator([this.iterator, ...args.map(toIterator)]) as any;
+    return this as any;
   }
 
   /** @lazy Aggregates this iterator and any number of others into one. Stops when all of the iterables is empty. */
@@ -160,7 +162,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public zipLongest<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<[T, A, B]>;
   public zipLongest(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]>;
   public zipLongest(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]> {
-    return new ExtendedIterator(new ZipLongestIterator([this.iterator, ...args.map(toIterator)]));
+    this.iterator = new ZipLongestIterator([this.iterator, ...args.map(toIterator)]) as any;
+    return this as any;
   }
 
   /**
@@ -172,7 +175,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * iter([1]).pairwise().toArray() // []
    */
   public pairwise(): ExtendedIterator<[T, T]> {
-    return new ExtendedIterator(new PairwiseIterator(this.iterator));
+    this.iterator = new PairwiseIterator(this.iterator) as any;
+    return this as any;
   }
 
   /**
@@ -181,7 +185,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * fewer than the number of values in this iterator. Will be empty if this iterator has fewer than three values.
    */
   public triplewise(): ExtendedIterator<[T, T, T]> {
-    return new ExtendedIterator(new TriplewiseIterator(this.iterator));
+    this.iterator = new TriplewiseIterator(this.iterator) as any;
+    return this as any;
   }
 
   /**
@@ -190,7 +195,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param predicate A function to call for each value.
    */
   public takeWhile(predicate: Predicate<T>): ExtendedIterator<T> {
-    return new ExtendedIterator(new TakeWhileIterator(this.iterator, predicate));
+    this.iterator = new TakeWhileIterator(this.iterator, predicate);
+    return this;
   }
 
   /**
@@ -199,7 +205,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param predicate The function to call for each value.
    */
   public dropWhile(predicate: Predicate<T>): ExtendedIterator<T> {
-    return new ExtendedIterator(new DropWhileIterator(this.iterator, predicate));
+    this.iterator = new DropWhileIterator(this.iterator, predicate);
+    return this;
   }
 
   /**
@@ -228,7 +235,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * iter([1,2,3,4,5,6,7,8,9]).chunk(2, 0).toArray() // [[1,2], [3,4], [5,6], [7,8], [9, 0]]
    */
   public chunks<N extends number>(length: N, fill?: T): ExtendedIterator<Tuple<T, N>[]> {
-    return new ExtendedIterator(new ChunksIterator(this.iterator, length, fill)) as ExtendedIterator<Tuple<T, N>[]>;
+    this.iterator = new ChunksIterator(this.iterator, length, fill) as any;
+    return this as any;
   }
 
   /**
@@ -244,9 +252,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * iter([1,2,3,4,5]).windows(3, 3, 0).toArray() // [[1,2,3], [4,5,0]]
    */
   public windows<Length extends number>(length: Length, offset: number, fill?: T): ExtendedIterator<Tuple<T, Length>> {
-    return new ExtendedIterator(new WindowsIterator(this.iterator, length, offset, fill)) as ExtendedIterator<
-      Tuple<T, Length>
-    >;
+    this.iterator = new WindowsIterator(this.iterator, length, offset, fill) as any;
+    return this as any;
   }
 
   /**
@@ -278,7 +285,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * equal(iter([1,2,3]).cycle().take(5).toArray(), [1,2,3,1,2])
    */
   public cycle(times = Infinity): ExtendedIterator<T> {
-    return new ExtendedIterator(new CycleIterator(this.iterator, times));
+    this.iterator = new CycleIterator(this.iterator, times);
+    return this;
   }
 
   /**
@@ -292,7 +300,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * equal(it.toArray(), []);
    */
   public resume(times = Infinity): ExtendedIterator<T> {
-    return new ExtendedIterator(new ResumeIterator(this.iterator, times));
+    this.iterator = new ResumeIterator(this.iterator, times);
+    return this;
   }
 
   /**
@@ -302,7 +311,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * iterator.
    */
   public compress(selectors: IteratorOrIterable<any>): ExtendedIterator<T> {
-    return new ExtendedIterator(new CompressIterator(this.iterator, toIterator(selectors)));
+    this.iterator = new CompressIterator(this.iterator, toIterator(selectors));
+    return this;
   }
 
   /**
@@ -316,7 +326,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * iterator.
    */
   public permutations<Size extends number>(size?: Size): ExtendedIterator<Tuple<T, Size>> {
-    return new ExtendedIterator(new PermutationsIterator(this.iterator, size));
+    this.iterator = new PermutationsIterator(this.iterator, size) as any;
+    return this as any;
   }
 
   /**
@@ -328,7 +339,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param withReplacement Whether or not to allow duplicate elements in the combinations.
    */
   public combinations<Size extends number>(size: Size, withReplacement = false): ExtendedIterator<Tuple<T, Size>> {
-    return new ExtendedIterator(new CombinationsIterator(this.iterator, size, withReplacement));
+    this.iterator = new CombinationsIterator(this.iterator, size, withReplacement) as any;
+    return this as any;
   }
 
   /**
@@ -338,10 +350,9 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param repeat Optional number of times to repeat.
    * @see https://docs.python.org/3/library/itertools.html#itertools.product for more info.
    */
-  public product(iterators: IteratorOrIterable<T>[], repeat = 1) {
-    return new ExtendedIterator(
-      new ProductIterator([this.iterator, ...(iterators.map(toIterator) as Iterator<T>[])], repeat),
-    );
+  public product(iterators: IteratorOrIterable<T>[], repeat = 1): ExtendedIterator<T> {
+    this.iterator = new ProductIterator([this.iterator, ...(iterators.map(toIterator) as Iterator<T>[])], repeat) as any;
+    return this;
   }
 
   /**
