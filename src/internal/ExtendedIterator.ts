@@ -350,13 +350,13 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param repeat Optional number of times to repeat (default: 1).
    * @see https://docs.python.org/3/library/itertools.html#itertools.product for more info.
    */
-  public product(repeat?: number): ExtendedIterator<T>;
-  public product(iterators: IteratorOrIterable<T>[], repeat?: number): ExtendedIterator<T>;
-  public product(...params: any[]) {
+  public product(repeat?: number): ExtendedIterator<T[]>;
+  public product(iterators: IteratorOrIterable<T>[], repeat?: number): ExtendedIterator<T[]>;
+  public product(...params: any[]): ExtendedIterator<T[]> {
     const iterators: Iterator<T>[] = typeof params[0] === 'number' ? [] : params[0];
     const repeat = params.find(param => typeof param === 'number') ?? 1;
     this.iterator = new ProductIterator([this.iterator, ...(iterators.map(toIterator) as Iterator<T>[])], repeat) as any;
-    return this;
+    return this as any;
   }
 
   /**
