@@ -121,7 +121,7 @@ some amount, depending on the method.</p>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>iterator</span><a href="#iterator" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">iterator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Iterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/24ae110/src/internal/ExtendedIterator.ts#L47">internal/ExtendedIterator.ts:47</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/ae4cc4f/src/internal/ExtendedIterator.ts#L47">internal/ExtendedIterator.ts:47</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="_iterator_" class="tsd-anchor"></a>
@@ -700,7 +700,8 @@ iterator.</p>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="product" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>product</span><a href="#product" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-<li class="tsd-signature" id="product.product-1">product<span class="tsd-signature-symbol">(</span>iterators<span class="tsd-signature-symbol">: </span><a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, repeat<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></li></ul>
+<li class="tsd-signature" id="product.product-1">product<span class="tsd-signature-symbol">(</span>repeat<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+<li class="tsd-signature" id="product.product-2">product<span class="tsd-signature-symbol">(</span>iterators<span class="tsd-signature-symbol">: </span><a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, repeat<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></li></ul>
 <ul class="tsd-descriptions">
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography">
@@ -712,13 +713,18 @@ iterator.</p>
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>iterators: <a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
-<div class="tsd-comment tsd-typography"><p>Other iterators.</p>
-</div></li>
-<li>
-<h5>repeat: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></h5>
-<div class="tsd-comment tsd-typography"><p>Optional number of times to repeat.</p>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> repeat: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Optional number of times to repeat (default: 1).</p>
 </div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h4></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>iterators: <a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> repeat: <span class="tsd-signature-type">number</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="quantify" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>quantify</span><a href="#quantify" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>

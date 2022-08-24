@@ -347,10 +347,14 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @lazy
    * Returns the cartesian product of this iterator with other `iterators` after it.
    * @param iterators Other iterators.
-   * @param repeat Optional number of times to repeat.
+   * @param repeat Optional number of times to repeat (default: 1).
    * @see https://docs.python.org/3/library/itertools.html#itertools.product for more info.
    */
-  public product(iterators: IteratorOrIterable<T>[], repeat = 1): ExtendedIterator<T> {
+  public product(repeat?: number): ExtendedIterator<T>;
+  public product(iterators: IteratorOrIterable<T>[], repeat?: number): ExtendedIterator<T>;
+  public product(...params: any[]) {
+    const iterators: Iterator<T>[] = typeof params[0] === 'number' ? [] : params[0];
+    const repeat = params.find(param => typeof param === 'number') ?? 1;
     this.iterator = new ProductIterator([this.iterator, ...(iterators.map(toIterator) as Iterator<T>[])], repeat) as any;
     return this;
   }

@@ -429,6 +429,12 @@ describe('internal', function () {
         ['d', 'x'],
         ['d', 'y'],
       ]);
+      equal(iter([0, 1]).product(2).toArray(), [
+        [0, 0],
+        [0, 1],
+        [1, 0],
+        [1, 1],
+      ]);
     });
 
     it('join', async function () {
