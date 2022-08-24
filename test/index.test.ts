@@ -429,7 +429,7 @@ describe('internal', function () {
         ['d', 'x'],
         ['d', 'y'],
       ]);
-      equal(iter([0, 1]).product(2).toArray(), [
+      equal(iter(range(2)).product(2).toArray(), [
         [0, 0],
         [0, 1],
         [1, 0],
@@ -523,8 +523,18 @@ describe('internal', function () {
     it('toMap', async function () {
       const map = iter(range(10))
         .map(n => [n, n * 2])
-        .toMap<number, number>();
+        .toMap();
       iter(range(10)).forEach(n => assert(map.get(n) === n * 2));
+      const map2 = iter(range(10))
+        .map(n => [n.toString(), n * 2])
+        .toMap<string, number>();
+      iter(range(10)).forEach(n => assert(map2.get(n.toString()) === n * 2));
+      const map3 = iter(range(10))
+        .map(n => [n.toString(), { n: n * 2 }])
+        .toMap<string, { n: number }>();
+      iter(range(10)).forEach(n => assert(map3.get(n.toString())?.n === n * 2));
+      // This iterator's type does not extend `any[]`:
+      throws(() => iter(range(10)).toMap());
     });
   });
 

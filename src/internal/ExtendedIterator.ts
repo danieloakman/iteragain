@@ -355,7 +355,10 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public product(...params: any[]): ExtendedIterator<T[]> {
     const iterators: Iterator<T>[] = typeof params[0] === 'number' ? [] : params[0];
     const repeat = params.find(param => typeof param === 'number') ?? 1;
-    this.iterator = new ProductIterator([this.iterator, ...(iterators.map(toIterator) as Iterator<T>[])], repeat) as any;
+    this.iterator = new ProductIterator(
+      [this.iterator, ...(iterators.map(toIterator) as Iterator<T>[])],
+      repeat,
+    ) as any;
     return this as any;
   }
 
@@ -407,7 +410,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   /** Iterate over this iterator using the `array.prototype.forEach` style of method. */
   public forEach(callback: Callback<T>) {
     let next: IteratorResult<T>;
-    while(!(next = this.iterator.next()).done) callback(next.value);
+    while (!(next = this.iterator.next()).done) callback(next.value);
   }
 
   /** Return true if every element in this iterator matches the predicate. */
@@ -554,12 +557,10 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /**
-   * Shorthand for `new Map<K, V>(this)`. Must specify the types to get the correct type back,
-   * e.g. `iterator.toMap<string, number>();`
+   * Shorthand for `new Map<K, V>(this)`. The type of this iterator must extend `any[]` for this to work. And you may
+   * also need to pass in your own values for the generics: e.g. `iterator.toMap<string, number>();`
    */
-  public toMap<K, V>(): Map<K, V>;
-  public toMap<KV>(): Map<KV, KV>;
-  public toMap<K, V>() {
+  public toMap<K extends string | number = T extends any[] ? T[0] : never, V = T extends any[] ? T[1] : never>() {
     return new Map<K, V>(this as any);
   }
 }
