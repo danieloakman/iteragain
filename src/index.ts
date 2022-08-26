@@ -44,6 +44,7 @@ import unique from './unique';
 import spy from './spy';
 import unzip from './unzip';
 import consume from './consume';
+import reverse from './reverse';
 
 export {
   chunks,
@@ -76,6 +77,7 @@ export {
   reduce,
   repeat,
   resume,
+  reverse,
   roundrobin,
   slice,
   some,
@@ -124,6 +126,7 @@ export default {
   reduce,
   repeat,
   resume,
+  reverse,
   roundrobin,
   slice,
   some,

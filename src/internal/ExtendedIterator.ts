@@ -392,6 +392,19 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     });
   }
 
+  /**
+   * @lazy
+   * Reverses this iterator's order. Note that in order to reverse, it will attempt to iterate fully once, which
+   * could cause significant memory usage. So because of this, only use on finite iterators.
+   */
+  public reverse() {
+    let next: IteratorResult<T>;
+    const result: T[] = [];
+    while (!(next = this.iterator.next()).done) result.unshift(next.value);
+    this.iterator = toIterator(result);
+    return this;
+  }
+
   /** Reduces this iterator to a single value. */
   public reduce(reducer: (accumulator: T, value: T) => T): T;
   public reduce<R>(reducer: (accumulator: R, value: T) => R, initialValue: R): R;

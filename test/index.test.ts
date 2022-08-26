@@ -46,6 +46,7 @@ import {
   unzip,
   spy,
   consume,
+  reverse,
 } from '../src/index';
 import CachedIterator from '../src/internal/CachedIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -353,6 +354,11 @@ describe('internal', function () {
       equal(iterator.toArray(), []);
       iterator = iter([1, 2, 3]).resume();
       iter(range(10)).forEach(() => equal(iterator.toArray(), [1, 2, 3]));
+    });
+
+    it('reverse', async function () {
+      equal(iter([1, 2, 3]).reverse().toArray(), [3, 2, 1]);
+      equal(iter([]).reverse().toArray(), []);
     });
 
     it('compress', async function () {
@@ -888,6 +894,12 @@ it('resume', async function () {
   equal([...it, ...it, ...it], [0, 1, 0, 1]);
   it = resume(range(2));
   equal([...it], [0, 1]);
+});
+
+it('reverse', async function () {
+  equal([...reverse(range(10))], [...range(9, -1)]);
+  const mapper = (n: number) => n * n;
+  equal([...map(reverse(range(10)), mapper)], [...map(range(9, -1), mapper)]);
 });
 
 it('roundrobin', async function () {
