@@ -79,6 +79,7 @@ some amount, depending on the method.</p>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#quantify" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>quantify</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#reduce" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>reduce</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#resume" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>resume</span></a>
+<a href="internal_ExtendedIterator.ExtendedIterator.html#reverse" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>reverse</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#slice" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>slice</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#some" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>some</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#take" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>take</span></a>
@@ -121,7 +122,7 @@ some amount, depending on the method.</p>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>iterator</span><a href="#iterator" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">iterator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Iterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/e0ff9e8/src/internal/ExtendedIterator.ts#L47">internal/ExtendedIterator.ts:47</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/8874ccc/src/internal/ExtendedIterator.ts#L47">internal/ExtendedIterator.ts:47</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="_iterator_" class="tsd-anchor"></a>
@@ -844,6 +845,17 @@ iterator.</p>
 <div class="tsd-comment tsd-typography"><p>The number of times to resume the iterator (default: Infinity).</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="reverse" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>reverse</span><a href="#reverse" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature" id="reverse.reverse-1">reverse<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></li></ul>
+<ul class="tsd-descriptions">
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography">
+<h3>Lazy</h3><p>Reverses this iterator&#39;s order. Note that in order to reverse, it will attempt to iterate fully once, which
+could cause significant memory usage. So because of this, only use on finite iterators.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="internal_ExtendedIterator.ExtendedIterator.html" class="tsd-signature-type" data-tsd-kind="Class">ExtendedIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="slice" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>slice</span><a href="#slice" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1261,6 +1273,7 @@ elements.</p>
 <li class="tsd-kind-module"><a href="../modules/reduce.html">reduce</a></li>
 <li class="tsd-kind-module"><a href="../modules/repeat.html">repeat</a></li>
 <li class="tsd-kind-module"><a href="../modules/resume.html">resume</a></li>
+<li class="tsd-kind-module"><a href="../modules/reverse.html">reverse</a></li>
 <li class="tsd-kind-module"><a href="../modules/roundrobin.html">roundrobin</a></li>
 <li class="tsd-kind-module"><a href="../modules/slice.html">slice</a></li>
 <li class="tsd-kind-module"><a href="../modules/some.html">some</a></li>
@@ -1315,6 +1328,7 @@ elements.</p>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#quantify" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>quantify</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#reduce" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>reduce</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#resume" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>resume</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#reverse" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>reverse</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#slice" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>slice</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#some" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>some</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#take" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>take</a></li>

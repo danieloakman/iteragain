@@ -8,7 +8,6 @@ import { join } from 'path';
 import { execSync } from 'child_process';
 
 (async () => {
-  process.argv[2];
   if (process.argv.length < 3) {
     console.error('Usage: new:iterator <file-name>');
     process.exit(1);
