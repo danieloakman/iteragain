@@ -5,6 +5,8 @@ import { readFileSync, writeFileSync } from 'fs';
 import iter from '../src/iter';
 import { format } from 'prettier';
 
+const PRETTIER_CONFIG = JSON.parse(readFileSync(join(__dirname, '../.prettierrc'), 'utf8'));
+
 function genUnformattedTest(testNames: string[]): string {
   if (!testNames.length) return '';
   return `
@@ -14,7 +16,7 @@ function genUnformattedTest(testNames: string[]): string {
   `.trim();
 }
 function genTest(testNames: string[]): string {
-  return format(genUnformattedTest(testNames), { parser: 'typescript' });
+  return format(genUnformattedTest(testNames), { parser: 'typescript', ...PRETTIER_CONFIG });
 }
 
 (async function main() {
@@ -25,7 +27,7 @@ function genTest(testNames: string[]): string {
 
   const testNames = process.argv[2].split(/\/|\\/);
   const testFile = readFileSync(join(__dirname, '../test/index.test.ts'), { encoding: 'utf-8' });
-  const newTest = format(genTest(testNames), { parser: 'typescript' });
+  const newTest = genTest(testNames);
   console.log(newTest);
   // TODO: add newTest to testFile in correct order.
 })();
