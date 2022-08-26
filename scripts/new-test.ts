@@ -26,5 +26,6 @@ function genTest(testNames: string[]): string {
   const testNames = process.argv[2].split(/\/|\\/);
   const testFile = readFileSync(join(__dirname, '../test/index.test.ts'), { encoding: 'utf-8' });
   const newTest = format(genTest(testNames), { parser: 'typescript' });
+  console.log(newTest);
   // TODO: add newTest to testFile in correct order.
 })();
