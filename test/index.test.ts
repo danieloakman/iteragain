@@ -47,8 +47,8 @@ import {
   spy,
   consume,
   reverse,
+  seekable,
 } from '../src/index';
-import CachedIterator from '../src/internal/CachedIterator';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
 
@@ -545,11 +545,11 @@ describe('internal', function () {
     });
   });
 
-  it('CachedIterator', async function () {
-    const it = new CachedIterator(range(10));
-    equal([...it], [...range(10)]);
-    assert(it.cache.has(3) && it.cache.has(7));
-  });
+  // it('CachedIterator', async function () {
+  //   const it = new CachedIterator(range(10));
+  //   equal([...it], [...range(10)]);
+  //   assert(it.cache.has(3) && it.cache.has(7));
+  // });
 
   it('FunctionIterator', async function () {
     const it = new FunctionIterator(((n = 0) => () => n++ * 2)(), 100);
@@ -918,6 +918,20 @@ it('roundrobin', async function () {
     [...roundrobin('ABC', 'D', 'EF')],
     ['A', 'D', 'E', 'B', 'F', 'C'],
   );
+});
+
+it('seekable', async function () {
+  const it = seekable(count(), 5);
+  const toValues = <T extends IteratorResult<any>[]>(...itResults: T) => itResults.map(it => it.value);
+  equal(toValues(it.next(), it.next(), it.next()), [0, 1, 2]);
+  it.seek(0);
+  equal(toValues(it.next(), it.next(), it.next()), [0, 1, 2]);
+  equal(it.elements, [0, 1, 2]);
+  equal(it.peek(), [it.next().value]);
+  it.seek(10);
+  equal(it.elements, [5, 6, 7, 8, 9]);
+  equal(it.seek(-1), it.elements[it.elements.length - 1]);
+  equal(seekable([]).seek(10), undefined);
 });
 
 it('slice', async function () {

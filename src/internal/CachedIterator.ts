@@ -1,4 +1,7 @@
-/** Caches the values of the input `iterator` into a Map. */
+/**
+ * @deprecated Use `SeekableIterator` instead.
+ * @description Caches the values of the input `iterator` into a Map.
+ */
 export class CachedIterator<T> implements IterableIterator<T> {
   public readonly cache = new Map<number, T>();
   protected i = 0;

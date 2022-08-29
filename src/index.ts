@@ -45,6 +45,7 @@ import spy from './spy';
 import unzip from './unzip';
 import consume from './consume';
 import reverse from './reverse';
+import seekable from './seekable';
 
 export {
   chunks,
@@ -79,6 +80,7 @@ export {
   resume,
   reverse,
   roundrobin,
+  seekable,
   slice,
   some,
   spy,
@@ -128,6 +130,7 @@ export default {
   resume,
   reverse,
   roundrobin,
+  seekable,
   slice,
   some,
   spy,
