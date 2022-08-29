@@ -49,6 +49,7 @@ import {
   reverse,
 } from '../src/index';
 import CachedIterator from '../src/internal/CachedIterator';
+import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
 
 describe('internal', function () {
@@ -550,6 +551,12 @@ describe('internal', function () {
     assert(it.cache.has(3) && it.cache.has(7));
   });
 
+  it('FunctionIterator', async function () {
+    const it = new FunctionIterator(((n = 0) => () => n++ * 2)(), 100);
+    equal([...it], [...range(0, 100, 2)]);
+    equal([...it], []);
+  });
+
   it('ObjectIterator', async function () {
     this.timeout(5000);
     const obj = { a: 1 };
@@ -1003,9 +1010,11 @@ it('tee', async function () {
 });
 
 it('toIterator', async function () {
-  const it = toIterator([1, 2, 3]);
-  assert(isIterator(it));
+  const it1 = toIterator([1, 2, 3]);
+  assert(isIterator(it1));
   throws(() => toIterator(null));
+  throws(() => toIterator(undefined));
+  equal(toArray(toIterator(((i = 0) => () => i++)(), 3)), [0, 1, 2]);
 });
 
 it('triplewise', async function () {
