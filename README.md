@@ -28,7 +28,7 @@ const result2 = iter(someArray).map(iteratee).filter(predicate).reduce(reducer).
 equal(result1, result2); // Asserts that the results are the same.
 ```
 
-### Basic use of `iter` and some `standalone` functions
+### Basic use of `iter` and some standalone functions
 
 ```js
 // Import from the root index
