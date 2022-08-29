@@ -27,7 +27,7 @@
     "prepare": "husky install",
     "preversion": "npm run lint",
     "postversion": "git push --follow-tags",
-    "publish:all": "ts-node ./scripts/publish.ts"
+    "publish:all": "ts-node ./scripts/publish-all.ts"
   },
   "dependencies": {},
   "devDependencies": {
