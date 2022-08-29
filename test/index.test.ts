@@ -1013,7 +1013,7 @@ it('seekable', async function () {
   equal(it.peek(), [9]);
   const empty = seekable([]);
   equal(empty.seek(10), undefined);
-  equal(empty.next().done, true);
+  equal([...empty], []);
 });
 
 it('slice', async function () {
