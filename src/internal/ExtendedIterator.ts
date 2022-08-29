@@ -34,7 +34,7 @@ import DropWhileIterator from './DropWhileIterator';
 import CompressIterator from './CompressIterator';
 import ProductIterator from './ProductIterator';
 import CombinationsIterator from './CombinationsIterator';
-import CachedIterator from './CachedIterator';
+import SeekableIterator from './SeekableIterator';
 import TeedIterator from './TeedIterator';
 import count from '../count';
 
@@ -269,11 +269,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param n The number of independent iterators to create.
    */
   public tee<N extends number>(n: N): Tuple<ExtendedIterator<T>, N> {
-    const cachedIterator = new CachedIterator(toIterator(this.iterator));
+    const seekable = new SeekableIterator(toIterator(this.iterator));
     const indices = new Array(n).fill(0);
     return Array.from(
       { length: n },
-      (_, i) => new ExtendedIterator(new TeedIterator(i, cachedIterator, indices)),
+      (_, i) => new ExtendedIterator(new TeedIterator(i, seekable, indices)),
     ) as Tuple<ExtendedIterator<T>, N>;
   }
 

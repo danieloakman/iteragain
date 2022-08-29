@@ -281,7 +281,12 @@ describe('internal', function () {
       equal(iter([1, 1, 3, 3, 2, 2]).unique().toArray(), [1, 3, 2]);
       equal(iter('AAAABBBCCDAABBB').unique().join(''), 'ABCD');
       equal(iter('AAAABBBCCDAABBB').unique({ justSeen: true }).join(''), 'ABCDAB');
-      equal(iter('ABBCcAD').unique({ iteratee: v => v.toLowerCase() }).join(''), 'ABCD');
+      equal(
+        iter('ABBCcAD')
+          .unique({ iteratee: v => v.toLowerCase() })
+          .join(''),
+        'ABCD',
+      );
     });
 
     it('unzip', async function () {
@@ -289,10 +294,20 @@ describe('internal', function () {
         iter([
           ['a', 1],
           ['b', 2],
-        ]).unzip().map(v => v.toArray()),
-        [['a', 'b'], [1, 2]],
+        ])
+          .unzip()
+          .map(v => v.toArray()),
+        [
+          ['a', 'b'],
+          [1, 2],
+        ],
       );
-      equal(iter([1, 2, 3]).unzip().map(v => v.toArray()), [[1, 2, 3]]);
+      equal(
+        iter([1, 2, 3])
+          .unzip()
+          .map(v => v.toArray()),
+        [[1, 2, 3]],
+      );
     });
 
     it('chunks', async function () {
@@ -337,15 +352,56 @@ describe('internal', function () {
     });
 
     it('distribute', async function () {
-      equal(iter(range(3)).distribute(2).map(v => v.toArray()), [[0, 2], [1]]);
-      equal(iter(range(6)).distribute(2).map(v => v.toArray()), [[0, 2, 4], [1, 3, 5]]);
-      equal(iter(range(6)).distribute(3).map(v => v.toArray()), [[0, 3], [1, 4], [2, 5]]);
+      equal(
+        iter(range(3))
+          .distribute(2)
+          .map(v => v.toArray()),
+        [[0, 2], [1]],
+      );
+      equal(
+        iter(range(6))
+          .distribute(2)
+          .map(v => v.toArray()),
+        [
+          [0, 2, 4],
+          [1, 3, 5],
+        ],
+      );
+      equal(
+        iter(range(6))
+          .distribute(3)
+          .map(v => v.toArray()),
+        [
+          [0, 3],
+          [1, 4],
+          [2, 5],
+        ],
+      );
     });
 
     it('divide', async function () {
-      equal(iter(range(3)).divide(2).map(v => v.toArray()), [[0, 1], [2]]);
-      equal(iter(range(10)).divide(3).map(v => v.toArray()), [[0, 1, 2, 3], [4, 5, 6], [7, 8, 9]]);
-      equal(iter([]).divide(3).map(v => v.toArray()), [[], [], []]);
+      equal(
+        iter(range(3))
+          .divide(2)
+          .map(v => v.toArray()),
+        [[0, 1], [2]],
+      );
+      equal(
+        iter(range(10))
+          .divide(3)
+          .map(v => v.toArray()),
+        [
+          [0, 1, 2, 3],
+          [4, 5, 6],
+          [7, 8, 9],
+        ],
+      );
+      equal(
+        iter([])
+          .divide(3)
+          .map(v => v.toArray()),
+        [[], [], []],
+      );
     });
 
     it('resume', async function () {
@@ -552,7 +608,14 @@ describe('internal', function () {
   // });
 
   it('FunctionIterator', async function () {
-    const it = new FunctionIterator(((n = 0) => () => n++ * 2)(), 100);
+    const it = new FunctionIterator(
+      (
+        (n = 0) =>
+          () =>
+            n++ * 2
+      )(),
+      100,
+    );
     equal([...it], [...range(0, 100, 2)]);
     equal([...it], []);
   });
@@ -613,14 +676,36 @@ it('cycle', async function () {
 });
 
 it('distribute', async function () {
-  equal([...distribute(range(3), 3)].map(v => toArray(v)), [[0], [1], [2]]);
-  equal([...distribute(range(6), 2)].map(v => toArray(v)), [[0, 2, 4], [1, 3, 5]]);
+  equal(
+    [...distribute(range(3), 3)].map(v => toArray(v)),
+    [[0], [1], [2]],
+  );
+  equal(
+    [...distribute(range(6), 2)].map(v => toArray(v)),
+    [
+      [0, 2, 4],
+      [1, 3, 5],
+    ],
+  );
 });
 
 it('divide', async function () {
-  equal(divide(range(1, 4), 3).map(v => toArray(v)), [[1], [2], [3]]);
-  equal(divide(range(1, 7), 3).map(v => toArray(v)), [[1, 2], [3, 4], [5, 6]]);
-  equal(divide(range(1, 4), 5).map(v => [...v]), [[1], [2], [3], [], []]);
+  equal(
+    divide(range(1, 4), 3).map(v => toArray(v)),
+    [[1], [2], [3]],
+  );
+  equal(
+    divide(range(1, 7), 3).map(v => toArray(v)),
+    [
+      [1, 2],
+      [3, 4],
+      [5, 6],
+    ],
+  );
+  equal(
+    divide(range(1, 4), 5).map(v => [...v]),
+    [[1], [2], [3], [], []],
+  );
 });
 
 it('dropWhile', async function () {
@@ -910,14 +995,8 @@ it('reverse', async function () {
 });
 
 it('roundrobin', async function () {
-  equal(
-    [...roundrobin([1, 2, 3], [4, 5, 6])],
-    [1, 4, 2, 5, 3, 6],
-  );
-  equal(
-    [...roundrobin('ABC', 'D', 'EF')],
-    ['A', 'D', 'E', 'B', 'F', 'C'],
-  );
+  equal([...roundrobin([1, 2, 3], [4, 5, 6])], [1, 4, 2, 5, 3, 6]);
+  equal([...roundrobin('ABC', 'D', 'EF')], ['A', 'D', 'E', 'B', 'F', 'C']);
 });
 
 it('seekable', async function () {
@@ -930,8 +1009,11 @@ it('seekable', async function () {
   equal(it.peek(), [it.next().value]);
   it.seek(10);
   equal(it.elements, [5, 6, 7, 8, 9]);
-  equal(it.seek(-1), it.elements[it.elements.length - 1]);
-  equal(seekable([]).seek(10), undefined);
+  it.seek(-1);
+  equal(it.peek(), [9]);
+  const empty = seekable([]);
+  equal(empty.seek(10), undefined);
+  equal(empty.next().done, true);
 });
 
 it('slice', async function () {
@@ -1028,7 +1110,19 @@ it('toIterator', async function () {
   assert(isIterator(it1));
   throws(() => toIterator(null));
   throws(() => toIterator(undefined));
-  equal(toArray(toIterator(((i = 0) => () => i++)(), 3)), [0, 1, 2]);
+  equal(
+    toArray(
+      toIterator(
+        (
+          (i = 0) =>
+            () =>
+              i++
+        )(),
+        3,
+      ),
+    ),
+    [0, 1, 2],
+  );
 });
 
 it('triplewise', async function () {
@@ -1050,8 +1144,21 @@ it('unique', async function () {
 });
 
 it('unzip', async function () {
-  equal(unzip([['a', 1], ['b', 2], ['c', 3]]).map(toArray), [['a', 'b', 'c'], [1, 2, 3]]);
-  equal(unzip(zip('abc', [1, 2])).map(toArray), [['a', 'b'], [1, 2]]);
+  equal(
+    unzip([
+      ['a', 1],
+      ['b', 2],
+      ['c', 3],
+    ]).map(toArray),
+    [
+      ['a', 'b', 'c'],
+      [1, 2, 3],
+    ],
+  );
+  equal(unzip(zip('abc', [1, 2])).map(toArray), [
+    ['a', 'b'],
+    [1, 2],
+  ]);
   // @ts-expect-error
   equal([...unzip([0, 1, 2])[0]], [0, 1, 2]);
 });

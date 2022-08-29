@@ -1,4 +1,4 @@
-import CachedIterator from './internal/CachedIterator';
+import SeekableIterator from './internal/SeekableIterator';
 import TeedIterator from './internal/TeedIterator';
 import { IteratorOrIterable, Tuple } from './internal/types';
 import toIterator from './toIterator';
@@ -15,9 +15,9 @@ import toIterator from './toIterator';
  * @param n The number of independent iterators to create.
  */
 export function tee<T, N extends number>(arg: IteratorOrIterable<T>, n: N): Tuple<IterableIterator<T>, N> {
-  const cachedIterator = new CachedIterator(toIterator(arg));
+  const seekable = new SeekableIterator(toIterator(arg));
   const indices = new Array(n).fill(0);
-  return Array.from({ length: n }, (_, i) => new TeedIterator(i, cachedIterator, indices)) as Tuple<IterableIterator<T>, N>;
+  return Array.from({ length: n }, (_, i) => new TeedIterator(i, seekable, indices)) as Tuple<IterableIterator<T>, N>;
 }
 
 export default tee;

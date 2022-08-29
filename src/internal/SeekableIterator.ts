@@ -7,7 +7,7 @@ import { Tuple } from './types';
 export class SeekableIterator<T> implements IterableIterator<T> {
   protected cache: T[] = [];
   protected i = 0;
-  protected _done = false;
+  protected iteratorDone = false;
 
   constructor(protected iterator: Iterator<T>, protected maxLength = Infinity) {}
 
@@ -16,7 +16,8 @@ export class SeekableIterator<T> implements IterableIterator<T> {
   }
 
   get done(): boolean {
-    return this._done;
+    // If the iterator is done, then determine if `i` is at the end of the cache.
+    return this.iteratorDone ? (!this.cache.length || this.i >= this.cache.length) : false;
   }
 
   [Symbol.iterator](): IterableIterator<T> {
@@ -24,27 +25,23 @@ export class SeekableIterator<T> implements IterableIterator<T> {
   }
 
   public next(): IteratorResult<T> {
-    if (this._done) return { done: true, value: undefined };
+    if (this.done) return { done: true, value: undefined };
     const cachedValue = this.cache[this.i++];
     if (cachedValue !== undefined) return { done: false, value: cachedValue };
     const next = this.iterator.next();
-    if (next.done) this._done = true;
+    if (next.done) this.iteratorDone = true;
     else this.add(next.value);
     return next;
   }
 
   /**
-   * Seeks forward/backwards to the index `i` and returns the value at that index. `i` may be any positive or negative
-   * number. Negative numbers seek starting from the end of the internal cache (e.g. -1 is the last element).
+   * Seeks forward/backwards to the index `i`. `i` may be any positive or negative number. Negative numbers seek
+   * starting from the end of the internal cache (e.g. -1 is the last element).
    */
-  public seek(i: number): T | undefined {
+  public seek(i: number): void {
     if (i < 0) i = (this.cache.length + i);
-    if (i > this.i) while (this.i < i && !this._done) this.next();
-    else if (i < this.i) {
-      this._done = false;
-      this.i = i;
-    }
-    return this.cache[this.i];
+    if (i > this.i) while (this.i < i && !this.done) this.next();
+    else if (i < this.i) this.i = i;
   }
 
   /**
