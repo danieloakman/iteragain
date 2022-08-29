@@ -24,12 +24,10 @@
     "v:patch": "npm version patch -f -m \"Upgrade package version to v%s\"",
     "v:minor": "npm version minor -f -m \"Upgrade package version to v%s\"",
     "v:major": "npm version major -f -m \"Upgrade package version to v%s\"",
-    "prepare": "npm run build && husky install",
-    "prepublishOnly": "npm run test && npm run lint",
+    "prepare": "husky install",
     "preversion": "npm run lint",
     "postversion": "git push --follow-tags",
-    "publish:es": "ts-node ./scripts/publish-es.ts",
-    "publish:all": "npm publish && npm run publish:es"
+    "publish:all": "ts-node ./scripts/publish.ts"
   },
   "dependencies": {},
   "devDependencies": {
