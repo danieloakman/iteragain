@@ -15,6 +15,8 @@ See [iteragain-es](https://www.npmjs.com/package/iteragain-es) for the ES module
 
 ## Code examples
 
+### A performance benefit over user Array's higher-order methods
+
 ```js
 // This is an example of using Array higher-order methods.
 // And this particular one will iterate over `someArray` 3 times.
@@ -25,6 +27,8 @@ const result2 = iter(someArray).map(iteratee).filter(predicate).reduce(reducer).
 
 equal(result1, result2); // Asserts that the results are the same.
 ```
+
+### Basic use of `iter` and some `standalone` functions
 
 ```js
 // Import from the root index
@@ -40,6 +44,8 @@ let nums = iter([1, 2, 3, 4, 5])
 import { map, filter, toArray } from 'iteragain';
 nums = toArray(filter(map([1, 2, 3, 4, 5], n => n * n), n => n % 2 === 0)); // [4, 16]
 ```
+
+### Using the `range` standalone function.
 
 ```js
 import range from 'iteragain/range';
@@ -59,6 +65,8 @@ r.nth(10); // undefined (the 10th element doesn't exist)
 r.index(4); // 2 (the index of the value 4)
 ```
 
+### Iterating through any object's properties recursively.
+
 ```js
 import iter from 'iteragain/iter';
 const obj = { a: 1, b: { c: 2, d: { e: 3 }, f: 4 } };
@@ -66,6 +74,15 @@ const keys = iter(obj)
   .map(([key, _value, _parent]) => key)
   .toArray();
   // ['a', 'c', 'e', 'd', 'b', 'f'] Post-order depth first search traversal of `obj`.
+```
+
+### Supports passing functions as input and using an optional sentinel value to stop iteration
+
+```js
+import iter from 'iteragain/iter';
+const it = iter(() => someFunction(1, 2, 3), null)
+// Will call `someFunction` with the arguments [1, 2, 3] for each iteration until it returns `null`:
+const results = it.toArray();
 ```
 
 ## Inpired by
