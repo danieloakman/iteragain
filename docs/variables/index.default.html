@@ -1046,6 +1046,9 @@ could cause significant memory usage. So because of this, only use on finite ite
 <li class="tsd-signature" id="__type.__type-77.__type-78"><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span>, maxLength<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/internal_SeekableIterator.SeekableIterator.html" class="tsd-signature-type" data-tsd-kind="Class">SeekableIterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></li></ul>
 <ul class="tsd-descriptions">
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Wraps the input iterator to allow for seeking backwards and forwards through its values. An internal cache of length
+<code>maxLength</code> is kept and progressively added to when iterating forwards.</p>
+</div>
 <div class="tsd-type-parameters">
 <h4 class="tsd-type-parameters-title">Type Parameters</h4>
 <ul class="tsd-type-parameters">
@@ -1576,7 +1579,7 @@ elements.</p>
 <h5><code class="tsd-tag ts-flagRest">Rest</code> <span class="tsd-signature-symbol">...</span>args: <a href="../types/internal_types.IteratorOrIterable.html" class="tsd-signature-type" data-tsd-kind="Type alias">IteratorOrIterable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></li></ul></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/c3e56d5/src/index.ts#L100">index.ts:100</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/9e40a5a/src/index.ts#L100">index.ts:100</a></li></ul></aside></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
