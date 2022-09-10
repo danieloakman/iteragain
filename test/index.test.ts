@@ -124,6 +124,22 @@ describe('internal', function () {
       );
     });
 
+    it('min', async function () {
+      equal(iter([1, 2, 3]).min(), 1);
+      equal(iter('123a0A').min(), '0');
+    });
+
+    it('max', async function () {
+      equal(iter([1, 2, 3]).max(), 3);
+      equal(iter('123a0A').max(), 'a');
+    });
+
+    it('minmax', async function () {
+      equal(iter([1, 2, 3]).minmax(), [1, 3]);
+      equal(iter('123a0A').minmax(), ['0', 'a']);
+      equal(iter(['1', 0, '2']).minmax(), [0, '2']);
+    });
+
     it('concat', async function () {
       equal(iter([1, 2, 3]).concat([4, 5, 6]).toArray(), [1, 2, 3, 4, 5, 6]);
     });
@@ -944,6 +960,7 @@ it('range', async function () {
   assert(range().toArray(), []);
   // Is still subject to floating numbers rounding errors:
   throws(() => equal(range(0, 5, 0.3).toArray(), [0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7]));
+  assert(range(0, Infinity, 13).includes(26));
 
   for (const args of [
     [10],

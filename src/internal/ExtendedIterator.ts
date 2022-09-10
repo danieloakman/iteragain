@@ -410,14 +410,50 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public reduce<R>(reducer: (accumulator: R, value: T) => R, initialValue: R): R;
   public reduce<R>(reducer: (accumulator: T | R, value: T) => R): R;
   public reduce<R>(reducer: (accumulator: R | T, value: T) => R, initialValue?: R): R {
+    let next: IteratorResult<T>;
     let accumulator = initialValue ?? this.iterator.next().value;
-    for (const value of this) accumulator = reducer(accumulator, value);
+    while(!(next = this.iterator.next()).done) accumulator = reducer(accumulator, next.value);
     return accumulator;
   }
 
   /** Returns the number of times the `predicate` returns a truthy value. */
   public quantify(predicate: Predicate<T>): number {
     return this.reduce((acc, v) => acc + (predicate(v) ? 1 : 0), 0);
+  }
+
+  /** Returns the minimum value from this iterator. */
+  public min(iteratee: Iteratee<T, number> = v => v as unknown as number): T {
+    let next = this.iterator.next();
+    let min = { value: next.value, comparison: iteratee(next.value) };
+    while (!(next = this.iterator.next()).done) {
+      const comparison = iteratee(next.value);
+      if (comparison < min.comparison) min = { value: next.value, comparison };
+    }
+    return min.value;
+  }
+
+  /** Returns the maximum value from this iterator. */
+  public max(iteratee: Iteratee<T, number> = v => v as unknown as number): T {
+    let next = this.iterator.next();
+    let max = { value: next.value, comparison: iteratee(next.value) };
+    while (!(next = this.iterator.next()).done) {
+      const comparison = iteratee(next.value);
+      if (comparison > max.comparison) max = { value: next.value, comparison };
+    }
+    return max.value;
+  }
+
+  /** Returns the minimum and maximum from this iterator. */
+  public minmax(iteratee: Iteratee<T, number> = v => v as unknown as number): [T, T] {
+    let next = this.iterator.next();
+    let min = { value: next.value, comparison: iteratee(next.value) };
+    let max = { value: next.value, comparison: iteratee(next.value) };
+    while (!(next = this.iterator.next()).done) {
+      const comparison = iteratee(next.value);
+      if (comparison < min.comparison) min = { value: next.value, comparison };
+      if (comparison > max.comparison) max = { value: next.value, comparison };
+    }
+    return [min.value, max.value];
   }
 
   /** Iterate over this iterator using the `array.prototype.forEach` style of method. */
