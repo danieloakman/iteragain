@@ -46,6 +46,9 @@ import unzip from './unzip';
 import consume from './consume';
 import reverse from './reverse';
 import seekable from './seekable';
+import min from './min';
+import max from './max';
+import minmax from './minmax';
 
 export {
   chunks,
@@ -68,6 +71,9 @@ export {
   isIterator,
   iter,
   map,
+  max,
+  min,
+  minmax,
   nth,
   pairwise,
   partition,
@@ -97,6 +103,7 @@ export {
   zip,
   zipLongest,
 };
+
 export default {
   chunks,
   combinations,
@@ -118,6 +125,9 @@ export default {
   isIterator,
   iter,
   map,
+  max,
+  min,
+  minmax,
   nth,
   pairwise,
   partition,

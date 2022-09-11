@@ -443,7 +443,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return max.value;
   }
 
-  /** Returns the minimum and maximum from this iterator. */
+  /** Returns the minimum and maximum from this iterator as a tuple: `[min, max]`. */
   public minmax(iteratee: Iteratee<T, number> = v => v as unknown as number): [T, T] {
     let next = this.iterator.next();
     let min = { value: next.value, comparison: iteratee(next.value) };

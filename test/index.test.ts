@@ -48,6 +48,9 @@ import {
   consume,
   reverse,
   seekable,
+  min,
+  max,
+  minmax,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -538,7 +541,7 @@ describe('internal', function () {
       equal(iter([1, 2, 3]).includes(4), false);
     });
 
-    it('exhaust & tap', async function () {
+    it('consume & tap', async function () {
       let mapWasCalled = 0;
       const f = () => mapWasCalled++;
       equal(iter([1, 2, 3]).tap(f).consume(), undefined);
@@ -648,7 +651,6 @@ describe('internal', function () {
     const obj3 = { a: 1, b: { c: 2 } } as Record<string, any>;
     const obj4 = { circle: obj3 } as Record<string, any>;
     obj3.b.circle = obj4;
-    // const str = JSON.stringify(obj3);
     throws(() => [...new ObjectIterator(obj3, 'pre-order-DFS')].map(([k]) => k));
   });
 });
@@ -837,6 +839,21 @@ it('iter', async function () {
 
 it('map', async function () {
   equal([...map(range(10), n => n * n)], [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]);
+});
+
+it('max', async function () {
+  equal(max(range(10)), 9);
+  equal(max(range(10), n => -n), 0);
+});
+
+it('min', async function () {
+  equal(min(range(10)), 0);
+  equal(min(range(10), n => -n), 9);
+});
+
+it('minmax', async function () {
+  equal(minmax(range(10)), [0, 9]);
+  equal(minmax(range(10), n => -n), [9, 0]);
 });
 
 it('nth', async function () {
