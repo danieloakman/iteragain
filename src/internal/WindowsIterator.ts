@@ -1,11 +1,15 @@
 /** An Iterator that yields windows or tuples of various sizes and offsets/intervals from the input `iterator`. */
-export class WindowsIterator<T> implements Iterator<T[]> {
+export class WindowsIterator<T> implements IterableIterator<T[]> {
   protected prev: T[] = [];
   protected nextResult: IteratorResult<T> = { done: false, value: undefined };
   /** The number of elements inbetween windows. */
   protected readonly unused = this.offset - this.length;
 
   constructor(protected iterator: Iterator<T>, protected length: number, protected offset: number, protected fill?: T) {}
+
+  [Symbol.iterator](): IterableIterator<T[]> {
+    return this;
+  }
 
   next(): IteratorResult<T[]> {
     if (this.nextResult.done) return this.nextResult;

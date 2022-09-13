@@ -1,11 +1,11 @@
 {
   "name": "iteragain",
-  "version": "2.1.0",
+  "version": "3.8.1",
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
   "main": "index.js",
   "types": "index.d.ts",
   "engines": {
-    "node": "14.x"
+    "node": ">14.x"
   },
   "scripts": {
     "build": "tsc --build",
@@ -16,26 +16,27 @@
     "genasync:watch": "ts-node ./scripts/gen-async.ts -w",
     "lint": "eslint --ignore-path .eslintignore ./src --ext .ts",
     "format": "prettier-eslint --ignore .gitignore --write \"./src/**/*\"",
-    "test": "nyc --skip-full ts-mocha test/**.test.ts --reporter list",
+    "test": "nyc --skip-full ts-mocha test/**.test.ts --reporter spec",
     "bm": "ts-node benchmark/index.bm.ts",
     "bm:prof": "node -r ts-node/register --prof benchmark/index.bm.ts",
     "new:iterator": "ts-node ./scripts/new-iterator.ts",
+    "new:function": "ts-node ./scripts/new-function.ts",
+    "new:test": "ts-node ./scripts/new-test.ts",
     "typedoc": "typedoc --plugin typedoc-plugin-remove-references --includeVersion --entryPointStrategy expand src/ && git add docs",
     "v:patch": "npm version patch -f -m \"Upgrade package version to v%s\"",
     "v:minor": "npm version minor -f -m \"Upgrade package version to v%s\"",
     "v:major": "npm version major -f -m \"Upgrade package version to v%s\"",
-    "prepare": "npm run build && husky install",
-    "prepublishOnly": "npm run test && npm run lint",
+    "prepare": "husky install",
     "preversion": "npm run lint",
     "postversion": "git push --follow-tags",
-    "publish:es": "ts-node ./scripts/publish-es.ts",
-    "publish:all": "npm publish && npm run publish:es"
+    "publish:all": "ts-node ./scripts/publish-all.ts"
   },
   "dependencies": {},
   "devDependencies": {
     "@types/benchmark": "^2.1.1",
     "@types/mocha": "^8.0.0",
     "@types/node": "^14.0.23",
+    "@types/prettier": "^2.7.0",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "benchmark": "^2.1.4",

@@ -1,7 +1,11 @@
-export class RoundrobinIterator implements Iterator<any> {
+export class RoundrobinIterator implements IterableIterator<any> {
   protected i = 0;
 
   constructor(protected iterators: Iterator<any>[]) {}
+
+  [Symbol.iterator](): IterableIterator<any> {
+    return this;
+  }
 
   next(): IteratorResult<any> {
     if (!this.iterators.length) return { done: true, value: undefined };

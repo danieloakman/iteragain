@@ -1,8 +1,12 @@
 /** An iterator that pairs adjacent values in the input `Iterator<T>` together like: [T, T] */
-export class PairwiseIterator<T> implements Iterator<[T, T]> {
+export class PairwiseIterator<T> implements IterableIterator<[T, T]> {
   protected prev: IteratorResult<T> = null;
 
   constructor(protected iterator: Iterator<T>) {}
+
+  [Symbol.iterator](): IterableIterator<[T, T]> {
+    return this;
+  }
 
   next(): IteratorResult<[T, T]> {
     if (!this.prev && (this.prev = this.iterator.next()).done) return { done: true, value: undefined };

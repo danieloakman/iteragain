@@ -2,9 +2,10 @@ import { setupSuite } from './bm-util';
 
 const suite = setupSuite(__filename.split(/[\\/]/).pop());
 import ExtendedIterator from '../src/internal/ExtendedIterator';
+import { map, filter, toIterator, toArray } from '../src';
 import { IteratorWithOperators } from 'iterare/lib/iterate';
 import { from } from 'rxjs';
-import { map, filter/* , skip */ } from 'rxjs/operators';
+import { map as rsjsMap, filter as rxjsFilter/* , skip */ } from 'rxjs/operators';
 
 function* nums(size: number) {
   for (let i = 0; i < size; i++) yield i;
@@ -43,6 +44,9 @@ suite.add('iteragain', () => {
     .map(x => x.toString())
     .toArray();
 });
+suite.add('iteragain standalones', () => {
+  toArray(map(filter(map(toIterator(nums(SIZE)), x => x * x), x => x % 2 !== 0), x => x.toString()));
+});
 suite.add('iterare', () => {
   new IteratorWithOperators(nums(SIZE))
     .map(x => x * x)
@@ -54,11 +58,11 @@ suite.add('rxjs', () => {
   from(nums(SIZE))
     .pipe(
       // skip(SIZE / 2),
-      map(n => n * n),
-      filter(n => n % 2 !== 0),
+      rsjsMap(n => n * n),
+      rxjsFilter(n => n % 2 !== 0),
       // filter(n => n > 100),
       // filter(n => n < 200),
-      map(n => n.toString()),
+      rsjsMap(n => n.toString()),
     )
     .subscribe(() => {});
 });
