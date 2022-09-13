@@ -843,17 +843,26 @@ it('map', async function () {
 
 it('max', async function () {
   equal(max(range(10)), 9);
-  equal(max(range(10), n => -n), 0);
+  equal(
+    max(range(10), n => -n),
+    0,
+  );
 });
 
 it('min', async function () {
   equal(min(range(10)), 0);
-  equal(min(range(10), n => -n), 9);
+  equal(
+    min(range(10), n => -n),
+    9,
+  );
 });
 
 it('minmax', async function () {
   equal(minmax(range(10)), [0, 9]);
-  equal(minmax(range(10), n => -n), [9, 0]);
+  equal(
+    minmax(range(10), n => -n),
+    [9, 0],
+  );
 });
 
 it('nth', async function () {
@@ -862,7 +871,6 @@ it('nth', async function () {
   equal(nth(toIterator({ a: 1, b: 2 }), 1), ['b', 2, { a: 1, b: 2 }]);
 });
 
-// test pairwise:
 it('pairwise', async function () {
   equal(
     [...pairwise(range(10))],
@@ -1156,6 +1164,19 @@ it('toIterator', async function () {
       ),
     ),
     [0, 1, 2],
+  );
+  equal(
+    toArray(
+      toIterator(
+        (
+          (n = 1) =>
+            () =>
+              (n = n * 2)
+        )(),
+        1024,
+      ),
+    ),
+    [2, 4, 8, 16, 32, 64, 128, 256, 512],
   );
 });
 
