@@ -7,7 +7,7 @@ import toIterator from './toIterator';
  * @param take Number of elements starting from the front of iterable to take (default: 1).
  * @returns Returns the array of elements taken from the front.
  */
-export function take<T, Size extends number>(arg: IteratorOrIterable<T>, take: Size = 1 as Size): Tuple<T, Size> {
+export function take<T, Size extends number = 1>(arg: IteratorOrIterable<T>, take: Size = 1 as Size): Tuple<T, Size> {
   const results: T[] = [];
   const it = toIterator(arg);
   let next: IteratorResult<T, any>;
