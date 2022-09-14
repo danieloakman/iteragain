@@ -49,6 +49,9 @@ import seekable from './seekable';
 import min from './min';
 import max from './max';
 import minmax from './minmax';
+import find from './find';
+import findIndex from './findIndex';
+import includes from './includes';
 
 export {
   chunks,
@@ -65,8 +68,11 @@ export {
   every,
   filter,
   filterMap,
+  find,
+  findIndex,
   flatten,
   forEach,
+  includes,
   isIterable,
   isIterator,
   iter,
@@ -119,8 +125,11 @@ export default {
   every,
   filter,
   filterMap,
+  find,
+  findIndex,
   flatten,
   forEach,
+  includes,
   isIterable,
   isIterator,
   iter,

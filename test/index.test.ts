@@ -51,6 +51,9 @@ import {
   min,
   max,
   minmax,
+  find,
+  findIndex,
+  includes,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -536,6 +539,17 @@ describe('internal', function () {
       );
     });
 
+    it('findIndex', async function () {
+      equal(
+        iter([1, 2, 3]).findIndex(n => n > 2),
+        2,
+      );
+      equal(
+        iter([1, 2, 3]).findIndex(n => n > 4),
+        -1,
+      );
+    });
+
     it('includes', async function () {
       equal(iter([1, 2, 3]).includes(2), true);
       equal(iter([1, 2, 3]).includes(4), false);
@@ -551,6 +565,8 @@ describe('internal', function () {
       equal(iterator.tap(f).consume(2), undefined);
       equal(mapWasCalled, 2);
       equal(iterator.toArray(), [3]);
+      // Test deprecated exhaust method:
+      equal(iterator.exhaust(), undefined);
     });
 
     it('peek', async function () {
@@ -759,6 +775,16 @@ it('filterMap', async function () {
   equal([...filterMap(range(10), n => (n % 2 === 0 ? n : null))], [0, 2, 4, 6, 8]);
 });
 
+it('find', async function () {
+  equal(find(range(10), n => n === 5), 5);
+  equal(find(range(10), n => n === 10), undefined);
+});
+
+it('findIndex', async function () {
+  equal(findIndex(range(10), n => n === 5), 5);
+  equal(findIndex(range(10), n => n === 10), -1);
+});
+
 it('flatten', async function () {
   equal([...flatten([[1], [2, 3]])], [1, 2, 3]);
   equal([...flatten([[1], [2, 3], [4, 5]])], [1, 2, 3, 4, 5]);
@@ -772,6 +798,11 @@ it('forEach', async function () {
   const arr: number[] = [];
   forEach(range(10), n => arr.push(n));
   equal(arr, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+});
+
+it('includes', async function () {
+  equal(includes(range(10), 5), true);
+  equal(includes(range(10), 10), false);
 });
 
 it('isIterable', async function () {
@@ -1150,7 +1181,9 @@ it('tee', async function () {
 it('toIterator', async function () {
   const it1 = toIterator([1, 2, 3]);
   assert(isIterator(it1));
+  // @ts-expect-error
   throws(() => toIterator(null));
+  // @ts-expect-error
   throws(() => toIterator(undefined));
   equal(
     toArray(

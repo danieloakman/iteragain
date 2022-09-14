@@ -495,6 +495,18 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     while (!(next = this.iterator.next()).done) if (predicate(next.value)) return next.value;
   }
 
+  /**
+   * Finds the index of the first value that passes a truthy vale to `predicate`, then returns it. Only consumes the
+   * iterator's values up to the found value, then stops. So if it's not found, then the iterator is exhausted.
+   */
+  public findIndex(predicate: Predicate<T>): number {
+    let next: IteratorResult<T>;
+    let i = -1;
+    while (i++, !(next = this.iterator.next()).done)
+      if (predicate(next.value)) return i;
+    return -1;
+  }
+
   /** Returns true if `value` strictly equals some value in this iterator. */
   public includes(value: T): boolean {
     return this.some(v => v === value);

@@ -63,6 +63,7 @@ some amount, depending on the method.</p>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#filter" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>filter</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#filterMap" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>filter<wbr/>Map</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#find" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>find</span></a>
+<a href="internal_ExtendedIterator.ExtendedIterator.html#findIndex" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>find<wbr/>Index</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#flatten" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>flatten</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#forEach" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>for<wbr/>Each</span></a>
 <a href="internal_ExtendedIterator.ExtendedIterator.html#includes" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>includes</span></a>
@@ -125,7 +126,7 @@ some amount, depending on the method.</p>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>iterator</span><a href="#iterator" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">iterator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Iterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/eb44613/src/internal/ExtendedIterator.ts#L47">internal/ExtendedIterator.ts:47</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/danieloakman/iterutil/blob/66521ab/src/internal/ExtendedIterator.ts#L47">internal/ExtendedIterator.ts:47</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="_iterator_" class="tsd-anchor"></a>
@@ -453,6 +454,21 @@ values up to the found value, then stops. So if it&#39;s not found, then the ite
 <li>
 <h5>predicate: <a href="../types/internal_types.Predicate.html" class="tsd-signature-type" data-tsd-kind="Type alias">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h4></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="findIndex" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>find<wbr/>Index</span><a href="#findIndex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature" id="findIndex.findIndex-1">find<wbr/>Index<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="../types/internal_types.Predicate.html" class="tsd-signature-type" data-tsd-kind="Type alias">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li></ul>
+<ul class="tsd-descriptions">
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Finds the index of the first value that passes a truthy vale to <code>predicate</code>, then returns it. Only consumes the
+iterator&#39;s values up to the found value, then stops. So if it&#39;s not found, then the iterator is exhausted.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>predicate: <a href="../types/internal_types.Predicate.html" class="tsd-signature-type" data-tsd-kind="Type alias">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="flatten" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>flatten</span><a href="#flatten" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1271,8 +1287,11 @@ elements.</p>
 <li class="tsd-kind-module"><a href="../modules/every.html">every</a></li>
 <li class="tsd-kind-module"><a href="../modules/filter.html">filter</a></li>
 <li class="tsd-kind-module"><a href="../modules/filterMap.html">filter<wbr/>Map</a></li>
+<li class="tsd-kind-module"><a href="../modules/find.html">find</a></li>
+<li class="tsd-kind-module"><a href="../modules/findIndex.html">find<wbr/>Index</a></li>
 <li class="tsd-kind-module"><a href="../modules/flatten.html">flatten</a></li>
 <li class="tsd-kind-module"><a href="../modules/forEach.html">for<wbr/>Each</a></li>
+<li class="tsd-kind-module"><a href="../modules/includes.html">includes</a></li>
 <li class="tsd-kind-module"><a href="../modules/index.html">index</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_CachedIterator.html">internal/<wbr/>Cached<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_ChunksIterator.html">internal/<wbr/>Chunks<wbr/>Iterator</a></li>
@@ -1363,6 +1382,7 @@ elements.</p>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#filter" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>filter</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#filterMap" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>filter<wbr/>Map</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#find" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>find</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#findIndex" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>find<wbr/>Index</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#flatten" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>flatten</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#forEach" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>for<wbr/>Each</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="internal_ExtendedIterator.ExtendedIterator.html#includes" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>includes</a></li>
