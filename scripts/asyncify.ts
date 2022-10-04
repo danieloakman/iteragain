@@ -72,12 +72,11 @@ function asyncifyFile(file: AsyncableFile) {
       case 'c': {
         // Comment line:
         let startOfLine = -1;
-        for (let i = match.index - 1; i > -1; i--) {
+        for (let i = match.index - 1; i > -1; i--)
           if (newContents[i] === '\n') {
             startOfLine = i;
             break;
           }
-        }
         newContents = stringSplice(newContents, match.index, match[0].length);
         if (startOfLine !== -1) newContents = stringSplice(newContents, startOfLine + 1, 0, '// ');
         break;
@@ -88,11 +87,13 @@ function asyncifyFile(file: AsyncableFile) {
   writeFileSync(file.dest, newContents);
 }
 
+const CLEAN_MODE = process.argv.includes('--clean') || process.argv.includes('-c');
 const WATCH_MODE = process.argv.includes('--watch') || process.argv.includes('-w');
 
 iter(walkdirSync(join(__dirname, '../src')))
   .filterMap(({ path, stats }) => createFile(path, stats))
   .tap(file => {
+    if (CLEAN_MODE) return;
     if (WATCH_MODE) {
       console.log(`Watching "${basename(file.src)}"`);
       watchFile(file.src, (currentStats, _prev) => {
