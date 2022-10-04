@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { walkdirSync } from 'more-node-fs';
-import iter from '../src/iter';
+import { iter } from '../src';
 import { join, basename, dirname } from 'path';
 import { watchFile, unlinkSync, readFileSync, writeFileSync, existsSync, Stats } from 'fs';
 
@@ -18,14 +18,15 @@ type AsyncifyCommand = {
   args: string[];
 }
 
-const ASYNCABLE = /\/\* *asyncable\([a-z]+\) *\*\//gim;
+const ASYNCIFY = /\/\* *asyncify\([a-z]+\) *\*\//gim;
 const COMMENT = /^ *\/\*|\*\/ *$/g;
-const COMMAND_AND_ARGS = /\/\* *[a-z]{1,2}\([^*/]*\) *\*\/ */;
+const COMMAND_AND_ARGS = /\/\* *[a-z]{1,2}\([^*/]*\) *\*\//;
+// const NEW_LINE_OR_CARRIAGE_RETURN = /\r|\n/;
 
 function createFile(path: string, stats: Stats): AsyncableFile | null {
   if (!stats.isFile()) return null;
   const contents = readFileSync(path, 'utf8');
-  const match = contents.match(ASYNCABLE);
+  const match = contents.match(ASYNCIFY);
   if (match) {
     const { args: [destFileName] } = parseCommand(match[0]);
     if (!destFileName) throw new Error(`No destination file name found in "${path}"`);
@@ -58,7 +59,7 @@ function parseCommand(rawCommand: string): AsyncifyCommand {
 }
 
 function asyncifyFile(file: AsyncableFile) {
-  let newContents = file.contents.replace(ASYNCABLE, '').trimStart();
+  let newContents = file.contents.replace(ASYNCIFY, '').trimStart();
   let match: ReturnType<typeof String.prototype.match>;
   while ((match = newContents.match(COMMAND_AND_ARGS)) !== null) {
     if (typeof match.index !== 'number') continue;
@@ -91,14 +92,24 @@ function asyncifyFile(file: AsyncableFile) {
       case 'c': {
         // Comment line:
         let startOfLine = -1;
-        for (let i = match.index - 1; i > -1; i--) {
+        loop: for (let i = match.index - 1; i > -1; i--) {
           if (newContents[i] === '\n') {
-            startOfLine = i;
-            break;
+            for (let j = i + 1; j < newContents.length; j++) {
+              if (newContents[j] !== ' ') {
+                startOfLine = j;
+                break loop;
+              }
+            }
           }
         }
+        // const endOfLine = iter(newContents.slice(match.index))
+        //   .zip(count(match.index))
+        //   .takeWhile(([char]) => !NEW_LINE_OR_CARRIAGE_RETURN.test(char))
+        //   .reverse()
+        //   .find(([char]) => char !== ' ')?.[1] ?? -1;
         newContents = stringSplice(newContents, match.index, match[0].length);
-        if (startOfLine !== -1) newContents = stringSplice(newContents, startOfLine + 1, 0, '// ');
+        if (startOfLine !== -1) newContents = stringSplice(newContents, startOfLine, 0, '// ');
+        // if (endOfLine !== -1) newContents = stringSplice(newContents, endOfLine, ???, '');
         break;
       }
     }
