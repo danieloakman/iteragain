@@ -4,20 +4,30 @@ import iter from '../src/iter';
 import { join, basename, dirname } from 'path';
 import { watchFile, unlinkSync, readFileSync, writeFileSync, existsSync, Stats } from 'fs';
 
+const CLEAN_MODE = process.argv.includes('--clean') || process.argv.includes('-c');
+const WATCH_MODE = process.argv.includes('--watch') || process.argv.includes('-w');
+
 type AsyncableFile = {
   src: string;
   dest: string;
   contents: string;
 };
 
-const ASYNCABLE = /\/\* *asyncable:[a-z]+ *\*\//gim;
+type AsyncifyCommand = {
+  cmd: string;
+  args: string[];
+}
+
+const ASYNCABLE = /\/\* *asyncable\([a-z]+\) *\*\//gim;
 const COMMENT = /^ *\/\*|\*\/ *$/g;
+const COMMAND_AND_ARGS = /\/\* *[a-z]{1,2}\([^*/]*\) *\*\/ */;
 
 function createFile(path: string, stats: Stats): AsyncableFile | null {
   if (!stats.isFile()) return null;
   const contents = readFileSync(path, 'utf8');
-  if (ASYNCABLE.test(contents)) {
-    const destFileName = contents.match(ASYNCABLE)?.[0].replace(COMMENT, '').split(':')[1].trim() ?? '';
+  const match = contents.match(ASYNCABLE);
+  if (match) {
+    const { args: [destFileName] } = parseCommand(match[0]);
     if (!destFileName) throw new Error(`No destination file name found in "${path}"`);
     const dest = join(dirname(path), destFileName) + '.ts';
     if (path === dest) return null;
@@ -36,15 +46,24 @@ function stringSplice(str: string, index: number, count = 1, add = '') {
   return str.slice(0, index) + add + str.slice(index + count);
 }
 
+function parseCommand(rawCommand: string): AsyncifyCommand {
+  try {
+    const [cmd, argStr] = rawCommand.split('(').map(str => str.replace(COMMENT, '').trim());
+    const args = argStr.split(',').map(str => str.replace(')', '').trim());
+    return { cmd, args };
+  } catch (err) {
+    console.error(`Error parsing command "${rawCommand}"\n`, err.stack);
+    return { cmd: '', args: [] };
+  }
+}
+
 function asyncifyFile(file: AsyncableFile) {
   let newContents = file.contents.replace(ASYNCABLE, '').trimStart();
-  const regex = /\/\*[a-z]{1,2}:[^*/]+\*\/ */;
   let match: ReturnType<typeof String.prototype.match>;
-  while ((match = newContents.match(regex)) !== null) {
+  while ((match = newContents.match(COMMAND_AND_ARGS)) !== null) {
     if (typeof match.index !== 'number') continue;
-    const [command, argStr] = match[0].split(':').map(str => str.replace(COMMENT, ''));
-    const args = argStr.split(',').map(str => str.trim());
-    switch (command) {
+    const { cmd, args } = parseCommand(match[0]);
+    switch (cmd) {
       case 'i':
         // Insert
         newContents = stringSplice(newContents, match.index, match[0].length, args[0]);
@@ -72,11 +91,12 @@ function asyncifyFile(file: AsyncableFile) {
       case 'c': {
         // Comment line:
         let startOfLine = -1;
-        for (let i = match.index - 1; i > -1; i--)
+        for (let i = match.index - 1; i > -1; i--) {
           if (newContents[i] === '\n') {
             startOfLine = i;
             break;
           }
+        }
         newContents = stringSplice(newContents, match.index, match[0].length);
         if (startOfLine !== -1) newContents = stringSplice(newContents, startOfLine + 1, 0, '// ');
         break;
@@ -86,9 +106,6 @@ function asyncifyFile(file: AsyncableFile) {
   console.log(`Compiled "${file.dest}"`);
   writeFileSync(file.dest, newContents);
 }
-
-const CLEAN_MODE = process.argv.includes('--clean') || process.argv.includes('-c');
-const WATCH_MODE = process.argv.includes('--watch') || process.argv.includes('-w');
 
 iter(walkdirSync(join(__dirname, '../src')))
   .filterMap(({ path, stats }) => createFile(path, stats))
