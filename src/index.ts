@@ -52,6 +52,7 @@ import minmax from './minmax';
 import find from './find';
 import findIndex from './findIndex';
 import includes from './includes';
+import shuffle from './shuffle';
 
 export {
   chunks,
@@ -93,6 +94,7 @@ export {
   reverse,
   roundrobin,
   seekable,
+  shuffle,
   slice,
   some,
   spy,
@@ -150,6 +152,7 @@ export default {
   reverse,
   roundrobin,
   seekable,
+  shuffle,
   slice,
   some,
   spy,

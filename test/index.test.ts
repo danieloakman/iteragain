@@ -54,6 +54,7 @@ import {
   find,
   findIndex,
   includes,
+  shuffle,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -1123,6 +1124,12 @@ it('seekable', async function () {
   const empty = seekable([]);
   equal(empty.seek(10), undefined);
   equal([...empty], []);
+});
+
+it('shuffle', async function () {
+  const shuffled = [...shuffle(range(10))];
+  equal(shuffled.length, 10);
+  equal(shuffled.sort((a: number, b: number) => a - b), range(10).toArray());
 });
 
 it('slice', async function () {
