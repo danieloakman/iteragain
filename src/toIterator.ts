@@ -1,3 +1,10 @@
+/* asyncify(toAsyncIterator)*/
+/* ra(IteratorOrIterable, AsyncIteratorOrIterable) */
+/* ra(toIterator, toAsyncIterator) */
+/* ra(isIterable, isAsyncIterable) */
+/* ra(isIterator, isAsyncIterator) */
+/* ra(' Iterator', ' AsyncIterator') */
+
 import ObjectIterator from './internal/ObjectIterator';
 import { IteratorOrIterable } from './internal/types';
 import isIterable from './isIterable';
@@ -16,7 +23,7 @@ import FunctionIterator from './internal/FunctionIterator';
  * deeply.
  */
 export function toIterator<T>(it: IteratorOrIterable<T>): Iterator<T>;
-export function toIterator<TFunc extends (...args: any[]) => any>(
+export function toIterator<TFunc extends (...args: any[]) => /*r(Promise<any>)*/ any>(
   func: TFunc,
   sentinel?: ReturnType<TFunc>,
 ): FunctionIterator<TFunc>;
@@ -24,8 +31,8 @@ export function toIterator(object: Record<PropertyKey, any>): ObjectIterator<any
 export function toIterator(...args: any[]): any {
   if (isIterator(args[0])) return args[0];
   if (isIterable(args[0])) return args[0][Symbol.iterator]();
-  if (typeof args[0] === 'object' && args[0] !== null) return new ObjectIterator(args[0]);
-  if (typeof args[0] === 'function') return new FunctionIterator(args[0], args[1]);
+  if (typeof args[0] === 'object' && args[0] !== null) return new ObjectIterator(args[0]); /*c*/
+  if (typeof args[0] === 'function') return new FunctionIterator(args[0], args[1]); /*c*/
   throw new TypeError(`Cannot convert ${typeof args[0]} to an iterator.`);
 }
 

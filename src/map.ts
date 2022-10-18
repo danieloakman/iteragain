@@ -1,3 +1,10 @@
+/* asyncify(asyncMap) */
+/* ra(IteratorOrIterable, AsyncIteratorOrIterable) */
+/* ra(Iteratee, AsyncIteratee) */
+/* ra(map, asyncMap) */
+/* ra(toIterator,toAsyncIterator) */
+/* ra(MapIterator, AsyncMapIterator) */
+
 import MapIterator from './internal/MapIterator';
 import { Iteratee, IteratorOrIterable } from './internal/types';
 import toIterator from './toIterator';

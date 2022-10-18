@@ -1,14 +1,25 @@
+/* asyncify(AsyncMapIterator) */
+/* ra(MapIterator, AsyncMapIterator) */
+/* ra(IterableIterator, AsyncIterableIterator) */
+/* ra(Symbol.iterator, Symbol.asyncIterator) */
+/* ra('IteratorResult<R>', 'Promise<IteratorResult<R>>') */
+/* ra(Iteratee, AsyncIteratee) */
+/* ra(' Iterator', ' AsyncIterator') */
+
+import { Iteratee } from './types';
+
 /** An iterator that takes an input Iterator<T> and maps it's values to the type `R`. */
 export class MapIterator<T, R> implements IterableIterator<R> {
-  constructor(protected iterator: Iterator<T>, protected iteratee: (value: T) => R) {}
+  constructor(protected iterator: Iterator<T>, protected iteratee: Iteratee<T, R>) {}
 
   [Symbol.iterator](): IterableIterator<R> {
     return this;
   }
 
-  next(): IteratorResult<R> {
-    const { value, done } = this.iterator.next();
-    return { value: done ? undefined : this.iteratee(value), done };
+  /*i(async)*/ next(): IteratorResult<R> {
+    const { value, done } = /*i(await)*/ this.iterator.next();
+    return { value: done ? undefined : /*i(await)*/ this.iteratee(value), done };
   }
 }
+
 export default MapIterator;

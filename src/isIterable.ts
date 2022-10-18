@@ -1,7 +1,11 @@
-/* asyncable:isAsyncIterable */
+/* asyncify(isAsyncIterable) */
+/* ra(isIterable, isAsyncIterable) */
+/* ra(' Iterable', ' AsyncIterable') */
+/* ra('Symbol.iterator', 'Symbol.asyncIterator') */
 
 /** Returns true if `arg` implements the `Symbol.iterator`, i.e. it's able to be passed to a `for of` loop. */
-export function /*r:isAsyncIterable*/ isIterable(arg: any): arg is /*i:Async*/ Iterable<any> {
-  return typeof arg?.[/*r:Symbol.iterator,Symbol.asyncIterator*/ Symbol.iterator] === 'function';
+export function isIterable(arg: any): arg is Iterable<any> {
+  return typeof arg?.[Symbol.iterator] === 'function';
 }
-export default /*r:isAsyncIterable*/ isIterable;
+
+export default isIterable;
