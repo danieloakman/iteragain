@@ -271,10 +271,10 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public tee<N extends number>(n: N): Tuple<ExtendedIterator<T>, N> {
     const seekable = new SeekableIterator(toIterator(this.iterator));
     const indices = new Array(n).fill(0);
-    return Array.from(
-      { length: n },
-      (_, i) => new ExtendedIterator(new TeedIterator(i, seekable, indices)),
-    ) as Tuple<ExtendedIterator<T>, N>;
+    return Array.from({ length: n }, (_, i) => new ExtendedIterator(new TeedIterator(i, seekable, indices))) as Tuple<
+      ExtendedIterator<T>,
+      N
+    >;
   }
 
   /**
@@ -412,7 +412,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public reduce<R>(reducer: (accumulator: R | T, value: T) => R, initialValue?: R): R {
     let next: IteratorResult<T>;
     let accumulator = initialValue ?? this.iterator.next().value;
-    while(!(next = this.iterator.next()).done) accumulator = reducer(accumulator, next.value);
+    while (!(next = this.iterator.next()).done) accumulator = reducer(accumulator, next.value);
     return accumulator;
   }
 
@@ -502,8 +502,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public findIndex(predicate: Predicate<T>): number {
     let next: IteratorResult<T>;
     let i = -1;
-    while (i++, !(next = this.iterator.next()).done)
-      if (predicate(next.value)) return i;
+    while ((i++, !(next = this.iterator.next()).done)) if (predicate(next.value)) return i;
     return -1;
   }
 
@@ -548,6 +547,17 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    */
   public consume(n = Infinity): void {
     while (n-- > 0 && !this.iterator.next().done);
+  }
+
+  /** Collects all values from this iterator, then shuffles the order of it's values. */
+  public shuffle(): ExtendedIterator<T> {
+    const values = this.toArray();
+    for (let i = values.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [values[i], values[j]] = [values[j], values[i]];
+    }
+    this.iterator = toIterator(values);
+    return this;
   }
 
   /**

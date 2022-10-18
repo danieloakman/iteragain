@@ -57,6 +57,12 @@ import {
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
+// import asyncMap from '../src/asyncMap';
+// import asyncToArray from '../src/asyncToArray';
+
+// function sleep(ms: number) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 describe('internal', function () {
   describe('ExtendedIterator', function () {
@@ -565,8 +571,14 @@ describe('internal', function () {
       equal(iterator.tap(f).consume(2), undefined);
       equal(mapWasCalled, 2);
       equal(iterator.toArray(), [3]);
-      // Test deprecated exhaust method:
+      // Test the deprecated exhaust method:
       equal(iterator.exhaust(), undefined);
+    });
+
+    it('shuffle', async function () {
+      const shuffled = iter(range(100)).shuffle().toArray();
+      equal(shuffled.length, 100);
+      equal(shuffled.sort((a: number, b: number) => a - b), range(100).toArray());
     });
 
     it('peek', async function () {
@@ -670,6 +682,18 @@ describe('internal', function () {
     throws(() => [...new ObjectIterator(obj3, 'pre-order-DFS')].map(([k]) => k));
   });
 });
+
+// it('asyncMap', async function () {
+//   this.timeout(10000);
+//   async function* nums(n: number) {
+//     for (let i = 0; i < n; i++) {
+//       await sleep(1);
+//       yield i;
+//     }
+//   }
+//   const it = asyncMap(nums(5), async v => v * 2);
+//   equal(await asyncToArray(it), [0, 2, 4, 6, 8]);
+// });
 
 it('chunks', async function () {
   equal([...chunks([1, 2, 3, 4, 5], 2)], [[1, 2], [3, 4], [5]]);
@@ -776,13 +800,25 @@ it('filterMap', async function () {
 });
 
 it('find', async function () {
-  equal(find(range(10), n => n === 5), 5);
-  equal(find(range(10), n => n === 10), undefined);
+  equal(
+    find(range(10), n => n === 5),
+    5,
+  );
+  equal(
+    find(range(10), n => n === 10),
+    undefined,
+  );
 });
 
 it('findIndex', async function () {
-  equal(findIndex(range(10), n => n === 5), 5);
-  equal(findIndex(range(10), n => n === 10), -1);
+  equal(
+    findIndex(range(10), n => n === 5),
+    5,
+  );
+  equal(
+    findIndex(range(10), n => n === 10),
+    -1,
+  );
 });
 
 it('flatten', async function () {
@@ -1181,9 +1217,7 @@ it('tee', async function () {
 it('toIterator', async function () {
   const it1 = toIterator([1, 2, 3]);
   assert(isIterator(it1));
-  // @ts-expect-error
   throws(() => toIterator(null));
-  // @ts-expect-error
   throws(() => toIterator(undefined));
   equal(
     toArray(
