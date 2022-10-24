@@ -234,7 +234,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * iter([1,2,3,4,5,6,7,8,9]).chunk(3).toArray() // [[1,2,3], [4,5,6], [7,8,9]]
    * iter([1,2,3,4,5,6,7,8,9]).chunk(2, 0).toArray() // [[1,2], [3,4], [5,6], [7,8], [9, 0]]
    */
-  public chunks<N extends number>(length: N, fill?: T): ExtendedIterator<Tuple<T, N>[]> {
+  public chunks<Length extends number>(length: Length, fill?: T): ExtendedIterator<Tuple<T, Length>> {
     this.iterator = new ChunksIterator(this.iterator, length, fill) as any;
     return this as any;
   }
