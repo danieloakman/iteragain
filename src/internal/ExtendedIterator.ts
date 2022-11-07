@@ -405,6 +405,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return this;
   }
 
+  /** @lazy Maps `key` from `T` in each value of this iterator. */
+  public pluck(key: keyof T) {
+    return this.filterMap(value => value[key]);
+  }
+
   /** Reduces this iterator to a single value. */
   public reduce(reducer: (accumulator: T, value: T) => T): T;
   public reduce<R>(reducer: (accumulator: R, value: T) => R, initialValue: R): R;

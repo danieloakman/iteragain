@@ -55,6 +55,7 @@ import {
   findIndex,
   includes,
   shuffle,
+  pluck,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -445,6 +446,18 @@ describe('internal', function () {
     it('reverse', async function () {
       equal(iter([1, 2, 3]).reverse().toArray(), [3, 2, 1]);
       equal(iter([]).reverse().toArray(), []);
+    });
+
+    it('pluck', async function () {
+      equal(
+        iter([{ a: 1 }, { a: 2 }, { a: 3 }]).pluck('a').toArray(),
+        [1, 2, 3],
+      );
+      equal(
+        iter([{ a: 1, b: 2 }, { a: 2 }, { a: 3 }]).pluck('b').toArray(),
+        [2],
+      );
+      equal(iter({ a: 1 }).pluck(0).toArray(), ['a']);
     });
 
     it('compress', async function () {
@@ -977,6 +990,18 @@ it('permutations', async function () {
       [3, 1, 2],
       [3, 2, 1],
     ],
+  );
+});
+
+it('pluck', async function () {
+  equal(
+    [...pluck([{ a: 1 }, { a: 2 }, { a: 3 }], 'a')],
+    [1, 2, 3],
+  );
+  equal(
+    // @ts-expect-error
+    [...pluck([{ a: 1 }, { a: 2 }, { a: 3 }], 'b')],
+    [],
   );
 });
 

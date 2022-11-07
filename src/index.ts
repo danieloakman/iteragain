@@ -53,6 +53,7 @@ import find from './find';
 import findIndex from './findIndex';
 import includes from './includes';
 import shuffle from './shuffle';
+import pluck from './pluck';
 
 export {
   chunks,
@@ -85,6 +86,7 @@ export {
   pairwise,
   partition,
   permutations,
+  pluck,
   product,
   quantify,
   range,
@@ -143,6 +145,7 @@ export default {
   pairwise,
   partition,
   permutations,
+  pluck,
   product,
   quantify,
   range,
