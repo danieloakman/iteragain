@@ -189,6 +189,15 @@ describe('internal', function () {
           .toArray(),
         [1, 2, 3],
       );
+
+      equal(
+        iter(range(2)).map(() =>
+          iter(range(2)).map(() =>
+            iter(range(2)).permutations(2)
+          )
+        ).flatten(2).toArray(),
+        [[0, 1], [1, 0], [0, 1], [1, 0], [0, 1], [1, 0], [0, 1], [1, 0]],
+      );
     });
 
     it('every & some', async function () {
@@ -842,6 +851,8 @@ it('flatten', async function () {
   equal([...flatten([[1], [[2], 3]], 1)], [1, [2], 3]);
   equal([...flatten([[1], [[2], 3]], 0)], [[1], [[2], 3]]);
   equal([...flatten('abc')], ['a', 'b', 'c']);
+  equal([...flatten(['abc'])], ['abc']);
+  equal([...flatten(map(range(3), () => range(2)), 1)], [0, 1, 0, 1, 0, 1]);
 });
 
 it('forEach', async function () {
