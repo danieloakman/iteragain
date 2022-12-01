@@ -565,6 +565,12 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return this;
   }
 
+  /** Collects all values from this iterator, then sorts them. */
+  public sort(comparator?: (a: T, b: T) => number): ExtendedIterator<T> {
+    this.iterator = toIterator(this.toArray().sort(comparator));
+    return this;
+  }
+
   /**
    * Partitions this iterator into a tuple of `[falsey, truthy]` corresponding to what `predicate` returns for each
    * value.

@@ -54,6 +54,7 @@ import findIndex from './findIndex';
 import includes from './includes';
 import shuffle from './shuffle';
 import pluck from './pluck';
+import sort from './sort';
 
 export {
   chunks,
@@ -99,6 +100,7 @@ export {
   shuffle,
   slice,
   some,
+  sort,
   spy,
   take,
   takeWhile,
@@ -158,6 +160,7 @@ export default {
   shuffle,
   slice,
   some,
+  sort,
   spy,
   take,
   takeWhile,

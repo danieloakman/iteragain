@@ -56,6 +56,7 @@ import {
   includes,
   shuffle,
   pluck,
+  sort,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -217,6 +218,13 @@ describe('internal', function () {
         iter([1, 2, 3]).some(n => n > 3),
         false,
       );
+    });
+
+    it('sort', async function () {
+      equal(iter([1, 2, 3]).sort().toArray(), [1, 2, 3]);
+      equal(iter([3, 2, 1]).sort().toArray(), [1, 2, 3]);
+      equal(iter([1, 2, 3]).sort((a, b) => b - a).toArray(), [3, 2, 1]);
+      equal(iter([3, 2, 1]).sort((a, b) => b - a).toArray(), [3, 2, 1]);
     });
 
     it('enumerate', async function () {
@@ -1181,6 +1189,12 @@ it('some', async function () {
     some([1, 2, 3], n => n > 4),
     false,
   );
+});
+
+it('sort', async function () {
+  equal([...sort([3, 1, 2])], [1, 2, 3]);
+  equal([...sort([3, 1, 2], (a, b) => b - a)], [3, 2, 1]);
+  equal([...sort([3, 1, 2], (a, b) => a - b)], [1, 2, 3]);
 });
 
 it('spy', async function () {
