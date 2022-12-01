@@ -566,7 +566,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** Collects all values from this iterator, then sorts them. */
-  public sort(comparator?: (a: T, b: T) => number): ExtendedIterator<T> {
+  public sort(comparator: (a: T, b: T) => number = (a, b) => a < b ? -1 : a > b ? 1 : 0): ExtendedIterator<T> {
     this.iterator = toIterator(this.toArray().sort(comparator));
     return this;
   }

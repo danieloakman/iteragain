@@ -225,6 +225,7 @@ describe('internal', function () {
       equal(iter([3, 2, 1]).sort().toArray(), [1, 2, 3]);
       equal(iter([1, 2, 3]).sort((a, b) => b - a).toArray(), [3, 2, 1]);
       equal(iter([3, 2, 1]).sort((a, b) => b - a).toArray(), [3, 2, 1]);
+      equal(iter([3, 2, 1, 3]).sort().toArray(), [1, 2, 3, 3]);
     });
 
     it('enumerate', async function () {
@@ -1195,6 +1196,7 @@ it('sort', async function () {
   equal([...sort([3, 1, 2])], [1, 2, 3]);
   equal([...sort([3, 1, 2], (a, b) => b - a)], [3, 2, 1]);
   equal([...sort([3, 1, 2], (a, b) => a - b)], [1, 2, 3]);
+  equal([...sort([3, 1, 3, 2])], [1, 2, 3, 3]);
 });
 
 it('spy', async function () {
