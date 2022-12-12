@@ -55,6 +55,7 @@ import includes from './includes';
 import shuffle from './shuffle';
 import pluck from './pluck';
 import sort from './sort';
+import length from './length';
 
 export {
   chunks,
@@ -79,6 +80,7 @@ export {
   isIterable,
   isIterator,
   iter,
+  length,
   map,
   max,
   min,
@@ -139,6 +141,7 @@ export default {
   isIterable,
   isIterator,
   iter,
+  length,
   map,
   max,
   min,

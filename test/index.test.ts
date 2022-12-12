@@ -57,6 +57,7 @@ import {
   shuffle,
   pluck,
   sort,
+  length,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -88,6 +89,11 @@ describe('internal', function () {
 
     it('toString', async function () {
       equal(iter([]).toString(), 'ExtendedIterator');
+    });
+
+    it('length', async function () {
+      equal(iter([]).length(), 0);
+      equal(iter([1, 2, 3]).length(), 3);
     });
 
     it('map', async function () {
@@ -936,6 +942,13 @@ it('iter', async function () {
       .map(v => v[0])
       .toArray(),
   );
+});
+
+it('length', async function () {
+  equal(length(range(10)), 10);
+  equal(length(range(0)), 0);
+  equal(length(range(1)), 1);
+  equal(length(range(100)), 100);
 });
 
 it('map', async function () {

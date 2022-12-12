@@ -421,6 +421,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return accumulator;
   }
 
+  /** Consumes this iterator and returns the number of values/items in it. */
+  public length() {
+    return this.reduce((acc, _) => acc + 1, 0);
+  }
+
   /** Returns the number of times the `predicate` returns a truthy value. */
   public quantify(predicate: Predicate<T>): number {
     return this.reduce((acc, v) => acc + (predicate(v) ? 1 : 0), 0);
