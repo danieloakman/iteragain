@@ -23,7 +23,7 @@ import SliceIterator from './SliceIterator';
 import ZipIterator from './ZipIterator';
 import ZipLongestIterator from './ZipLongestIterator';
 import TapIterator from './TapIterator';
-import TriplewiseIterator from './TripleWiseIterator';
+import TriplewiseIterator from './TriplewiseIterator';
 import ChunksIterator from './ChunksIterator';
 import TakeWhileIterator from './TakeWhileIterator';
 import CycleIterator from './CycleIterator';
