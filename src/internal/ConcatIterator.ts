@@ -8,12 +8,12 @@ export class ConcatIterator<T extends Array<Iterator<any>>> implements IterableI
     return this;
   }
 
-  next(): IteratorResult<IterSource<T[number]>> {
+  next(...args: any[]): IteratorResult<IterSource<T[number]>> {
     if (!this.iterators.length) return { done: true, value: undefined };
-    const next = this.iterators[0].next();
+    const next = this.iterators[0].next(...args as any);
     if (!next.done) return next;
     this.iterators.shift();
-    return this.next();
+    return this.next(...args as any);
   }
 }
 

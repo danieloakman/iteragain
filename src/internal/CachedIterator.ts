@@ -13,9 +13,9 @@ export class CachedIterator<T> implements IterableIterator<T> {
     return this;
   }
 
-  next(): IteratorResult<T> {
+  next(...args: any[]): IteratorResult<T> {
     if (this.done) return { done: true, value: undefined };
-    const next = this.iterator.next();
+    const next = this.iterator.next(...args as any);
     if ((this.done = next.done)) return next;
     this.cache.set(this.i++, next.value);
     return next;

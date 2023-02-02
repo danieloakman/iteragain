@@ -5,10 +5,10 @@ export class ZipIterator implements IterableIterator<any> {
     return this;
   }
 
-  next(): IteratorResult<any> {
+  next(...args: any[]): IteratorResult<any> {
     const values = [];
     for (const iterator of this.iterators) {
-      const { value, done } = iterator.next();
+      const { value, done } = iterator.next(...args as any);
       if (done) return { done, value: undefined };
       values.push(value);
     }

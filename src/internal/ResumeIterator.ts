@@ -13,8 +13,8 @@ export class ResumeIterator<T> implements IterableIterator<T> {
     return this;
   }
 
-  next(): IteratorResult<T> {
-    const next = this.iterator.next();
+  next(...args: any[]): IteratorResult<T> {
+    const next = this.iterator.next(...args as any);
     if (next.done && this.times-- > 0) {
       this.iterator = toIterator(this.values.splice(0, this.values.length));
       return next;

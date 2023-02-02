@@ -11,16 +11,16 @@ export class WindowsIterator<T> implements IterableIterator<T[]> {
     return this;
   }
 
-  next(): IteratorResult<T[]> {
+  next(...args: any[]): IteratorResult<T[]> {
     if (this.nextResult.done) return this.nextResult;
-    while (this.prev.length < this.length && !(this.nextResult = this.iterator.next()).done)
+    while (this.prev.length < this.length && !(this.nextResult = this.iterator.next(...args as any)).done)
       this.prev.push(this.nextResult.value);
     if (this.prev.length < this.length) {
       if (this.fill === undefined || !this.prev.length) return this.nextResult as IteratorResult<T[]>;
       this.prev.push(...Array.from({ length: this.length - this.prev.length }, _ => this.fill));
     }
     // Remove unused elements:
-    for (let i = 0; i < this.unused; i++) this.iterator.next();
+    for (let i = 0; i < this.unused; i++) this.iterator.next(...args as any);
     const value = this.prev.slice();
     this.prev.splice(0, this.offset);
     return { done: false, value };

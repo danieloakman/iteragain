@@ -12,25 +12,25 @@ export class FlattenIterator implements IterableIterator<any> {
     return this;
   }
 
-  next() {
-    if (this.depth < 1) return this.iterator.next();
+  next(...args: any[]) {
+    if (this.depth < 1) return this.iterator.next(...args as any);
     let next: IteratorResult<any>;
     if (this.inner) {
-      next = this.inner.next();
+      next = this.inner.next(...args as any);
       if (next.done) {
         this.inner = null;
-        return this.next();
+        return this.next(...args as any);
       }
       return next;
     }
-    next = this.iterator.next();
+    next = this.iterator.next(...args as any);
     if (typeof next.value !== 'string') {
       if (isIterator(next.value)) {
         this.inner = new FlattenIterator(next.value, this.depth - 1);
-        return this.next();
+        return this.next(...args as any);
       } else if (isIterable(next.value)) {
         this.inner = new FlattenIterator(toIterator(next.value), this.depth - 1);
-        return this.next();
+        return this.next(...args as any);
       }
     }
     return next;

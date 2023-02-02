@@ -47,8 +47,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   public constructor(protected iterator: Iterator<T>) {}
 
   /** Returns a `{ value, done }` object that adheres to the Iterator interface. */
-  public next(): IteratorResult<T> {
-    return this.iterator.next();
+  public next(...args: any[]): IteratorResult<T> {
+    return this.iterator.next(...args as any);
   }
 
   /** Implements this as an Iterable so it's allowed to be used with "for of" loops. */

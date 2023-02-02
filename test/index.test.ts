@@ -703,6 +703,27 @@ describe('internal', function () {
     );
     equal([...it], [...range(0, 100, 2)]);
     equal([...it], []);
+    const it2 = iter(((t = 0) => (n?: number) => {
+      if (typeof n === 'number')
+        t += n;
+      return t;
+    })()).map(n => n + 10);
+    equal(it2.next(1).value, 11);
+    equal(it2.next(2).value, 13);
+    equal(it2.next(3).value, 16);
+    function* sum() {
+      let t = 0;
+      while (true) {
+        const n = yield t;
+        if (typeof n === 'number')
+          t += n;
+      }
+    }
+    const it3 = iter(sum());
+    equal(it3.next(0).value, 0);
+    equal(it3.next(1).value, 1);
+    equal(it3.next(2).value, 3);
+    equal(it3.next(3).value, 6);
   });
 
   it('ObjectIterator', async function () {
@@ -831,6 +852,12 @@ it('every', async function () {
 
 it('filter', async function () {
   equal([...filter(range(10), n => n % 2 === 0)], [0, 2, 4, 6, 8]);
+  type A = { a: number };
+  type B = { b: number };
+  const isA = (v: any): v is A => typeof v.a === 'number';
+  const arr: (A | B)[] = [{ a: 1 }, { b: 2 }, { a: 3 }, { b: 4 }];
+  equal([...filter(arr, isA)].map(v => v.a), [1, 3]);
+  const arr2 = arr.filter(isA);
 });
 
 it('filterMap', async function () {
@@ -1289,7 +1316,9 @@ it('tee', async function () {
 it('toIterator', async function () {
   const it1 = toIterator([1, 2, 3]);
   assert(isIterator(it1));
+  // @ts-expect-error
   throws(() => toIterator(null));
+  // @ts-expect-error
   throws(() => toIterator(undefined));
   equal(
     toArray(

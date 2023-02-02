@@ -19,12 +19,12 @@ export class ObjectIterator<T extends Record<PropertyKey, any>> implements Itera
     return this;
   }
 
-  public next(): IteratorResult<ObjectEntry> {
+  public next(...args: any[]): IteratorResult<ObjectEntry> {
     if (this.inner) {
-      const next = this.inner.next();
+      const next = this.inner.next(...args as any);
       if (!next.done) return next;
       this.inner = null;
-      return this.next();
+      return this.next(...args as any);
     }
     if (!this.arr.length) return { done: true, value: undefined };
     const next = this.arr.shift();
@@ -34,7 +34,7 @@ export class ObjectIterator<T extends Record<PropertyKey, any>> implements Itera
           ? [new ObjectIterator(next[1]), new RepeatIterator(next, 1)]
           : [new RepeatIterator(next, 1), new ObjectIterator(next[1])],
       );
-      return this.next();
+      return this.next(...args as any);
     }
     return { value: next, done: false };
   }
@@ -46,10 +46,6 @@ export class ObjectIterator<T extends Record<PropertyKey, any>> implements Itera
   protected push(obj: any) {
     for (const key of Object.keys(obj)) this.arr.push([key, obj[key], obj]);
   }
-
-  // protected unshift(obj: any) {
-  //   for (const key of Object.keys(obj)) this.arr.unshift([key, obj[key], obj]);
-  // }
 }
 
 export default ObjectIterator;

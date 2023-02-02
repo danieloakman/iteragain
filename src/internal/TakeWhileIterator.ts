@@ -10,12 +10,12 @@ export class TakeWhileIterator<T> implements IterableIterator<T> {
     return this;
   }
 
-  next(): IteratorResult<T> {
+  next(...args: any[]): IteratorResult<T> {
     if (this.done) return { done: true, value: undefined };
-    const next = this.iterator.next();
+    const next = this.iterator.next(...args as any);
     if (next.done || !this.predicate(next.value)) {
       this.done = true;
-      return this.next();
+      return this.next(...args as any);
     }
     return next;
   }

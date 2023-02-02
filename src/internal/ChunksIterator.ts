@@ -11,10 +11,10 @@ export class ChunksIterator<T, Size extends number> implements IterableIterator<
     return this;
   }
 
-  next(): IteratorResult<Tuple<T, Size>> {
+  next(...args: any[]): IteratorResult<Tuple<T, Size>> {
     if (this.done) return { done: true, value: undefined };
     for (let i = 0; i < this.length; i++) {
-      const next = this.iterator.next();
+      const next = this.iterator.next(...args as any);
       if (next.done) {
         this.done = true;
         if (this.chunk.length) {

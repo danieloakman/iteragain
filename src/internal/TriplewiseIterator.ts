@@ -8,9 +8,9 @@ export class TriplewiseIterator<T> implements IterableIterator<[T, T, T]> {
     return this;
   }
 
-  next(): IteratorResult<[T, T, T]> {
+  next(...args: any[]): IteratorResult<[T, T, T]> {
     while (this.prev.length !== 3) {
-      const next = this.iterator.next();
+      const next = this.iterator.next(...args as any);
       // if (next.done) return (this.next = () => ({ done: true, value: undefined }))();
       if (next.done) return { done: true, value: undefined };
       this.prev.push(next.value);

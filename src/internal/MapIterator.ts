@@ -16,8 +16,8 @@ export class MapIterator<T, R> implements IterableIterator<R> {
     return this;
   }
 
-  /*i(async)*/ next(): IteratorResult<R> {
-    const { value, done } = /*i(await)*/ this.iterator.next();
+  /*i(async)*/ next(...args: any[]): IteratorResult<R> {
+    const { value, done } = /*i(await)*/ this.iterator.next(...args as any);
     return { value: done ? undefined : /*i(await)*/ this.iteratee(value), done };
   }
 }
