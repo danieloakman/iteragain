@@ -120,6 +120,11 @@ describe('internal', function () {
         [],
       );
       equal(iter([]).filter(Boolean).toArray(), []);
+      type A = { a: number };
+      type B = { b: number };
+      const isA = (v: any): v is A => typeof v.a === 'number';
+      const arr: (A | B)[] = [{ a: 1 }, { b: 2 }, { a: 3 }, { b: 4 }];
+      equal(iter(arr).filter(isA).toArray(), [{ a: 1 }, { a: 3 }]);
     });
 
     it('filterMap', async function () {
@@ -857,7 +862,8 @@ it('filter', async function () {
   const isA = (v: any): v is A => typeof v.a === 'number';
   const arr: (A | B)[] = [{ a: 1 }, { b: 2 }, { a: 3 }, { b: 4 }];
   equal([...filter(arr, isA)].map(v => v.a), [1, 3]);
-  const arr2 = arr.filter(isA);
+  equal([...filter(arr, (v): v is B => 'b' in v && typeof v.b === 'number')].map(v => v.b), [2, 4]);
+  equal(arr.filter(isA).map(v => v.a), [1, 3]);
 });
 
 it('filterMap', async function () {
@@ -1316,9 +1322,7 @@ it('tee', async function () {
 it('toIterator', async function () {
   const it1 = toIterator([1, 2, 3]);
   assert(isIterator(it1));
-  // @ts-expect-error
   throws(() => toIterator(null));
-  // @ts-expect-error
   throws(() => toIterator(undefined));
   equal(
     toArray(

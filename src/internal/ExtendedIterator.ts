@@ -11,6 +11,7 @@ import {
   Iteratee,
   IterSource,
   Callback,
+  StrictPredicate,
 } from './types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
@@ -71,6 +72,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * Returns a new ExtendedIterator that filters each element in this iterator.
    * @param predicate A function that returns a truthy value to indicate to keep that value.
    */
+  public filter<S extends T>(predicate: StrictPredicate<T, S>): ExtendedIterator<S>;
+  public filter(predicate: Predicate<T>): ExtendedIterator<T>;
   public filter(predicate: Predicate<T>): ExtendedIterator<T> {
     this.iterator = new FilterIterator(this.iterator, predicate);
     return this;

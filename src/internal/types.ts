@@ -32,6 +32,9 @@ export type Tuple<T, N extends number> = N extends N ? (number extends N ? T[] :
 /** A function that returns a truthy or falsey value given an input value of type `T`. */
 export type Predicate<T> = (value: T) => any;
 
+/** A function that returns a truthy or falsey value that determines if `T` is `S`. */
+export type StrictPredicate<T, S extends T> = (value: T) => value is S;
+
 // /** An async function that returns a truthy or falsey value given an input value of type `T`. */
 // export type AsyncPredicate<T> = (value: T) => Promise<any>;
 
