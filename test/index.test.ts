@@ -203,12 +203,20 @@ describe('internal', function () {
       );
 
       equal(
-        iter(range(2)).map(() =>
-          iter(range(2)).map(() =>
-            iter(range(2)).permutations(2)
-          )
-        ).flatten(2).toArray(),
-        [[0, 1], [1, 0], [0, 1], [1, 0], [0, 1], [1, 0], [0, 1], [1, 0]],
+        iter(range(2))
+          .map(() => iter(range(2)).map(() => iter(range(2)).permutations(2)))
+          .flatten(2)
+          .toArray(),
+        [
+          [0, 1],
+          [1, 0],
+          [0, 1],
+          [1, 0],
+          [0, 1],
+          [1, 0],
+          [0, 1],
+          [1, 0],
+        ],
       );
     });
 
@@ -234,8 +242,18 @@ describe('internal', function () {
     it('sort', async function () {
       equal(iter([1, 2, 3]).sort().toArray(), [1, 2, 3]);
       equal(iter([3, 2, 1]).sort().toArray(), [1, 2, 3]);
-      equal(iter([1, 2, 3]).sort((a, b) => b - a).toArray(), [3, 2, 1]);
-      equal(iter([3, 2, 1]).sort((a, b) => b - a).toArray(), [3, 2, 1]);
+      equal(
+        iter([1, 2, 3])
+          .sort((a, b) => b - a)
+          .toArray(),
+        [3, 2, 1],
+      );
+      equal(
+        iter([3, 2, 1])
+          .sort((a, b) => b - a)
+          .toArray(),
+        [3, 2, 1],
+      );
       equal(iter([3, 2, 1, 3]).sort().toArray(), [1, 2, 3, 3]);
     });
 
@@ -479,11 +497,15 @@ describe('internal', function () {
 
     it('pluck', async function () {
       equal(
-        iter([{ a: 1 }, { a: 2 }, { a: 3 }]).pluck('a').toArray(),
+        iter([{ a: 1 }, { a: 2 }, { a: 3 }])
+          .pluck('a')
+          .toArray(),
         [1, 2, 3],
       );
       equal(
-        iter([{ a: 1, b: 2 }, { a: 2 }, { a: 3 }]).pluck('b').toArray(),
+        iter([{ a: 1, b: 2 }, { a: 2 }, { a: 3 }])
+          .pluck('b')
+          .toArray(),
         [2],
       );
       equal(iter({ a: 1 }).pluck(0).toArray(), ['a']);
@@ -621,7 +643,10 @@ describe('internal', function () {
     it('shuffle', async function () {
       const shuffled = iter(range(100)).shuffle().toArray();
       equal(shuffled.length, 100);
-      equal(shuffled.sort((a: number, b: number) => a - b), range(100).toArray());
+      equal(
+        shuffled.sort((a: number, b: number) => a - b),
+        range(100).toArray(),
+      );
     });
 
     it('peek', async function () {
@@ -708,11 +733,15 @@ describe('internal', function () {
     );
     equal([...it], [...range(0, 100, 2)]);
     equal([...it], []);
-    const it2 = iter(((t = 0) => (n?: number) => {
-      if (typeof n === 'number')
-        t += n;
-      return t;
-    })()).map(n => n + 10);
+    const it2 = iter(
+      (
+        (t = 0) =>
+          (n?: number) => {
+            if (typeof n === 'number') t += n;
+            return t;
+          }
+      )(),
+    ).map(n => n + 10);
     equal(it2.next(1).value, 11);
     equal(it2.next(2).value, 13);
     equal(it2.next(3).value, 16);
@@ -720,8 +749,7 @@ describe('internal', function () {
       let t = 0;
       while (true) {
         const n = yield t;
-        if (typeof n === 'number')
-          t += n;
+        if (typeof n === 'number') t += n;
       }
     }
     const it3 = iter(sum());
@@ -861,9 +889,18 @@ it('filter', async function () {
   type B = { b: number };
   const isA = (v: any): v is A => typeof v.a === 'number';
   const arr: (A | B)[] = [{ a: 1 }, { b: 2 }, { a: 3 }, { b: 4 }];
-  equal([...filter(arr, isA)].map(v => v.a), [1, 3]);
-  equal([...filter(arr, (v): v is B => 'b' in v && typeof v.b === 'number')].map(v => v.b), [2, 4]);
-  equal(arr.filter(isA).map(v => v.a), [1, 3]);
+  equal(
+    [...filter(arr, isA)].map(v => v.a),
+    [1, 3],
+  );
+  equal(
+    [...filter(arr, (v): v is B => 'b' in v && typeof v.b === 'number')].map(v => v.b),
+    [2, 4],
+  );
+  equal(
+    arr.filter(isA).map(v => v.a),
+    [1, 3],
+  );
 });
 
 it('filterMap', async function () {
@@ -900,7 +937,15 @@ it('flatten', async function () {
   equal([...flatten([[1], [[2], 3]], 0)], [[1], [[2], 3]]);
   equal([...flatten('abc')], ['a', 'b', 'c']);
   equal([...flatten(['abc'])], ['abc']);
-  equal([...flatten(map(range(3), () => range(2)), 1)], [0, 1, 0, 1, 0, 1]);
+  equal(
+    [
+      ...flatten(
+        map(range(3), () => range(2)),
+        1,
+      ),
+    ],
+    [0, 1, 0, 1, 0, 1],
+  );
 });
 
 it('forEach', async function () {
@@ -1060,10 +1105,7 @@ it('permutations', async function () {
 });
 
 it('pluck', async function () {
-  equal(
-    [...pluck([{ a: 1 }, { a: 2 }, { a: 3 }], 'a')],
-    [1, 2, 3],
-  );
+  equal([...pluck([{ a: 1 }, { a: 2 }, { a: 3 }], 'a')], [1, 2, 3]);
   equal(
     // @ts-expect-error
     [...pluck([{ a: 1 }, { a: 2 }, { a: 3 }], 'b')],
@@ -1220,7 +1262,10 @@ it('seekable', async function () {
 it('shuffle', async function () {
   const shuffled = [...shuffle(range(10))];
   equal(shuffled.length, 10);
-  equal(shuffled.sort((a: number, b: number) => a - b), range(10).toArray());
+  equal(
+    shuffled.sort((a: number, b: number) => a - b),
+    range(10).toArray(),
+  );
 });
 
 it('slice', async function () {
