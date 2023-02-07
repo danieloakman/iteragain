@@ -23,10 +23,10 @@ import FunctionIterator from './internal/FunctionIterator';
  * deeply.
  */
 export function toIterator<T>(it: IteratorOrIterable<T>): Iterator<T>;
-export function toIterator<TFunc extends (...args: any[]) => /*r(Promise<any>)*/ any>(
+export function toIterator<TFunc extends (...args: any[]) => /*r(Promise<any>)*/ any, TSentinel = undefined>(
   func: TFunc,
-  sentinel?: ReturnType<TFunc>,
-): FunctionIterator<TFunc>;
+  sentinel?: TSentinel,
+): FunctionIterator<TFunc, TSentinel>;
 export function toIterator(object: Record<PropertyKey, any>): ObjectIterator<any>;
 export function toIterator(...args: any[]): any {
   if (isIterator(args[0])) return args[0];

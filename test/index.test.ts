@@ -729,7 +729,7 @@ describe('internal', function () {
           () =>
             n++ * 2
       )(),
-      100,
+      100 as const,
     );
     equal([...it], [...range(0, 100, 2)]);
     equal([...it], []);
