@@ -6,11 +6,16 @@ import toArray from '../toArray';
  */
 export class RangeIterator implements IterableIterator<number> {
   /** The start of this range of numbers (inclusive). */
-  public readonly start: number;
+  readonly start: number;
   /** The stop/end point of this range of numbers (exclusive). */
-  public readonly stop: number;
+  readonly stop: number;
   /** Each iteration is increased by this amount. */
-  public readonly step: number;
+  readonly step: number;
+
+  /** Alias of `includes`. */
+  has = this.includes;
+  /** Alias of `nth`. */
+  at = this.nth;
 
   protected i: number;
   protected _length: number;

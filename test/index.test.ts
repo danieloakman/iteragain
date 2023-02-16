@@ -1179,6 +1179,7 @@ it('range', async function () {
   equal(range(10).nth(Infinity), undefined);
   equal(range(10).nth(-10), 0);
   equal(range(10).nth(-11), undefined);
+  equal(range(10).nth(5), range(10).at(5));
   let r = range(3);
   equal([...r, ...r], [0, 1, 2, 0, 1, 2]);
   assert(range(3).equal(range(0, 3, 1)));
@@ -1187,6 +1188,8 @@ it('range', async function () {
   // Is still subject to floating numbers rounding errors:
   throws(() => equal(range(0, 5, 0.3).toArray(), [0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7]));
   assert(range(0, Infinity, 13).includes(26));
+  assert(range(Infinity).has(10));
+  assert(range(-Infinity).has(-10));
 
   for (const args of [
     [10],
