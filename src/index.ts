@@ -56,6 +56,7 @@ import shuffle from './shuffle';
 import pluck from './pluck';
 import sort from './sort';
 import length from './length';
+import flatMap from './flatMap';
 
 export {
   chunks,
@@ -74,6 +75,7 @@ export {
   filterMap,
   find,
   findIndex,
+  flatMap,
   flatten,
   forEach,
   includes,
@@ -135,6 +137,7 @@ export default {
   filterMap,
   find,
   findIndex,
+  flatMap,
   flatten,
   forEach,
   includes,

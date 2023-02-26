@@ -58,11 +58,13 @@ import {
   pluck,
   sort,
   length,
+  flatMap,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
 // import asyncMap from '../src/asyncMap';
 // import asyncToArray from '../src/asyncToArray';
+import { IteratorOrIterable } from '../src/internal/types';
 
 // function sleep(ms: number) {
 //   return new Promise(resolve => setTimeout(resolve, ms));
@@ -621,6 +623,12 @@ describe('internal', function () {
       );
     });
 
+    it('flatMap', async function () {
+      // @ts-ignore
+      const arr = [1, 2, 3].flatMap(n => [n, n * 2]);
+      equal(iter([1, 2, 3]).flatMap(n => [n, n * 2]).toArray(), arr);
+    });
+
     it('includes', async function () {
       equal(iter([1, 2, 3]).includes(2), true);
       equal(iter([1, 2, 3]).includes(4), false);
@@ -927,6 +935,25 @@ it('findIndex', async function () {
     findIndex(range(10), n => n === 10),
     -1,
   );
+});
+
+it('flatMap', async function () {
+  // @ts-ignore
+  const a = [1, 2, [3]].flatMap(n => n);
+  equal([...flatMap([1, 2, [3]], n => n)], a);
+  function dotsEitherSide(n: number[]) {
+    return flatMap(n, n => [n - 0.1, n, n + 0.1]);
+  }
+  equal([...dotsEitherSide([1, 2, 3])], [0.9, 1, 1.1, 1.9, 2, 2.1, 2.9, 3, 3.1]);
+  function repeatNums(n: number[]) {
+    return flatMap(n, n => repeat(n, n));
+  }
+  equal([...repeatNums([1, 2, 3])], [1, 2, 2, 3, 3, 3]);
+  function chars(...strings: string[]) {
+    return flatMap(strings, str => [...str]);
+  }
+  equal([...chars('abc', 'def')], ['a', 'b', 'c', 'd', 'e', 'f']);
+  equal([...flatMap(['123'], str => str)], ['123']);
 });
 
 it('flatten', async function () {
