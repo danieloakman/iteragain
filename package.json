@@ -4,9 +4,6 @@
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
   "main": "index.js",
   "types": "index.d.ts",
-  "engines": {
-    "node": ">14.x"
-  },
   "scripts": {
     "build": "tsc --build",
     "build:es": "tsc -p tsconfig.es.json",
