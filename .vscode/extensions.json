@@ -8,6 +8,7 @@
     "rvest.vs-code-prettier-eslint",
     "redhat.vscode-yaml",
     "gruntfuggly.todo-tree",
-    "VisualStudioExptTeam.vscodeintellicode"
+    "visualstudioexptteam.vscodeintellicode",
+    "christian-kohler.npm-intellisense"
   ]
 }
