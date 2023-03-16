@@ -1,6 +1,10 @@
 import { IteratorOrIterable } from './internal/types';
 import toIterator from './toIterator';
 
+/**
+ * Partitions this iterator into a tuple of `[falsey, truthy]` corresponding to what `predicate` returns for each
+ * value.
+ */
 export function partition<T>(arg: IteratorOrIterable<T>, predicate: (value: T) => any): [T[], T[]] {
   const iterator = toIterator(arg);
   const falsey: T[] = [];
