@@ -651,6 +651,16 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return result;
   }
 
+  /** Calls `Promise.all` on all collected values. */
+  promiseAll(): Promise<T[]> {
+    return Promise.all(this.toArray());
+  }
+
+  /** Calls `Promise.race` on all collected values. */
+  promiseRace() {
+    return Promise.race(this.toArray());
+  }
+
   /** Shorthand for `new Set(this)`. */
   toSet() {
     return new Set(this);
