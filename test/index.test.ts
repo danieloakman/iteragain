@@ -59,6 +59,8 @@ import {
   sort,
   length,
   flatMap,
+  promiseAll,
+  promiseRace,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -425,6 +427,24 @@ describe('internal', function () {
       equal(b.toArray(), [1, 2, 3]);
     });
 
+    it('promiseAll', async function () {
+      equal(iter([1, 2, 3]).toArray(), [1, 2, 3]);
+      equal(iter([]).toArray(), []);
+      const sleep = (ms: number): Promise<number> => new Promise(resolve => setTimeout(() => resolve(ms), ms));
+      equal(
+        await iter(range(3))
+          .map(n => sleep(n))
+          .map(p => p.then(n => n * 10))
+          .promiseAll(),
+        [0, 10, 20],
+      );
+    });
+
+    it('promiseRace', async function () {
+      const sleep = (ms: number): Promise<number> => new Promise(resolve => setTimeout(() => resolve(ms), ms));
+      equal(await iter([3, 1, 2]).map(n => sleep(n * 10)).promiseRace(), 10);
+    });
+
     it('cycle', async function () {
       equal(iter([1, 2, 3]).cycle(2).toArray(), [1, 2, 3, 1, 2, 3, 1, 2, 3]);
       equal(iter([1, 2, 3]).cycle().take(7), [1, 2, 3, 1, 2, 3, 1]);
@@ -626,7 +646,12 @@ describe('internal', function () {
     it('flatMap', async function () {
       // @ts-ignore
       const arr = [1, 2, 3].flatMap(n => [n, n * 2]);
-      equal(iter([1, 2, 3]).flatMap(n => [n, n * 2]).toArray(), arr);
+      equal(
+        iter([1, 2, 3])
+          .flatMap(n => [n, n * 2])
+          .toArray(),
+        arr,
+      );
     });
 
     it('includes', async function () {
@@ -1176,6 +1201,17 @@ it('product', async function () {
       [1, 1, 1],
     ],
   );
+});
+
+it('promiseAll', async function () {
+  const sleep = (ms: number): Promise<number> => new Promise(resolve => setTimeout(() => resolve(ms), ms));
+  const [it1, it2] = tee(iter(range(10)).map(n => n * 10), 2);
+  equal(await promiseAll(map(it1, sleep)), toArray(it2));
+});
+
+it('promiseRace', async function () {
+  const sleep = (ms: number): Promise<number> => new Promise(resolve => setTimeout(() => resolve(ms), ms));
+  equal(await promiseRace(map([20, 10, 30], sleep)), 10);
 });
 
 it('quantify', async function () {
