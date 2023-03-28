@@ -57,6 +57,8 @@ import pluck from './pluck';
 import sort from './sort';
 import length from './length';
 import flatMap from './flatMap';
+import promiseAll from './promiseAll';
+import promiseRace from './promiseRace';
 
 export {
   chunks,
@@ -93,6 +95,8 @@ export {
   permutations,
   pluck,
   product,
+  promiseAll,
+  promiseRace,
   quantify,
   range,
   reduce,
@@ -155,6 +159,8 @@ export default {
   permutations,
   pluck,
   product,
+  promiseAll,
+  promiseRace,
   quantify,
   range,
   reduce,
