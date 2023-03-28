@@ -652,7 +652,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** Calls `Promise.all` on all collected values. */
-  promiseAll(): Promise<T[]> {
+  promiseAll() {
     return Promise.all(this.toArray());
   }
 
