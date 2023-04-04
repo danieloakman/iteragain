@@ -12,6 +12,7 @@ import {
   IterSource,
   Callback,
   StrictPredicate,
+  Awaited,
 } from './types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
@@ -652,13 +653,13 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** Calls `Promise.all` on all collected values. */
-  promiseAll() {
-    return Promise.all(this.toArray());
+  promiseAll(): Promise<Awaited<T>[]> {
+    return Promise.all(this.toArray()) as Promise<Awaited<T>[]>;
   }
 
   /** Calls `Promise.race` on all collected values. */
-  promiseRace() {
-    return Promise.race(this.toArray());
+  promiseRace(): Promise<Awaited<T>> {
+    return Promise.race(this.toArray()) as Promise<Awaited<T>>;
   }
 
   /** Shorthand for `new Set(this)`. */
