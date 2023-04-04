@@ -524,9 +524,9 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * Maps this iterator to a new value `R` and flattens any resulting iterables or iterators by a depth of 1.
    * Behaves the same as `Array.prototype.flatMap`.
    */
-  flatMap<R>(iteratee: Iteratee<T, R | IteratorOrIterable<R>>) {
+  flatMap<R>(iteratee: Iteratee<T, R | IteratorOrIterable<R>>): ExtendedIterator<R> {
     this.iterator = new FlatMapIterator(this.iterator, iteratee) as any;
-    return this;
+    return this as any;
   }
 
   /** Returns true if `value` strictly equals some value in this iterator. */
