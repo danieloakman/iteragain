@@ -1,5 +1,5 @@
 import CompressIterator from './internal/CompressIterator';
-import { IteratorOrIterable } from './internal/types';
+import { IterSource, IteratorOrIterable } from './internal/types';
 import toIterator from './toIterator';
 
 /**
@@ -7,7 +7,7 @@ import toIterator from './toIterator';
  * @param selectors An iterator or iterable of falsey or truthy values to select which values to keep in this
  * iterator.
  */
-export function compress<T>(arg: IteratorOrIterable<T>, selectors: IteratorOrIterable<any>) {
+export function compress<T extends IteratorOrIterable<any>>(arg: T, selectors: IteratorOrIterable<any>): IterableIterator<IterSource<T>> {
   return new CompressIterator(toIterator(arg), toIterator(selectors));
 }
 

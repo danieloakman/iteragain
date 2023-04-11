@@ -93,13 +93,13 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** @lazy Concatenates this iterator with the given iterators, in order of: `[this.iterator, ...others]`. */
-  concat<U extends IteratorOrIterable<any>[]>(...args: U) {
+  concat<U extends IteratorOrIterable<any>[]>(...args: U): ExtendedIterator<T | IterSource<U[number]>> {
     this.iterator = new ConcatIterator([this.iterator, ...(args.map(toIterator) as Iterator<IterSource<U[number]>>[])]);
-    return this;
+    return this as any;
   }
 
   /** @lazy Prepends this iterator with the given iterators, in order of: `[...args, this.iterator]`. */
-  prepend<U extends IteratorOrIterable<any>[]>(...args: U) {
+  prepend<U extends IteratorOrIterable<any>[]>(...args: U): ExtendedIterator<T | IterSource<U[number]>> {
     this.iterator = new ConcatIterator([...(args.map(toIterator) as Iterator<IterSource<U[number]>>[]), this.iterator]);
     return this;
   }

@@ -65,6 +65,10 @@ export type IterSource<T> = T extends Iterable<infer U>
   ? U
   : T;
 
+export type MapToSource<T extends IteratorOrIterable<any>[]> = {
+  [K in keyof T]: IterSource<T[K]>;
+};
+
 // export type ObjectLeafs<T extends Record<string, unknown>, K = keyof T> = K extends string
 //   ? T[K] extends Record<string, unknown>
 //     ? ObjectLeafs<T[K], keyof T[K]>

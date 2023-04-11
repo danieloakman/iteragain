@@ -1,5 +1,5 @@
 import FilterMapIterator from './internal/FilterMapIterator';
-import { Iteratee, IteratorOrIterable } from './internal/types';
+import { IterSource, Iteratee, IteratorOrIterable } from './internal/types';
 import toIterator from './toIterator';
 
 /**
@@ -7,7 +7,7 @@ import toIterator from './toIterator';
  * @param iteratee A function that maps each value in this iterator to a new value and also filters out any that
  * return a nullish value.
  */
-export function filterMap<T, R>(arg: IteratorOrIterable<T>, iteratee: Iteratee<T, R>) {
+export function filterMap<T extends IteratorOrIterable<any>, R>(arg: T, iteratee: Iteratee<IterSource<T>, R>) {
   return new FilterMapIterator(toIterator(arg), iteratee);
 }
 

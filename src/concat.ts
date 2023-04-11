@@ -8,3 +8,4 @@ export function concat<T extends IteratorOrIterable<any>[]>(...args: T) {
 }
 
 export default concat;
+

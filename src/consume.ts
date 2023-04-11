@@ -6,7 +6,7 @@ import toIterator from './toIterator';
  * @param arg The iterator or iterable to consume.
  * @param n optional, the number of elements to consume (default: Infinity).
  */
-export function consume<T>(arg: IteratorOrIterable<T>, n = Infinity): void {
+export function consume(arg: IteratorOrIterable<any>, n = Infinity): void {
   const it = toIterator(arg);
   while (n-- > 0 && !it.next().done);
 }

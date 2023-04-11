@@ -172,6 +172,8 @@ describe('internal', function () {
 
     it('concat', async function () {
       equal(iter([1, 2, 3]).concat([4, 5, 6]).toArray(), [1, 2, 3, 4, 5, 6]);
+      // const a = iter([1, 2, 3]).concat(['1']).concat([[1]]);
+      //    ^?
     });
 
     it('prepend', async function () {
@@ -841,6 +843,8 @@ it('compress', async function () {
 
 it('concat', async function () {
   equal([...concat([1, 2, 3], [], range(4, 7))], [1, 2, 3, 4, 5, 6]);
+  // const a = toArray(concat([1, 2, 3, ''], [1, 2, 3]));
+  //    ^?
 });
 
 it('consume', async function () {
@@ -856,6 +860,8 @@ it('count', async function () {
 it('cycle', async function () {
   equal(take(cycle([1, 2, 3]), 10), [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]);
   equal([...cycle(range(3), 1)], [0, 1, 2, 0, 1, 2]);
+  // const a = toArray(cycle(range(3), 2));
+  //    ^?
 });
 
 it('distribute', async function () {
@@ -870,6 +876,8 @@ it('distribute', async function () {
       [1, 3, 5],
     ],
   );
+  // const a = toArray(distribute(['', 2], 2));
+  //    ^?
 });
 
 it('divide', async function () {
@@ -889,10 +897,14 @@ it('divide', async function () {
     divide(range(1, 4), 5).map(v => [...v]),
     [[1], [2], [3], [], []],
   );
+  // const a = toArray(divide(range(1, 4), 2));
+  //    ^?
 });
 
 it('dropWhile', async function () {
   equal([...dropWhile(range(10), n => n < 5)], [5, 6, 7, 8, 9]);
+  // const a = toArray(dropWhile(range(10), n => n < 10));
+  //    ^?
 });
 
 it('enumerate', async function () {
@@ -934,10 +946,16 @@ it('filter', async function () {
     arr.filter(isA).map(v => v.a),
     [1, 3],
   );
+  // const a = toArray(filter([1, 2, 3, ''], n => typeof n === 'number'));
+  // //    ^?
+  // const b = toArray(map(filter([1, 2, 3], n => n === 1), n => n.toString()));
+  // //    ^?
 });
 
 it('filterMap', async function () {
   equal([...filterMap(range(10), n => (n % 2 === 0 ? n : null))], [0, 2, 4, 6, 8]);
+  // const a = toArray(filterMap([1, 2, 3, null, ''], n => n));
+  //    ^?
 });
 
 it('find', async function () {
@@ -949,6 +967,11 @@ it('find', async function () {
     find(range(10), n => n === 10),
     undefined,
   );
+  // function isStr(v: any): v is string {
+  //   return typeof v === 'string';
+  // }
+  // const a = find([1, 2, 3, ''], isStr);
+  // //    ^?
 });
 
 it('findIndex', async function () {
@@ -979,6 +1002,8 @@ it('flatMap', async function () {
   }
   equal([...chars('abc', 'def')], ['a', 'b', 'c', 'd', 'e', 'f']);
   equal([...flatMap(['123'], str => str)], ['123']);
+  // const a = flatMap([1, 2, 3], n => [n, n.toString(), Buffer.from('')]);
+  // //    ^?
 });
 
 it('flatten', async function () {
@@ -998,6 +1023,8 @@ it('flatten', async function () {
     ],
     [0, 1, 0, 1, 0, 1],
   );
+  // const a = toArray(flatten([[1, 2, 3, '', [['']]], [['']]], 1));
+  // //    ^?
 });
 
 it('forEach', async function () {
@@ -1083,6 +1110,8 @@ it('length', async function () {
 
 it('map', async function () {
   equal([...map(range(10), n => n * n)], [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]);
+  // const a = toArray(map([1, 3], n => [n, n.toString()]));
+  // //    ^?
 });
 
 it('max', async function () {
