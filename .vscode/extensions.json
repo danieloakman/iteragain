@@ -9,6 +9,7 @@
     "redhat.vscode-yaml",
     "gruntfuggly.todo-tree",
     "visualstudioexptteam.vscodeintellicode",
-    "christian-kohler.npm-intellisense"
+    "christian-kohler.npm-intellisense",
+    "orta.vscode-twoslash-queries"
   ]
 }
