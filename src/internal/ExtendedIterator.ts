@@ -13,6 +13,7 @@ import {
   Callback,
   StrictPredicate,
   Awaited,
+  KeyIdentifier,
 } from './types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
@@ -40,6 +41,7 @@ import SeekableIterator from './SeekableIterator';
 import TeedIterator from './TeedIterator';
 import count from '../count';
 import FlatMapIterator from './FlatMapIterator';
+import GroupByIterator from './GroupByIterator';
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
@@ -611,6 +613,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
       ExtendedIterator<T>,
       Size
     >;
+  }
+
+  groupBy(key: KeyIdentifier<T>): ExtendedIterator<[string, T[]]> {
+    this.iterator = new GroupByIterator(this.iterator, key) as any;
+    return this as any;
   }
 
   /**

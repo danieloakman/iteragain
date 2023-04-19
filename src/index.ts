@@ -59,6 +59,7 @@ import length from './length';
 import flatMap from './flatMap';
 import promiseAll from './promiseAll';
 import promiseRace from './promiseRace';
+import groupBy from './groupBy';
 
 export {
   chunks,
@@ -80,6 +81,7 @@ export {
   flatMap,
   flatten,
   forEach,
+  groupBy,
   includes,
   isIterable,
   isIterator,
@@ -144,6 +146,7 @@ export default {
   flatMap,
   flatten,
   forEach,
+  groupBy,
   includes,
   isIterable,
   isIterator,

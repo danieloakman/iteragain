@@ -61,6 +61,7 @@ import {
   flatMap,
   promiseAll,
   promiseRace,
+  groupBy,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -1031,6 +1032,11 @@ it('forEach', async function () {
   const arr: number[] = [];
   forEach(range(10), n => arr.push(n));
   equal(arr, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+});
+
+it('groupBy', async function () {
+  equal([...groupBy('AAAABBBCCDAABBB')].map(v => v[0]), ['A', 'B', 'C', 'D', 'A']);
+  equal(toArray(map(groupBy([{ a: 1 }, { a: 2 }, { a: 3 }], 'a'), v => v[0])), [1, 2, 3]);
 });
 
 it('includes', async function () {

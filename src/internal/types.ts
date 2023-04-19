@@ -88,3 +88,5 @@ export type ObjectEntry<T = any> = [string, T, any];
 
 /** Recursively unwraps `T` until it's not a Promise, (Polyfill) */
 export type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
+
+export type KeyIdentifier<T> = keyof T | Iteratee<T, any>;
