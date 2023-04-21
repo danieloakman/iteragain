@@ -657,6 +657,17 @@ describe('internal', function () {
       );
     });
 
+    it('groupBy', async function () {
+      const groupBy = iter([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        .sort((a, b) => (a % 2) - (b % 2))
+        .groupBy(n => n % 2)
+        .toArray();
+      equal(groupBy, [
+        [0, [2, 4, 6, 8, 10]],
+        [1, [1, 3, 5, 7, 9]],
+      ]);
+    });
+
     it('includes', async function () {
       equal(iter([1, 2, 3]).includes(2), true);
       equal(iter([1, 2, 3]).includes(4), false);
@@ -1035,8 +1046,12 @@ it('forEach', async function () {
 });
 
 it('groupBy', async function () {
-  equal([...groupBy('AAAABBBCCDAABBB')].map(v => v[0]), ['A', 'B', 'C', 'D', 'A']);
+  equal([...groupBy('AAAABBBCCDAABBB')].map(v => v[0]), ['A', 'B', 'C', 'D', 'A', 'B']);
+  equal([...groupBy('AAAABBBCCD')].map(v => v[1].join('')), ['AAAA', 'BBB', 'CC', 'D']);
   equal(toArray(map(groupBy([{ a: 1 }, { a: 2 }, { a: 3 }], 'a'), v => v[0])), [1, 2, 3]);
+  equal(toArray(map(groupBy([1, 2, 3, 4, 5], v => v % 2), v => v[0])), [1, 0, 1, 0, 1]);
+  equal(toArray(map(groupBy([true, true, false, false]), v => v[0])), [true, false]);
+  equal(toArray(map(groupBy([{ a: 1 }, { a: 1 }, { a: 3 }], v => v.a), v => v[0])), [1, 3]);
 });
 
 it('includes', async function () {

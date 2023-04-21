@@ -89,4 +89,19 @@ export type ObjectEntry<T = any> = [string, T, any];
 /** Recursively unwraps `T` until it's not a Promise, (Polyfill) */
 export type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
 
+// /**
+//  * Extracts the properties from `T` that are of type `U`.
+//  * @example
+//  * type a = PropsOfType<{ a: string; b: number; c: boolean; d: string }, string | number>; // 'a' | 'b' | 'd'
+//  */
+// export type PropsOfType<T, U> = {
+//   [K in keyof T]: T[K] extends U ? K : never;
+// }[keyof T];
+
 export type KeyIdentifier<T> = keyof T | Iteratee<T, any>;
+
+export type KeyIdentifiersValue<T, K extends KeyIdentifier<T>> = K extends keyof T
+  ? T[K]
+  : K extends Iteratee<T, any>
+  ? ReturnType<K>
+  : never;
