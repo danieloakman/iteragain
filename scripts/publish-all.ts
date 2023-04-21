@@ -13,7 +13,6 @@ try {
   // Clean, Build and Publish for common JS version ("iteragain"):
   execSync('pnpm run build:clean && pnpm run build && pnpm publish', { stdio: 'inherit' });
 
-
   // Clean, Build for ES modules:
   execSync('pnpm run build:clean && pnpm run build:es', { stdio: 'inherit' });
 
@@ -32,7 +31,7 @@ try {
   writeFileSync(packageLockJSONPath, JSON.stringify(packageLockJSON, null, 2));
   writeFileSync(readmePath, readFileSync(readmeESPath, 'utf8'));
 
-  execSync('pnpm publish', { stdio: 'inherit' });
+  execSync('pnpm publish --no-git-checks', { stdio: 'inherit' });
 } finally {
   // Cleanup
   execSync('git checkout package.json package-lock.json README.md && pnpm run build:clean', { stdio: 'inherit' });
