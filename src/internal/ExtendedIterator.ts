@@ -14,6 +14,7 @@ import {
   StrictPredicate,
   Awaited,
   KeyIdentifier,
+  KeyIdentifiersValue,
 } from './types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
@@ -413,7 +414,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** @lazy Maps `key` from `T` in each value of this iterator. */
-  pluck(key: keyof T) {
+  pluck<K extends keyof T>(key: K) {
     return this.filterMap(value => value[key]);
   }
 
@@ -615,8 +616,31 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     >;
   }
 
-  groupBy(key: KeyIdentifier<T>): ExtendedIterator<[string, T[]]> {
-    this.iterator = new GroupByIterator(this.iterator, key) as any;
+  /**
+   * Groups *consecutive* keys in the input iterator by some key identifier function or property. Functionally equivalent
+   * to the itertools.groupby function in Python. Generally the input iterator needs to be sorted by the same key. Each
+   * iteration will return the next group of values with the same key, until the key changes. So unless the input iterator
+   * is sorted beforehand, you may have broken up groups with the same keys.
+   * @param arg The input iterator or iterable.
+   * @param key The key identifier function or property name. If left undefined, and the value is a primitive, the value
+   * itself is used as a key. Iterators for object like values *must* use a key identifier.
+   * @example
+   *  groupby('AAAABBBCCDAABBB') // =>
+   *    // ['A', ['A', 'A', 'A', 'A']],
+   *    // ['B', ['B', 'B', 'B']],
+   *    // ['C', ['C', 'C']],
+   *    // ['D', ['D']],
+   *    // ['A', ['A', 'A']],
+   *    // ['B', ['B', 'B', 'B']]
+   */
+  // groupBy(): ExtendedIterator<[T, T[]]>;
+  // groupBy<T extends number, U = T>(key?: Iteratee<number, U>): ExtendedIterator<[U, number[]]>;
+  // groupBy<T extends string, U = T>(key?: Iteratee<string, U>): ExtendedIterator<[U, string[]]>;
+  // groupBy<T extends boolean, U = T>(key?: Iteratee<boolean, U>): ExtendedIterator<[U, boolean[]]>;
+  groupBy(): ExtendedIterator<[T, T[]]>;
+  groupBy<K extends KeyIdentifier<T>>(key: K): ExtendedIterator<[KeyIdentifiersValue<T, K>, T[]]>;
+  groupBy(key: KeyIdentifier<any> = v => v): ExtendedIterator<[any, any[]]> {
+    this.iterator = new GroupByIterator(this.iterator, key as any) as any;
     return this as any;
   }
 

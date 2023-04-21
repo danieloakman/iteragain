@@ -67,7 +67,6 @@ import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
 // import asyncMap from '../src/asyncMap';
 // import asyncToArray from '../src/asyncToArray';
-import { IteratorOrIterable } from '../src/internal/types';
 
 // function sleep(ms: number) {
 //   return new Promise(resolve => setTimeout(resolve, ms));
@@ -666,6 +665,9 @@ describe('internal', function () {
         [0, [2, 4, 6, 8, 10]],
         [1, [1, 3, 5, 7, 9]],
       ]);
+      equal(iter([]).groupBy().toArray(), []);
+      equal(iter([{ a: 1 }]).groupBy('a').map(v => v[0]).toArray(), [1]);
+      equal(iter('abc').groupBy().pluck(0).toArray(), ['a', 'b', 'c']);
     });
 
     it('includes', async function () {
@@ -1483,7 +1485,9 @@ it('tee', async function () {
 it('toIterator', async function () {
   const it1 = toIterator([1, 2, 3]);
   assert(isIterator(it1));
+  // @ts-expect-error
   throws(() => toIterator(null));
+  // @ts-expect-error
   throws(() => toIterator(undefined));
   equal(
     toArray(
