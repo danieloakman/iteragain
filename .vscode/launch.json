@@ -12,13 +12,17 @@
       "args": [],
       "autoAttachChildProcesses": false,
       "outputCapture": "std",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeArgs": ["-r", "ts-node/register"]
+    },
+    {
+      "name": "Attach to Node Debug Process",
+      "port": 9229,
+      "request": "attach",
       "skipFiles": [
-          "<node_internals>/**"
+        "<node_internals>/**"
       ],
-      "runtimeArgs": [
-          "-r",
-          "ts-node/register"
-      ]
-  },
+      "type": "node"
+    },
   ]
 }

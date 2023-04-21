@@ -23,7 +23,7 @@
 <li>
 <h4>N<span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">number</span></h4></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iteragain/blob/ed2f6b9e/src/internal/types.ts#L30">internal/types.ts:30</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/danieloakman/iteragain/blob/095d0e0c/src/internal/types.ts#L30">internal/types.ts:30</a></li></ul></aside></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -64,6 +64,7 @@
 <li class="tsd-kind-module"><a href="../modules/flatMap.html">flat<wbr/>Map</a></li>
 <li class="tsd-kind-module"><a href="../modules/flatten.html">flatten</a></li>
 <li class="tsd-kind-module"><a href="../modules/forEach.html">for<wbr/>Each</a></li>
+<li class="tsd-kind-module"><a href="../modules/groupBy.html">group<wbr/>By</a></li>
 <li class="tsd-kind-module"><a href="../modules/includes.html">includes</a></li>
 <li class="tsd-kind-module"><a href="../modules/index.html">index</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_CachedIterator.html">internal/<wbr/>Cached<wbr/>Iterator</a></li>
@@ -80,6 +81,7 @@
 <li class="tsd-kind-module"><a href="../modules/internal_FlatMapIterator.html">internal/<wbr/>Flat<wbr/>Map<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_FlattenIterator.html">internal/<wbr/>Flatten<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_FunctionIterator.html">internal/<wbr/>Function<wbr/>Iterator</a></li>
+<li class="tsd-kind-module"><a href="../modules/internal_GroupByIterator.html">internal/<wbr/>Group<wbr/>By<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_MapIterator.html">internal/<wbr/>Map<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_ObjectIterator.html">internal/<wbr/>Object<wbr/>Iterator</a></li>
 <li class="tsd-kind-module"><a href="../modules/internal_PairwiseIterator.html">internal/<wbr/>Pairwise<wbr/>Iterator</a></li>
@@ -153,11 +155,13 @@
 <li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="internal_types.IterSource.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Iter<wbr/>Source</a></li>
 <li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="internal_types.Iteratee.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Iteratee</a></li>
 <li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="internal_types.IteratorOrIterable.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Iterator<wbr/>Or<wbr/>Iterable</a></li>
+<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="internal_types.KeyIdentifier.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Key<wbr/>Identifier</a></li>
 <li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="internal_types.MapToSource.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Map<wbr/>To<wbr/>Source</a></li>
 <li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="internal_types.ObjectEntry.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Object<wbr/>Entry</a></li>
 <li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="internal_types.Predicate.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Predicate</a></li>
 <li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="internal_types.StrictPredicate.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Strict<wbr/>Predicate</a></li>
-<li class="current tsd-kind-type-alias tsd-parent-kind-module"><a href="internal_types.Tuple.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Tuple</a></li></ul></nav></div></div>
+<li class="current tsd-kind-type-alias tsd-parent-kind-module"><a href="internal_types.Tuple.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Tuple</a></li>
+<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="internal_types.Value.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Value</a></li></ul></nav></div></div>
 <div class="container tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
 <div class="overlay"></div><script src="../assets/main.js"></script></body></html>
