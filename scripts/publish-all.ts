@@ -8,14 +8,14 @@ function readJSONFile(path: string) {
 
 try {
   // Test and lint:
-  execSync('npm run test && npm run lint', { stdio: 'inherit' });
+  execSync('pnpm run coverage && pnpm run lint', { stdio: 'inherit' });
 
   // Clean, Build and Publish for common JS version ("iteragain"):
-  execSync('npm run build:clean && npm run build && npm publish', { stdio: 'inherit' });
+  execSync('pnpm run build:clean && pnpm run build && pnpm publish', { stdio: 'inherit' });
 
 
   // Clean, Build for ES modules:
-  execSync('npm run build:clean && npm run build:es', { stdio: 'inherit' });
+  execSync('pnpm run build:clean && pnpm run build:es', { stdio: 'inherit' });
 
   // Modify package.json and package-lock.json for ES modules version ("iteragain-es") publish:
   const packageJSONPath = join(__dirname, '../package.json');
@@ -32,8 +32,8 @@ try {
   writeFileSync(packageLockJSONPath, JSON.stringify(packageLockJSON, null, 2));
   writeFileSync(readmePath, readFileSync(readmeESPath, 'utf8'));
 
-  execSync('npm publish', { stdio: 'inherit' });
+  execSync('pnpm publish', { stdio: 'inherit' });
 } finally {
   // Cleanup
-  execSync('git checkout package.json package-lock.json README.md && npm run build:clean', { stdio: 'inherit' });
+  execSync('git checkout package.json package-lock.json README.md && pnpm run build:clean', { stdio: 'inherit' });
 }
