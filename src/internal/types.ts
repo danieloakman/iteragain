@@ -26,8 +26,35 @@ export type FlattenDepth5<T> = T extends IteratorOrIterable<infer V> ? FlattenDe
 // export type AsyncFlattenDepth4<T> = T extends AsyncIteratorOrIterable<infer V> ? AsyncFlattenDepth3<V> : T;
 // export type AsyncFlattenDepth5<T> = T extends AsyncIteratorOrIterable<infer V> ? AsyncFlattenDepth4<V> : T;
 
-type _TupleOf<T, N extends number, R extends unknown[]> = R['length'] extends N ? R : _TupleOf<T, N, [T, ...R]>;
-export type Tuple<T, N extends number> = N extends N ? (number extends N ? T[] : _TupleOf<T, N, []>) : never;
+type TupleOf<T, N extends number, R extends unknown[]> = R['length'] extends N ? R : TupleOf<T, N, [T, ...R]>;
+type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N
+  ? Acc[number]
+  : Enumerate<N, [...Acc, Acc['length']]>;
+
+/** Creates a union of all integers between `StartInclusive` and `EndExclusive`. */
+export type IntRange<StartInclusive extends number, EndExclusive extends number> = Exclude<
+  Enumerate<EndExclusive>,
+  Enumerate<StartInclusive>
+>;
+
+/**
+ * Creates a tuple of `T` and size `N` which is unconstrained by size of `N`. So for large tuples the
+ * "Type instantiation is excessively deep and possibly infinite" TS error will occur.
+ */
+export type UnconstrainedTuple<T, N extends number> = N extends N
+  ? number extends N
+    ? T[]
+    : TupleOf<T, N, []>
+  : never;
+
+export type Tuple<T, N extends number, Range extends number = IntRange<0, 11>> = N extends Range ? UnconstrainedTuple<T, N> : T[];
+
+// type a = Tuple<number, 0>;
+// //   ^?
+// type b = Tuple<number, 10>;
+// //   ^?
+// type c = Tuple<number, 11>;
+// //   ^?
 
 /** A function that returns a truthy or falsey value given an input value of type `T`. */
 export type Predicate<T> = (value: T) => any;
