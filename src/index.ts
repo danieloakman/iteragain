@@ -1,192 +1,63 @@
-import chunks from './chunks';
-import combinations from './combinations';
-import compress from './compress';
-import concat from './concat';
-import resume from './resume';
-import count from './count';
-import cycle from './cycle';
-import dropWhile from './dropWhile';
-import enumerate from './enumerate';
-import flatten from './flatten';
-import isIterable from './isIterable';
-import isIterator from './isIterator';
-import iter from './iter';
-import partition from './partition';
-import product from './product';
-import range from './range';
-import repeat from './repeat';
-import take from './take';
-import toArray from './toArray';
-import toIterator from './toIterator';
-import zip from './zip';
-import zipLongest from './zipLongest';
-import filter from './filter';
-import filterMap from './filterMap';
-import pairwise from './pairwise';
-import permutations from './permutations';
-import slice from './slice';
-import takeWhile from './takeWhile';
-import map from './map';
-import tap from './tap';
-import triplewise from './triplewise';
-import windows from './windows';
-import tee from './tee';
-import reduce from './reduce';
-import quantify from './quantify';
-import every from './every';
-import some from './some';
-import forEach from './forEach';
-import nth from './nth';
-import roundrobin from './roundrobin';
-import distribute from './distribute';
-import divide from './divide';
-import unique from './unique';
-import spy from './spy';
-import unzip from './unzip';
-import consume from './consume';
-import reverse from './reverse';
-import seekable from './seekable';
-import min from './min';
-import max from './max';
-import minmax from './minmax';
-import find from './find';
-import findIndex from './findIndex';
-import includes from './includes';
-import shuffle from './shuffle';
-import pluck from './pluck';
-import sort from './sort';
-import length from './length';
-import flatMap from './flatMap';
-import promiseAll from './promiseAll';
-import promiseRace from './promiseRace';
-import groupBy from './groupBy';
-
-export {
-  chunks,
-  combinations,
-  compress,
-  concat,
-  consume,
-  count,
-  cycle,
-  distribute,
-  divide,
-  dropWhile,
-  enumerate,
-  every,
-  filter,
-  filterMap,
-  find,
-  findIndex,
-  flatMap,
-  flatten,
-  forEach,
-  groupBy,
-  includes,
-  isIterable,
-  isIterator,
-  iter,
-  length,
-  map,
-  max,
-  min,
-  minmax,
-  nth,
-  pairwise,
-  partition,
-  permutations,
-  pluck,
-  product,
-  promiseAll,
-  promiseRace,
-  quantify,
-  range,
-  reduce,
-  repeat,
-  resume,
-  reverse,
-  roundrobin,
-  seekable,
-  shuffle,
-  slice,
-  some,
-  sort,
-  spy,
-  take,
-  takeWhile,
-  tap,
-  tee,
-  toArray,
-  toIterator,
-  triplewise,
-  unique,
-  unzip,
-  windows,
-  zip,
-  zipLongest,
-};
-
-export default {
-  chunks,
-  combinations,
-  compress,
-  concat,
-  consume,
-  count,
-  cycle,
-  distribute,
-  divide,
-  dropWhile,
-  enumerate,
-  every,
-  filter,
-  filterMap,
-  find,
-  findIndex,
-  flatMap,
-  flatten,
-  forEach,
-  groupBy,
-  includes,
-  isIterable,
-  isIterator,
-  iter,
-  length,
-  map,
-  max,
-  min,
-  minmax,
-  nth,
-  pairwise,
-  partition,
-  permutations,
-  pluck,
-  product,
-  promiseAll,
-  promiseRace,
-  quantify,
-  range,
-  reduce,
-  repeat,
-  resume,
-  reverse,
-  roundrobin,
-  seekable,
-  shuffle,
-  slice,
-  some,
-  sort,
-  spy,
-  take,
-  takeWhile,
-  tap,
-  tee,
-  toArray,
-  toIterator,
-  triplewise,
-  unique,
-  unzip,
-  windows,
-  zip,
-  zipLongest,
-};
+export * from './internal/types';
+export * from './chunks';
+export * from './combinations';
+export * from './compress';
+export * from './concat';
+export * from './resume';
+export * from './count';
+export * from './cycle';
+export * from './dropWhile';
+export * from './enumerate';
+export * from './flatten';
+export * from './isIterable';
+export * from './isIterator';
+export * from './iter';
+export * from './partition';
+export * from './product';
+export * from './range';
+export * from './repeat';
+export * from './take';
+export * from './toArray';
+export * from './toIterator';
+export * from './zip';
+export * from './zipLongest';
+export * from './filter';
+export * from './filterMap';
+export * from './pairwise';
+export * from './permutations';
+export * from './slice';
+export * from './takeWhile';
+export * from './map';
+export * from './tap';
+export * from './triplewise';
+export * from './windows';
+export * from './tee';
+export * from './reduce';
+export * from './quantify';
+export * from './every';
+export * from './some';
+export * from './forEach';
+export * from './nth';
+export * from './roundrobin';
+export * from './distribute';
+export * from './divide';
+export * from './unique';
+export * from './spy';
+export * from './unzip';
+export * from './consume';
+export * from './reverse';
+export * from './seekable';
+export * from './min';
+export * from './max';
+export * from './minmax';
+export * from './find';
+export * from './findIndex';
+export * from './includes';
+export * from './shuffle';
+export * from './pluck';
+export * from './sort';
+export * from './length';
+export * from './flatMap';
+export * from './promiseAll';
+export * from './promiseRace';
+export * from './groupBy';
