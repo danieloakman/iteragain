@@ -4,7 +4,7 @@ import { KeyIdentifiersValue, KeyIdentifier } from './types';
 export class GroupByIterator<T, K extends KeyIdentifier<T>>
 implements IterableIterator<[KeyIdentifiersValue<T, K>, T[]]>
 {
-  protected currKey: KeyIdentifiersValue<T, K>;
+  protected currKey: KeyIdentifiersValue<T, K> | undefined;
   protected currGroup: T[] = [];
   protected done = false;
 

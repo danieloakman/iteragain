@@ -21,7 +21,7 @@ export function divide<T, Size extends number>(arg: IteratorOrIterable<T>, n: Si
         [Symbol.iterator]() {
           return this;
         },
-      }),
+      }) as IterableIterator<T>,
     );
   }
   return result as Tuple<IterableIterator<T>, Size>;

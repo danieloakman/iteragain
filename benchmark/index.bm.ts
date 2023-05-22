@@ -1,6 +1,6 @@
 import { setupSuite } from './bm-util';
 
-const suite = setupSuite(__filename.split(/[\\/]/).pop());
+const suite = setupSuite({ name: __filename.split(/[\\/]/).pop() });
 import ExtendedIterator from '../src/internal/ExtendedIterator';
 import { map, filter, toIterator, toArray } from '../src';
 import { IteratorWithOperators } from 'iterare/lib/iterate';

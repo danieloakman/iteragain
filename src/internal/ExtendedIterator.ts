@@ -153,7 +153,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     const [head] = this.peek();
     const n = Array.isArray(head) ? head.length : 1;
     if (n < 2) return [this];
-    return this.tee(n).map((it, i) => it.map(v => v[i]));
+    return this.tee(n).map((it, i) => it.map(v => (v as any)[i]));
   }
 
   /** @lazy Aggregates this iterator and any number of others into one. Stops when one of the iterables is empty. */
@@ -376,8 +376,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param iteratee Iteratee to use to transform each value before being tested for uniqueness.
    * @param justSeen If true, will only test for uniqueness with the last value in the iterator and not all values.
    */
-  unique({ iteratee, justSeen }: { iteratee?: Iteratee<T, any>; justSeen?: boolean } = {}): ExtendedIterator<T> {
-    iteratee = iteratee ?? (v => v);
+  unique({ iteratee = (v => v), justSeen }: { iteratee?: Iteratee<T, any>; justSeen?: boolean } = {}): ExtendedIterator<T> {
     if (justSeen) {
       let lastValue: T;
       return this.filter(value => {
@@ -499,7 +498,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param separator The separator to use between each value (default: ',').
    */
   join(separator = ','): string {
-    return this.reduce((str, v) => str + separator + v);
+    return this.reduce((str, v) => str + separator + v as any) as string;
   }
 
   /**

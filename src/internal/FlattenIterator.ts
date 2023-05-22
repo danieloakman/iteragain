@@ -4,7 +4,7 @@ import toIterator from '../toIterator';
 
 /** Flattens an iterator `depth` number of levels. */
 export class FlattenIterator implements IterableIterator<any> {
-  protected inner: Iterator<any> = null;
+  protected inner: Iterator<any> | null = null;
 
   constructor(protected iterator: Iterator<any>, protected depth: number) {}
 
@@ -12,7 +12,7 @@ export class FlattenIterator implements IterableIterator<any> {
     return this;
   }
 
-  next(...args: any[]) {
+  next(...args: any[]): IteratorResult<any> {
     if (this.depth < 1) return this.iterator.next(...args as any);
     let next: IteratorResult<any>;
     if (this.inner) {

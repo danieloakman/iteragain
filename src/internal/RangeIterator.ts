@@ -22,13 +22,10 @@ export class RangeIterator implements IterableIterator<number> {
   /** The sign of `step`. */
   protected readonly stepSign: number;
 
-  constructor(stop: number);
-  constructor(start: number, stop: number);
-  constructor(start: number, stop: number, step: number);
-  constructor(...params: any[]) {
+  constructor(...params: number[]) {
     let start = 0,
-      stop = 0,
-      step: number;
+      stop = 0;
+    let step: number | undefined;
     if (params.length === 1) stop = params[0];
     else if (params.length > 1) [start, stop, step] = params;
     if (typeof step !== 'number') step = Math.sign(stop - start);
@@ -69,7 +66,7 @@ export class RangeIterator implements IterableIterator<number> {
   }
 
   /** Returns the number at `index` in this range. `index` can be negative to access indices starting from the end. */
-  nth(index: number): number {
+  nth(index: number): number | undefined {
     const num = index >= 0 ? this.start + index * this.step : this.stop + index * this.step;
     return this.includes(num) ? num : undefined;
   }

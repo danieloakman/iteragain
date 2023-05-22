@@ -1388,6 +1388,7 @@ it('shuffle', async function () {
 
 it('slice', async function () {
   equal([...slice([1, 2, 3, 4, 5], 1, 3)], [2, 3]);
+  equal([...slice([1, 2, 3, 4, 5], 1)], [2, 3, 4, 5]);
 });
 
 it('some', async function () {

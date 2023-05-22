@@ -10,7 +10,7 @@ import toIterator from './toIterator';
 export /*i(async)*/ function toArray<T extends IteratorOrIterable<any>>(iteratorOrIterable: T): /*r(T[], Promise<T[]>)*/IterSource<T>[] {
   const iterator = toIterator(iteratorOrIterable);
   const result: IterSource<T>[] = [];
-  let next: IteratorResult<T>;
+  let next: IteratorResult<IterSource<T>>;
   while (!(next = /*i(await)*/ iterator.next()).done) result.push(next.value);
   return result;
 }

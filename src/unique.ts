@@ -10,9 +10,8 @@ import FilterIterator from './internal/FilterIterator';
  */
 export function unique<T>(
   arg: IteratorOrIterable<T>,
-  { iteratee, justSeen }: { iteratee?: Iteratee<T, any>; justSeen?: boolean } = {},
+  { iteratee = (v => v), justSeen }: { iteratee?: Iteratee<T, any>; justSeen?: boolean } = {},
 ): IterableIterator<T> {
-  iteratee = iteratee ?? (v => v);
   if (justSeen) {
     let lastValue: T;
     return new FilterIterator(toIterator(arg), value => {

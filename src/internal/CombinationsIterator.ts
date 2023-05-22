@@ -6,7 +6,7 @@ export class CombinationsIterator<T, Size extends number> implements IterableIte
   protected pool: T[];
   protected indices: number[];
   protected n: number;
-  protected i: number;
+  protected i = 0;
 
   constructor(iterator: Iterator<T>, protected size: Size, protected withReplacement: boolean) {
     this.pool = toArray(iterator);

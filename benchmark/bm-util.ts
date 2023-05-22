@@ -2,11 +2,11 @@
 
 import { Suite } from 'benchmark';
 
-export function handleStartEvent(event) {
+export function handleStartEvent(event: { target: any; currentTarget: { name: string } }) {
   console.log(`Starting benchmark suite: ${event.currentTarget.name}`);
 }
 
-export function handleCycleEvent(event) {
+export function handleCycleEvent(event: { target: any }) {
   const result = event.target.toString();
   const splitIndex = result.indexOf('ops/sec') + 7;
   const rmeOpsPerSec = (event.target.stats.rme.toFixed(2) * (event.target.hz / 100))
@@ -18,7 +18,7 @@ export function handleCycleEvent(event) {
   );
 }
 
-export function handleCompleteEvent(event) {
+export function handleCompleteEvent(event: any) {
   console.log('Fastest is ' + event.currentTarget.filter('fastest').map('name'));
 }
 

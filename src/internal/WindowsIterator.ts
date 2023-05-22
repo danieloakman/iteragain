@@ -1,7 +1,7 @@
 /** An Iterator that yields windows or tuples of various sizes and offsets/intervals from the input `iterator`. */
 export class WindowsIterator<T> implements IterableIterator<T[]> {
   protected prev: T[] = [];
-  protected nextResult: IteratorResult<T> = { done: false, value: undefined };
+  protected nextResult = { done: false, value: undefined } as IteratorResult<T>;
   /** The number of elements inbetween windows. */
   protected readonly unused = this.offset - this.length;
 
@@ -17,7 +17,8 @@ export class WindowsIterator<T> implements IterableIterator<T[]> {
       this.prev.push(this.nextResult.value);
     if (this.prev.length < this.length) {
       if (this.fill === undefined || !this.prev.length) return this.nextResult as IteratorResult<T[]>;
-      this.prev.push(...Array.from({ length: this.length - this.prev.length }, _ => this.fill));
+      for (let i = this.prev.length; i < this.length; i++) this.prev.push(this.fill);
+      // this.prev.push(...Array.from({ length: this.length - this.prev.length }, _ => this.fill));
     }
     // Remove unused elements:
     for (let i = 0; i < this.unused; i++) this.iterator.next(...args as any);

@@ -5,7 +5,7 @@ import isIterator from '../isIterator';
 
 /** Maps and flattens an iterator by a depth of 1. */
 export class FlatMapIterator<T, R> implements IterableIterator<R> {
-  protected inner: Iterator<R> = null;
+  protected inner: Iterator<R> | null = null;
 
   constructor(protected readonly iterator: Iterator<T>, protected readonly iteratee: Iteratee<T, R | IteratorOrIterable<R>>) {}
 

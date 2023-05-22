@@ -1,6 +1,6 @@
 /** An iterator that pairs adjacent values in the input `Iterator<T>` together like: [T, T] */
 export class PairwiseIterator<T> implements IterableIterator<[T, T]> {
-  protected prev: IteratorResult<T> = null;
+  protected prev: IteratorResult<T> | null = null;
 
   constructor(protected iterator: Iterator<T>) {}
 

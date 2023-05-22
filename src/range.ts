@@ -12,7 +12,7 @@ import RangeIterator from './internal/RangeIterator';
 export function range(stop: number): RangeIterator;
 export function range(start: number, stop: number): RangeIterator;
 export function range(start: number, stop: number, step: number): RangeIterator;
-export function range(...params: Partial<ConstructorParameters<typeof RangeIterator>>): RangeIterator {
+export function range(...params: ConstructorParameters<typeof RangeIterator>): RangeIterator {
   return new RangeIterator(...params);
 }
 

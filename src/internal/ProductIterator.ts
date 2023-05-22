@@ -5,7 +5,7 @@ export class ProductIterator<T> implements IterableIterator<T[]> {
   protected done = false;
   protected pools: T[][] = [];
   protected indices: number[];
-  protected i: number;
+  protected i = 0;
 
   constructor(iterators: Iterator<T>[], repeat: number) {
     const iterated = iterators.map(toArray);
