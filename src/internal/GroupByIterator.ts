@@ -1,4 +1,4 @@
-import { KeyIdentifiersValue, KeyIdentifier } from './types';
+import { KeyIdentifiersValue, KeyIdentifier } from '../types';
 
 /** Groups values in the input iterator by some key identifier function or property. */
 export class GroupByIterator<T, K extends KeyIdentifier<T>>

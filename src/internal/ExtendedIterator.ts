@@ -15,7 +15,7 @@ import {
   Awaited,
   KeyIdentifier,
   KeyIdentifiersValue,
-} from './types';
+} from '../types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
 import FilterIterator from './FilterIterator';
@@ -54,7 +54,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /** Returns a `{ value, done }` object that adheres to the Iterator interface. */
   next(...args: any[]): IteratorResult<T, T> {
-    return this.iterator.next(...args as any);
+    return this.iterator.next(...(args as any));
   }
 
   /** Implements this as an Iterable so it's allowed to be used with "for of" loops. */
@@ -376,7 +376,10 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param iteratee Iteratee to use to transform each value before being tested for uniqueness.
    * @param justSeen If true, will only test for uniqueness with the last value in the iterator and not all values.
    */
-  unique({ iteratee = (v => v), justSeen }: { iteratee?: Iteratee<T, any>; justSeen?: boolean } = {}): ExtendedIterator<T> {
+  unique({
+    iteratee = v => v,
+    justSeen,
+  }: { iteratee?: Iteratee<T, any>; justSeen?: boolean } = {}): ExtendedIterator<T> {
     if (justSeen) {
       let lastValue: T;
       return this.filter(value => {
@@ -498,7 +501,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param separator The separator to use between each value (default: ',').
    */
   join(separator = ','): string {
-    return this.reduce((str, v) => str + separator + v as any) as string;
+    return this.reduce((str, v) => (str + separator + v) as any) as string;
   }
 
   /**
@@ -587,7 +590,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** Collects all values from this iterator, then sorts them. */
-  sort(comparator: (a: T, b: T) => number = (a, b) => a < b ? -1 : a > b ? 1 : 0): ExtendedIterator<T> {
+  sort(comparator: (a: T, b: T) => number = (a, b) => (a < b ? -1 : a > b ? 1 : 0)): ExtendedIterator<T> {
     this.iterator = toIterator(this.toArray().sort(comparator));
     return this;
   }

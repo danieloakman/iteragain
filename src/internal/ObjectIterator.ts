@@ -1,4 +1,4 @@
-import { ObjectEntry } from './types';
+import { ObjectEntry } from '../types';
 import ConcatIterator from './ConcatIterator';
 import RepeatIterator from './RepeatIterator';
 
@@ -21,10 +21,10 @@ export class ObjectIterator<T extends Record<PropertyKey, any>> implements Itera
 
   public next(...args: any[]): IteratorResult<ObjectEntry> {
     if (this.inner) {
-      const next = this.inner.next(...args as any);
+      const next = this.inner.next(...(args as any));
       if (!next.done) return next;
       this.inner = null;
-      return this.next(...args as any);
+      return this.next(...(args as any));
     }
     if (!this.arr.length) return { done: true, value: undefined };
     const next = this.arr.shift() as ObjectEntry; // Previous line ensures this is not undefined.
@@ -34,7 +34,7 @@ export class ObjectIterator<T extends Record<PropertyKey, any>> implements Itera
           ? [new ObjectIterator(next[1]), new RepeatIterator(next, 1)]
           : [new RepeatIterator(next, 1), new ObjectIterator(next[1])],
       );
-      return this.next(...args as any);
+      return this.next(...(args as any));
     }
     return { value: next, done: false };
   }

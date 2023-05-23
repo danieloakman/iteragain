@@ -1,4 +1,4 @@
-import { Iteratee, IteratorOrIterable } from './types';
+import { Iteratee, IteratorOrIterable } from '../types';
 import toIterator from '../toIterator';
 import isIterable from '../isIterable';
 import isIterator from '../isIterator';
@@ -7,7 +7,10 @@ import isIterator from '../isIterator';
 export class FlatMapIterator<T, R> implements IterableIterator<R> {
   protected inner: Iterator<R> | null = null;
 
-  constructor(protected readonly iterator: Iterator<T>, protected readonly iteratee: Iteratee<T, R | IteratorOrIterable<R>>) {}
+  constructor(
+    protected readonly iterator: Iterator<T>,
+    protected readonly iteratee: Iteratee<T, R | IteratorOrIterable<R>>,
+  ) {}
 
   [Symbol.iterator](): IterableIterator<R> {
     return this;
@@ -15,14 +18,14 @@ export class FlatMapIterator<T, R> implements IterableIterator<R> {
 
   next(...args: any[]): IteratorResult<R> {
     if (this.inner) {
-      const next = this.inner.next(...args as any);
+      const next = this.inner.next(...(args as any));
       if (next.done) {
         this.inner = null;
         return this.next(...args);
       }
       return next;
     }
-    const next = this.iterator.next(...args as any);
+    const next = this.iterator.next(...(args as any));
     if (next.done) return next;
     const value = this.iteratee(next.value);
     if (typeof value !== 'string') {

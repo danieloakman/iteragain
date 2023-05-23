@@ -1,4 +1,4 @@
-import { Tuple } from './types';
+import { Tuple } from '../types';
 
 /**
  * Wraps `iterator` to allow for seeking backwards and forwards. An internal cache of length `maxLength` is kept and
@@ -17,7 +17,7 @@ export class SeekableIterator<T> implements IterableIterator<T> {
 
   get done(): boolean {
     // If the iterator is done, then determine if `i` is at the end of the cache.
-    return this.iteratorDone ? (!this.cache.length || this.i >= this.cache.length) : false;
+    return this.iteratorDone ? !this.cache.length || this.i >= this.cache.length : false;
   }
 
   [Symbol.iterator](): IterableIterator<T> {
@@ -28,7 +28,7 @@ export class SeekableIterator<T> implements IterableIterator<T> {
     if (this.done) return { done: true, value: undefined };
     const cachedValue = this.cache[this.i++];
     if (cachedValue !== undefined) return { done: false, value: cachedValue };
-    const next = this.iterator.next(...args as any);
+    const next = this.iterator.next(...(args as any));
     if (next.done) this.iteratorDone = true;
     else this.add(next.value);
     return next;
@@ -39,7 +39,7 @@ export class SeekableIterator<T> implements IterableIterator<T> {
    * starting from the end of the internal cache (e.g. -1 is the last element).
    */
   public seek(i: number): void {
-    if (i < 0) i = (this.cache.length + i);
+    if (i < 0) i = this.cache.length + i;
     if (i > this.i) while (this.i < i && !this.done) this.next();
     else if (i < this.i) this.i = i;
   }

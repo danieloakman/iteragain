@@ -1,4 +1,4 @@
-import { Predicate } from './types';
+import { Predicate } from '../types';
 
 /** Take values from the input `iterator` while the predicate returns a truthy value. */
 export class TakeWhileIterator<T> implements IterableIterator<T> {
@@ -12,10 +12,10 @@ export class TakeWhileIterator<T> implements IterableIterator<T> {
 
   next(...args: any[]): IteratorResult<T> {
     if (this.done) return { done: true, value: undefined };
-    const next = this.iterator.next(...args as any);
+    const next = this.iterator.next(...(args as any));
     if (next.done || !this.predicate(next.value)) {
       this.done = true;
-      return this.next(...args as any);
+      return this.next(...(args as any));
     }
     return next;
   }
