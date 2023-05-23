@@ -1,4 +1,4 @@
-import { IteratorOrIterable } from './internal/types';
+import { IteratorOrIterable } from './types';
 import toArray from './toArray';
 
 /** Collects all values from the input iterator, then shuffles the order of it's values. */

@@ -1,5 +1,5 @@
 import FilterMapIterator from './internal/FilterMapIterator';
-import { IterSource, Iteratee, IteratorOrIterable } from './internal/types';
+import { IterSource, Iteratee, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /**

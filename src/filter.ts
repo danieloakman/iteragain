@@ -1,5 +1,5 @@
 import FilterIterator from './internal/FilterIterator';
-import { IterSource, IteratorOrIterable, Predicate, StrictPredicate } from './internal/types';
+import { IterSource, IteratorOrIterable, Predicate, StrictPredicate } from './types';
 import toIterator from './toIterator';
 
 /**

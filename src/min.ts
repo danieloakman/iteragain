@@ -1,8 +1,11 @@
-import { Iteratee, IteratorOrIterable } from './internal/types';
+import { Iteratee, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /** Returns the minimum value from the input iterator. */
-export function min<T>(arg: IteratorOrIterable<T>, iteratee: Iteratee<T, number> = (v: T) => v as unknown as number): T {
+export function min<T>(
+  arg: IteratorOrIterable<T>,
+  iteratee: Iteratee<T, number> = (v: T) => v as unknown as number,
+): T {
   const it = toIterator(arg);
   let next = it.next();
   let min = { value: next.value, comparison: iteratee(next.value) };

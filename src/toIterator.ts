@@ -6,7 +6,7 @@
 /* ra(' Iterator', ' AsyncIterator') */
 
 import ObjectIterator from './internal/ObjectIterator';
-import { IteratorOrIterable } from './internal/types';
+import { IteratorOrIterable } from './types';
 import isIterable from './isIterable';
 import isIterator from './isIterator';
 import FunctionIterator from './internal/FunctionIterator';

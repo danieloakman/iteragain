@@ -1,4 +1,4 @@
-import { IteratorOrIterable } from './internal/types';
+import { IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /** Reduces the input iterator to a single value. */

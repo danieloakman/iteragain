@@ -1,4 +1,4 @@
-import { IteratorOrIterable } from './internal/types';
+import { IteratorOrIterable } from './types';
 import spy from './spy';
 import tee from './tee';
 import map from './map';

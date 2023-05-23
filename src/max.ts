@@ -1,4 +1,4 @@
-import { Iteratee, IteratorOrIterable } from './internal/types';
+import { Iteratee, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /** Returns the maximum value from the input iterator. */

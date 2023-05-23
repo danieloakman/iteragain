@@ -1,5 +1,5 @@
 import GroupByIterator from './internal/GroupByIterator';
-import { IterSource, Iteratee, IteratorOrIterable, KeyIdentifier, KeyIdentifiersValue } from './internal/types';
+import { IterSource, Iteratee, IteratorOrIterable, KeyIdentifier, KeyIdentifiersValue } from './types';
 import toIterator from './toIterator';
 
 /**

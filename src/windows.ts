@@ -1,4 +1,4 @@
-import { IteratorOrIterable } from './internal/types';
+import { IteratorOrIterable } from './types';
 import WindowsIterator from './internal/WindowsIterator';
 import toIterator from './toIterator';
 
@@ -14,7 +14,12 @@ import toIterator from './toIterator';
  * toArray(windows([1,2,3,4,5], 2, 3)) // [[1,2], [4,5]]
  * toArray(windows([1,2,3,4,5], 3, 3, 0)) // [[1,2,3], [4,5,0]]
  */
-export function windows<T, Length extends number>(arg: IteratorOrIterable<T>, length: Length, offset: number, fill?: T) {
+export function windows<T, Length extends number>(
+  arg: IteratorOrIterable<T>,
+  length: Length,
+  offset: number,
+  fill?: T,
+) {
   return new WindowsIterator(toIterator(arg), length, offset, fill);
 }
 

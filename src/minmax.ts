@@ -1,4 +1,4 @@
-import { Iteratee, IteratorOrIterable } from './internal/types';
+import { Iteratee, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /** Returns the minimum and maximum from the input iterator as a tuple: `[min, max]`. */

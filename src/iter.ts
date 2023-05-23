@@ -1,6 +1,6 @@
 import ExtendedIterator from './internal/ExtendedIterator';
 import toIterator from './toIterator';
-import { IteratorOrIterable, ObjectEntry } from './internal/types';
+import { IteratorOrIterable, ObjectEntry } from './types';
 
 /** Shorthand for `new ExtendedIterator(toIterator(arg))`. */
 export function iter<T>(arg: IteratorOrIterable<T>): ExtendedIterator<T>;

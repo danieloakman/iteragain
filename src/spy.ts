@@ -1,5 +1,5 @@
 import concat from './concat';
-import { IteratorOrIterable, Tuple } from './internal/types';
+import { IteratorOrIterable, Tuple } from './types';
 import take from './take';
 import toIterator from './toIterator';
 

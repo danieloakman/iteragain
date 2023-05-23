@@ -1,4 +1,4 @@
-import { IteratorOrIterable, IterSource } from './internal/types';
+import { IteratorOrIterable, IterSource } from './types';
 import toIterator from './toIterator';
 import ConcatIterator from './internal/ConcatIterator';
 
@@ -8,4 +8,3 @@ export function concat<T extends IteratorOrIterable<any>[]>(...args: T) {
 }
 
 export default concat;
-

@@ -1,4 +1,4 @@
-import { IteratorOrIterable } from './internal/types';
+import { IteratorOrIterable } from './types';
 import reduce from './reduce';
 
 /** Consumes the input iterator and returns the number of values/items in it. */

@@ -1,4 +1,4 @@
-import { Iteratee, IteratorOrIterable } from './internal/types';
+import { Iteratee, IteratorOrIterable } from './types';
 import FlatMapIterator from './internal/FlatMapIterator';
 import toIterator from './toIterator';
 

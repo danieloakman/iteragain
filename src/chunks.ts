@@ -1,7 +1,6 @@
 import ChunksIterator from './internal/ChunksIterator';
-import { IteratorOrIterable } from './internal/types';
+import { IteratorOrIterable } from './types';
 import toIterator from './toIterator';
-
 
 /**
  * Yields non-overlapping chunks (tuples) of `length` from the input iterator.

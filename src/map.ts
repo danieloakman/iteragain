@@ -6,7 +6,7 @@
 /* ra(MapIterator, AsyncMapIterator) */
 
 import MapIterator from './internal/MapIterator';
-import { IterSource, Iteratee, IteratorOrIterable } from './internal/types';
+import { IterSource, Iteratee, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /** Returns a new iterator that maps each element in the input iterator to a new value. */

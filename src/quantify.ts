@@ -1,4 +1,4 @@
-import { IteratorOrIterable, Predicate } from './internal/types';
+import { IteratorOrIterable, Predicate } from './types';
 import reduce from './reduce';
 
 /** Returns the number of times the `predicate` returns a truthy value. */

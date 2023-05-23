@@ -1,4 +1,4 @@
-import { IteratorOrIterable, Tuple } from './internal/types';
+import { IteratorOrIterable, Tuple } from './types';
 import toArray from './toArray';
 import toIterator from './toIterator';
 

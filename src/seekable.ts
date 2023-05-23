@@ -1,4 +1,4 @@
-import { IteratorOrIterable } from './internal/types';
+import { IteratorOrIterable } from './types';
 import SeekableIterator from './internal/SeekableIterator';
 import toIterator from './toIterator';
 

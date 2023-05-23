@@ -1,5 +1,5 @@
 import CombinationsIterator from './internal/CombinationsIterator';
-import { IterSource, IteratorOrIterable, Tuple } from './internal/types';
+import { IterSource, IteratorOrIterable, Tuple } from './types';
 import toIterator from './toIterator';
 
 /**
@@ -9,7 +9,11 @@ import toIterator from './toIterator';
  * @param size The size of each combination.
  * @param withReplacement Whether or not to allow duplicate elements in the combinations.
  */
-export function combinations<T  extends IteratorOrIterable<any>, Size extends number>(arg: T, size: Size, withReplacement = false): IterableIterator<Tuple<IterSource<T>, Size>> {
+export function combinations<T extends IteratorOrIterable<any>, Size extends number>(
+  arg: T,
+  size: Size,
+  withReplacement = false,
+): IterableIterator<Tuple<IterSource<T>, Size>> {
   return new CombinationsIterator(toIterator(arg), size, withReplacement);
 }
 

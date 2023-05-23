@@ -1,5 +1,5 @@
 import CycleIterator from './internal/CycleIterator';
-import { IterSource, IteratorOrIterable } from './internal/types';
+import { IterSource, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /**

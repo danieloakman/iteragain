@@ -1,4 +1,4 @@
-import { Iteratee, IteratorOrIterable } from './internal/types';
+import { Iteratee, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 import FilterIterator from './internal/FilterIterator';
 
@@ -10,7 +10,7 @@ import FilterIterator from './internal/FilterIterator';
  */
 export function unique<T>(
   arg: IteratorOrIterable<T>,
-  { iteratee = (v => v), justSeen }: { iteratee?: Iteratee<T, any>; justSeen?: boolean } = {},
+  { iteratee = v => v, justSeen }: { iteratee?: Iteratee<T, any>; justSeen?: boolean } = {},
 ): IterableIterator<T> {
   if (justSeen) {
     let lastValue: T;

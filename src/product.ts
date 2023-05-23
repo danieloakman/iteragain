@@ -1,5 +1,5 @@
 import ProductIterator from './internal/ProductIterator';
-import { IteratorOrIterable } from './internal/types';
+import { IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /**
