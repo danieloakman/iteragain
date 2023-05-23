@@ -1,4 +1,4 @@
-export * from './internal/types';
+export * from './types';
 export * from './chunks';
 export * from './combinations';
 export * from './compress';
