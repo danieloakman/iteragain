@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "hbenl.vscode-mocha-test-adapter",
     "eamodio.gitlens",
     "dbaeumer.vscode-eslint",
     "ms-vscode.vscode-typescript-next",
