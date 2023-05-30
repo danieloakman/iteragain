@@ -6,6 +6,10 @@ import toIterator from './toIterator';
  * Returns a new iterator that has each element in this iterator filtered by the predicate.
  * @param predicate A function that returns a truthy value to indicate to keep that value.
  */
+export function filter<T extends IteratorOrIterable<any>>(
+  arg: T,
+  predicate: BooleanConstructor,
+): FilterIterator<NonNullable<T>>;
 export function filter<T extends IteratorOrIterable<any>, S extends IterSource<T>>(
   arg: T,
   predicate: StrictPredicate<IterSource<T>, S>,

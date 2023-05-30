@@ -129,6 +129,7 @@ describe('internal', function () {
       const isA = (v: any): v is A => typeof v.a === 'number';
       const arr: (A | B)[] = [{ a: 1 }, { b: 2 }, { a: 3 }, { b: 4 }];
       equal(iter(arr).filter(isA).toArray(), [{ a: 1 }, { a: 3 }]);
+      equal(iter(['a', undefined]).filter(Boolean).toArray(), ['a']);
     });
 
     it('filterMap', async function () {

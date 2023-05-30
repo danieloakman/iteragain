@@ -77,6 +77,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * Returns a new ExtendedIterator that filters each element in this iterator.
    * @param predicate A function that returns a truthy value to indicate to keep that value.
    */
+  filter(predicate: BooleanConstructor): ExtendedIterator<NonNullable<T>>;
   filter<S extends T>(predicate: StrictPredicate<T, S>): ExtendedIterator<S>;
   filter(predicate: Predicate<T>): ExtendedIterator<T>;
   filter(predicate: Predicate<T>): ExtendedIterator<T> {
