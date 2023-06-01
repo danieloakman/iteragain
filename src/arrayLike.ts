@@ -19,17 +19,14 @@ export function arrayLike<T>(arg: IteratorOrIterable<T>): readonly T[] {
       else if (prop === Symbol.iterator) {
         it.seek(0);
         return it[Symbol.iterator].bind(it);
-      } else if (typeof prop === 'string' && /^-?\d+$/.test(prop)) {
-        const index = Number(prop);
-        if (isNaN(index)) return undefined;
-        // Circumvent seeking if the index is within the cached elements:
-        if (index in it.elements) return it.elements[index];
-        it.seek(index);
-        return it.next().value;
-      } else if (prop && prop in target) {
+      } else if (prop && prop in it.elements) {
         const value: unknown = target[prop as any];
         if (typeof value === 'function') return value.bind(it.elements);
-        return value;
+      }
+      const index = Number(prop);
+      if (typeof prop === 'string' && !isNaN(index)) {
+        it.seek(index);
+        return it.next().value;
       }
       return undefined;
     },
@@ -37,7 +34,7 @@ export function arrayLike<T>(arg: IteratorOrIterable<T>): readonly T[] {
       return prop in it.elements;
     },
     ownKeys: () => {
-      return Object.keys(it.elements);
+      return Object.keys(it.elements).concat('length');
     },
     getOwnPropertyDescriptor: (_, prop) => {
       return Object.getOwnPropertyDescriptor(it.elements, prop);

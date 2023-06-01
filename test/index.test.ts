@@ -864,6 +864,11 @@ it('arrayLike', async function () {
   equal(arr[-1], 100);
   // @ts-expect-error
   throws(() => (arr[0] = 5));
+  equal(arr['something'], undefined);
+  assert(Object.keys(arr).includes('25'));
+  // @ts-expect-error
+  throws(() => delete arr[0]);
+  throws(() => Object.defineProperty(arr, 0, { value: 5 }));
   const arr2 = arrayLike(range(100, 110));
   equal(arr2.length, 0);
   equal([...arr2], [...range(100, 110)]);
