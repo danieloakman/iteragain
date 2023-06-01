@@ -25,7 +25,7 @@ export function arrayLike<T>(arg: IteratorOrIterable<T>): readonly T[] {
         if (typeof value === 'function') return value.bind(it.elements);
       }
       const index = Number(prop);
-      if (typeof prop === 'string' && !isNaN(index)) {
+      if (!isNaN(index)) {
         it.seek(index);
         return it.next().value;
       }
