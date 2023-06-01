@@ -67,6 +67,23 @@ suite.add('rxjs', () => {
     .subscribe(() => {});
 });
 
+// Testing that arrayLike saves time if the iterator is only partially iterated over:
+// for (const size of [1e3, 1e4, 1e5, 1e6, 1e7]) {
+//   suite.add(`arrayLike ${size}`, () => {
+//     const arr = arrayLike(filter(map(nums(size), n => n * n), n => n % 2 !== 0));
+//     for (const t of [size / 8, size / 4, size / 2, size]) {
+//       const arr2 = take(arr, t);
+//     }
+//   });
+
+//   suite.add(`array ${size}`, () => {
+//     for (const t of [size / 8, size / 4, size / 2, size]) {
+//       const arr = filter(map(nums(size), n => n * n), n => n % 2 !== 0);
+//       const arr2 = take(arr, t);
+//     }
+//   });
+// }
+
 suite.run({
   async: true,
 });
