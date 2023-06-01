@@ -51,3 +51,5 @@ export function arrayLike<T>(arg: IteratorOrIterable<T>): readonly T[] {
     },
   });
 }
+
+export default arrayLike;
