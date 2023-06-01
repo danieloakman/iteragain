@@ -62,6 +62,7 @@ import {
   promiseAll,
   promiseRace,
   groupBy,
+  arrayLike,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -445,7 +446,12 @@ describe('internal', function () {
 
     it('promiseRace', async function () {
       const sleep = (ms: number): Promise<number> => new Promise(resolve => setTimeout(() => resolve(ms), ms));
-      equal(await iter([3, 1, 2]).map(n => sleep(n * 10)).promiseRace(), 10);
+      equal(
+        await iter([3, 1, 2])
+          .map(n => sleep(n * 10))
+          .promiseRace(),
+        10,
+      );
     });
 
     it('cycle', async function () {
@@ -667,7 +673,13 @@ describe('internal', function () {
         [1, [1, 3, 5, 7, 9]],
       ]);
       equal(iter([]).groupBy().toArray(), []);
-      equal(iter([{ a: 1 }]).groupBy('a').map(v => v[0]).toArray(), [1]);
+      equal(
+        iter([{ a: 1 }])
+          .groupBy('a')
+          .map(v => v[0])
+          .toArray(),
+        [1],
+      );
       equal(iter('abc').groupBy().pluck(0).toArray(), ['a', 'b', 'c']);
     });
 
@@ -836,6 +848,29 @@ describe('internal', function () {
 //   const it = asyncMap(nums(5), async v => v * 2);
 //   equal(await asyncToArray(it), [0, 2, 4, 6, 8]);
 // });
+
+it('arrayLike', async function () {
+  const arr = arrayLike(iter(range(100)).map(n => n * 2));
+  equal(arr.length, 0);
+  equal(arr[0], 0);
+  equal(arr[1], 2);
+  equal(arr[2], 4);
+  equal(arr[50], 100);
+  equal(arr.length, 51);
+  equal(arr[25], 50);
+  equal(arr.slice(0, 5).map(n => n * 2), [0, 4, 8, 12, 16]);
+  assert(!(100 in arr));
+  assert(25 in arr);
+  equal(arr[-1], 100);
+  // @ts-expect-error
+  throws(() => (arr[0] = 5));
+  const arr2 = arrayLike(range(100, 110));
+  equal(arr2.length, 0);
+  equal([...arr2], [...range(100, 110)]);
+  const arr3 = arrayLike(range(3));
+  equal([...arr3], [0, 1, 2]);
+  equal(arr3[0], 0);
+});
 
 it('chunks', async function () {
   equal([...chunks([1, 2, 3, 4, 5], 2)], [[1, 2], [3, 4], [5]]);
@@ -1049,12 +1084,34 @@ it('forEach', async function () {
 });
 
 it('groupBy', async function () {
-  equal([...groupBy('AAAABBBCCDAABBB')].map(v => v[0]), ['A', 'B', 'C', 'D', 'A', 'B']);
-  equal([...groupBy('AAAABBBCCD')].map(v => v[1].join('')), ['AAAA', 'BBB', 'CC', 'D']);
+  equal(
+    [...groupBy('AAAABBBCCDAABBB')].map(v => v[0]),
+    ['A', 'B', 'C', 'D', 'A', 'B'],
+  );
+  equal(
+    [...groupBy('AAAABBBCCD')].map(v => v[1].join('')),
+    ['AAAA', 'BBB', 'CC', 'D'],
+  );
   equal(toArray(map(groupBy([{ a: 1 }, { a: 2 }, { a: 3 }], 'a'), v => v[0])), [1, 2, 3]);
-  equal(toArray(map(groupBy([1, 2, 3, 4, 5], v => v % 2), v => v[0])), [1, 0, 1, 0, 1]);
+  equal(
+    toArray(
+      map(
+        groupBy([1, 2, 3, 4, 5], v => v % 2),
+        v => v[0],
+      ),
+    ),
+    [1, 0, 1, 0, 1],
+  );
   equal(toArray(map(groupBy([true, true, false, false]), v => v[0])), [true, false]);
-  equal(toArray(map(groupBy([{ a: 1 }, { a: 1 }, { a: 3 }], v => v.a), v => v[0])), [1, 3]);
+  equal(
+    toArray(
+      map(
+        groupBy([{ a: 1 }, { a: 1 }, { a: 3 }], v => v.a),
+        v => v[0],
+      ),
+    ),
+    [1, 3],
+  );
 });
 
 it('includes', async function () {
@@ -1258,7 +1315,10 @@ it('product', async function () {
 
 it('promiseAll', async function () {
   const sleep = (ms: number): Promise<number> => new Promise(resolve => setTimeout(() => resolve(ms), ms));
-  const [it1, it2] = tee(iter(range(10)).map(n => n * 10), 2);
+  const [it1, it2] = tee(
+    iter(range(10)).map(n => n * 10),
+    2,
+  );
   equal(await promiseAll(map(it1, sleep)), toArray(it2));
 });
 
