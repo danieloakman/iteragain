@@ -9,11 +9,11 @@ export class RoundrobinIterator implements IterableIterator<any> {
 
   next(...args: any[]): IteratorResult<any> {
     if (!this.iterators.length) return { done: true, value: undefined };
-    const next = this.iterators[this.i].next(...args as any);
+    const next = this.iterators[this.i].next(...(args as any));
     if (next.done) {
       this.iterators.splice(this.i, 1);
       this.i %= this.iterators.length;
-      return this.next(...args as any);
+      return this.next(...(args as any));
     }
     this.i = (this.i + 1) % this.iterators.length;
     return next;

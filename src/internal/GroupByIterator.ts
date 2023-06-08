@@ -2,7 +2,7 @@ import { KeyIdentifiersValue, KeyIdentifier } from '../types';
 
 /** Groups values in the input iterator by some key identifier function or property. */
 export class GroupByIterator<T, K extends KeyIdentifier<T>>
-implements IterableIterator<[KeyIdentifiersValue<T, K>, T[]]>
+  implements IterableIterator<[KeyIdentifiersValue<T, K>, T[]]>
 {
   protected currKey: KeyIdentifiersValue<T, K> | undefined;
   protected currGroup: T[] = [];

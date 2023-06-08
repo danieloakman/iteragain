@@ -5,7 +5,7 @@ import ExtendedIterator from '../src/internal/ExtendedIterator';
 import { map, filter, toIterator, toArray } from '../src';
 import { IteratorWithOperators } from 'iterare/lib/iterate';
 import { from } from 'rxjs';
-import { map as rsjsMap, filter as rxjsFilter/* , skip */ } from 'rxjs/operators';
+import { map as rsjsMap, filter as rxjsFilter /* , skip */ } from 'rxjs/operators';
 
 function* nums(size: number) {
   for (let i = 0; i < size; i++) yield i;
@@ -45,7 +45,15 @@ suite.add('iteragain', () => {
     .toArray();
 });
 suite.add('iteragain standalones', () => {
-  toArray(map(filter(map(toIterator(nums(SIZE)), x => x * x), x => x % 2 !== 0), x => x.toString()));
+  toArray(
+    map(
+      filter(
+        map(toIterator(nums(SIZE)), x => x * x),
+        x => x % 2 !== 0,
+      ),
+      x => x.toString(),
+    ),
+  );
 });
 suite.add('iterare', () => {
   new IteratorWithOperators(nums(SIZE))

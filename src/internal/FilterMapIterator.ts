@@ -7,10 +7,10 @@ export class FilterMapIterator<T, R> implements IterableIterator<NonNullable<R>>
   }
 
   next(...args: any[]): IteratorResult<NonNullable<R>> {
-    const next = this.iterator.next(...args as any);
+    const next = this.iterator.next(...(args as any));
     if (next.done) return { value: undefined, done: true };
     const value = this.iteratee(next.value);
-    if (value === null || value === undefined) return this.next(...args as any);
+    if (value === null || value === undefined) return this.next(...(args as any));
     return { value: value as NonNullable<R>, done: false };
   }
 }

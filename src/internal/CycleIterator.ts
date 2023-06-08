@@ -14,10 +14,10 @@ export class CycleIterator<T> implements IterableIterator<T> {
   }
 
   next(...args: any[]): IteratorResult<T> {
-    const next = this.iterator.next(...args as any);
+    const next = this.iterator.next(...(args as any));
     if (next.done && this.times-- > 0) {
       this.iterator = toIterator(this.values.splice(0, this.values.length));
-      return this.next(...args as any);
+      return this.next(...(args as any));
     }
     this.values.push(next.value);
     return next;

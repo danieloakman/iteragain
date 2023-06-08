@@ -788,8 +788,8 @@ describe('internal', function () {
     const it = new FunctionIterator(
       (
         (n = 0) =>
-          () =>
-            n++ * 2
+        () =>
+          n++ * 2
       )(),
       100 as const,
     );
@@ -798,10 +798,10 @@ describe('internal', function () {
     const it2 = iter(
       (
         (t = 0) =>
-          (n?: number) => {
-            if (typeof n === 'number') t += n;
-            return t;
-          }
+        (n?: number) => {
+          if (typeof n === 'number') t += n;
+          return t;
+        }
       )(),
     ).map(n => n + 10);
     equal(it2.next(1).value, 11);
@@ -858,7 +858,10 @@ it('arrayLike', async function () {
   equal(arr[50], 100);
   equal(arr.length, 51);
   equal(arr[25], 50);
-  equal(arr.slice(0, 5).map(n => n * 2), [0, 4, 8, 12, 16]);
+  equal(
+    arr.slice(0, 5).map(n => n * 2),
+    [0, 4, 8, 12, 16],
+  );
   assert(!(100 in arr));
   assert(25 in arr);
   equal(arr[-1], 100);
@@ -1561,8 +1564,8 @@ it('toIterator', async function () {
       toIterator(
         (
           (i = 0) =>
-            () =>
-              i++
+          () =>
+            i++
         )(),
         3,
       ),
@@ -1574,8 +1577,8 @@ it('toIterator', async function () {
       toIterator(
         (
           (n = 1) =>
-            () =>
-              (n = n * 2)
+          () =>
+            (n = n * 2)
         )(),
         1024,
       ),

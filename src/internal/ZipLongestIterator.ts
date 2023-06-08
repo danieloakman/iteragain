@@ -11,7 +11,7 @@ export class ZipLongestIterator implements IterableIterator<any> {
     const values = [];
     for (let i = 0; i < this.iterators.length; i++) {
       if (!this.done.has(i)) {
-        const next = this.iterators[i].next(...args as any);
+        const next = this.iterators[i].next(...(args as any));
         if (next.done) this.done.add(i);
         values.push(next.value);
       } else values.push(undefined);

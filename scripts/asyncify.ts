@@ -59,10 +59,11 @@ function parseRegExp(str: string): RegExp {
 
 function parseCommand(rawCommand: string): AsyncifyCommand {
   const [cmd, argStr] = rawCommand.split('(').map(str => str.replace(COMMENT, '').trim());
-  const args = argStr?.split(',').map(str => {
-    str = str.replace(')', '').trim();
-    return str[0] === '/' ? parseRegExp(str) : str.replace(/['"]/g, '');
-  }) ?? [];
+  const args =
+    argStr?.split(',').map(str => {
+      str = str.replace(')', '').trim();
+      return str[0] === '/' ? parseRegExp(str) : str.replace(/['"]/g, '');
+    }) ?? [];
   return { cmd, args };
 }
 
@@ -76,7 +77,7 @@ function asyncifyFile(file: AsyncableFile) {
       switch (cmd) {
         case 'insert':
         case 'i':
-          if (typeof args[0] !== 'string') throw new Error('Insert command\'s argument must be a string');
+          if (typeof args[0] !== 'string') throw new Error("Insert command's argument must be a string");
           newContents = stringSplice(newContents, match.index, match[0].length, args[0]);
           break;
         case 'replace':
@@ -85,23 +86,25 @@ function asyncifyFile(file: AsyncableFile) {
           const end = start + match[0].length;
           let sliced = newContents.slice(end);
           if (args.length > 1) {
-            if (typeof args[1] !== 'string') throw new Error('Replace command\'s second argument must be a string');
+            if (typeof args[1] !== 'string') throw new Error("Replace command's second argument must be a string");
             sliced = sliced.replace(args[0], args[1]);
             newContents = stringSplice(newContents, start, newContents.length - start, sliced);
           } else {
             const nextWord = sliced.match(/[A-z<>]+/)?.[0] ?? '';
             if (!nextWord) throw new Error('Could not find next word');
             if (typeof args[0] !== 'string')
-              throw new Error('Replace command\'s first argument must be a string if no second argument is provided');
+              throw new Error("Replace command's first argument must be a string if no second argument is provided");
             newContents = stringSplice(newContents, start, end + nextWord.length - start, args[0]);
           }
           break;
         }
         case 'replaceAll':
         case 'ra':
-          if (typeof args[1] !== 'string') throw new Error('ReplaceAll command\'s second argument must be a string');
-          newContents = stringSplice(newContents, match.index, match[0].length)
-            .replace(new RegExp(args[0], 'g'), args[1]);
+          if (typeof args[1] !== 'string') throw new Error("ReplaceAll command's second argument must be a string");
+          newContents = stringSplice(newContents, match.index, match[0].length).replace(
+            new RegExp(args[0], 'g'),
+            args[1],
+          );
           break;
         case 'comment':
         case 'c': {

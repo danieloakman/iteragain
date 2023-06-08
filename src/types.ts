@@ -47,7 +47,9 @@ export type UnconstrainedTuple<T, N extends number> = N extends N
     : TupleOf<T, N, []>
   : never;
 
-export type Tuple<T, N extends number, Range extends number = IntRange<0, 11>> = N extends Range ? UnconstrainedTuple<T, N> : T[];
+export type Tuple<T, N extends number, Range extends number = IntRange<0, 11>> = N extends Range
+  ? UnconstrainedTuple<T, N>
+  : T[];
 
 // type a = Tuple<number, 0>;
 // //   ^?

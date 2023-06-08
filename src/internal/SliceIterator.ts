@@ -10,7 +10,7 @@ export class SliceIterator<T> implements IterableIterator<T> {
 
   next(...args: any[]): IteratorResult<T> {
     let result: IteratorResult<T>;
-    while (!(result = this.iterator.next(...args as any)).done && this.i++ < this.start);
+    while (!(result = this.iterator.next(...(args as any))).done && this.i++ < this.start);
     if (this.i <= this.end) return result;
     return { done: true, value: undefined };
   }

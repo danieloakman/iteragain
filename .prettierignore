@@ -2,7 +2,7 @@ node_modules
 dist
 **.d.ts
 **.js
-.vscode/**/*.ts
+.vscode
 .nyc_output
 src/**/*Async*.ts
 src/**/*async*.ts

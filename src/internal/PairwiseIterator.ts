@@ -9,9 +9,9 @@ export class PairwiseIterator<T> implements IterableIterator<[T, T]> {
   }
 
   next(...args: any[]): IteratorResult<[T, T]> {
-    if (!this.prev && (this.prev = this.iterator.next(...args as any)).done) return { done: true, value: undefined };
+    if (!this.prev && (this.prev = this.iterator.next(...(args as any))).done) return { done: true, value: undefined };
 
-    const next = this.iterator.next(...args as any);
+    const next = this.iterator.next(...(args as any));
     if (next.done) return { done: true, value: undefined };
     const value: [T, T] = [this.prev.value, next.value];
     this.prev = next;

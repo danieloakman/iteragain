@@ -7,7 +7,7 @@ export class TapIterator<T> implements IterableIterator<T> {
   }
 
   next(...args: any[]): IteratorResult<T> {
-    const next = this.iterator.next(...args as any);
+    const next = this.iterator.next(...(args as any));
     if (!next.done) this.func(next.value);
     return next;
   }

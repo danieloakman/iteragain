@@ -8,7 +8,7 @@ export class ZipIterator implements IterableIterator<any> {
   next(...args: any[]): IteratorResult<any> {
     const values = [];
     for (const iterator of this.iterators) {
-      const { value, done } = iterator.next(...args as any);
+      const { value, done } = iterator.next(...(args as any));
       if (done) return { done, value: undefined };
       values.push(value);
     }

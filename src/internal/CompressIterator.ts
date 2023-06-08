@@ -6,7 +6,7 @@ export class CompressIterator<T> implements IterableIterator<T> {
   }
 
   next(...args: any[]): IteratorResult<T> {
-    const [next, selector] = [this.iterator.next(...args as any), this.selectors.next()];
+    const [next, selector] = [this.iterator.next(...(args as any)), this.selectors.next()];
     if (next.done || selector.done) return { done: true, value: undefined };
     else if (selector.value) return next;
     return this.next();

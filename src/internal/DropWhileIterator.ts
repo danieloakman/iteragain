@@ -9,9 +9,9 @@ export class DropWhileIterator<T> implements IterableIterator<T> {
   }
 
   next(...args: any[]): IteratorResult<T> {
-    if (this.dropped) return this.iterator.next(...args as any);
+    if (this.dropped) return this.iterator.next(...(args as any));
     let next: IteratorResult<T>;
-    do next = this.iterator.next(...args as any);
+    do next = this.iterator.next(...(args as any));
     while (!next.done && this.predicate(next.value));
     this.dropped = true;
     return next;

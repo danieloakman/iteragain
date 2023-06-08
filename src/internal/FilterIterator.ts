@@ -11,7 +11,7 @@ export class FilterIterator<T> implements IterableIterator<T> {
 
   next(...args: any[]): IteratorResult<any> {
     let result: IteratorResult<T>;
-    do result = this.iterator.next(...args as any);
+    do result = this.iterator.next(...(args as any));
     while (!result.done && !this.predicate(result.value));
     return result;
   }

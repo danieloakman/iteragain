@@ -17,7 +17,7 @@ export class FunctionIterator<TFunc extends (...args: any[]) => any, TSentinel =
     const result = this.func(...args);
     return result === this.sentinel
       ? ((this.func = (() => this.sentinel) as any), { done: true, value: undefined })
-      : { done: false, value: result } as any;
+      : ({ done: false, value: result } as any);
   }
 }
 
