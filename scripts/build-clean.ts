@@ -4,4 +4,4 @@ import { walkdirSync } from 'more-node-fs';
 import { unlinkSync } from 'fs';
 import { join } from 'path';
 for (const { path, stats } of walkdirSync(join(__dirname, '../'), { ignore: /node_modules/i }))
-  if (stats.isFile() && /(\.d\.ts|\.js)$/.test(path)) unlinkSync(path);
+  if (stats.isFile() && /(\.d\.ts|\.js|\.map)$/.test(path)) unlinkSync(path);
