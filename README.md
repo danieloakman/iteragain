@@ -15,7 +15,7 @@ See [iteragain-es](https://www.npmjs.com/package/iteragain-es) for the ES module
 
 ## Code examples
 
-### A performance benefit over user Array's higher-order methods
+### A performance benefit over using Array's higher-order methods
 
 ```js
 // This is an example of using Array higher-order methods.
