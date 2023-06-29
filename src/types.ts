@@ -125,3 +125,6 @@ export type KeyIdentifiersValue<T, K extends KeyIdentifier<T>> = K extends keyof
   : K extends Iteratee<T, any>
   ? ReturnType<K>
   : never;
+
+/** The params used for `unique` method/function. */
+export type UniqueParams<T> = { iteratee?: Iteratee<T, any>; justSeen?: boolean } | Iteratee<T, any>;

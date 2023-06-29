@@ -15,6 +15,7 @@ import {
   Awaited,
   KeyIdentifier,
   KeyIdentifiersValue,
+  UniqueParams,
 } from '../types';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
@@ -377,10 +378,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param iteratee Iteratee to use to transform each value before being tested for uniqueness.
    * @param justSeen If true, will only test for uniqueness with the last value in the iterator and not all values.
    */
-  unique({
-    iteratee = v => v,
-    justSeen,
-  }: { iteratee?: Iteratee<T, any>; justSeen?: boolean } = {}): ExtendedIterator<T> {
+  unique(params: UniqueParams<T> = v => v): ExtendedIterator<T> {
+    const { iteratee = (v: T) => v, justSeen = false } = typeof params === 'function' ? { iteratee: params } : params;
     if (justSeen) {
       let lastValue: T;
       return this.filter(value => {

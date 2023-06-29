@@ -1603,6 +1603,7 @@ it('unique', async function () {
   equal([...unique('AAAABBBCCDAABBB')].join(''), 'ABCD');
   equal([...unique('AAAABBBCCDAABBB', { justSeen: true })].join(''), 'ABCDAB');
   equal([...unique('ABBCcAD', { iteratee: v => v.toLowerCase() })].join(''), 'ABCD');
+  equal([...unique('ABBCcAD', v => v.toLowerCase())].join(''), 'ABCD');
 });
 
 it('unzip', async function () {
