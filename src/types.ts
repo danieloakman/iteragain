@@ -59,7 +59,7 @@ export type Tuple<T, N extends number, Range extends number = IntRange<0, 11>> =
 // //   ^?
 
 /** A function that returns a truthy or falsey value given an input value of type `T`. */
-export type Predicate<T> = (value: T) => any;
+export type Predicate<T> = (value: T) => unknown;
 
 /** A function that returns a truthy or falsey value that determines if `T` is `S`. */
 export type StrictPredicate<T, S extends T> = (value: T) => value is S;
@@ -68,7 +68,7 @@ export type StrictPredicate<T, S extends T> = (value: T) => value is S;
 // export type AsyncPredicate<T> = (value: T) => Promise<any>;
 
 /** A function designated as a callback which doesn't necessarily return anything. */
-export type Callback<T, R = any> = (value: T) => R;
+export type Callback<T, R = unknown> = (value: T) => R;
 
 // /** An async function designated as a callback which doesn't necessarily return anything. */
 // export type AsyncCallback<T, R = any> = (value: T) => Promise<R>;
@@ -78,6 +78,11 @@ export type Iteratee<T, R> = (value: T) => R;
 
 // /** An async function that does something with value of type `T` and transforms it into type `R`. */
 // export type AsyncIteratee<T, R> = (value: T) => Promise<R>;
+
+/** Any generic function. */
+export interface AnyFunction {
+  (...args: any[]): any;
+}
 
 /** Returns the source of the generic Iterable, Iterator, IterableIterator or their async counterparts. */
 export type IterSource<T> = T extends Iterable<infer U>
@@ -128,3 +133,20 @@ export type KeyIdentifiersValue<T, K extends KeyIdentifier<T>> = K extends keyof
 
 /** The params used for `unique` method/function. */
 export type UniqueParams<T> = { iteratee?: Iteratee<T, any>; justSeen?: boolean } | Iteratee<T, any>;
+
+export type ShiftArr<T extends unknown[]> = T extends [unknown, ...infer P] ? P : never;
+
+export interface Curry1<T extends AnyFunction> {
+  (...args: Parameters<T>): ReturnType<T>;
+  (...args: ShiftArr<Parameters<T>>): (arg0: Parameters<T>[0]) => ReturnType<T>;
+  // (...args: ParametersExceptFirst<ParametersExceptFirst<T>>): (
+  //   arg0: Parameters<T>[0],
+  // ) => (arg1: Parameters<T>[1]) => ReturnType<T>;
+  // (...args: ParametersExceptFirst<ParametersExceptFirst<ParametersExceptFirst<T>>>): (
+  //   arg0: Parameters<T>[0],
+  // ) => (arg1: Parameters<T>[1]) => (arg2: Parameters<T>[2]) => ReturnType<T>;
+  // (...args: ParametersExceptFirst<ParametersExceptFirst<ParametersExceptFirst<ParametersExceptFirst<T>>>>): (
+  //   arg0: Parameters<T>[0],
+  // ) => (arg1: Parameters<T>[1]) => (arg2: Parameters<T>[2]) => (arg3: Parameters<T>[3]) => ReturnType<T>;
+}
+
