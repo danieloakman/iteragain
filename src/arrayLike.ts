@@ -3,7 +3,7 @@ import { IteratorOrIterable } from './types';
 
 // TODO: possible add an overload for passing in a seekable to begin with, so that the maxLength param could be used.
 /**
- * Creates a proxy object that allows for readonly array-like access to the elements of the input iterator. Some
+ * @description Creates a proxy object that allows for readonly array-like access to the elements of the input iterator. Some
  * important things to note are:
  * - `length` will always be the length of the internal cache, not the length of the final
  * iterated values.
