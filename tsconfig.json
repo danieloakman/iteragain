@@ -5,6 +5,7 @@
     "allowSyntheticDefaultImports": false,
     "target": "es6",
     "moduleResolution": "node",
+    "incremental": true,
     "sourceMap": true,
     "outDir": "./",
     "declaration": true,
@@ -13,7 +14,9 @@
     "allowJs": false,
     "declarationMap": true,
     "lib": ["ES2015"],
-    "strict": true
+    "strict": true,
+    "noImplicitAny": true,
+    "noUncheckedIndexedAccess": false,
   },
   "include": ["./src"],
   "exclude": ["node_modules", "test", "dist", "benchmark"]
