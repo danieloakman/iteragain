@@ -63,6 +63,7 @@ import {
   promiseRace,
   groupBy,
   arrayLike,
+  split,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -1476,6 +1477,14 @@ it('sort', async function () {
   equal([...sort([3, 1, 2], (a, b) => b - a)], [3, 2, 1]);
   equal([...sort([3, 1, 2], (a, b) => a - b)], [1, 2, 3]);
   equal([...sort([3, 1, 3, 2])], [1, 2, 3, 3]);
+});
+
+it('split', async function () {
+  equal([...split('a,b,c', ',')], 'a,b,c'.split(','));
+  equal([...split('a,b,c', ',', 1)], 'a,b,c'.split(',', 1));
+  equal([...split('a,b,c', ',', 2)], 'a,b,c'.split(',', 2));
+  equal([...split('a,b,c', ',', 3)], 'a,b,c'.split(',', 3));
+  equal([...split('a-b-c-d-e', /-/)], 'a-b-c-d-e'.split(/-/));
 });
 
 it('spy', async function () {
