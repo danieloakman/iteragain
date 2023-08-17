@@ -1,7 +1,12 @@
 import FunctionIterator from './internal/FunctionIterator';
 import SliceIterator from './internal/SliceIterator';
 
-/** @todo // TODO: Implement */
+/**
+ * Functionally the same as `String.prototype.split` except this splits `str` lazily.
+ * @param str The string to split.
+ * @param separator The separator to split on. Either a `string` or `RegExp`.
+ * @param limit The maximum number of splits to return. This is here
+ */
 export function split(str: string, separator: string | RegExp, limit?: number): IterableIterator<string> {
   const fnIt = new FunctionIterator(() => {
     if (!str.length) return;
