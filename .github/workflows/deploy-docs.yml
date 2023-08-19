@@ -24,11 +24,8 @@ jobs:
           node-version: 18
           cache: 'pnpm'
 
-      - name: Install dependencies
-        run: pnpm install
-      - uses: actions/checkout@v3
-      - name: Run typedoc
-        run: pnpm run typedoc
+      - run: pnpm install
+      - run: pnpm run typedoc
 
       # Commit all changed files back to the repository
       - uses: stefanzweifel/git-auto-commit-action@v4
