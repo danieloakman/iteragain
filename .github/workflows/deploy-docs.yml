@@ -1,0 +1,41 @@
+name: Deploy Documentation to Github Pages
+
+on:
+  push:
+    branches: [master, main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+      - uses: actions/checkout@v3
+      - name: Run typedoc
+        run: pnpm run typedoc
+
+      # Commit all changed files back to the repository
+      - uses: stefanzweifel/git-auto-commit-action@v4
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: deploy-docs-report
+          path: deploy-docs-report
+          retention-days: 30
