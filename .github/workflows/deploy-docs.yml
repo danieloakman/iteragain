@@ -5,7 +5,7 @@ on:
     branches: [master, main]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     permissions:
@@ -24,11 +24,17 @@ jobs:
           node-version: 18
           cache: 'pnpm'
 
-      - run: pnpm install
-      - run: pnpm run typedoc
+      - name: Install & Build Docs
+        run: |
+          pnpm install
+          pnpm run typedoc
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs # The folder the action should deploy.
 
       # Commit all changed files back to the repository
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      # - uses: stefanzweifel/git-auto-commit-action@v4
 
       - uses: actions/upload-artifact@v3
         if: failure()
