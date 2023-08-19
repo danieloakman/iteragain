@@ -9,9 +9,11 @@ Iterators and Iterables in Javascript has basically no supporting methods or fun
 
 This package can be used like in Python with standalone functions like [map](https://danieloakman.github.io/iteragain/functions/map.map.html), [filter](https://danieloakman.github.io/iteragain/functions/filter.filter.html), etc. Or be used with method chaining by calling [iter](https://danieloakman.github.io/iteragain/functions/iter.iter.html) which returns an instance of the [ExtendedIterator](https://danieloakman.github.io/iteragain/classes/internal_ExtendedIterator.ExtendedIterator.html) class. Either is supported for however you want to handle iterators.
 
-__You can see the full list of modules and the documentation on everything [here](https://danieloakman.github.io/iteragain).__
-
 See [iteragain-es](https://www.npmjs.com/package/iteragain-es) for the ES modules exported version of this package.
+
+## Documentation
+
+You can see the full list of modules and the documentation on everything [here](https://danieloakman.github.io/iteragain).
 
 ## Code examples
 
@@ -85,9 +87,41 @@ const it = iter(() => someFunction(1, 2, 3), null)
 const results = it.toArray();
 ```
 
+### Accessing elements from an iterator with [arrayLike](https://danieloakman.github.io/iteragain/functions/arrayLike.arrayLike.html)
+
+The `arrayLike` uses a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) that wraps a [seekable](https://danieloakman.github.io/iteragain/functions/seekable.seekable.html) iterator. This allows access to elements from the iterator. This can be useful when you may need to easily search behind the current element, then look ahead, or just access elements by index.
+
+```js
+import { arrayLike, range, iter, toArray } from 'iteragain';
+
+const arr = arrayLike(iter(range(100)).map(n => n * n)); // Cached elements: []
+arr.length; // Returns 0
+
+arr[4]; // Returns 16. Cached elements: [0, 1, 4, 9, 16]
+arr.length; // returns 5
+
+arr[9]; // Returns 81. Cached elements: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+arr.length; // Returns 10
+
+// Negative indices are supported, because internally it's just a seekable.
+// This will seek starting from the end of the internal cache.
+arr[-1]; // Returns 81. Cached elements: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+arr.length; // Returns 10
+
+// All other array methods are supported, as it's of type `readonly number[]`.
+// Including using it as an iterable:
+for (const n of arr) {
+  console.log(n);
+  if (n > 20) beak;
+}
+
+// Exhausts the iterator wrapped inside of `arr`. `collected` is just a regular array.
+const collected = toArray(arr);
+```
+
 ## Inpired by
 
-[iterplus](https://www.npmjs.com/package/iterplus), [iterare](https://www.npmjs.com/package/iterare), [lodash](https://www.npmjs.com/package/lodash), [rxjs](https://www.npmjs.com/package/rxjs) and the Python [itertools](https://docs.python.org/3/library/itertools.html) and [more-itertools](https://pypi.org/project/more-itertools/) modules. See benchmark section for performance against some of these.
+[iterplus](https://www.npmjs.com/package/iterplus), [iterare](https://www.npmjs.com/package/iterare), [lodash](https://www.npmjs.com/package/lodash), [rxjs](https://www.npmjs.com/package/rxjs), [ixjs](https://www.npmjs.com/package/ix) and the Python [itertools](https://docs.python.org/3/library/itertools.html) and [more-itertools](https://pypi.org/project/more-itertools/) modules. See benchmark section for performance against some of these.
 
 ## Benchmark
 
