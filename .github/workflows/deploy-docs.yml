@@ -24,17 +24,22 @@ jobs:
           node-version: 18
           cache: 'pnpm'
 
-      - name: Install & Build Docs
+      - name: Install & Build Docs 🛠️
         run: |
           pnpm install
           pnpm run typedoc
+
+      # Commit all changed files back to the repository
+      - name: Commit /docs ✍️
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update documentation"
+          commit_user_name: "Github Actions"
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: docs # The folder the action should deploy.
-
-      # Commit all changed files back to the repository
-      # - uses: stefanzweifel/git-auto-commit-action@v4
 
       - uses: actions/upload-artifact@v3
         if: failure()
