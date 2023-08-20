@@ -1,4 +1,4 @@
-name: Update Documentation
+name: Deploy Documentation
 
 on:
   push:
@@ -41,17 +41,17 @@ jobs:
           # branch: gh-pages
           # create_branch: true
 
-      - name: Merge main to gh-pages
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          target_branch: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Deploy 🚀
-      #   uses: JamesIves/github-pages-deploy-action@v4
+      # - name: Merge main to gh-pages
+      #   uses: devmasx/merge-branch@master
       #   with:
-      #     folder: docs # The folder the action should deploy.
+      #     type: now
+      #     target_branch: gh-pages
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs # The folder the action should deploy.
 
       - uses: actions/upload-artifact@v3
         if: failure()
