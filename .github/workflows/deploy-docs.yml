@@ -3,6 +3,9 @@ name: Deploy Documentation to Github Pages
 on:
   push:
     branches: [master, main]
+    paths:
+      - src/**/*
+      - README*
 
 jobs:
   build-and-deploy:
@@ -35,11 +38,12 @@ jobs:
         with:
           commit_message: 'Update documentation'
           commit_user_name: Github Actions
+          branch: gh-pages
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: docs # The folder the action should deploy.
+      # - name: Deploy 🚀
+      #   uses: JamesIves/github-pages-deploy-action@v4
+      #   with:
+      #     folder: docs # The folder the action should deploy.
 
       - uses: actions/upload-artifact@v3
         if: failure()
