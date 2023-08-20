@@ -112,7 +112,7 @@ arr.length; // Returns 10
 // Including using it as an iterable:
 for (const n of arr) {
   console.log(n);
-  if (n > 20) beak;
+  if (n > 20) break;
 }
 
 // Exhausts the iterator wrapped inside of `arr`. `collected` is just a regular array.
