@@ -47,7 +47,7 @@ import { map, filter, toArray } from 'iteragain';
 nums = toArray(filter(map([1, 2, 3, 4, 5], n => n * n), n => n % 2 === 0)); // [4, 16]
 ```
 
-### Using the `range` standalone function.
+### Using the `range` standalone function
 
 ```js
 import range from 'iteragain/range';
@@ -67,7 +67,7 @@ r.nth(10); // undefined (the 10th element doesn't exist)
 r.index(4); // 2 (the index of the value 4)
 ```
 
-### Iterating through any object's properties recursively.
+### Iterating through any object's properties recursively
 
 ```js
 import iter from 'iteragain/iter';
@@ -125,7 +125,7 @@ const collected = toArray(arr);
 
 ## Benchmark
 
-```
+```txt
 Starting benchmark suite: index.bm.ts
   for of loop x 2,015 ops/sec, ±47 ops/sec or ±2.33% (90 runs sampled)
   iteragain x 1,431 ops/sec, ±25 ops/sec or ±1.74% (92 runs sampled)
