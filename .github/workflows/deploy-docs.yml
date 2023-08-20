@@ -39,6 +39,7 @@ jobs:
           commit_message: 'Update documentation'
           commit_user_name: Github Actions
           branch: gh-pages
+          create_branch: true
 
       # - name: Deploy 🚀
       #   uses: JamesIves/github-pages-deploy-action@v4
