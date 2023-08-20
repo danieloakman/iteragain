@@ -125,7 +125,7 @@ const collected = toArray(arr);
 
 ## Benchmark
 
-```txt
+```md
 Starting benchmark suite: index.bm.ts
   for of loop x 2,015 ops/sec, ±47 ops/sec or ±2.33% (90 runs sampled)
   iteragain x 1,431 ops/sec, ±25 ops/sec or ±1.74% (92 runs sampled)
