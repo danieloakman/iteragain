@@ -6,6 +6,7 @@ on:
     paths:
       - src/**/*
       - README*
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
