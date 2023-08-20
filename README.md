@@ -127,8 +127,10 @@ const collected = toArray(arr);
 
 ```md
 Starting benchmark suite: index.bm.ts
-  for of loop x 2,015 ops/sec, ±47 ops/sec or ±2.33% (90 runs sampled)
-  iteragain x 1,431 ops/sec, ±25 ops/sec or ±1.74% (92 runs sampled)
-  iterare x 1,368 ops/sec, ±20 ops/sec or ±1.48% (95 runs sampled)
-  rxjs x 989 ops/sec, ±10 ops/sec or ±1.05% (93 runs sampled)
+  for of loop x 2,831 ops/sec, ±10 ops/sec or ±0.35% (98 runs sampled)
+  iteragain x 1,853 ops/sec, ±7 ops/sec or ±0.36% (98 runs sampled)
+  iteragain standalones x 1,740 ops/sec, ±27 ops/sec or ±1.57% (97 runs sampled)
+  iterare x 1,754 ops/sec, ±31 ops/sec or ±1.76% (96 runs sampled)
+  rxjs x 1,319 ops/sec, ±7 ops/sec or ±0.50% (96 runs sampled)
+  ixjs x 873 ops/sec, ±15 ops/sec or ±1.70% (95 runs sampled)
 ```

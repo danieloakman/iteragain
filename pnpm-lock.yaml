@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -41,6 +41,9 @@ devDependencies:
   iterplus:
     specifier: ^3.0.2
     version: 3.0.2
+  ix:
+    specifier: ^5.0.0
+    version: 5.0.0
   lint-staged:
     specifier: ^13.2.2
     version: 13.2.2
@@ -459,6 +462,7 @@ packages:
 
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -468,6 +472,10 @@ packages:
 
   /@types/mocha@10.0.1:
     resolution: {integrity: sha512-/fvYntiO1GeICvqbQ3doGDIP97vWmvFt83GKguJ6prmQM2iXZfFcq6YE8KteFyRtX2/h5Hf91BYvPodJKFYv5Q==}
+    dev: true
+
+  /@types/node@13.13.52:
+    resolution: {integrity: sha512-s3nugnZumCC//n4moGGe6tkNMyYEdaDBitVjwPxXmR5lnMG5dHePinH2EdxkG3Rh1ghFHHixAG4NJhpJW1rthQ==}
     dev: true
 
   /@types/node@20.2.5:
@@ -1665,6 +1673,13 @@ packages:
     resolution: {integrity: sha512-8BE+eq2mvO80lBrBWMgiByWlc8vemSAmqPEMWYUwht6TPECpuAco9KXhhU+2IIBRzhyyhvaAB2rdpLceMnkquQ==}
     dev: true
 
+  /ix@5.0.0:
+    resolution: {integrity: sha512-6LyyrHnvNrSy5pKtW/KA+KKusHrB223aBJCJlIGPN7QBfDkEEtNrAkAz9lLLShIcdJntq6BiPCHuKaCM/9wwXw==}
+    dependencies:
+      '@types/node': 13.13.52
+      tslib: 2.5.2
+    dev: true
+
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
     dev: true
@@ -1701,6 +1716,7 @@ packages:
   /json5@1.0.2:
     resolution: {integrity: sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==}
     hasBin: true
+    requiresBuild: true
     dependencies:
       minimist: 1.2.8
     dev: true
@@ -2471,6 +2487,7 @@ packages:
   /strip-bom@3.0.0:
     resolution: {integrity: sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==}
     engines: {node: '>=4'}
+    requiresBuild: true
     dev: true
     optional: true
 
