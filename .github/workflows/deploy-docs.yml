@@ -33,12 +33,20 @@ jobs:
           pnpm run typedoc
 
       # Commit all changed files back to the repository
-      - name: Commit /docs to gh-pages branch ✍️
+      - name: Commit /docs to main ✍️
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Update documentation'
           commit_user_name: Github Actions
-          branch: gh-pages
+          # branch: gh-pages
+          # create_branch: true
+
+      - name: Merge main to gh-pages
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          target_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: Deploy 🚀
       #   uses: JamesIves/github-pages-deploy-action@v4
