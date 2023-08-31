@@ -62,4 +62,4 @@ export * from './promiseAll';
 export * from './promiseRace';
 export * from './groupBy';
 export * from './arrayLike';
-export * from './fp';
+export * from './pipe';

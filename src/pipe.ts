@@ -1,7 +1,3 @@
-import isIterable from './isIterable';
-import isIterator from './isIterator';
-import { AnyFunction, Curry1, IteratorOrIterable } from './types';
-
 export function pipe<A, B>(value: A, fn1: (value: A) => B): B;
 export function pipe<A, B, C>(value: A, fn1: (value: A) => B, fn2: (value: B) => C): C;
 export function pipe<A, B, C, D>(value: A, fn1: (value: A) => B, fn2: (value: B) => C, fn3: (value: C) => D): D;
@@ -42,17 +38,4 @@ export function pipe<A, B, C, D, E, F, G, H>(
 export function pipe<T>(value: T, ...fns: ((value: T) => T)[]): T {
   for (const fn of fns) value = fn(value);
   return value;
-}
-
-export function curry1If<T extends AnyFunction>(
-  fn: T,
-  curryIf: (...args: unknown[]) => boolean,
-): Curry1<T> {
-  return ((...args: unknown[]) => {
-    return curryIf(...args) ? (...args2: unknown[]) => fn(...args2, ...args) : fn(...args);
-  });
-}
-
-export function curryFirstIt<T extends (it: IteratorOrIterable<unknown>, ...args: any[]) => unknown>(fn: T) {
-  return curry1If(fn, (...args: unknown[]) => !(isIterator(typeof args[0]) || isIterable(args[0])));
 }
