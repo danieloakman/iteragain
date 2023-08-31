@@ -1,0 +1,62 @@
+name: Deploy Documentation
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - src/**/*
+      - README*
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Install & Build Docs 🛠️
+        run: |
+          pnpm install
+          pnpm run typedoc
+
+      # Commit all changed files back to the repository
+      - name: Commit /docs to main ✍️
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Update documentation'
+          commit_user_name: Github Actions
+          # branch: gh-pages
+          # create_branch: true
+
+      # - name: Merge main to gh-pages
+      #   uses: devmasx/merge-branch@master
+      #   with:
+      #     type: now
+      #     target_branch: gh-pages
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs # The folder the action should deploy.
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: deploy-docs-report
+          path: deploy-docs-report
+          retention-days: 30

@@ -1,5 +1,7 @@
-
 # [iteragain](https://www.npmjs.com/package/iteragain)
+
+[![Run Tests](https://github.com/danieloakman/iteragain/actions/workflows/run-tests.yml/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/run-tests.yml)
+[![Deploy Documentation](https://github.com/danieloakman/iteragain/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/deploy-docs.yml)
 
 Another Javascript library for iterating.
 
@@ -9,9 +11,11 @@ Iterators and Iterables in Javascript has basically no supporting methods or fun
 
 This package can be used like in Python with standalone functions like [map](https://danieloakman.github.io/iteragain/functions/map.map.html), [filter](https://danieloakman.github.io/iteragain/functions/filter.filter.html), etc. Or be used with method chaining by calling [iter](https://danieloakman.github.io/iteragain/functions/iter.iter.html) which returns an instance of the [ExtendedIterator](https://danieloakman.github.io/iteragain/classes/internal_ExtendedIterator.ExtendedIterator.html) class. Either is supported for however you want to handle iterators.
 
-__You can see the full list of modules and the documentation on everything [here](https://danieloakman.github.io/iteragain).__
-
 See [iteragain-es](https://www.npmjs.com/package/iteragain-es) for the ES modules exported version of this package.
+
+## Documentation
+
+You can see the full list of modules and the documentation on everything [here](https://danieloakman.github.io/iteragain).
 
 ## Code examples
 
@@ -45,7 +49,7 @@ import { map, filter, toArray } from 'iteragain';
 nums = toArray(filter(map([1, 2, 3, 4, 5], n => n * n), n => n % 2 === 0)); // [4, 16]
 ```
 
-### Using the `range` standalone function.
+### Using the `range` standalone function
 
 ```js
 import range from 'iteragain/range';
@@ -65,7 +69,7 @@ r.nth(10); // undefined (the 10th element doesn't exist)
 r.index(4); // 2 (the index of the value 4)
 ```
 
-### Iterating through any object's properties recursively.
+### Iterating through any object's properties recursively
 
 ```js
 import iter from 'iteragain/iter';
@@ -85,16 +89,50 @@ const it = iter(() => someFunction(1, 2, 3), null)
 const results = it.toArray();
 ```
 
+### Accessing elements from an iterator with [arrayLike](https://danieloakman.github.io/iteragain/functions/arrayLike.arrayLike.html)
+
+The `arrayLike` uses a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) that wraps a [seekable](https://danieloakman.github.io/iteragain/functions/seekable.seekable.html) iterator. This allows access to elements from the iterator. This can be useful when you may need to easily search behind the current element, then look ahead, or just access elements by index.
+
+```js
+import { arrayLike, range, iter, toArray } from 'iteragain';
+
+const arr = arrayLike(iter(range(100)).map(n => n * n)); // Cached elements: []
+arr.length; // Returns 0
+
+arr[4]; // Returns 16. Cached elements: [0, 1, 4, 9, 16]
+arr.length; // returns 5
+
+arr[9]; // Returns 81. Cached elements: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+arr.length; // Returns 10
+
+// Negative indices are supported, because internally it's just a seekable.
+// This will seek starting from the end of the internal cache.
+arr[-1]; // Returns 81. Cached elements: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+arr.length; // Returns 10
+
+// All other array methods are supported, as it's of type `readonly number[]`.
+// Including using it as an iterable:
+for (const n of arr) {
+  console.log(n);
+  if (n > 20) break;
+}
+
+// Exhausts the iterator wrapped inside of `arr`. `collected` is just a regular array.
+const collected = toArray(arr);
+```
+
 ## Inpired by
 
-[iterplus](https://www.npmjs.com/package/iterplus), [iterare](https://www.npmjs.com/package/iterare), [lodash](https://www.npmjs.com/package/lodash), [rxjs](https://www.npmjs.com/package/rxjs) and the Python [itertools](https://docs.python.org/3/library/itertools.html) and [more-itertools](https://pypi.org/project/more-itertools/) modules. See benchmark section for performance against some of these.
+[iterplus](https://www.npmjs.com/package/iterplus), [iterare](https://www.npmjs.com/package/iterare), [lodash](https://www.npmjs.com/package/lodash), [rxjs](https://www.npmjs.com/package/rxjs), [ixjs](https://www.npmjs.com/package/ix) and the Python [itertools](https://docs.python.org/3/library/itertools.html) and [more-itertools](https://pypi.org/project/more-itertools/) modules. See benchmark section for performance against some of these.
 
 ## Benchmark
 
-```
+```md
 Starting benchmark suite: index.bm.ts
-  for of loop x 2,015 ops/sec, ±47 ops/sec or ±2.33% (90 runs sampled)
-  iteragain x 1,431 ops/sec, ±25 ops/sec or ±1.74% (92 runs sampled)
-  iterare x 1,368 ops/sec, ±20 ops/sec or ±1.48% (95 runs sampled)
-  rxjs x 989 ops/sec, ±10 ops/sec or ±1.05% (93 runs sampled)
+  for of loop x 2,831 ops/sec, ±10 ops/sec or ±0.35% (98 runs sampled)
+  iteragain x 1,853 ops/sec, ±7 ops/sec or ±0.36% (98 runs sampled)
+  iteragain standalones x 1,740 ops/sec, ±27 ops/sec or ±1.57% (97 runs sampled)
+  iterare x 1,754 ops/sec, ±31 ops/sec or ±1.76% (96 runs sampled)
+  rxjs x 1,319 ops/sec, ±7 ops/sec or ±0.50% (96 runs sampled)
+  ixjs x 873 ops/sec, ±15 ops/sec or ±1.70% (95 runs sampled)
 ```

@@ -6,8 +6,10 @@ import { map, filter, toIterator, toArray } from '../src';
 import { IteratorWithOperators } from 'iterare/lib/iterate';
 import { from } from 'rxjs';
 import { map as rsjsMap, filter as rxjsFilter /* , skip */ } from 'rxjs/operators';
+import * as ixIt from 'ix/iterable';
+import * as ixOps from 'ix/iterable/operators'
 
-function* nums(size: number) {
+function* nums(size: number): Generator<number> {
   for (let i = 0; i < size; i++) yield i;
 }
 
@@ -73,6 +75,14 @@ suite.add('rxjs', () => {
       rsjsMap(n => n.toString()),
     )
     .subscribe(() => {});
+});
+suite.add('ixjs', () => {
+  ixIt.from(nums(SIZE))
+    .pipe(
+      ixOps.map(n => n * n),
+      ixOps.filter(n => n % 2 !== 0),
+      ixOps.map(n => n.toString()),
+  ).forEach(() => {});
 });
 
 // Testing that arrayLike saves time if the iterator is only partially iterated over:

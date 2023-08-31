@@ -22,6 +22,9 @@
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Distributes <code>arg</code> among <code>n</code> amount of smaller iterators. Does not maintain order so if order is important, use
 <code>divide</code> instead.</p>
+
+<h3>Example</h3><pre><code class="language-ts"><span class="hl-5">distribute</span><span class="hl-2">(</span><span class="hl-5">range</span><span class="hl-2">(</span><span class="hl-8">3</span><span class="hl-2">), </span><span class="hl-8">3</span><span class="hl-2">)].</span><span class="hl-5">map</span><span class="hl-2">(</span><span class="hl-4">v</span><span class="hl-2"> </span><span class="hl-1">=&gt;</span><span class="hl-2"> </span><span class="hl-5">toArray</span><span class="hl-2">(</span><span class="hl-4">v</span><span class="hl-2">)); </span><span class="hl-0">// [[0], [1], [2]],</span><br/><span class="hl-2"> </span><span class="hl-5">distribute</span><span class="hl-2">(</span><span class="hl-5">range</span><span class="hl-2">(</span><span class="hl-8">6</span><span class="hl-2">), </span><span class="hl-8">2</span><span class="hl-2">)].</span><span class="hl-5">map</span><span class="hl-2">(</span><span class="hl-4">v</span><span class="hl-2"> </span><span class="hl-1">=&gt;</span><span class="hl-2"> </span><span class="hl-5">toArray</span><span class="hl-2">(</span><span class="hl-4">v</span><span class="hl-2">)); </span><span class="hl-0">// [[0, 2, 4], [1, 3, 5]]</span>
+</code><button>Copy</button></pre>
 </div>
 <section class="tsd-panel">
 <h4>Type Parameters</h4>
@@ -39,7 +42,7 @@
 <h5><span class="tsd-kind-parameter">n</span>: <span class="tsd-signature-type tsd-kind-type-parameter">Size</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="../types/types.Tuple.html" class="tsd-signature-type tsd-kind-type-alias">Tuple</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">Size</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/danieloakman/iteragain/blob/763979ba/src/distribute.ts#L11">distribute.ts:11</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/danieloakman/iteragain/blob/fc5e315/src/distribute.ts#L14">distribute.ts:14</a></li></ul></aside></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
