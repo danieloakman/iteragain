@@ -80,8 +80,8 @@ export type Iteratee<T, R> = (value: T) => R;
 // export type AsyncIteratee<T, R> = (value: T) => Promise<R>;
 
 /** Any generic function. */
-export interface AnyFunction {
-  (...args: any[]): any;
+export interface Fn<Args extends any[] = any[], Result = any> {
+  (...args: Args): Result;
 }
 
 /** Returns the source of the generic Iterable, Iterator, IterableIterator or their async counterparts. */
@@ -136,17 +136,17 @@ export type UniqueParams<T> = { iteratee?: Iteratee<T, any>; justSeen?: boolean 
 
 export type ShiftArr<T extends unknown[]> = T extends [unknown, ...infer P] ? P : never;
 
-export interface Curry1<T extends AnyFunction> {
-  (...args: Parameters<T>): ReturnType<T>;
-  (...args: ShiftArr<Parameters<T>>): (arg0: Parameters<T>[0]) => ReturnType<T>;
-  // (...args: ParametersExceptFirst<ParametersExceptFirst<T>>): (
-  //   arg0: Parameters<T>[0],
-  // ) => (arg1: Parameters<T>[1]) => ReturnType<T>;
-  // (...args: ParametersExceptFirst<ParametersExceptFirst<ParametersExceptFirst<T>>>): (
-  //   arg0: Parameters<T>[0],
-  // ) => (arg1: Parameters<T>[1]) => (arg2: Parameters<T>[2]) => ReturnType<T>;
-  // (...args: ParametersExceptFirst<ParametersExceptFirst<ParametersExceptFirst<ParametersExceptFirst<T>>>>): (
-  //   arg0: Parameters<T>[0],
-  // ) => (arg1: Parameters<T>[1]) => (arg2: Parameters<T>[2]) => (arg3: Parameters<T>[3]) => ReturnType<T>;
-}
+// export interface Curry1<T extends Fn> {
+//   (...args: Parameters<T>): ReturnType<T>;
+//   (...args: ShiftArr<Parameters<T>>): (arg0: Parameters<T>[0]) => ReturnType<T>;
+//   // (...args: ParametersExceptFirst<ParametersExceptFirst<T>>): (
+//   //   arg0: Parameters<T>[0],
+//   // ) => (arg1: Parameters<T>[1]) => ReturnType<T>;
+//   // (...args: ParametersExceptFirst<ParametersExceptFirst<ParametersExceptFirst<T>>>): (
+//   //   arg0: Parameters<T>[0],
+//   // ) => (arg1: Parameters<T>[1]) => (arg2: Parameters<T>[2]) => ReturnType<T>;
+//   // (...args: ParametersExceptFirst<ParametersExceptFirst<ParametersExceptFirst<ParametersExceptFirst<T>>>>): (
+//   //   arg0: Parameters<T>[0],
+//   // ) => (arg1: Parameters<T>[1]) => (arg2: Parameters<T>[2]) => (arg3: Parameters<T>[3]) => ReturnType<T>;
+// }
 
