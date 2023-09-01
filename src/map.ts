@@ -8,11 +8,18 @@
 import MapIterator from './internal/MapIterator';
 import { IterSource, Iteratee, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
-import { curryFirstIt } from './fp';
 
 /** Returns a new iterator that maps each element in the input iterator to a new value. */
-export const map = curryFirstIt(<T extends IteratorOrIterable<any>, R>(arg: T, iteratee: Iteratee<IterSource<T>, R>) => {
-  return new MapIterator(toIterator(arg), iteratee);
-});
+export function map<T extends IteratorOrIterable<any>, R>(
+  iteratee: Iteratee<IterSource<T>, R>,
+): (arg: T) => IterableIterator<IterSource<T>>;
+export function map<T extends IteratorOrIterable<any>, R>(
+  arg: T,
+  iteratee: Iteratee<IterSource<T>, R>,
+): IterableIterator<IterSource<T>>;
+export function map(...args: any[]): any {
+  if (args.length === 1) return (it: IteratorOrIterable<any>) => map(it, args[0] as Iteratee<any, any>);
+  return new MapIterator(toIterator(args[0]), args[1]);
+}
 
 export default map;

@@ -63,6 +63,7 @@ import {
   promiseRace,
   groupBy,
   arrayLike,
+  pipe,
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
@@ -1198,7 +1199,14 @@ it('length', async function () {
 });
 
 it('map', async function () {
-  equal([...map(range(10), n => n * n)], [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]);
+  const result = [...map(range(10), n => n * n)];
+  equal(result, [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]);
+  equal(result, [
+    ...pipe(
+      range(10),
+      map(v => v * v),
+    ),
+  ]);
   // const a = toArray(map([1, 3], n => [n, n.toString()]));
   // //    ^?
 });
