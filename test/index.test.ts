@@ -1005,6 +1005,10 @@ it('filter', async function () {
     arr.filter(isA).map(v => v.a),
     [1, 3],
   );
+  equal(
+    pipe(range(10), filter(n => n > 5 && n % 2 === 0), toArray),
+    [6, 8],
+  )
   // const a = toArray(filter([1, 2, 3, ''], n => typeof n === 'number'));
   // //    ^?
   // const b = toArray(map(filter([1, 2, 3], n => n === 1), n => n.toString()));

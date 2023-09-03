@@ -9,17 +9,27 @@ import toIterator from './toIterator';
 export function filter<T extends IteratorOrIterable<any>>(
   arg: T,
   predicate: BooleanConstructor,
-): FilterIterator<NonNullable<T>>;
+): IterableIterator<NonNullable<T>>;
+export function filter<T extends IteratorOrIterable<any>>(
+  predicate: BooleanConstructor,
+): (arg: T) => IterableIterator<NonNullable<T>>;
 export function filter<T extends IteratorOrIterable<any>, S extends IterSource<T>>(
   arg: T,
   predicate: StrictPredicate<IterSource<T>, S>,
-): FilterIterator<S>;
+): IterableIterator<S>;
+export function filter<T extends IteratorOrIterable<any>, S extends IterSource<T>>(
+  predicate: StrictPredicate<IterSource<T>, S>,
+): (arg: T) => IterableIterator<S>;
 export function filter<T extends IteratorOrIterable<any>>(
   arg: T,
   predicate: Predicate<IterSource<T>>,
-): FilterIterator<IterSource<T>>;
-export function filter(arg: IteratorOrIterable<any>, predicate: (value: any) => any) {
-  return new FilterIterator(toIterator(arg), predicate);
+): IterableIterator<IterSource<T>>;
+export function filter<T extends IteratorOrIterable<any>>(
+  predicate: Predicate<IterSource<T>>,
+): (arg: T) => IterableIterator<IterSource<T>>;
+export function filter(...args: any[]): any {
+  if (args.length === 1) return (it: IteratorOrIterable<any>) => filter(it, args[0]);
+  return new FilterIterator(toIterator(args[0]), args[1]);
 }
 
 export default filter;
