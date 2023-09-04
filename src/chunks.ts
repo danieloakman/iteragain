@@ -13,11 +13,11 @@ import toIterator from './toIterator';
 export function chunks<T extends IteratorOrIterable<any>, Size extends number>(
   arg: T,
   length: Size,
-  fill?: T,
+  fill?: IterSource<T>,
 ): IterableIterator<Tuple<IterSource<T>, Size>>;
 export function chunks<T extends IteratorOrIterable<any>, Size extends number>(
   length: Size,
-  fill?: T,
+  fill?: IterSource<T>,
 ): (arg: T) => IterableIterator<Tuple<IterSource<T>, Size>>;
 export function chunks(...args: any[]): ItOrCurriedIt<any> {
   if (typeof args[0] === 'number') return (it: IteratorOrIterable<any>) => chunks(it, args[0], args[1]);
