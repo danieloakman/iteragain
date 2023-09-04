@@ -18,7 +18,7 @@ export function map<T extends IteratorOrIterable<any>, R>(
   iteratee: Iteratee<IterSource<T>, R>,
 ): IterableIterator<IterSource<T>>;
 export function map(...args: any[]): ItOrCurriedIt<any> {
-  if (args.length === 1) return (it: IteratorOrIterable<any>) => map(it, args[0]);
+  if (args.length === 1) return it => map(it, args[0]);
   return new MapIterator(toIterator(args[0]), args[1]);
 }
 

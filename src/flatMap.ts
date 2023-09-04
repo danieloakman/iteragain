@@ -14,7 +14,7 @@ export function flatMap<T, R>(
   iteratee: Iteratee<T, R | IteratorOrIterable<R>>,
 ): (arg: IteratorOrIterable<T>) => IterableIterator<R>
 export function flatMap(...args: any[]): ItOrCurriedIt<any> {
-  if (args.length === 1) return (it: IteratorOrIterable<any>) => flatMap(it, args[0]);
+  if (args.length === 1) return it => flatMap(it, args[0]);
   return new FlatMapIterator(toIterator(args[0]), args[1]);
 }
 

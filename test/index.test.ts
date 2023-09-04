@@ -883,17 +883,17 @@ it('arrayLike', async function () {
 
 it('chunks', async function () {
   equal([...chunks([1, 2, 3, 4, 5], 2)], [[1, 2], [3, 4], [5]]);
-  // equal(iter([1, 2, 3, 4, 5]).chunks(3, 0).toArray(), [
-  //   [1, 2, 3],
-  //   [4, 5, 0],
-  // ]);
-  // equal(iter([1, 2, 3, 4, 5]).chunks(6).toArray(), [[1, 2, 3, 4, 5]]);
-  // equal(iter([1, 2, 3, 4, 5]).chunks(6, 0).toArray(), [[1, 2, 3, 4, 5, 0]]);
-  // equal(iter([]).chunks(5).toArray(), []);
+  equal(pipe(range(1, 11), chunks(3, -1), toArray), [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+    [10, -1, -1],
+  ]);
 });
 
 it('combinations', async function () {
   equal([...combinations([0, 1], 2)], [[0, 1]]);
+  equal(pipe([0, 1, 2], combinations(2, true), take(3)), [[0, 0], [0, 1], [0, 2]]);
 });
 
 it('compress', async function () {
@@ -1006,9 +1006,13 @@ it('filter', async function () {
     [1, 3],
   );
   equal(
-    pipe(range(10), filter(n => n > 5 && n % 2 === 0), toArray),
+    pipe(
+      range(10),
+      filter(n => n > 5 && n % 2 === 0),
+      toArray,
+    ),
     [6, 8],
-  )
+  );
   // const a = toArray(filter([1, 2, 3, ''], n => typeof n === 'number'));
   // //    ^?
   // const b = toArray(map(filter([1, 2, 3], n => n === 1), n => n.toString()));
@@ -1017,6 +1021,7 @@ it('filter', async function () {
 
 it('filterMap', async function () {
   equal([...filterMap(range(10), n => (n % 2 === 0 ? n : null))], [0, 2, 4, 6, 8]);
+  equal(pipe(range(10), filterMap(n => n > 4 ? n.toString() : undefined), take(3)), ['5', '6', '7']);
   // const a = toArray(filterMap([1, 2, 3, null, ''], n => n));
   //    ^?
 });
@@ -1049,7 +1054,6 @@ it('findIndex', async function () {
 });
 
 it('flatMap', async function () {
-  // @ts-ignore
   const a = [1, 2, [3]].flatMap(n => n);
   equal([...flatMap([1, 2, [3]], n => n)], a);
   function dotsEitherSide(n: number[]) {
@@ -1065,6 +1069,7 @@ it('flatMap', async function () {
   }
   equal([...chars('abc', 'def')], ['a', 'b', 'c', 'd', 'e', 'f']);
   equal([...flatMap(['123'], str => str)], ['123']);
+  equal(pipe('abcde', flatMap(str => [str, str.charCodeAt(0)]), toArray), ['a', 97, 'b', 98, 'c', 99, 'd', 100, 'e', 101]);
   // const a = flatMap([1, 2, 3], n => [n, n.toString(), Buffer.from('')]);
   // //    ^?
 });

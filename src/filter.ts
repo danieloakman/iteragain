@@ -28,7 +28,7 @@ export function filter<T extends IteratorOrIterable<any>>(
   predicate: Predicate<IterSource<T>>,
 ): (arg: T) => IterableIterator<IterSource<T>>;
 export function filter(...args: any[]): ItOrCurriedIt<any> {
-  if (args.length === 1) return (it: IteratorOrIterable<any>) => filter(it, args[0]);
+  if (args.length === 1) return it => filter(it, args[0]);
   return new FilterIterator(toIterator(args[0]), args[1]);
 }
 

@@ -19,7 +19,7 @@ export function combinations<T extends IteratorOrIterable<any>, Size extends num
   withReplacement?: boolean,
 ): (arg: T) => IterableIterator<Tuple<IterSource<T>, Size>>;
 export function combinations(...args: any[]): ItOrCurriedIt<any> {
-  if (typeof args[0] === 'number') return (it: IteratorOrIterable<any>) => combinations(it, args[0], args[1]);
+  if (typeof args[0] === 'number') return it => combinations(it, args[0], args[1]);
   return new CombinationsIterator(toIterator(args[0]), args[1], args[2] ?? false);
 }
 

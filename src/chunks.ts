@@ -20,7 +20,7 @@ export function chunks<T extends IteratorOrIterable<any>, Size extends number>(
   fill?: IterSource<T>,
 ): (arg: T) => IterableIterator<Tuple<IterSource<T>, Size>>;
 export function chunks(...args: any[]): ItOrCurriedIt<any> {
-  if (typeof args[0] === 'number') return (it: IteratorOrIterable<any>) => chunks(it, args[0], args[1]);
+  if (typeof args[0] === 'number') return it => chunks(it, args[0], args[1]);
   return new ChunksIterator(toIterator(args[0]), args[1], args[2]);
 }
 
