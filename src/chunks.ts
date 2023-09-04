@@ -1,5 +1,5 @@
 import ChunksIterator from './internal/ChunksIterator';
-import { IteratorOrIterable } from './types';
+import type { ItOrCurriedIt, IterSource, IteratorOrIterable, Tuple } from './types';
 import toIterator from './toIterator';
 
 /**
@@ -10,8 +10,18 @@ import toIterator from './toIterator';
  * [...chunks([1,2,3,4,5,6,7,8,9], 3)] // [[1,2,3], [4,5,6], [7,8,9]]
  * [...chunks([1,2,3,4,5,6,7,8,9], 2, 0)] // [[1,2], [3,4], [5,6], [7,8], [9, 0]]
  */
-export function chunks<T extends IteratorOrIterable<any>, Size extends number>(arg: T, length: Size, fill?: T) {
-  return new ChunksIterator(toIterator(arg), length, fill);
+export function chunks<T extends IteratorOrIterable<any>, Size extends number>(
+  arg: T,
+  length: Size,
+  fill?: T,
+): IterableIterator<Tuple<IterSource<T>, Size>>;
+export function chunks<T extends IteratorOrIterable<any>, Size extends number>(
+  length: Size,
+  fill?: T,
+): (arg: T) => IterableIterator<Tuple<IterSource<T>, Size>>;
+export function chunks(...args: any[]): ItOrCurriedIt<any> {
+  if (typeof args[0] === 'number') return (it: IteratorOrIterable<any>) => chunks(it, args[0], args[1]);
+  return new ChunksIterator(toIterator(args[0]), args[1], args[2]);
 }
 
 export default chunks;

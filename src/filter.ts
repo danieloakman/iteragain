@@ -1,5 +1,5 @@
 import FilterIterator from './internal/FilterIterator';
-import { IterSource, IteratorOrIterable, Predicate, StrictPredicate } from './types';
+import type { ItOrCurriedIt, IterSource, IteratorOrIterable, Predicate, StrictPredicate } from './types';
 import toIterator from './toIterator';
 
 /**
@@ -27,7 +27,7 @@ export function filter<T extends IteratorOrIterable<any>>(
 export function filter<T extends IteratorOrIterable<any>>(
   predicate: Predicate<IterSource<T>>,
 ): (arg: T) => IterableIterator<IterSource<T>>;
-export function filter(...args: any[]): any {
+export function filter(...args: any[]): ItOrCurriedIt<any> {
   if (args.length === 1) return (it: IteratorOrIterable<any>) => filter(it, args[0]);
   return new FilterIterator(toIterator(args[0]), args[1]);
 }

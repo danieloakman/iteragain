@@ -1,4 +1,4 @@
-import { Iteratee, IteratorOrIterable } from './types';
+import type { ItOrCurriedIt, Iteratee, IteratorOrIterable } from './types';
 import FlatMapIterator from './internal/FlatMapIterator';
 import toIterator from './toIterator';
 
@@ -9,8 +9,13 @@ import toIterator from './toIterator';
 export function flatMap<T, R>(
   arg: IteratorOrIterable<T>,
   iteratee: Iteratee<T, R | IteratorOrIterable<R>>,
-): IterableIterator<R> {
-  return new FlatMapIterator(toIterator(arg), iteratee);
+): IterableIterator<R>
+export function flatMap<T, R>(
+  iteratee: Iteratee<T, R | IteratorOrIterable<R>>,
+): (arg: IteratorOrIterable<T>) => IterableIterator<R>
+export function flatMap(...args: any[]): ItOrCurriedIt<any> {
+  if (args.length === 1) return (it: IteratorOrIterable<any>) => flatMap(it, args[0]);
+  return new FlatMapIterator(toIterator(args[0]), args[1]);
 }
 
 export default flatMap;

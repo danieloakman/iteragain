@@ -1,5 +1,5 @@
 import CombinationsIterator from './internal/CombinationsIterator';
-import { IterSource, IteratorOrIterable, Tuple } from './types';
+import { ItOrCurriedIt, IterSource, IteratorOrIterable, Tuple } from './types';
 import toIterator from './toIterator';
 
 /**
@@ -12,9 +12,15 @@ import toIterator from './toIterator';
 export function combinations<T extends IteratorOrIterable<any>, Size extends number>(
   arg: T,
   size: Size,
-  withReplacement = false,
-): IterableIterator<Tuple<IterSource<T>, Size>> {
-  return new CombinationsIterator(toIterator(arg), size, withReplacement);
+  withReplacement?: boolean,
+): IterableIterator<Tuple<IterSource<T>, Size>>;
+export function combinations<T extends IteratorOrIterable<any>, Size extends number>(
+  size: Size,
+  withReplacement?: boolean,
+): (arg: T) => IterableIterator<Tuple<IterSource<T>, Size>>;
+export function combinations(...args: any[]): ItOrCurriedIt<any> {
+  if (typeof args[0] === 'number') return (it: IteratorOrIterable<any>) => combinations(it, args[0], args[1]);
+  return new CombinationsIterator(toIterator(args[0]), args[1], args[2] ?? false);
 }
 
 export default combinations;
