@@ -983,6 +983,10 @@ it('divide', async function () {
     divide(range(1, 4), 5).map(v => [...v]),
     [[1], [2], [3], [], []],
   );
+  equal(
+    pipe(range(1, 7), divide(2), map(toArray), toArray),
+    [[1, 2, 3], [4, 5, 6]]
+  );
   // const a = toArray(divide(range(1, 4), 2));
   //    ^?
 });
