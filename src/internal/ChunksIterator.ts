@@ -1,4 +1,4 @@
-import { Tuple } from '../types';
+import type { Tuple } from '../types';
 
 /** An iterator that yields non-overlapping values in chunks (tuples) of a certain `size`. */
 export class ChunksIterator<T, Size extends number> implements IterableIterator<Tuple<T, Size>> {

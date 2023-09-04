@@ -1,4 +1,4 @@
-import { IteratorOrIterable, Predicate } from './types';
+import type { IteratorOrIterable, Predicate } from './types';
 import toIterator from './toIterator';
 
 /** Return true if only one element in this iterator matches the predicate. */

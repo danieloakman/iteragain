@@ -1,6 +1,6 @@
 import SeekableIterator from './internal/SeekableIterator';
 import TeedIterator from './internal/TeedIterator';
-import { IteratorOrIterable, Tuple } from './types';
+import type { IteratorOrIterable, Tuple } from './types';
 import toIterator from './toIterator';
 
 /**

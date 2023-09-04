@@ -1,4 +1,4 @@
-import { Iteratee, IteratorOrIterable } from '../types';
+import type { Iteratee, IteratorOrIterable } from '../types';
 import toIterator from '../toIterator';
 import isIterable from '../isIterable';
 import isIterator from '../isIterator';

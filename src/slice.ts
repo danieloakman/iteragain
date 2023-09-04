@@ -1,5 +1,5 @@
 import SliceIterator from './internal/SliceIterator';
-import { IteratorOrIterable } from './types';
+import type { IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /**

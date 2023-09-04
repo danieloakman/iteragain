@@ -1,5 +1,5 @@
 import TapIterator from './internal/TapIterator';
-import { ItOrCurriedIt, IteratorOrIterable } from './types';
+import type { ItOrCurriedIt, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /**

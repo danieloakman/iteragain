@@ -1,5 +1,5 @@
 import TriplewiseIterator from './internal/TriplewiseIterator';
-import { IteratorOrIterable } from './types';
+import type { IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /**

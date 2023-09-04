@@ -1,6 +1,6 @@
 import RangeIterator from './RangeIterator';
 import toArray from '../toArray';
-import { Tuple } from '../types';
+import type { Tuple } from '../types';
 
 /** Returns all successive `size` length permutations of the input `iterator`. */
 export class PermutationsIterator<T, Size extends number> implements IterableIterator<Tuple<T, Size>> {

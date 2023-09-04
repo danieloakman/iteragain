@@ -1,4 +1,4 @@
-import { Iteratee, IteratorOrIterable } from './types';
+import type { Iteratee, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /** Returns the minimum value from the input iterator. */

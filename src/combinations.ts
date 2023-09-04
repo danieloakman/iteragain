@@ -1,5 +1,5 @@
 import CombinationsIterator from './internal/CombinationsIterator';
-import { ItOrCurriedIt, IterSource, IteratorOrIterable, Tuple } from './types';
+import type { ItOrCurriedIt, IterSource, IteratorOrIterable, Tuple } from './types';
 import toIterator from './toIterator';
 
 /**

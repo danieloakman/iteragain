@@ -1,5 +1,5 @@
 import TakeWhileIterator from './internal/TakeWhileIterator';
-import { IteratorOrIterable, Predicate } from './types';
+import type { IteratorOrIterable, Predicate } from './types';
 import toIterator from './toIterator';
 
 /**

@@ -1,4 +1,4 @@
-import { IterSource } from '../types';
+import type { IterSource } from '../types';
 
 /** An iterator that concatenates other iterators together, in the order they are in the `iterators` arg. */
 export class ConcatIterator<T extends Array<Iterator<any>>> implements IterableIterator<IterSource<T[number]>> {

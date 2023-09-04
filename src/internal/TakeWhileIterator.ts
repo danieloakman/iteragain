@@ -1,4 +1,4 @@
-import { Predicate } from '../types';
+import type { Predicate } from '../types';
 
 /** Take values from the input `iterator` while the predicate returns a truthy value. */
 export class TakeWhileIterator<T> implements IterableIterator<T> {

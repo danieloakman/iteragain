@@ -1,4 +1,4 @@
-import { Callback, IteratorOrIterable } from './types';
+import type { Callback, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /** Iterate an iterator using the `array.prototype.forEach` style of method. */

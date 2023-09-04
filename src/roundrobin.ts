@@ -1,5 +1,5 @@
 import RoundrobinIterator from './internal/RoundrobinIterator';
-import { IteratorOrIterable, IterSource } from './types';
+import type { IteratorOrIterable, IterSource } from './types';
 import toIterator from './toIterator';
 
 /** Creates a new iterable that yields values from each iterator in `args` in an alternating fashion. */

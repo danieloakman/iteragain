@@ -1,4 +1,4 @@
-import { IteratorOrIterable, Tuple } from './types';
+import type { IteratorOrIterable, Tuple } from './types';
 import tee from './tee';
 import count from './count';
 import compress from './compress';

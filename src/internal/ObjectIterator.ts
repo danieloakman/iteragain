@@ -1,4 +1,4 @@
-import { ObjectEntry } from '../types';
+import type { ObjectEntry } from '../types';
 import ConcatIterator from './ConcatIterator';
 import RepeatIterator from './RepeatIterator';
 

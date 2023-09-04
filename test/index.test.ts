@@ -961,7 +961,10 @@ it('distribute', async function () {
       [1, 3, 5],
     ],
   );
-  equal(pipe(range(5), distribute(4), v => v.map(toArray)), [[0, 4], [1], [2], [3]]);
+  equal(
+    pipe(range(5), distribute(4), v => v.map(toArray)),
+    [[0, 4], [1], [2], [3]],
+  );
   // const a = toArray(distribute(['', 2], 2));
   //    ^?
 });
@@ -983,16 +986,24 @@ it('divide', async function () {
     divide(range(1, 4), 5).map(v => [...v]),
     [[1], [2], [3], [], []],
   );
-  equal(
-    pipe(range(1, 7), divide(2), map(toArray), toArray),
-    [[1, 2, 3], [4, 5, 6]]
-  );
+  equal(pipe(range(1, 7), divide(2), map(toArray), toArray), [
+    [1, 2, 3],
+    [4, 5, 6],
+  ]);
   // const a = toArray(divide(range(1, 4), 2));
   //    ^?
 });
 
 it('dropWhile', async function () {
   equal([...dropWhile(range(10), n => n < 5)], [5, 6, 7, 8, 9]);
+  equal(
+    pipe(
+      count(),
+      dropWhile(n => n < 10),
+      take(5),
+    ),
+    [10, 11, 12, 13, 14],
+  );
   // const a = toArray(dropWhile(range(10), n => n < 10));
   //    ^?
 });
@@ -1015,6 +1026,12 @@ it('every', async function () {
   equal(
     every(range(10), n => n < 5),
     false,
+  );
+  assert(
+    pipe(
+      range(50, 100, 2),
+      every(n => n % 2 === 0),
+    ),
   );
 });
 
@@ -1073,6 +1090,14 @@ it('find', async function () {
     find(range(10), n => n === 10),
     undefined,
   );
+  const gt = 0.99;
+  pipe(
+    count(),
+    map(() => Math.random()),
+    find(n => n > gt),
+    n => typeof n === 'number' && n > gt,
+    assert,
+  );
   // function isStr(v: any): v is string {
   //   return typeof v === 'string';
   // }
@@ -1088,6 +1113,13 @@ it('findIndex', async function () {
   equal(
     findIndex(range(10), n => n === 10),
     -1,
+  );
+  equal(
+    pipe(
+      range(5, 10),
+      findIndex(n => n === 8),
+    ),
+    3,
   );
 });
 

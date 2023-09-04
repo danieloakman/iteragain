@@ -1,4 +1,4 @@
-import { IteratorOrIterable } from './types';
+import type { IteratorOrIterable } from './types';
 import WindowsIterator from './internal/WindowsIterator';
 import toIterator from './toIterator';
 

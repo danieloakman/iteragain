@@ -1,4 +1,4 @@
-import { IteratorOrIterable } from './types';
+import type { IteratorOrIterable } from './types';
 import toArray from './toArray';
 
 /** Collects all values from the input iterator, then sorts them. */

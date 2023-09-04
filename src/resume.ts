@@ -1,5 +1,5 @@
 import ResumeIterator from './internal/ResumeIterator';
-import { IteratorOrIterable } from './types';
+import type { IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /**

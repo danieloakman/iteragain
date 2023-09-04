@@ -1,5 +1,5 @@
 import seekable from './seekable';
-import { IteratorOrIterable } from './types';
+import type { IteratorOrIterable } from './types';
 
 // TODO: possible add an overload for passing in a seekable to begin with, so that the maxLength param could be used.
 /**

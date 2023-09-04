@@ -1,4 +1,4 @@
-import { ItOrCurriedIt, IteratorOrIterable } from './types';
+import type { ItOrCurriedIt, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /** Reduces the input iterator to a single value. */

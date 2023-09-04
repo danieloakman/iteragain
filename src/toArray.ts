@@ -3,7 +3,7 @@
 /* ra(toArray, asyncToArray) */
 /* ra(toIterator, toAsyncIterator) */
 
-import { IterSource, IteratorOrIterable } from './types';
+import type { IterSource, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /** Converts an iterator or iterable into an array by iterating over all it's values and collecting them. */

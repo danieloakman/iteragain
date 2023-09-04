@@ -1,5 +1,5 @@
 import toArray from '../toArray';
-import { Tuple } from '../types';
+import type { Tuple } from '../types';
 
 /** Creates `size` length subsequences from the input `iterator`. */
 export class CombinationsIterator<T, Size extends number> implements IterableIterator<Tuple<T, Size>> {

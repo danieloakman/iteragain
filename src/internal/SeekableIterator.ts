@@ -1,4 +1,4 @@
-import { Tuple } from '../types';
+import type { Tuple } from '../types';
 
 /**
  * Wraps `iterator` to allow for seeking backwards and forwards. An internal cache of length `maxLength` is kept and

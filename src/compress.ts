@@ -1,5 +1,5 @@
 import CompressIterator from './internal/CompressIterator';
-import { ItOrCurriedIt, IterSource, IteratorOrIterable } from './types';
+import type { ItOrCurriedIt, IterSource, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /**

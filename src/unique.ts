@@ -1,4 +1,4 @@
-import { IteratorOrIterable, UniqueParams } from './types';
+import type { IteratorOrIterable, UniqueParams } from './types';
 import toIterator from './toIterator';
 import FilterIterator from './internal/FilterIterator';
 

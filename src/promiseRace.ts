@@ -1,4 +1,4 @@
-import { IteratorOrIterable, Awaited } from './types';
+import type { IteratorOrIterable, Awaited } from './types';
 import toArray from './toArray';
 
 /** Calls `Promise.race` on all collected values. */
