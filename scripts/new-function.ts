@@ -22,7 +22,7 @@ import { execSync } from 'child_process';
   await promises.writeFile(
     filePath,
     `
-import { IteratorOrIterable } from './types';
+import type { IteratorOrIterable } from './types';
 
 /** @todo // TODO: Implement */
 export function ${fileName}<T>(arg: IteratorOrIterable<T>): IterableIterator<T> {
