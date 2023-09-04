@@ -136,6 +136,8 @@ export type UniqueParams<T> = { iteratee?: Iteratee<T, any>; justSeen?: boolean 
 
 export type ShiftArr<T extends unknown[]> = T extends [unknown, ...infer P] ? P : never;
 
+export type ItOrCurriedIt<T> = IterableIterator<T> | ((arg: IteratorOrIterable<T>) => IterableIterator<T>);
+
 // export interface Curry1<T extends Fn> {
 //   (...args: Parameters<T>): ReturnType<T>;
 //   (...args: ShiftArr<Parameters<T>>): (arg0: Parameters<T>[0]) => ReturnType<T>;
@@ -149,4 +151,3 @@ export type ShiftArr<T extends unknown[]> = T extends [unknown, ...infer P] ? P 
 //   //   arg0: Parameters<T>[0],
 //   // ) => (arg1: Parameters<T>[1]) => (arg2: Parameters<T>[2]) => (arg3: Parameters<T>[3]) => ReturnType<T>;
 // }
-
