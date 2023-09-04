@@ -1,5 +1,5 @@
 import CompressIterator from './internal/CompressIterator';
-import { IterSource, IteratorOrIterable } from './types';
+import { ItOrCurriedIt, IterSource, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /**
@@ -10,8 +10,13 @@ import toIterator from './toIterator';
 export function compress<T extends IteratorOrIterable<any>>(
   arg: T,
   selectors: IteratorOrIterable<any>,
-): IterableIterator<IterSource<T>> {
-  return new CompressIterator(toIterator(arg), toIterator(selectors));
+): IterableIterator<IterSource<T>>;
+export function compress<T extends IteratorOrIterable<any>>(
+  selectors: IteratorOrIterable<any>,
+): (arg: T) => IterableIterator<IterSource<T>>;
+export function compress(...args: any[]): ItOrCurriedIt<any> {
+  if (args.length === 1) return it => compress(it, args[0]);
+  return new CompressIterator(toIterator(args[0]), toIterator(args[1]));
 }
 
 export default compress;

@@ -14,13 +14,21 @@ import map from './map';
 export function distribute<T, Size extends number>(
   arg: IteratorOrIterable<T>,
   n: Size,
-): Tuple<IterableIterator<T>, Size> {
-  return tee(arg, n).map((it, i) =>
+): Tuple<IterableIterator<T>, Size>;
+export function distribute<T, Size extends number>(
+  n: Size,
+): (arg: IteratorOrIterable<T>) => Tuple<IterableIterator<T>, Size>;
+export function distribute(
+  ...args: any[]
+): IterableIterator<any>[] | ((arg: IteratorOrIterable<any>) => IterableIterator<any>[]) {
+  if (args.length === 1) return it => distribute(it, args[0]);
+  const n = args[1];
+  return tee(args[0], n).map((it, i) =>
     compress(
       it,
       map(count(), v => (v - i) % n === 0),
     ),
-  ) as Tuple<IterableIterator<T>, Size>;
+  );
 }
 
 export default distribute;

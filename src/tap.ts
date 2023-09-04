@@ -1,5 +1,5 @@
 import TapIterator from './internal/TapIterator';
-import { IteratorOrIterable } from './types';
+import { ItOrCurriedIt, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /**
@@ -9,8 +9,11 @@ import toIterator from './toIterator';
  *  toArray(tap(map([1, 2, 3], n => n * 2), console.log));
  *  // logs 2, 4, 6 to the console
  */
-export function tap<T>(arg: IteratorOrIterable<T>, func: (value: T) => any) {
-  return new TapIterator(toIterator(arg), func);
+export function tap<T>(arg: IteratorOrIterable<T>, func: (value: T) => any): IterableIterator<T>;
+export function tap<T>(func: (value: T) => any): (arg: IteratorOrIterable<T>) => IterableIterator<T>;
+export function tap(...args: any[]): ItOrCurriedIt<any> {
+  if (args.length === 1) return it => tap(it, args[0]);
+  return new TapIterator(toIterator(args[0]), args[1]);
 }
 
 export default tap;

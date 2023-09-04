@@ -546,6 +546,10 @@ describe('internal', function () {
     it('compress', async function () {
       equal(iter([1, 2, 3]).compress([0, 1, 0]).toArray(), [2]);
       equal(iter('abcdef').compress([1, 0, 1, 0, 1, 1]).join(''), 'acef');
+      equal(
+        pipe('*hi*', compress([0, 1, 1, 0]), toArray, v => v.join('')),
+        'hi',
+      );
     });
 
     it('permutations', async function () {
@@ -893,7 +897,11 @@ it('chunks', async function () {
 
 it('combinations', async function () {
   equal([...combinations([0, 1], 2)], [[0, 1]]);
-  equal(pipe([0, 1, 2], combinations(2, true), take(3)), [[0, 0], [0, 1], [0, 2]]);
+  equal(pipe([0, 1, 2], combinations(2, true), take(3)), [
+    [0, 0],
+    [0, 1],
+    [0, 2],
+  ]);
 });
 
 it('compress', async function () {
@@ -910,6 +918,24 @@ it('consume', async function () {
   const arr: number[] = [];
   equal(consume(tap(range(3), n => arr.push(n))), undefined);
   equal(arr, [0, 1, 2]);
+  equal(
+    pipe(
+      range(5, 10),
+      tap(n => arr.push(n)),
+      consume,
+    ),
+    undefined,
+  );
+  equal(arr, [0, 1, 2, 5, 6, 7, 8, 9]);
+  equal(
+    pipe(
+      range(5, 10),
+      tap(n => arr.push(n)),
+      consume(1),
+    ),
+    undefined,
+  );
+  equal(arr, [0, 1, 2, 5, 6, 7, 8, 9, 5]);
 });
 
 it('count', async function () {
@@ -919,8 +945,8 @@ it('count', async function () {
 it('cycle', async function () {
   equal(take(cycle([1, 2, 3]), 10), [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]);
   equal([...cycle(range(3), 1)], [0, 1, 2, 0, 1, 2]);
-  // const a = toArray(cycle(range(3), 2));
-  //    ^?
+  equal(pipe(range(1, 4), cycle, take(10)), [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]);
+  equal(pipe(range(1, 4), cycle(2), toArray), [1, 2, 3, 1, 2, 3, 1, 2, 3]);
 });
 
 it('distribute', async function () {
@@ -935,6 +961,7 @@ it('distribute', async function () {
       [1, 3, 5],
     ],
   );
+  equal(pipe(range(5), distribute(4), v => v.map(toArray)), [[0, 4], [1], [2], [3]]);
   // const a = toArray(distribute(['', 2], 2));
   //    ^?
 });
@@ -1021,7 +1048,14 @@ it('filter', async function () {
 
 it('filterMap', async function () {
   equal([...filterMap(range(10), n => (n % 2 === 0 ? n : null))], [0, 2, 4, 6, 8]);
-  equal(pipe(range(10), filterMap(n => n > 4 ? n.toString() : undefined), take(3)), ['5', '6', '7']);
+  equal(
+    pipe(
+      range(10),
+      filterMap(n => (n > 4 ? n.toString() : undefined)),
+      take(3),
+    ),
+    ['5', '6', '7'],
+  );
   // const a = toArray(filterMap([1, 2, 3, null, ''], n => n));
   //    ^?
 });
@@ -1069,7 +1103,14 @@ it('flatMap', async function () {
   }
   equal([...chars('abc', 'def')], ['a', 'b', 'c', 'd', 'e', 'f']);
   equal([...flatMap(['123'], str => str)], ['123']);
-  equal(pipe('abcde', flatMap(str => [str, str.charCodeAt(0)]), toArray), ['a', 97, 'b', 98, 'c', 99, 'd', 100, 'e', 101]);
+  equal(
+    pipe(
+      'abcde',
+      flatMap(str => [str, str.charCodeAt(0)]),
+      toArray,
+    ),
+    ['a', 97, 'b', 98, 'c', 99, 'd', 100, 'e', 101],
+  );
   // const a = flatMap([1, 2, 3], n => [n, n.toString(), Buffer.from('')]);
   // //    ^?
 });
@@ -1420,6 +1461,13 @@ it('reduce', async function () {
   equal(
     reduce(range(10), (acc, n) => acc + n),
     45,
+  );
+  equal(
+    pipe(
+      range(5),
+      reduce((acc, n) => acc + n),
+    ),
+    10,
   );
 });
 
