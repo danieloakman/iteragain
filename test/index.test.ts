@@ -1152,7 +1152,7 @@ it('flatMap', async function () {
 });
 
 it('flatten', async function () {
-  equal([...flatten([[1], [2, 3, 4], [5,[[[[[[6]]]]]]]])], [1, 2, 3, 4, 5, 6]);
+  equal([...flatten([[1], [2, 3, 4], [5, [[[[[[6]]]]]]]])], [1, 2, 3, 4, 5, 6]);
   equal([...flatten([[1], [2, 3], [4, 5]])], [1, 2, 3, 4, 5]);
   equal([...flatten([[1], [[2], 3]], 2)], [1, 2, 3]);
   equal([...flatten([[1], [[2], 3]], 1)], [1, [2], 3]);
@@ -1169,12 +1169,12 @@ it('flatten', async function () {
     [0, 1, 0, 1, 0, 1],
   );
   pipe(
-    ['a', [[1], [[[[[2],[[[3]]]]]]]]],
+    ['a', [[1], [[[[[2], [[[3]]]]]]]]],
     v => flatten(v),
     filter((v): v is number => typeof v === 'number'),
     toArray,
     v => (assert(v.length), v),
-    forEach(n => assert(typeof n === 'number'))
+    forEach(n => assert(typeof n === 'number')),
   );
   // const a = toArray(flatten([[1, 2, 3, '', [['']]], [['']]], 1));
   // //    ^?
@@ -1220,6 +1220,13 @@ it('groupBy', async function () {
 it('includes', async function () {
   equal(includes(range(10), 5), true);
   equal(includes(range(10), 10), false);
+  assert(
+    pipe(
+      count(),
+      map(() => Math.floor(Math.random() * 1000) + 1),
+      includes(1),
+    ),
+  );
 });
 
 it('isIterable', async function () {
@@ -1333,6 +1340,14 @@ it('nth', async function () {
   equal(nth(range(10), 3), 3);
   equal(nth(range(10), -3), undefined);
   equal(nth(toIterator({ a: 1, b: 2 }), 1), ['b', 2, { a: 1, b: 2 }]);
+  pipe(
+    range(50),
+    flatMap(n => [n + 50, n.toString()]),
+    shuffle,
+    filter((v): v is number => typeof v === 'number'),
+    nth(10),
+    n => assert(n && n > 50),
+  );
 });
 
 it('pairwise', async function () {
