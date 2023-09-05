@@ -67,6 +67,9 @@ import {
 } from '../src/index';
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
+import SeekableIterator from '../src/internal/SeekableIterator';
+import { expectType } from 'ts-expect';
+
 // import asyncMap from '../src/asyncMap';
 // import asyncToArray from '../src/asyncToArray';
 
@@ -987,10 +990,14 @@ it('divide', async function () {
     divide(range(1, 4), 5).map(v => [...v]),
     [[1], [2], [3], [], []],
   );
-  equal(pipe(range(1, 7), divide(2), map(toArray), toArray), [
-    [1, 2, 3],
-    [4, 5, 6],
-  ]);
+  {
+    const arr = pipe(range(1, 7), divide(2), map(toArray), toArray);
+    expectType<number[][]>(arr);
+    equal(arr, [
+      [1, 2, 3],
+      [4, 5, 6],
+    ]);
+  }
   // const a = toArray(divide(range(1, 4), 2));
   //    ^?
 });
@@ -1586,6 +1593,8 @@ it('resume', async function () {
   equal([...it, ...it, ...it], [0, 1, 0, 1]);
   it = resume(range(2));
   equal([...it], [0, 1]);
+  const it2 = pipe([5, 8, 13], map(n => n.toString()), v => v, resume(1));
+  equal([...it2, ...it2, ...it2], ['5', '8', '13', '5', '8', '13']);
 });
 
 it('reverse', async function () {
@@ -1600,20 +1609,35 @@ it('roundrobin', async function () {
 });
 
 it('seekable', async function () {
-  const it = seekable(count(), 5);
-  const toValues = <T extends IteratorResult<any>[]>(...itResults: T) => itResults.map(it => it.value);
-  equal(toValues(it.next(), it.next(), it.next()), [0, 1, 2]);
-  it.seek(0);
-  equal(toValues(it.next(), it.next(), it.next()), [0, 1, 2]);
-  equal(it.elements, [0, 1, 2]);
-  equal(it.peek(), [it.next().value]);
-  it.seek(10);
-  equal(it.elements, [5, 6, 7, 8, 9]);
-  it.seek(-1);
-  equal(it.peek(), [9]);
-  const empty = seekable([]);
-  equal(empty.seek(10), undefined);
-  equal([...empty], []);
+  {
+    const it = seekable(count(), 5);
+    const toValues = <T extends IteratorResult<any>[]>(...itResults: T) => itResults.map(it => it.value);
+    equal(toValues(it.next(), it.next(), it.next()), [0, 1, 2]);
+    it.seek(0);
+    equal(toValues(it.next(), it.next(), it.next()), [0, 1, 2]);
+    equal(it.elements, [0, 1, 2]);
+    equal(it.peek(), [it.next().value]);
+    it.seek(10);
+    equal(it.elements, [5, 6, 7, 8, 9]);
+    it.seek(-1);
+    equal(it.peek(), [9]);
+  }
+  {
+    const empty = seekable([]);
+    equal(empty.seek(10), undefined);
+  }
+  {
+    const isPrime = (n: number) => {
+      if (n < 2) return false;
+      for (let i = 2; i <= Math.sqrt(n); i++) if (n % i === 0) return false;
+      return true;
+    }
+    const primes = pipe(count(), filter(isPrime), seekable(100));
+    expectType<SeekableIterator<number>>(primes);
+    primes.seek(5);
+    equal(primes.next().value, 13);
+  }
+  equal(pipe(range(10), seekable(1), v => (v.seek(100), v), v => v.next().value), undefined);
 });
 
 it('shuffle', async function () {

@@ -1,5 +1,5 @@
 import ResumeIterator from './internal/ResumeIterator';
-import type { IteratorOrIterable } from './types';
+import type { ItOrCurriedIt, IterSource, IteratorOrIterable } from './types';
 import toIterator from './toIterator';
 
 /**
@@ -11,8 +11,11 @@ import toIterator from './toIterator';
  * equal([...it], [1,2,3]);
  * equal([...it], []);
  */
-export function resume<T>(arg: IteratorOrIterable<T>, times = Infinity): IterableIterator<T> {
-  return new ResumeIterator(toIterator(arg), times);
+export function resume<T extends IteratorOrIterable<any>>(times?: number): (arg: T) => IterableIterator<IterSource<T>>;
+export function resume<T extends IteratorOrIterable<any>>(arg: T, times?: number): IterableIterator<IterSource<T>>;
+export function resume(...args: any[]): ItOrCurriedIt<any> {
+  if (!args.length || typeof args[0] === 'number') return it => resume(it, args[0]);
+  return new ResumeIterator(toIterator(args[0]), args[1] ?? Infinity);
 }
 
 export default resume;
