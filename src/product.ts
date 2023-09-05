@@ -8,6 +8,7 @@ import toIterator from './toIterator';
  * @param repeat Optional number of times to repeat the input `iterators`.
  * @see https://docs.python.org/3/library/itertools.html#itertools.product for more info, as it does the same.
  */
+// TODO: Add currying support
 export function product<T>(iterators: IteratorOrIterable<T>[], repeat = 1): IterableIterator<T[]> {
   return new ProductIterator(iterators.map(toIterator) as Iterator<T>[], repeat);
 }
