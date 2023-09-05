@@ -1,9 +1,12 @@
+import toIterator from './toIterator';
 import type { IteratorOrIterable } from './types';
-import reduce from './reduce';
 
 /** Consumes the input iterator and returns the number of values/items in it. */
 export function length<T>(arg: IteratorOrIterable<T>): number {
-  return reduce(arg, (acc, _) => acc + 1, 0);
+  let result = 0;
+  const it = toIterator(arg);
+  while (!it.next().done) result++;
+  return result;
 }
 
 export default length;
