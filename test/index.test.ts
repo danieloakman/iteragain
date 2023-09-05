@@ -1435,6 +1435,19 @@ it('pluck', async function () {
     [...pluck([{ a: 1 }, { a: 2 }, { a: 3 }], 'b')],
     [],
   );
+  equal(
+    pipe(
+      range(5),
+      map(n => ({ n, rand: Math.random() })),
+      pluck('n'),
+      take(3),
+      v => {
+        expectType<number[]>(v);
+        return v;
+      },
+    ),
+    [0, 1, 2],
+  );
 });
 
 it('product', async function () {
@@ -1593,7 +1606,12 @@ it('resume', async function () {
   equal([...it, ...it, ...it], [0, 1, 0, 1]);
   it = resume(range(2));
   equal([...it], [0, 1]);
-  const it2 = pipe([5, 8, 13], map(n => n.toString()), v => v, resume(1));
+  const it2 = pipe(
+    [5, 8, 13],
+    map(n => n.toString()),
+    v => v,
+    resume(1),
+  );
   equal([...it2, ...it2, ...it2], ['5', '8', '13', '5', '8', '13']);
 });
 
@@ -1631,13 +1649,21 @@ it('seekable', async function () {
       if (n < 2) return false;
       for (let i = 2; i <= Math.sqrt(n); i++) if (n % i === 0) return false;
       return true;
-    }
+    };
     const primes = pipe(count(), filter(isPrime), seekable(100));
     expectType<SeekableIterator<number>>(primes);
     primes.seek(5);
     equal(primes.next().value, 13);
   }
-  equal(pipe(range(10), seekable(1), v => (v.seek(100), v), v => v.next().value), undefined);
+  equal(
+    pipe(
+      range(10),
+      seekable(1),
+      v => (v.seek(100), v),
+      v => v.next().value,
+    ),
+    undefined,
+  );
 });
 
 it('shuffle', async function () {
