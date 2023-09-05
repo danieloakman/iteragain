@@ -63,3 +63,4 @@ export * from './promiseRace';
 export * from './groupBy';
 export * from './arrayLike';
 export * from './pipe';
+export * from './toIterableIterator';
