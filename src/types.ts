@@ -2,11 +2,25 @@ export type IteratorOrIterable<T> = Iterator<T> | Iterable<T>;
 
 // export type AsyncIteratorOrIterable<T> = AsyncIterator<T> | AsyncIterable<T>;
 
-export type FlattenDeep<T> = T extends IteratorOrIterable<infer V>
-  ? V extends IteratorOrIterable<infer U>
-    ? U
-    : V
-  : T;
+export type FlattenDeep<A> = A extends IteratorOrIterable<infer B>
+  ? B extends IteratorOrIterable<infer C>
+    ? C extends IteratorOrIterable<infer D>
+      ? D extends IteratorOrIterable<infer E>
+        ? E extends IteratorOrIterable<infer F>
+          ? F extends IteratorOrIterable<infer G>
+            ? G extends IteratorOrIterable<infer H>
+              ? H extends IteratorOrIterable<infer I>
+                ? I extends IteratorOrIterable<infer J>
+                  ? J
+                  : I
+                : H
+              : G
+            : F
+          : E
+        : D
+      : C
+    : B
+  : A;
 
 // export type AsyncFlattenDeep<T> = T extends AsyncIteratorOrIterable<infer V>
 //   ? V extends AsyncIteratorOrIterable<infer U>
