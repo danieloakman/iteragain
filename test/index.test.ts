@@ -1488,6 +1488,13 @@ it('quantify', async function () {
     quantify(range(10), n => n % 2 === 0),
     5,
   );
+  equal(
+    pipe(
+      range(5, 50),
+      quantify(n => n % 2 === 0),
+    ),
+    22,
+  );
 });
 
 it('range', async function () {
@@ -1559,6 +1566,13 @@ it('reduce', async function () {
       reduce((acc, n) => acc + n),
     ),
     10,
+  );
+  equal(
+    pipe(
+      range(10),
+      reduce((acc, s) => acc + s, ''),
+    ),
+    '0123456789',
   );
 });
 
