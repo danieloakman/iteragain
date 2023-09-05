@@ -828,6 +828,7 @@ describe('internal', function () {
 
   it('ObjectIterator', async function () {
     this.timeout(5000);
+    this.slow(2000);
     const obj = { a: 1 };
     equal([...new ObjectIterator(obj)], [['a', 1, obj]]);
     const obj2 = { a: 1, b: { c: 2, d: { e: 3 } }, f: 4 };
@@ -1144,6 +1145,8 @@ it('flatMap', async function () {
       'abcde',
       flatMap(str => [str, str.charCodeAt(0)]),
       toArray,
+      v => v,
+      //  ^?
     ),
     ['a', 97, 'b', 98, 'c', 99, 'd', 100, 'e', 101],
   );
@@ -1184,6 +1187,12 @@ it('forEach', async function () {
   const arr: number[] = [];
   forEach(range(10), n => arr.push(n));
   equal(arr, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  pipe(
+    range(10),
+    shuffle,
+    filter(n => n > 5),
+    forEach(n => assert(n > 5)),
+  );
 });
 
 it('groupBy', async function () {
@@ -1375,19 +1384,40 @@ it('partition', async function () {
       [2, 4],
     ],
   );
+  equal(
+    pipe(
+      range(15, 20),
+      partition(n => n % 2),
+    ),
+    [
+      [16, 18],
+      [15, 17, 19],
+    ],
+  );
 });
 
 it('permutations', async function () {
-  equal(
-    [...permutations([1, 2, 3], 3)],
-    [
+  const result1 = [...permutations([1, 2, 3], 3)];
+  equal(result1, [
+    [1, 2, 3],
+    [1, 3, 2],
+    [2, 1, 3],
+    [2, 3, 1],
+    [3, 1, 2],
+    [3, 2, 1],
+  ]);
+  const k = (nums: number[]) => nums.join(',');
+  const result2 = result1.map(k);
+  assert(
+    pipe(
       [1, 2, 3],
-      [1, 3, 2],
-      [2, 1, 3],
-      [2, 3, 1],
-      [3, 1, 2],
-      [3, 2, 1],
-    ],
+      permutations(3),
+      map(v => {
+        v.reverse();
+        return v;
+      }),
+      some(v => result2.includes(k(v))),
+    ),
   );
 });
 
@@ -1439,6 +1469,7 @@ it('product', async function () {
 });
 
 it('promiseAll', async function () {
+  this.slow(500);
   const sleep = (ms: number): Promise<number> => new Promise(resolve => setTimeout(() => resolve(ms), ms));
   const [it1, it2] = tee(
     iter(range(10)).map(n => n * 10),
@@ -1460,6 +1491,7 @@ it('quantify', async function () {
 });
 
 it('range', async function () {
+  this.slow(300);
   equal([...range(5, 10, 2)], [5, 7, 9]);
   equal([...range(5, 10)], [5, 6, 7, 8, 9]);
   equal([...range(5, 0, -1)], [5, 4, 3, 2, 1]);
