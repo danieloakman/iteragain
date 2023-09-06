@@ -22,8 +22,10 @@ export function handleCompleteEvent(event: any) {
   console.log('Fastest is ' + event.currentTarget.filter('fastest').map('name'));
 }
 
-export function setupSuite(...args: ConstructorParameters<typeof Suite>) {
-  return new Suite(...args)
+export function setupSuite(...args: ConstructorParameters<typeof Suite>): Suite;
+export function setupSuite(name: string): Suite;
+export function setupSuite(...args: [string] | ConstructorParameters<typeof Suite>): Suite {
+  return new Suite(...args as any)
     .on('start', handleStartEvent)
     .on('cycle', handleCycleEvent)
     .on('complete', handleCompleteEvent);
