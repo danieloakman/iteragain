@@ -1,4 +1,4 @@
-import { ok as assert, deepStrictEqual as equal, notDeepStrictEqual as notEqual, throws } from 'assert';
+import { ok as assert, deepStrictEqual, notDeepStrictEqual as notEqual, throws } from 'assert';
 import {
   isIterable,
   isIterator,
@@ -68,7 +68,15 @@ import {
 import FunctionIterator from '../src/internal/FunctionIterator';
 import ObjectIterator from '../src/internal/ObjectIterator';
 import SeekableIterator from '../src/internal/SeekableIterator';
-import { expectType } from 'ts-expect';
+
+/**
+ * Expect value to be `T`, and return it to allow for piping/chaining.
+ * This doesn't actually *do* anything, it's just for type checking in tests.
+ */
+const expectType = <T>(value: T) => value;
+
+/** Wrapper for `deepStrictEqual` that asserts at the type level that `actual` and `expected` are the same type. */
+const equal = <T>(actual: T, expected: T, message?: string | Error) => deepStrictEqual(actual, expected, message);
 
 // import asyncMap from '../src/asyncMap';
 // import asyncToArray from '../src/asyncToArray';
@@ -387,7 +395,10 @@ describe('internal', function () {
           .unzip()
           .map(v => v.toArray()),
         [
+          // TODO: look into this
+          // @ts-expect-error
           ['a', 'b'],
+          // @ts-expect-error
           [1, 2],
         ],
       );
@@ -725,7 +736,9 @@ describe('internal', function () {
       equal(itA.peek(1), [1]);
       equal(itA.peek(3), [1, 2, 3]);
       equal(itA.toArray(), [1, 2, 3, 4, 5]);
+      // @ts-expect-error
       equal(itA.peek(), []);
+      // @ts-expect-error
       equal(itA.peek(3), []);
       equal(iter([1]).peek(2), [1]);
       const itB = iter(zip('abc', 'abc'));
@@ -739,7 +752,9 @@ describe('internal', function () {
       equal(iterator.take(2), [2, 3]);
       equal(iterator.take(1), [4]);
       equal(iterator.toArray(), [5]);
+      // @ts-expect-error
       equal(iterator.take(), []);
+      // @ts-expect-error
       equal(iterator.take(3), []);
       equal(iter([1]).take(2), [1]);
     });
@@ -1137,7 +1152,7 @@ it('flatMap', async function () {
   function dotsEitherSide(n: number[]) {
     return flatMap(n, n => [n - 0.1, n, n + 0.1]);
   }
-  equal([...dotsEitherSide([1, 2, 3])], [0.9, 1, 1.1, 1.9, 2, 2.1, 2.9, 3, 3.1]);
+  equal(expectType<number[]>([...dotsEitherSide([1, 2, 3])]), [0.9, 1, 1.1, 1.9, 2, 2.1, 2.9, 3, 3.1]);
   function repeatNums(n: number[]) {
     return flatMap(n, n => repeat(n, n));
   }
@@ -1145,20 +1160,18 @@ it('flatMap', async function () {
   function chars(...strings: string[]) {
     return flatMap(strings, str => [...str]);
   }
-  equal([...chars('abc', 'def')], ['a', 'b', 'c', 'd', 'e', 'f']);
+  equal(expectType<string[]>([...chars('abc', 'def')]), ['a', 'b', 'c', 'd', 'e', 'f']);
   equal([...flatMap(['123'], str => str)], ['123']);
   equal(
     pipe(
       'abcde',
       flatMap(str => [str, str.charCodeAt(0)]),
       toArray,
-      v => v,
-      //  ^?
+      expectType<(string | number)[]>,
     ),
     ['a', 97, 'b', 98, 'c', 99, 'd', 100, 'e', 101],
   );
-  // const a = flatMap([1, 2, 3], n => [n, n.toString(), Buffer.from('')]);
-  // //    ^?
+  expectType<IterableIterator<number | string | Buffer>>(flatMap([1, 2, 3], n => [n, n.toString(), Buffer.from('')]));
 });
 
 it('flatten', async function () {
@@ -1180,7 +1193,8 @@ it('flatten', async function () {
   );
   pipe(
     ['a', [[1], [[[[[2], [[[3]]]]]]]]],
-    v => flatten(v),
+    flatten,
+    expectType<IterableIterator<number>>,
     filter((v): v is number => typeof v === 'number'),
     toArray,
     v => (assert(v.length), v),
@@ -1198,6 +1212,7 @@ it('forEach', async function () {
     range(10),
     shuffle,
     filter(n => n > 5),
+    expectType<IterableIterator<number>>,
     forEach(n => assert(n > 5)),
   );
 });
@@ -1322,25 +1337,24 @@ it('map', async function () {
     ...pipe(
       range(10),
       map(v => v * v),
+      expectType<IterableIterator<number>>,
     ),
   ]);
-  // const a = toArray(map([1, 3], n => [n, n.toString()]));
-  // //    ^?
+  expectType<(number | string)[][]>(toArray(map([1, 3], n => [n, n.toString()])));
+  expectType<(readonly [number, string])[]>(toArray(map([1, 3], n => [n, n.toString()] as const)));
 });
 
 it('max', async function () {
   equal(max(range(10)), 9);
-  equal(
-    max(range(10), n => -n),
-    0,
-  );
-  equal(pipe(range(10), shuffle, max), 9);
+  equal(max(range(10), n => -n), 0);
+  equal(pipe(range(10), shuffle, expectType<IterableIterator<number>>, max, expectType<number>), 9);
   equal(
     pipe(
       range(10),
       map(n => [n, (n * n).toString()] as const),
       shuffle,
       max(v => parseFloat(v[1])),
+      expectType<readonly [number, string]>,
     ),
     [9, '81'],
   );
@@ -1619,8 +1633,11 @@ it('resume', async function () {
   const it2 = pipe(
     [5, 8, 13],
     map(n => n.toString()),
-    v => v,
     resume(1),
+    v => {
+      expectType<IterableIterator<string>>(v);
+      return v;
+    },
   );
   equal([...it2, ...it2, ...it2], ['5', '8', '13', '5', '8', '13']);
 });
