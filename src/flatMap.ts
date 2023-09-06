@@ -6,11 +6,11 @@ import toIterator from './toIterator';
  * Maps the input iterator to a new value `R` and flattens any resulting iterables or iterators by a depth of 1.
  * Behaves the same as `Array.prototype.flatMap`.
  */
-export function flatMap<T extends IteratorOrIterable<any>, R>(
-  arg: IteratorOrIterable<IterSource<T>>,
+export function flatMap<T extends IteratorOrIterable<unknown>, R>(
+  arg: T,
   iteratee: Iteratee<IterSource<T>, R | IteratorOrIterable<R>>,
 ): IterableIterator<R>
-export function flatMap<T extends IteratorOrIterable<any>, R>(
+export function flatMap<T extends IteratorOrIterable<unknown>, R>(
   iteratee: Iteratee<IterSource<T>, R | IteratorOrIterable<R>>,
 ): (arg: T) => IterableIterator<R>
 export function flatMap(...args: any[]): ItOrCurriedIt<any> {
