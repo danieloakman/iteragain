@@ -1334,6 +1334,16 @@ it('max', async function () {
     max(range(10), n => -n),
     0,
   );
+  equal(pipe(range(10), shuffle, max), 9);
+  equal(
+    pipe(
+      range(10),
+      map(n => [n, (n * n).toString()] as const),
+      shuffle,
+      max(v => parseFloat(v[1])),
+    ),
+    [9, '81'],
+  );
 });
 
 it('min', async function () {
