@@ -830,7 +830,7 @@ describe('internal', function () {
     equal(it2.next(1).value, 11);
     equal(it2.next(2).value, 13);
     equal(it2.next(3).value, 16);
-    function* sum() {
+    function* sum(): Generator<number> {
       let t = 0;
       while (true) {
         const n = yield t;
@@ -891,7 +891,7 @@ it('arrayLike', async function () {
   equal(arr[-1], 100);
   // @ts-expect-error
   throws(() => (arr[0] = 5));
-  equal(arr['something'], undefined);
+  equal(arr['something' as unknown as number], undefined);
   assert(Object.keys(arr).includes('25'));
   // @ts-expect-error
   throws(() => delete arr[0]);
@@ -1346,7 +1346,10 @@ it('map', async function () {
 
 it('max', async function () {
   equal(max(range(10)), 9);
-  equal(max(range(10), n => -n), 0);
+  equal(
+    max(range(10), n => -n),
+    0,
+  );
   equal(pipe(range(10), shuffle, expectType<IterableIterator<number>>, max, expectType<number>), 9);
   equal(
     pipe(
