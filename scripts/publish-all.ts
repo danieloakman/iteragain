@@ -8,7 +8,7 @@ function readJSONFile(path: string) {
 
 try {
   // Test and lint:
-  execSync('pnpm run coverage && pnpm run lint', { stdio: 'inherit' });
+  execSync('pnpm run test:check && pnpm run coverage && pnpm run lint', { stdio: 'inherit' });
 
   // Clean, Build and Publish for common JS version ("iteragain"):
   execSync('pnpm run build:clean && pnpm run build && pnpm publish', { stdio: 'inherit' });
