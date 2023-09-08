@@ -1794,6 +1794,14 @@ it('tee', async function () {
   equal(a.toArray(), [4, 9]);
   equal(b.toArray(), [6]);
   equal([...tee([1, 2, 3], 1)[0]], [1, 2, 3]);
+  equal(
+    pipe(range(3), tee(3), ([it1, it2, it3]) => zip(it3, it2, it1), toArray),
+    [
+      [0, 0, 0],
+      [1, 1, 1],
+      [2, 2, 2],
+    ],
+  );
   // const suite = setupSuite('tee');
   // const SIZE = 1e1;
   // suite.add('no clear', () => {

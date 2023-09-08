@@ -1,6 +1,6 @@
 import SeekableIterator from './internal/SeekableIterator';
 import TeedIterator from './internal/TeedIterator';
-import type { IteratorOrIterable, Tuple } from './types';
+import type { IterSource, IteratorOrIterable, Tuple } from './types';
 import toIterator from './toIterator';
 
 /**
@@ -14,10 +14,22 @@ import toIterator from './toIterator';
  * use `toArray` and then iterate over that.
  * @param n The number of independent iterators to create.
  */
-export function tee<T, N extends number>(arg: IteratorOrIterable<T>, n: N): Tuple<IterableIterator<T>, N> {
-  const seekable = new SeekableIterator(toIterator(arg));
+export function tee<T extends IteratorOrIterable<unknown>, N extends number>(
+  arg: T,
+  n: N,
+): Tuple<IterableIterator<IterSource<T>>, N>;
+export function tee<T extends IteratorOrIterable<unknown>, N extends number>(
+  n: N,
+): (arg: T) => Tuple<IterableIterator<IterSource<T>>, N>;
+export function tee(...args: any[]): IterableIterator<unknown>[] | ((arg: any) => IterableIterator<unknown>[]) {
+  if (args.length === 1) return it => tee(it, args[0]);
+  const seekable = new SeekableIterator(toIterator(args[0]));
+  const n = args[1];
   const indices = new Array(n).fill(0);
-  return Array.from({ length: n }, (_, i) => new TeedIterator(i, seekable, indices)) as Tuple<IterableIterator<T>, N>;
+  return Array.from({ length: n }, (_, i) => new TeedIterator(i, seekable, indices)) as Tuple<
+    IterableIterator<unknown>,
+    number
+  >;
 }
 
 export default tee;
