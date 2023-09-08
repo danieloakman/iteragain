@@ -1708,6 +1708,7 @@ it('shuffle', async function () {
 it('slice', async function () {
   equal([...slice([1, 2, 3, 4, 5], 1, 3)], [2, 3]);
   equal([...slice([1, 2, 3, 4, 5], 1)], [2, 3, 4, 5]);
+  equal(pipe(range(10), slice(1, 5), toArray), [1, 2, 3, 4]);
 });
 
 it('some', async function () {
@@ -1726,6 +1727,17 @@ it('sort', async function () {
   equal([...sort([3, 1, 2], (a, b) => b - a)], [3, 2, 1]);
   equal([...sort([3, 1, 2], (a, b) => a - b)], [1, 2, 3]);
   equal([...sort([3, 1, 3, 2])], [1, 2, 3, 3]);
+  equal(pipe(range(10), shuffle, sort, toArray), pipe(range(10), toArray));
+  equal(
+    pipe(
+      range(10),
+      shuffle,
+      sort((a, b) => b - a),
+      toArray,
+    ),
+    pipe(range(9, -1), toArray),
+  );
+  equal(pipe(range(10), shuffle, sort(), toArray), pipe(range(10), toArray));
 });
 
 it('spy', async function () {
