@@ -1744,6 +1744,15 @@ it('spy', async function () {
   const [value, it] = spy(range(10));
   equal(value, [0]);
   equal(spy(it, 10)[0], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  equal(
+    pipe(
+      count(),
+      map(n => n + 1),
+      spy(3),
+      v => v[0],
+    ),
+    [1, 2, 3],
+  );
 });
 
 it('take', async function () {
@@ -1758,6 +1767,14 @@ it('take', async function () {
 
 it('takeWhile', async function () {
   equal([...takeWhile([1, 2, 3, 4, 5], n => n < 3)], [1, 2]);
+  equal(
+    pipe(
+      range(-10, 10),
+      takeWhile(n => n < 0),
+      toArray,
+    ),
+    pipe(range(-10, 0), toArray),
+  );
 });
 
 it('tap', async function () {

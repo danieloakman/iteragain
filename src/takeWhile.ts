@@ -1,5 +1,5 @@
 import TakeWhileIterator from './internal/TakeWhileIterator';
-import type { IteratorOrIterable, Predicate } from './types';
+import type { ItOrCurriedIt, IteratorOrIterable, Predicate } from './types';
 import toIterator from './toIterator';
 
 /**
@@ -7,8 +7,11 @@ import toIterator from './toIterator';
  * @param arg The input iterator.
  * @param predicate A function to call for each value.
  */
-export function takeWhile<T>(arg: IteratorOrIterable<T>, predicate: Predicate<T>) {
-  return new TakeWhileIterator(toIterator(arg), predicate);
+export function takeWhile<T>(arg: IteratorOrIterable<T>, predicate: Predicate<T>): IterableIterator<T>;
+export function takeWhile<T>(predicate: Predicate<T>): (arg: IteratorOrIterable<T>) => IterableIterator<T>;
+export function takeWhile(...args: any[]): ItOrCurriedIt<unknown> {
+  if (args.length === 1) return it => takeWhile(it, args[0]);
+  return new TakeWhileIterator(toIterator(args[0]), args[1]);
 }
 
 export default takeWhile;
