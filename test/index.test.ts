@@ -1369,6 +1369,15 @@ it('min', async function () {
     min(range(10), n => -n),
     9,
   );
+  equal(
+    pipe(
+      range(-50, 50),
+      shuffle,
+      map(n => n.toString()),
+      min(n => parseFloat(n)),
+    ),
+    '-50',
+  );
 });
 
 it('minmax', async function () {
