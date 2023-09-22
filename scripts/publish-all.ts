@@ -1,6 +1,7 @@
 import { readFile, readdir, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { sh, ok, main } from 'js-utils';
+import { execSync } from 'child_process';
 
 async function readJSONFile(path: string) {
   return JSON.parse(await readFile(path, 'utf8'));
@@ -20,11 +21,12 @@ main(module, async () => {
     ok(await sh('pnpm run check && pnpm run coverage && pnpm run lint'));
 
     // Clean, Build and Publish for common JS version ("iteragain"):
-    ok(await sh('pnpm run build:clean && pnpm run build && pnpm publish'));
+    ok(await sh('pnpm run build:clean && pnpm run build'));
 
     assertDirContainsJSFiles(distDir);
 
-    ok(await sh('pnpm publish'));
+    // ok(await sh('pnpm publish'));
+    execSync('pnpm publish', { stdio: 'inherit' });
 
     // Clean, Build for ES modules:
     ok(await sh('pnpm run build:clean && pnpm run build:es'));
@@ -46,7 +48,8 @@ main(module, async () => {
     await writeFile(packageLockJSONPath, JSON.stringify(packageLockJSON, null, 2));
     await writeFile(readmePath, await readFile(readmeESPath, 'utf8'));
 
-    ok(await sh('pnpm publish --no-git-checks'));
+    // ok(await sh('pnpm publish --no-git-checks'));
+    execSync('pnpm publish --no-git-checks', { stdio: 'inherit' });
   } finally {
     // Cleanup
     ok(await sh('git checkout package.json package-lock.json README.md && pnpm run build:clean'));
