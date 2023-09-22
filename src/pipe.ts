@@ -1,3 +1,7 @@
+/**
+ * Pipe `value` through several functions with each having the result of the last one being passed to the next as its
+ * input.
+ */
 export function pipe<A, B>(value: A, fn1: (value: A) => B): B;
 export function pipe<A, B, C>(value: A, fn1: (value: A) => B, fn2: (value: B) => C): C;
 export function pipe<A, B, C, D>(value: A, fn1: (value: A) => B, fn2: (value: B) => C, fn3: (value: C) => D): D;
