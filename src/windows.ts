@@ -1,4 +1,4 @@
-import type { IteratorOrIterable } from './types';
+import type { ItOrCurriedIt, IterSource, IteratorOrIterable, Tuple } from './types';
 import WindowsIterator from './internal/WindowsIterator';
 import toIterator from './toIterator';
 
@@ -15,12 +15,28 @@ import toIterator from './toIterator';
  * toArray(windows([1,2,3,4,5], 3, 3, 0)) // [[1,2,3], [4,5,0]]
  */
 export function windows<T, Length extends number>(
+  length: Length,
+  offset: number,
+  fill: T,
+): (arg: IteratorOrIterable<T>) => IterableIterator<Tuple<T, Length>>;
+export function windows<T, Length extends number>(
+  length: Length,
+  offset: number,
+): (arg: T) => IterableIterator<IterSource<T>[]>;
+export function windows<T, Length extends number>(
   arg: IteratorOrIterable<T>,
   length: Length,
   offset: number,
-  fill?: T,
-) {
-  return new WindowsIterator(toIterator(arg), length, offset, fill);
+  fill: T,
+): IterableIterator<Tuple<T, Length>>;
+export function windows<T, Length extends number>(
+  arg: IteratorOrIterable<T>,
+  length: Length,
+  offset: number,
+): IterableIterator<T[]>;
+export function windows(...args: any[]): ItOrCurriedIt<unknown> {
+  if (typeof args[0] === 'number') return it => windows(it, args[0], args[1], args[2]);
+  return new WindowsIterator(toIterator(args[0]), args[1], args[2], args[3]);
 }
 
 export default windows;
