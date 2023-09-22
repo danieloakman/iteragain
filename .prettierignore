@@ -5,3 +5,4 @@ dist
 .nyc_output
 src/**/*Async*.ts
 src/**/*async*.ts
+*.html
