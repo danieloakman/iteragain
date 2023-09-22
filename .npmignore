@@ -13,8 +13,9 @@ test
 .nvmrc
 .prettierignore
 .prettierrc
-tsconfig.json
-tsconfig.es.json
+tsconfig*
 .nyc_output
 .nojekyll
+README.es.md
+.github
 README.es.md
