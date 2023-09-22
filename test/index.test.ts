@@ -1386,6 +1386,17 @@ it('minmax', async function () {
     minmax(range(10), n => -n),
     [9, 0],
   );
+  equal(
+    pipe(
+      range(-50, 50),
+      map(n => n * n),
+      shuffle,
+      map(n => n.toString()),
+      minmax(n => parseFloat(n)),
+      expectType<[string, string]>,
+    ),
+    ['0', '2500'],
+  );
 });
 
 it('nth', async function () {
