@@ -44,6 +44,9 @@ devDependencies:
   ix:
     specifier: ^5.0.0
     version: 5.0.0
+  js-utils:
+    specifier: github:danieloakman/js-utils#node
+    version: github.com/danieloakman/js-utils/742f6e6969bdc1877d9662a5bbb7d78d7717ca0b
   lint-staged:
     specifier: ^13.2.2
     version: 13.2.2
@@ -3282,4 +3285,11 @@ packages:
     resolution:
       { integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q== }
     engines: { node: '>=10' }
+    dev: true
+
+  github.com/danieloakman/js-utils/742f6e6969bdc1877d9662a5bbb7d78d7717ca0b:
+    resolution:
+      { tarball: https://codeload.github.com/danieloakman/js-utils/tar.gz/742f6e6969bdc1877d9662a5bbb7d78d7717ca0b }
+    name: js-utils
+    version: 0.1.0
     dev: true

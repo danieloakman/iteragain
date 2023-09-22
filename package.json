@@ -5,7 +5,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "build": "tsc --build",
+    "build": "tsc -p tsconfig.json",
     "build:es": "tsc -p tsconfig.es.json",
     "build:clean": "ts-node ./scripts/build-clean.ts",
     "build:watch": "pnpm run build:clean && tsc --watch",
@@ -47,6 +47,7 @@
     "iterare": "^1.2.1",
     "iterplus": "^3.0.2",
     "ix": "^5.0.0",
+    "js-utils": "github:danieloakman/js-utils#node",
     "lint-staged": "^13.2.2",
     "mocha": "10.2.0",
     "more-node-fs": "^2.0.2",
