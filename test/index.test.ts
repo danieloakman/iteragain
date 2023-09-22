@@ -1891,6 +1891,14 @@ it('unique', async function () {
   equal([...unique('AAAABBBCCDAABBB', { justSeen: true })].join(''), 'ABCDAB');
   equal([...unique('ABBCcAD', { iteratee: v => v.toLowerCase() })].join(''), 'ABCD');
   equal([...unique('ABBCcAD', v => v.toLowerCase())].join(''), 'ABCD');
+  equal(
+    pipe(
+      'AAaaaABBBbBCaaDdCaadD',
+      unique(v => v.toLowerCase()),
+      toArray,
+    ).join(''),
+    'ABCD',
+  );
 });
 
 it('unzip', async function () {
