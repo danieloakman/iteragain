@@ -1,7 +1,7 @@
 # [iteragain](https://www.npmjs.com/package/iteragain)
 
 [![Run Tests](https://github.com/danieloakman/iteragain/actions/workflows/run-tests.yml/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/run-tests.yml)
-[![Deploy Documentation](https://github.com/danieloakman/iteragain/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/deploy-docs.yml)
+[![Deploy Documentation](https://github.com/danieloakman/iteragain/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/pages/pages-build-deployment)
 
 Another Javascript library for iterating.
 
@@ -43,10 +43,15 @@ let nums = iter([1, 2, 3, 4, 5])
   .map(n => n * n)
   .filter(n => n % 2 === 0)
   .toArray();
-  // [4, 16]
+// [4, 16]
 // Or use the standalone functions instead of `iter`:
 import { map, filter, toArray } from 'iteragain';
-nums = toArray(filter(map([1, 2, 3, 4, 5], n => n * n), n => n % 2 === 0)); // [4, 16]
+nums = toArray(
+  filter(
+    map([1, 2, 3, 4, 5], n => n * n),
+    n => n % 2 === 0,
+  ),
+); // [4, 16]
 ```
 
 ### Using the `range` standalone function
@@ -77,14 +82,14 @@ const obj = { a: 1, b: { c: 2, d: { e: 3 }, f: 4 } };
 const keys = iter(obj)
   .map(([key, _value, _parent]) => key)
   .toArray();
-  // ['a', 'c', 'e', 'd', 'b', 'f'] Post-order depth first search traversal of `obj`.
+// ['a', 'c', 'e', 'd', 'b', 'f'] Post-order depth first search traversal of `obj`.
 ```
 
 ### Supports passing functions as input and using an optional sentinel value to stop iteration
 
 ```js
 import iter from 'iteragain/iter';
-const it = iter(() => someFunction(1, 2, 3), null)
+const it = iter(() => someFunction(1, 2, 3), null);
 // Will call `someFunction` with the arguments [1, 2, 3] for each iteration until it returns `null`:
 const results = it.toArray();
 ```
@@ -129,10 +134,10 @@ const collected = toArray(arr);
 
 ```md
 Starting benchmark suite: index.bm.ts
-  for of loop x 2,831 ops/sec, ±10 ops/sec or ±0.35% (98 runs sampled)
-  iteragain x 1,853 ops/sec, ±7 ops/sec or ±0.36% (98 runs sampled)
-  iteragain standalones x 1,740 ops/sec, ±27 ops/sec or ±1.57% (97 runs sampled)
-  iterare x 1,754 ops/sec, ±31 ops/sec or ±1.76% (96 runs sampled)
-  rxjs x 1,319 ops/sec, ±7 ops/sec or ±0.50% (96 runs sampled)
-  ixjs x 873 ops/sec, ±15 ops/sec or ±1.70% (95 runs sampled)
+for of loop x 2,831 ops/sec, ±10 ops/sec or ±0.35% (98 runs sampled)
+iteragain x 1,853 ops/sec, ±7 ops/sec or ±0.36% (98 runs sampled)
+iteragain standalones x 1,740 ops/sec, ±27 ops/sec or ±1.57% (97 runs sampled)
+iterare x 1,754 ops/sec, ±31 ops/sec or ±1.76% (96 runs sampled)
+rxjs x 1,319 ops/sec, ±7 ops/sec or ±0.50% (96 runs sampled)
+ixjs x 873 ops/sec, ±15 ops/sec or ±1.70% (95 runs sampled)
 ```
