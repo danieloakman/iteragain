@@ -49,10 +49,10 @@ jobs:
       #     target_branch: gh-pages
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: docs # The folder the action should deploy.
+      # - name: Deploy 🚀
+      #   uses: JamesIves/github-pages-deploy-action@v4
+      #   with:
+      #     folder: docs # The folder the action should deploy.
 
       - uses: actions/upload-artifact@v3
         if: failure()
