@@ -6,6 +6,7 @@ on:
     paths:
       - src/**/*
       - README*
+      - package.json
   workflow_dispatch:
 
 jobs:
