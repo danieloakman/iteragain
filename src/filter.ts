@@ -9,10 +9,10 @@ import toIterator from './toIterator';
 export function filter<T extends IteratorOrIterable<any>>(
   arg: T,
   predicate: BooleanConstructor,
-): IterableIterator<NonNullable<T>>;
+): IterableIterator<NonNullable<IterSource<T>>>;
 export function filter<T extends IteratorOrIterable<any>>(
   predicate: BooleanConstructor,
-): (arg: T) => IterableIterator<NonNullable<T>>;
+): (arg: T) => IterableIterator<NonNullable<IterSource<T>>>;
 export function filter<T extends IteratorOrIterable<any>, S extends IterSource<T>>(
   arg: T,
   predicate: StrictPredicate<IterSource<T>, S>,
