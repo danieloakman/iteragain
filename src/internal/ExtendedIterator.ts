@@ -45,6 +45,11 @@ import count from '../count';
 import FlatMapIterator from './FlatMapIterator';
 import GroupByIterator from './GroupByIterator';
 
+const enumerator =
+  <T>(count = 0) =>
+  (v: T): [number, T] =>
+    [count++, v];
+
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods
  * that modify the internal iterator, but don't start iterating. Methods without the `@lazy` prefix do start iterating
@@ -69,8 +74,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
 
   /** @lazy Returns a new ExtendedIterator that maps each element in this iterator to a new value. */
   map<R>(iteratee: Iteratee<T, R>): ExtendedIterator<R> {
-    this.iterator = new MapIterator(this.iterator, iteratee) as any;
-    return this as any;
+    return new ExtendedIterator(new MapIterator(this.iterator, iteratee));
   }
 
   /**
@@ -82,8 +86,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   filter<S extends T>(predicate: StrictPredicate<T, S>): ExtendedIterator<S>;
   filter(predicate: Predicate<T>): ExtendedIterator<T>;
   filter(predicate: Predicate<T>): ExtendedIterator<T> {
-    this.iterator = new FilterIterator(this.iterator, predicate);
-    return this;
+    return new ExtendedIterator(new FilterIterator(this.iterator, predicate));
   }
 
   /**
@@ -93,20 +96,21 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * return a nullish value.
    */
   filterMap<R>(iteratee: Iteratee<T, R>): ExtendedIterator<NonNullable<R>> {
-    this.iterator = new FilterMapIterator(this.iterator, iteratee) as any;
-    return this as any;
+    return new ExtendedIterator(new FilterMapIterator(this.iterator, iteratee));
   }
 
   /** @lazy Concatenates this iterator with the given iterators, in order of: `[this.iterator, ...others]`. */
   concat<U extends IteratorOrIterable<any>[]>(...args: U): ExtendedIterator<T | IterSource<U[number]>> {
-    this.iterator = new ConcatIterator([this.iterator, ...(args.map(toIterator) as Iterator<IterSource<U[number]>>[])]);
-    return this as any;
+    return new ExtendedIterator(
+      new ConcatIterator([this.iterator, ...(args.map(toIterator) as Iterator<IterSource<U[number]>>[])]),
+    );
   }
 
   /** @lazy Prepends this iterator with the given iterators, in order of: `[...args, this.iterator]`. */
   prepend<U extends IteratorOrIterable<any>[]>(...args: U): ExtendedIterator<T | IterSource<U[number]>> {
-    this.iterator = new ConcatIterator([...(args.map(toIterator) as Iterator<IterSource<U[number]>>[]), this.iterator]);
-    return this;
+    return new ExtendedIterator(
+      new ConcatIterator([...(args.map(toIterator) as Iterator<IterSource<U[number]>>[]), this.iterator]),
+    );
   }
 
   /**
@@ -119,8 +123,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @returns A new ExtendedIterator that only includes the elements between `start` and `end`.
    */
   slice(start = 0, end = Infinity): ExtendedIterator<T> {
-    this.iterator = new SliceIterator(this.iterator, start, end);
-    return this;
+    return new ExtendedIterator(new SliceIterator(this.iterator, start, end));
   }
 
   /**
@@ -136,13 +139,12 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   flatten(): ExtendedIterator<FlattenDeep<T>>;
   flatten(depth: number): ExtendedIterator<any>;
   flatten(depth = Infinity): ExtendedIterator<any> {
-    this.iterator = new FlattenIterator(this.iterator, depth) as any;
-    return this as any;
+    return new ExtendedIterator(new FlattenIterator(this.iterator, depth));
   }
 
   /** @lazy Attaches the index to each value as a pair like: `[0, value], [1, value]`, etc. */
   enumerate(): ExtendedIterator<[number, T]> {
-    return this.map(((count = 0) => v => [count++, v])()); // prettier-ignore
+    return this.map(enumerator());
   }
 
   /**
@@ -163,8 +165,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   zip<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<[T, A, B]>;
   zip(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]>;
   zip(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]> {
-    this.iterator = new ZipIterator([this.iterator, ...args.map(toIterator)]) as any;
-    return this as any;
+    return new ExtendedIterator(new ZipIterator([this.iterator, ...args.map(toIterator)]));
   }
 
   /** @lazy Aggregates this iterator and any number of others into one. Stops when all of the iterables is empty. */
@@ -172,8 +173,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   zipLongest<A, B>(a: IteratorOrIterable<A>, b: IteratorOrIterable<B>): ExtendedIterator<[T, A, B]>;
   zipLongest(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]>;
   zipLongest(...args: IteratorOrIterable<any>[]): ExtendedIterator<any[]> {
-    this.iterator = new ZipLongestIterator([this.iterator, ...args.map(toIterator)]) as any;
-    return this as any;
+    return new ExtendedIterator(new ZipLongestIterator([this.iterator, ...args.map(toIterator)]));
   }
 
   /**
@@ -185,8 +185,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * iter([1]).pairwise().toArray() // []
    */
   pairwise(): ExtendedIterator<[T, T]> {
-    this.iterator = new PairwiseIterator(this.iterator) as any;
-    return this as any;
+    return new ExtendedIterator(new PairwiseIterator(this.iterator));
   }
 
   /**
@@ -195,8 +194,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * fewer than the number of values in this iterator. Will be empty if this iterator has fewer than three values.
    */
   triplewise(): ExtendedIterator<[T, T, T]> {
-    this.iterator = new TriplewiseIterator(this.iterator) as any;
-    return this as any;
+    return new ExtendedIterator(new TriplewiseIterator(this.iterator));
   }
 
   /**
@@ -205,8 +203,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param predicate A function to call for each value.
    */
   takeWhile(predicate: Predicate<T>): ExtendedIterator<T> {
-    this.iterator = new TakeWhileIterator(this.iterator, predicate);
-    return this;
+    return new ExtendedIterator(new TakeWhileIterator(this.iterator, predicate));
   }
 
   /**
@@ -215,8 +212,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param predicate The function to call for each value.
    */
   dropWhile(predicate: Predicate<T>): ExtendedIterator<T> {
-    this.iterator = new DropWhileIterator(this.iterator, predicate);
-    return this;
+    return new ExtendedIterator(new DropWhileIterator(this.iterator, predicate));
   }
 
   /**
@@ -231,8 +227,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    *    .toArray() // returns [1, 4, 9]
    */
   tap(func: Predicate<T>): ExtendedIterator<T> {
-    this.iterator = new TapIterator(this.iterator, func);
-    return this;
+    return new ExtendedIterator(new TapIterator(this.iterator, func));
   }
 
   /**
@@ -245,8 +240,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * iter([1,2,3,4,5,6,7,8,9]).chunk(2, 0).toArray() // [[1,2], [3,4], [5,6], [7,8], [9, 0]]
    */
   chunks<Length extends number>(length: Length, fill?: T): ExtendedIterator<Tuple<T, Length>> {
-    this.iterator = new ChunksIterator(this.iterator, length, fill) as any;
-    return this as any;
+    return new ExtendedIterator(new ChunksIterator(this.iterator, length, fill));
   }
 
   /**
@@ -262,8 +256,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * iter([1,2,3,4,5]).windows(3, 3, 0).toArray() // [[1,2,3], [4,5,0]]
    */
   windows<Length extends number>(length: Length, offset: number, fill?: T): ExtendedIterator<Tuple<T, Length>> {
-    this.iterator = new WindowsIterator(this.iterator, length, offset, fill) as any;
-    return this as any;
+    return new ExtendedIterator(new WindowsIterator(this.iterator, length, offset, fill) as any);
   }
 
   /**

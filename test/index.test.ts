@@ -92,6 +92,12 @@ describe('internal', function () {
       assert(isIterable(iterator) && isIterator(iterator));
     });
 
+    // it('immutable', async () => {
+    //   const it = iter([1, 2, 3]);
+    //   it.map(n => (n * 2).toString());
+    //   equal(it.toArray(), ["2", "4", "6"]);
+    // });
+
     it('[Symbol.iterator]', async function () {
       const iterator1 = iter([1, 2, 3]);
       equal([...iterator1[Symbol.iterator]()], [1, 2, 3]);
