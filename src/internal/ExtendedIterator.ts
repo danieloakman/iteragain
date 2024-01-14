@@ -584,9 +584,10 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   partition(predicate: Predicate<T>): [falsey: T[], truthy: T[]] {
     const falsey: T[] = [];
     const truthy: T[] = [];
-    for (const value of this) {
-      if (predicate(value)) truthy.push(value);
-      else falsey.push(value);
+    let next: IteratorResult<T>;
+    while (!(next = this.iterator.next()).done) {
+      if (predicate(next.value)) truthy.push(next.value);
+      else falsey.push(next.value);
     }
     return [falsey, truthy];
   }
