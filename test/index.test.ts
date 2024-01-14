@@ -92,11 +92,20 @@ describe('internal', function () {
       assert(isIterable(iterator) && isIterator(iterator));
     });
 
-    // it('immutable', async () => {
-    //   const it = iter([1, 2, 3]);
-    //   it.map(n => (n * 2).toString());
-    //   equal(it.toArray(), ["2", "4", "6"]);
-    // });
+    it("Doesn't reassign internal iterator", async () => {
+      {
+        const it1 = iter([1, 2, 3]);
+        const it2 = it1.map(n => (n * 2).toString());
+        equal(it2.toArray(), ['2', '4', '6']);
+        equal(it1.toArray(), [], 'it1 should be empty');
+      }
+      {
+        const it1 = iter('abc');
+        const it2 = it1.map(n => n.toUpperCase().charCodeAt(0));
+        equal(it2.toArray(), [65, 66, 67]);
+        equal(it1.toArray(), [], 'it1 should be empty');
+      }
+    });
 
     it('[Symbol.iterator]', async function () {
       const iterator1 = iter([1, 2, 3]);
