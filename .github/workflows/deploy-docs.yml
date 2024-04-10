@@ -1,0 +1,41 @@
+name: Deploy Documentation
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Use Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies 🛠️
+        run: pnpm install
+
+      - name: Build docs 🏗️
+        run: pnpm run docs:build
+
+      - name: Deploy docs 🚀
+        run: pnpm run docs:deploy
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: update-docs-report
+          path: update-docs-report
+          retention-days: 30
