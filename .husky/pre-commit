@@ -1,4 +1,12 @@
-# Run prettier on staged files:
-bunx pretty-quick --staged
-# Then lint staged files:
-bunx lint-staged
+# Check if bun command is installed:
+if ! command -v bun &> /dev/null
+  # Run prettier on staged files:
+  bunx pretty-quick --staged
+  # Then lint staged files:
+  bunx lint-staged
+then
+  # Run prettier on staged files:
+  npx pretty-quick --staged
+  # Then lint staged files:
+  npx lint-staged
+fi
