@@ -18,7 +18,7 @@
     "test:debug": "pnpm run test --inspect",
     "check": "tsc -p tsconfig.test.json",
     "check:watch": "pnpm run check --watch",
-    "coverage": "nyc --skip-full ts-mocha test/**.test.ts --reporter spec",
+    "coverage": "nyc --skip-full ts-mocha src/test/**.test.ts --reporter spec",
     "bm": "ts-node benchmark/index.bm.ts",
     "bm:prof": "node -r ts-node/register --prof benchmark/index.bm.ts",
     "new:iterator": "ts-node ./scripts/new-iterator.ts",
