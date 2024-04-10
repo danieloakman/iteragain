@@ -1,11 +1,4 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 # Run prettier on staged files:
 npx pretty-quick --staged
 # Then lint staged files:
 npx lint-staged
-
-# Then run tests and generate docs:
-# npm test
-# npm run typedoc
