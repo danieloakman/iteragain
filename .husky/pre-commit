@@ -1,4 +1,4 @@
 # Run prettier on staged files:
-npx pretty-quick --staged
+bunx pretty-quick --staged
 # Then lint staged files:
-npx lint-staged
+bunx lint-staged
