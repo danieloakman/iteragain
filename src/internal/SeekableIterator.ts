@@ -9,7 +9,10 @@ export class SeekableIterator<T> implements IterableIterator<T> {
   protected i = 0;
   protected iteratorDone = false;
 
-  constructor(protected iterator: Iterator<T>, protected maxLength = Infinity) {}
+  constructor(
+    protected iterator: Iterator<T>,
+    protected maxLength = Infinity,
+  ) {}
 
   get elements(): readonly T[] {
     return this.cache;

@@ -2,25 +2,26 @@ export type IteratorOrIterable<T> = Iterator<T> | Iterable<T>;
 
 // export type AsyncIteratorOrIterable<T> = AsyncIterator<T> | AsyncIterable<T>;
 
-export type FlattenDeep<A> = A extends IteratorOrIterable<infer B>
-  ? B extends IteratorOrIterable<infer C>
-    ? C extends IteratorOrIterable<infer D>
-      ? D extends IteratorOrIterable<infer E>
-        ? E extends IteratorOrIterable<infer F>
-          ? F extends IteratorOrIterable<infer G>
-            ? G extends IteratorOrIterable<infer H>
-              ? H extends IteratorOrIterable<infer I>
-                ? I extends IteratorOrIterable<infer J>
-                  ? J
-                  : I
-                : H
-              : G
-            : F
-          : E
-        : D
-      : C
-    : B
-  : A;
+export type FlattenDeep<A> =
+  A extends IteratorOrIterable<infer B>
+    ? B extends IteratorOrIterable<infer C>
+      ? C extends IteratorOrIterable<infer D>
+        ? D extends IteratorOrIterable<infer E>
+          ? E extends IteratorOrIterable<infer F>
+            ? F extends IteratorOrIterable<infer G>
+              ? G extends IteratorOrIterable<infer H>
+                ? H extends IteratorOrIterable<infer I>
+                  ? I extends IteratorOrIterable<infer J>
+                    ? J
+                    : I
+                  : H
+                : G
+              : F
+            : E
+          : D
+        : C
+      : B
+    : A;
 
 // export type AsyncFlattenDeep<T> = T extends AsyncIteratorOrIterable<infer V>
 //   ? V extends AsyncIteratorOrIterable<infer U>
@@ -99,19 +100,20 @@ export interface Fn<Args extends any[] = any[], Result = any> {
 }
 
 /** Returns the source of the generic Iterable, Iterator, IterableIterator or their async counterparts. */
-export type IterSource<T> = T extends Iterable<infer U>
-  ? U
-  : T extends Iterator<infer U>
-  ? U
-  : T extends IterableIterator<infer U>
-  ? U
-  : T extends AsyncIterable<infer U>
-  ? U
-  : T extends AsyncIterator<infer U>
-  ? U
-  : T extends AsyncIterableIterator<infer U>
-  ? U
-  : T;
+export type IterSource<T> =
+  T extends Iterable<infer U>
+    ? U
+    : T extends Iterator<infer U>
+      ? U
+      : T extends IterableIterator<infer U>
+        ? U
+        : T extends AsyncIterable<infer U>
+          ? U
+          : T extends AsyncIterator<infer U>
+            ? U
+            : T extends AsyncIterableIterator<infer U>
+              ? U
+              : T;
 
 export type MapToSource<T extends IteratorOrIterable<any>[]> = {
   [K in keyof T]: IterSource<T[K]>;
@@ -142,8 +144,8 @@ export type KeyIdentifier<T> = keyof T | Iteratee<T, any>;
 export type KeyIdentifiersValue<T, K extends KeyIdentifier<T>> = K extends keyof T
   ? T[K]
   : K extends Iteratee<T, any>
-  ? ReturnType<K>
-  : never;
+    ? ReturnType<K>
+    : never;
 
 /** The params used for `unique` method/function. */
 export type UniqueParams<T> = { iteratee?: Iteratee<T, any>; justSeen?: boolean } | Iteratee<T, any>;

@@ -8,7 +8,10 @@ export class GroupByIterator<T, K extends KeyIdentifier<T>>
   protected currGroup: T[] = [];
   protected done = false;
 
-  constructor(protected iterator: Iterator<T>, protected key: K) {}
+  constructor(
+    protected iterator: Iterator<T>,
+    protected key: K,
+  ) {}
 
   [Symbol.iterator](): IterableIterator<[KeyIdentifiersValue<T, K>, T[]]> {
     return this;

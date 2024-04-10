@@ -1,5 +1,8 @@
 export class CompressIterator<T> implements IterableIterator<T> {
-  constructor(protected iterator: Iterator<T>, protected selectors: Iterator<any>) {}
+  constructor(
+    protected iterator: Iterator<T>,
+    protected selectors: Iterator<any>,
+  ) {}
 
   [Symbol.iterator](): IterableIterator<T> {
     return this;

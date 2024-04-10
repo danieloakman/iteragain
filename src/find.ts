@@ -6,7 +6,9 @@ import toIterator from './toIterator';
  * values up to the found value, then stops. So if it's not found, then the iterator is exhausted.
  */
 export function find<T, V extends T>(arg: IteratorOrIterable<T>, predicate: (value: T) => value is V): V | undefined;
-export function find<T, V extends T>(predicate: (value: T) => value is V): (arg: IteratorOrIterable<T>) => V | undefined;
+export function find<T, V extends T>(
+  predicate: (value: T) => value is V,
+): (arg: IteratorOrIterable<T>) => V | undefined;
 export function find<T>(arg: IteratorOrIterable<T>, predicate: Predicate<T>): T | undefined;
 export function find<T>(predicate: Predicate<T>): (arg: IteratorOrIterable<T>) => T | undefined;
 export function find(...args: any[]): any | ((arg: IteratorOrIterable<unknown>) => unknown) {

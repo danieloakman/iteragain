@@ -5,7 +5,11 @@ export class ChunksIterator<T, Size extends number> implements IterableIterator<
   protected done = false;
   protected chunk: T[] = [];
 
-  constructor(protected iterator: Iterator<T>, protected length: Size, protected fill?: T | undefined) {}
+  constructor(
+    protected iterator: Iterator<T>,
+    protected length: Size,
+    protected fill?: T | undefined,
+  ) {}
 
   [Symbol.iterator](): IterableIterator<Tuple<T, Size>> {
     return this;

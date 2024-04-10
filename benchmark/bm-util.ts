@@ -25,7 +25,7 @@ export function handleCompleteEvent(event: any) {
 export function setupSuite(...args: ConstructorParameters<typeof Suite>): Suite;
 export function setupSuite(name: string): Suite;
 export function setupSuite(...args: [string] | ConstructorParameters<typeof Suite>): Suite {
-  return new Suite(...args as any)
+  return new Suite(...(args as any))
     .on('start', handleStartEvent)
     .on('cycle', handleCycleEvent)
     .on('complete', handleCompleteEvent);

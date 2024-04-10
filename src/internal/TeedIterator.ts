@@ -1,7 +1,11 @@
 import SeekableIterator from './SeekableIterator';
 
 export class TeedIterator<T> implements IterableIterator<T> {
-  constructor(protected i: number, protected seekable: SeekableIterator<T>, protected indices: number[]) {}
+  constructor(
+    protected i: number,
+    protected seekable: SeekableIterator<T>,
+    protected indices: number[],
+  ) {}
 
   [Symbol.iterator](): IterableIterator<T> {
     return this;

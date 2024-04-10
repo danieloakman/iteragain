@@ -9,10 +9,10 @@ import toIterator from './toIterator';
 export function flatMap<T extends IteratorOrIterable<unknown>, R>(
   arg: T,
   iteratee: Iteratee<IterSource<T>, R | IteratorOrIterable<R>>,
-): IterableIterator<R>
+): IterableIterator<R>;
 export function flatMap<T extends IteratorOrIterable<unknown>, R>(
   iteratee: Iteratee<IterSource<T>, R | IteratorOrIterable<R>>,
-): (arg: T) => IterableIterator<R>
+): (arg: T) => IterableIterator<R>;
 export function flatMap(...args: any[]): ItOrCurriedIt<any> {
   if (args.length === 1) return it => flatMap(it, args[0]);
   return new FlatMapIterator(toIterator(args[0]), args[1]);

@@ -7,8 +7,13 @@ import toIterator from './toIterator';
  * `maxLength` is kept and progressively added to when iterating forwards.
  */
 export function seekable<T>(maxLength?: number): (arg: IteratorOrIterable<T>) => SeekableIterator<T>;
-export function seekable<T extends IteratorOrIterable<any>>(arg: T, maxLength?: number): SeekableIterator<IterSource<T>>;
-export function seekable<T>(...args: any[]): SeekableIterator<any> | ((arg: IteratorOrIterable<T>) => SeekableIterator<T>) {
+export function seekable<T extends IteratorOrIterable<any>>(
+  arg: T,
+  maxLength?: number,
+): SeekableIterator<IterSource<T>>;
+export function seekable<T>(
+  ...args: any[]
+): SeekableIterator<any> | ((arg: IteratorOrIterable<T>) => SeekableIterator<T>) {
   if (!args.length || typeof args[0] === 'number') return it => seekable(it, args[0]);
   return new SeekableIterator(toIterator(args[0]), args[1]);
 }

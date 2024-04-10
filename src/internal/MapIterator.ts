@@ -10,7 +10,10 @@ import type { Iteratee } from '../types';
 
 /** An iterator that takes an input Iterator<T> and maps it's values to the type `R`. */
 export class MapIterator<T, R> implements IterableIterator<R> {
-  constructor(protected iterator: Iterator<T>, protected iteratee: Iteratee<T, R>) {}
+  constructor(
+    protected iterator: Iterator<T>,
+    protected iteratee: Iteratee<T, R>,
+  ) {}
 
   [Symbol.iterator](): IterableIterator<R> {
     return this;

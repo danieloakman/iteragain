@@ -5,7 +5,10 @@ import toIterator from './toIterator';
 export function max<T extends IteratorOrIterable<unknown>>(
   iteratee?: Iteratee<IterSource<T>, number>,
 ): (arg: T) => IterSource<T>;
-export function max<T extends IteratorOrIterable<unknown>>(arg: T, iteratee?: Iteratee<IterSource<T>, number>): IterSource<T>;
+export function max<T extends IteratorOrIterable<unknown>>(
+  arg: T,
+  iteratee?: Iteratee<IterSource<T>, number>,
+): IterSource<T>;
 export function max(...args: any[]): unknown {
   if (!args.length || typeof args[0] === 'function') return (it: IteratorOrIterable<unknown>) => max(it, args[0]);
   const it = toIterator(args[0]);

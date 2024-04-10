@@ -6,7 +6,7 @@ import toIterator from './toIterator';
  * value.
  */
 export function partition<T>(arg: IteratorOrIterable<T>, predicate: Predicate<T>): [T[], T[]];
-export function partition<T>(predicate: Predicate<T>): (arg: IteratorOrIterable<T>) => [T[], T[]]
+export function partition<T>(predicate: Predicate<T>): (arg: IteratorOrIterable<T>) => [T[], T[]];
 export function partition<T>(...args: any[]): [T[], T[]] | ((arg: IteratorOrIterable<T>) => [T[], T[]]) {
   if (args.length === 1) return (arg: IteratorOrIterable<T>) => partition(arg, args[0]);
   const iterator = toIterator(args[0]);
