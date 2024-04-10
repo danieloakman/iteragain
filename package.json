@@ -14,7 +14,7 @@
     "asyncify:clean": "ts-node ./scripts/asyncify.ts -c",
     "lint": "eslint src",
     "format": "prettier --write **.ts",
-    "test": "ts-mocha test/**.test.ts --reporter spec",
+    "test": "ts-mocha src/**/*.test.ts --reporter spec",
     "test:debug": "pnpm run test --inspect",
     "check": "tsc -p tsconfig.test.json",
     "check:watch": "pnpm run check --watch",
