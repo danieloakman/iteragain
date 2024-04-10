@@ -26,6 +26,9 @@ devDependencies:
   benchmark:
     specifier: ^2.1.4
     version: 2.1.4
+  changie:
+    specifier: ^1.18.0
+    version: 1.18.0
   eslint:
     specifier: ^8.41.0
     version: 8.41.0
@@ -979,6 +982,12 @@ packages:
     resolution:
       { integrity: sha512-ree3Gqw/nazQAPuJJEy+avdl7QfZMcUvmHIKgEZkGL+xOBzRvup5Hxo6LHuMceSxOabuJLJm5Yp/92R9eMmMvA== }
     engines: { node: ^12.17.0 || ^14.13 || >=16.0.0 }
+    dev: true
+
+  /changie@1.18.0:
+    resolution:
+      { integrity: sha512-/5Ryt7slr9cbDt8rIXxxkHjIu6nacYgQrSVnNvXVSHw4dIl9ENna/cew1w48ZYTC1vMcy0F5QjQ1HNAriNa4gg== }
+    hasBin: true
     dev: true
 
   /chokidar@3.5.3:
