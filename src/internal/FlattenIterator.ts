@@ -6,7 +6,10 @@ import toIterator from '../toIterator';
 export class FlattenIterator implements IterableIterator<any> {
   protected inner: Iterator<any> | null = null;
 
-  constructor(protected iterator: Iterator<any>, protected depth: number) {}
+  constructor(
+    protected iterator: Iterator<any>,
+    protected depth: number,
+  ) {}
 
   [Symbol.iterator](): IterableIterator<any> {
     return this;

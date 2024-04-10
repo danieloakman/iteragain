@@ -11,7 +11,10 @@ export class ObjectIterator<T extends Record<PropertyKey, any>> implements Itera
   protected inner: Iterator<ObjectEntry> | null = null;
   protected arr: ObjectEntry[] = [];
 
-  constructor(object: T, protected traversal: 'post-order-DFS' | 'pre-order-DFS' | 'BFS' = 'post-order-DFS') {
+  constructor(
+    object: T,
+    protected traversal: 'post-order-DFS' | 'pre-order-DFS' | 'BFS' = 'post-order-DFS',
+  ) {
     this.push(object);
   }
 

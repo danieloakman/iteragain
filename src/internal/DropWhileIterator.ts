@@ -2,7 +2,10 @@
 export class DropWhileIterator<T> implements IterableIterator<T> {
   protected dropped = false;
 
-  constructor(protected iterator: Iterator<T>, protected predicate: (value: T) => any) {}
+  constructor(
+    protected iterator: Iterator<T>,
+    protected predicate: (value: T) => any,
+  ) {}
 
   [Symbol.iterator](): IterableIterator<T> {
     return this;

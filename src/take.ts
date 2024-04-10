@@ -10,8 +10,7 @@ import toIterator from './toIterator';
 export function take<T, Size extends number = 1>(arg: IteratorOrIterable<T>, take?: Size): Tuple<T, Size>;
 export function take<T, Size extends number = 1>(take?: Size): (arg: IteratorOrIterable<T>) => Tuple<T, Size>;
 export function take(...args: any[]): any[] | ((arg: IteratorOrIterable<any>) => any[]) {
-  if (!args.length || (args.length === 1 && typeof args[0] === 'number'))
-    return it => take(it, args[0]);
+  if (!args.length || (args.length === 1 && typeof args[0] === 'number')) return it => take(it, args[0]);
   const results: unknown[] = [];
   const it = toIterator(args[0]);
   let next: IteratorResult<unknown, unknown>;

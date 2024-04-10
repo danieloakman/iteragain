@@ -8,7 +8,11 @@ export class CombinationsIterator<T, Size extends number> implements IterableIte
   protected n: number;
   protected i = 0;
 
-  constructor(iterator: Iterator<T>, protected size: Size, protected withReplacement: boolean) {
+  constructor(
+    iterator: Iterator<T>,
+    protected size: Size,
+    protected withReplacement: boolean,
+  ) {
     this.pool = toArray(iterator);
     this.n = this.pool.length;
     if (this.n < this.size) this.next = () => ({ done: true, value: undefined });

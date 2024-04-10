@@ -4,7 +4,10 @@
  * the use of `yield` statements.
  */
 export class FunctionIterator<TFunc extends (...args: any[]) => any, TSentinel = undefined> {
-  constructor(protected func: TFunc, protected sentinel?: TSentinel) {}
+  constructor(
+    protected func: TFunc,
+    protected sentinel?: TSentinel,
+  ) {}
 
   [Symbol.iterator]() {
     return this;

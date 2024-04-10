@@ -15,18 +15,18 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - name: Use Node.js 18
+      - name: Use Node.js 20
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
-          registry-url: "https://registry.npmjs.org"
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install & Build 🛠️
         run: |
           pnpm i
           pnpm build
-      
+
       # - name: Publish to pnpm
       #   run: pnpm publish
       #   env:

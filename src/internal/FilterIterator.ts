@@ -3,7 +3,10 @@
  * `predicate`.
  */
 export class FilterIterator<T> implements IterableIterator<T> {
-  constructor(protected iterator: Iterator<T>, protected predicate: (value: T) => any) {}
+  constructor(
+    protected iterator: Iterator<T>,
+    protected predicate: (value: T) => any,
+  ) {}
 
   [Symbol.iterator](): IterableIterator<T> {
     return this;

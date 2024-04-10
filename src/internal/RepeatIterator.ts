@@ -1,6 +1,9 @@
 /** Repeats `value` a certain number of times. */
 export class RepeatIterator<T> implements IterableIterator<T> {
-  constructor(protected value: T, protected times: number) {}
+  constructor(
+    protected value: T,
+    protected times: number,
+  ) {}
 
   [Symbol.iterator](): IterableIterator<T> {
     return this;

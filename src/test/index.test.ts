@@ -64,10 +64,10 @@ import {
   groupBy,
   arrayLike,
   pipe,
-} from '../src/index';
-import FunctionIterator from '../src/internal/FunctionIterator';
-import ObjectIterator from '../src/internal/ObjectIterator';
-import SeekableIterator from '../src/internal/SeekableIterator';
+} from '..';
+import FunctionIterator from '../internal/FunctionIterator';
+import ObjectIterator from '../internal/ObjectIterator';
+import SeekableIterator from '../internal/SeekableIterator';
 
 /**
  * Expect value to be `T`, and return it to allow for piping/chaining.
@@ -78,8 +78,8 @@ const expectType = <T>(value: T) => value;
 /** Wrapper for `deepStrictEqual` that asserts at the type level that `actual` and `expected` are the same type. */
 const equal = <T>(actual: T, expected: T, message?: string | Error) => deepStrictEqual(actual, expected, message);
 
-// import asyncMap from '../src/asyncMap';
-// import asyncToArray from '../src/asyncToArray';
+// import asyncMap from '../asyncMap';
+// import asyncToArray from '../asyncToArray';
 
 // function sleep(ms: number) {
 //   return new Promise(resolve => setTimeout(resolve, ms));

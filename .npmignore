@@ -6,8 +6,7 @@ node_modules
 scripts
 src
 test
-.eslintignore
-.eslintrc.json
+.eslintrc.js
 .gitignore
 .npmignore
 .nvmrc

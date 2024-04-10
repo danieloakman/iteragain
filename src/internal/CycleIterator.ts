@@ -7,7 +7,10 @@ import toIterator from '../toIterator';
 export class CycleIterator<T> implements IterableIterator<T> {
   protected values: T[] = [];
 
-  constructor(protected iterator: Iterator<T>, protected times: number) {}
+  constructor(
+    protected iterator: Iterator<T>,
+    protected times: number,
+  ) {}
 
   [Symbol.iterator](): IterableIterator<T> {
     return this;

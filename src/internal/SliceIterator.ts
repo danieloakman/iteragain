@@ -2,7 +2,11 @@
 export class SliceIterator<T> implements IterableIterator<T> {
   protected i = 0;
 
-  constructor(protected iterator: Iterator<T>, protected start: number, protected end: number = Infinity) {}
+  constructor(
+    protected iterator: Iterator<T>,
+    protected start: number,
+    protected end: number = Infinity,
+  ) {}
 
   [Symbol.iterator](): IterableIterator<T> {
     return this;

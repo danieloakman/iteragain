@@ -47,8 +47,7 @@ import GroupByIterator from './GroupByIterator';
 
 const enumerator =
   <T>(count = 0) =>
-  (v: T): [number, T] =>
-    [count++, v];
+  (v: T): [number, T] => [count++, v];
 
 /**
  * Extends and implements the IterableIterator interface. Methods marked with the `@lazy` prefix are chainable methods

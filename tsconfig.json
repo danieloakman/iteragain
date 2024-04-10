@@ -19,5 +19,5 @@
     "noUncheckedIndexedAccess": false
   },
   "include": ["./src"],
-  "exclude": ["node_modules", "test", "dist", "benchmark"]
+  "exclude": ["node_modules", "**/*.test.ts", "dist", "benchmark"]
 }
