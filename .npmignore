@@ -1,12 +1,13 @@
+.changes
 .husky
 .vscode
-benchmark
 docs
 node_modules
 scripts
 src
-test
-.eslintrc.js
+.eslintcache
+.eslintrc.*
+.nycrc*
 .gitignore
 .npmignore
 .nvmrc
@@ -17,3 +18,4 @@ tsconfig*
 .nojekyll
 README.es.md
 .github
+.changie.*
