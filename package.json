@@ -24,7 +24,7 @@
     "new:function": "ts-node ./scripts/new-function.ts",
     "new:test": "ts-node ./scripts/new-test.ts",
     "docs:build": "typedoc --plugin typedoc-plugin-remove-references --includeVersion --entryPointStrategy expand src/",
-    "docs:deploy": "pnpm run docs:build && pnpm gh-pages -d docs --nojekyll -u \"Daniel Oakman 42539848+danieloakman@users.noreply.github.com\"",
+    "docs:deploy": "pnpm run docs:build && pnpm gh-pages -d docs --nojekyll -u \"Daniel Oakman <42539848+danieloakman@users.noreply.github.com>\"",
     "v:patch": "pnpm version patch -f -m \"Upgrade package version to v%s\"",
     "v:minor": "pnpm version minor -f -m \"Upgrade package version to v%s\"",
     "v:major": "pnpm version major -f -m \"Upgrade package version to v%s\"",
