@@ -2,7 +2,7 @@
   "name": "iteragain",
   "version": "3.19.2",
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
-  "type": "module",
+  "sideEffects": false,
   "scripts": {
     "build": "concurrently \"pnpm run build:cjs\" \"pnpm run build:es\" \"pnpm run build:types\"",
     "build:cjs": "tsc -p tsconfig.json",
@@ -69,7 +69,7 @@
   "types": "./dist/cjs/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/.index.d.ts",
+      "types": "./dist/types/index.d.ts",
       "require": "./dist/cjs/index.js",
       "import": "./dist/es/index.js",
       "default": "./dist/cjs/index.js"
