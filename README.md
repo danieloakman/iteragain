@@ -11,8 +11,6 @@ Iterators and Iterables in Javascript has basically no supporting methods or fun
 
 This package can be used like in Python with standalone functions like [map](https://danieloakman.github.io/iteragain/functions/map.map.html), [filter](https://danieloakman.github.io/iteragain/functions/filter.filter.html), etc. Or be used with method chaining by calling [iter](https://danieloakman.github.io/iteragain/functions/iter.iter.html) which returns an instance of the [ExtendedIterator](https://danieloakman.github.io/iteragain/classes/internal_ExtendedIterator.ExtendedIterator.html) class. Either is supported for however you want to handle iterators.
 
-See [iteragain-es](https://www.npmjs.com/package/iteragain-es) for the ES modules exported version of this package.
-
 ## Documentation
 
 You can see the full list of modules and the documentation on everything [here](https://danieloakman.github.io/iteragain).

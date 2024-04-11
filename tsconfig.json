@@ -7,7 +7,7 @@
     "moduleResolution": "node",
     "incremental": false,
     "sourceMap": true,
-    "outDir": "./",
+    "outDir": "./dist/cjs",
     "declaration": true,
     "alwaysStrict": true,
     "checkJs": false,
@@ -16,8 +16,9 @@
     "lib": ["ES2015"],
     "strict": true,
     "noImplicitAny": true,
-    "noUncheckedIndexedAccess": false
+    "noUncheckedIndexedAccess": false,
+    "skipLibCheck": true
   },
   "include": ["./src"],
-  "exclude": ["node_modules", "**/*.test.ts", "dist", "benchmark"]
+  "exclude": ["node_modules", "**/*.test.ts", "dist", "src/benchmark"]
 }

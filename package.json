@@ -1,14 +1,13 @@
 {
   "name": "iteragain",
-  "version": "3.18.4",
+  "version": "3.19.0-rc",
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "concurrently \"pnpm run build:cjs\" \"pnpm run build:es\"",
+    "build:cjs": "tsc -p tsconfig.json",
     "build:es": "tsc -p tsconfig.es.json",
-    "build:clean": "ts-node ./scripts/build-clean.ts",
-    "build:watch": "pnpm run build:clean && tsc --watch",
+    "clean": "rimraf dist",
     "asyncify": "ts-node ./scripts/asyncify.ts",
     "asyncify:watch": "ts-node ./scripts/asyncify.ts -w",
     "asyncify:clean": "ts-node ./scripts/asyncify.ts -c",
@@ -18,9 +17,9 @@
     "test:debug": "pnpm run test --inspect",
     "check": "tsc -p tsconfig.test.json",
     "check:watch": "pnpm run check --watch",
-    "coverage": "nyc --skip-full ts-mocha src/test/**.test.ts --reporter spec",
-    "bm": "ts-node benchmark/index.bm.ts",
-    "bm:prof": "node -r ts-node/register --prof benchmark/index.bm.ts",
+    "coverage": "nyc ts-mocha src/test/**.test.ts",
+    "bm": "ts-node src/benchmark/index.bm.ts",
+    "bm:prof": "node -r ts-node/register --prof src/benchmark/index.bm.ts",
     "new:iterator": "ts-node ./scripts/new-iterator.ts",
     "new:function": "ts-node ./scripts/new-function.ts",
     "new:test": "ts-node ./scripts/new-test.ts",
@@ -31,8 +30,7 @@
     "v:major": "pnpm version major -f -m \"Upgrade package version to v%s\"",
     "prepare": "husky",
     "preversion": "pnpm run lint",
-    "postversion": "git push --follow-tags",
-    "publish:all": "ts-node ./scripts/publish-all.ts"
+    "postversion": "git push --follow-tags"
   },
   "devDependencies": {
     "@types/benchmark": "^2.1.5",
@@ -42,6 +40,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "benchmark": "^2.1.4",
     "changie": "^1.18.0",
+    "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^8.10.0",
     "gh-pages": "^6.1.1",
@@ -56,6 +55,7 @@
     "nyc": "^15.1.0",
     "prettier": "^3.2.5",
     "pretty-quick": "^4.0.0",
+    "rimraf": "^5.0.5",
     "rxjs": "^7.8.1",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.2",
@@ -63,6 +63,16 @@
     "typedoc-plugin-remove-references": "0.0.6",
     "typedoc-plugin-rename-defaults": "^0.7.0",
     "typescript": "^5.4.5"
+  },
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    "import": "./dist/es/index.js",
+    "require": "./dist/cjs/index.js",
+    "internal": {
+      "import": "./dist/es/internal/index.js",
+      "require": "./dist/cjs/internal/index.js"
+    }
   },
   "repository": {
     "type": "git",
