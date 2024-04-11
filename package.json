@@ -30,8 +30,7 @@
     "v:major": "pnpm version major -f -m \"Upgrade package version to v%s\"",
     "prepare": "husky",
     "preversion": "pnpm run lint",
-    "postversion": "git push --follow-tags",
-    "publish:all": "ts-node ./scripts/publish-all.ts"
+    "postversion": "git push --follow-tags"
   },
   "devDependencies": {
     "@types/benchmark": "^2.1.5",
