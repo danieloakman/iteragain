@@ -16,7 +16,8 @@
     "lib": ["ES2015"],
     "strict": true,
     "noImplicitAny": true,
-    "noUncheckedIndexedAccess": false
+    "noUncheckedIndexedAccess": false,
+    "skipLibCheck": true
   },
   "include": ["./src"],
   "exclude": ["node_modules", "**/*.test.ts", "dist", "benchmark"]
