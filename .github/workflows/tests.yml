@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run Tests & Checks
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - src/**/*
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -15,20 +15,25 @@ jobs:
         node-version: [20]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      - run: pnpm install
-      - run: pnpm check
-      - run: pnpm lint
-      - run: pnpm coverage
+      - name: Install Dependencies 📥
+        run: |
+          pnpm install
+
+      - name: Check, Lint, Test 🧪
+        run: |
+          pnpm check
+          pnpm lint
+          pnpm coverage
 
       - uses: actions/upload-artifact@v3
         if: failure()

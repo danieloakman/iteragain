@@ -1,22 +1,23 @@
 name: Publish to NPM
 
 on:
-  release:
-    types: [created]
-# TODO: possible use this to only publish if tests passed https://stackoverflow.com/questions/64951853/run-deployment-workflow-if-tests-workflow-is-passed
+  push:
+    branches: [master, main]
+    tags:
+      - 'v*'
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v2
         with:
           version: 8
       - name: Use Node.js 20
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
@@ -27,7 +28,7 @@ jobs:
           pnpm i
           pnpm build
 
-      # - name: Publish to pnpm
-      #   run: pnpm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
