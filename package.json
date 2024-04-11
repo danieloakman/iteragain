@@ -2,6 +2,7 @@
   "name": "iteragain",
   "version": "3.18.4",
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
+  "type": "module",
   "scripts": {
     "build": "concurrently \"pnpm run build:cjs\" \"pnpm run build:es\"",
     "build:cjs": "tsc -p tsconfig.json",
