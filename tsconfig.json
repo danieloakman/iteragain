@@ -7,7 +7,7 @@
     "moduleResolution": "node",
     "incremental": false,
     "sourceMap": true,
-    "outDir": "./",
+    "outDir": "./dist/cjs",
     "declaration": true,
     "alwaysStrict": true,
     "checkJs": false,
