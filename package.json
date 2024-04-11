@@ -1,6 +1,6 @@
 {
   "name": "iteragain",
-  "version": "3.19.0-rc",
+  "version": "3.19.0",
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
   "type": "module",
   "scripts": {
