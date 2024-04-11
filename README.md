@@ -1,7 +1,7 @@
 # [iteragain](https://www.npmjs.com/package/iteragain)
 
-[![Run Tests](https://github.com/danieloakman/iteragain/actions/workflows/run-tests.yml/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/run-tests.yml)
 [![Deploy Documentation](https://github.com/danieloakman/iteragain/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/pages/pages-build-deployment)
+[![Publish to NPM](https://github.com/danieloakman/iteragain/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/npm-publish.yml)
 
 Another Javascript library for iterating.
 
