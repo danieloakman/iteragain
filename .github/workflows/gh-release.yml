@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    branches: [master, main]
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20]
+
+    permissions:
+      # Need this to upload release assets
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install Dependencies 📥
+        run: |
+          pnpm i
+
+      - name: Build 🛠️
+        run: |
+          pnpm build
+          npm pack
+          mv iteragain-*.tgz package.tgz
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          # TODO: Set `prerelease: true` if the tag is not a stable release.
+          files: |
+            package.tgz
