@@ -2,8 +2,6 @@
   "name": "iteragain",
   "version": "3.18.4",
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
-  "main": "index.js",
-  "types": "index.d.ts",
   "scripts": {
     "build": "concurrently \"pnpm run build:cjs\" \"pnpm run build:es\"",
     "build:cjs": "tsc -p tsconfig.json",
@@ -65,6 +63,16 @@
     "typedoc-plugin-remove-references": "0.0.6",
     "typedoc-plugin-rename-defaults": "^0.7.0",
     "typescript": "^5.4.5"
+  },
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    "import": "./dist/es/index.js",
+    "require": "./dist/cjs/index.js",
+    "internal": {
+      "import": "./dist/es/internal/index.js",
+      "require": "./dist/cjs/internal/index.js"
+    }
   },
   "repository": {
     "type": "git",
