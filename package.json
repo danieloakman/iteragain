@@ -4,10 +4,11 @@
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
   "type": "module",
   "scripts": {
-    "build": "concurrently \"pnpm run build:cjs\" \"pnpm run build:es\"",
+    "build": "concurrently \"pnpm run build:cjs\" \"pnpm run build:es\" \"pnpm run build:types\"",
     "build:cjs": "tsc -p tsconfig.json",
     "build:es": "tsc -p tsconfig.es.json",
-    "clean": "rimraf dist",
+    "build:types": "tsc -p tsconfig.types.json",
+    "clean": "rimraf dist iteragain*.tgz",
     "asyncify": "ts-node ./scripts/asyncify.ts",
     "asyncify:watch": "ts-node ./scripts/asyncify.ts -w",
     "asyncify:clean": "ts-node ./scripts/asyncify.ts -c",
@@ -67,12 +68,24 @@
   "main": "./dist/cjs/index.js",
   "types": "./dist/cjs/index.d.ts",
   "exports": {
-    "import": "./dist/es/index.js",
-    "require": "./dist/cjs/index.js",
-    "internal": {
-      "import": "./dist/es/internal/index.js",
-      "require": "./dist/cjs/internal/index.js"
-    }
+    ".": {
+      "types": "./dist/types/.index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/es/index.js"
+    },
+    "./internal/*": {
+      "types": "./dist/types/internal/*.d.ts",
+      "require": "./dist/cjs/internal/*.js",
+      "import": "./dist/es/internal/*.js",
+      "default": "./dist/cjs/internal/*.js"
+    },
+    "./*": {
+      "types": "./dist/types/*.d.ts",
+      "require": "./dist/cjs/*.js",
+      "import": "./dist/es/*.js",
+      "default": "./dist/cjs/*.js"
+    },
+    "./package.json": "./package.json"
   },
   "repository": {
     "type": "git",
