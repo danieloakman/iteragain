@@ -30,7 +30,7 @@
     "v:minor": "pnpm version minor -f -m \"Upgrade package version to v%s\"",
     "v:major": "pnpm version major -f -m \"Upgrade package version to v%s\"",
     "prepare": "husky",
-    "preversion": "pnpm run lint",
+    "preversion": "pnpm check && pnpm lint && pnpm coverage",
     "postversion": "git push --follow-tags"
   },
   "devDependencies": {
