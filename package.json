@@ -4,10 +4,7 @@
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
   "sideEffects": false,
   "scripts": {
-    "build": "concurrently \"pnpm run build:cjs\" \"pnpm run build:es\" \"pnpm run build:types\"",
-    "build:cjs": "tsc -p tsconfig.json",
-    "build:es": "tsc -p tsconfig.es.json",
-    "build:types": "tsc -p tsconfig.types.json",
+    "build": "concurrently \"tsc -p tsconfig.json\" \"tsc -p tsconfig.es5.json\" \"tsc -p tsconfig.esm.json\" \"tsc -p tsconfig.types.json\"",
     "clean": "rimraf dist iteragain*.tgz",
     "asyncify": "ts-node ./scripts/asyncify.ts",
     "asyncify:watch": "ts-node ./scripts/asyncify.ts -w",
@@ -65,26 +62,31 @@
     "typedoc-plugin-rename-defaults": "^0.7.0",
     "typescript": "^5.4.5"
   },
-  "main": "./dist/es/index.js",
-  "types": "./dist/es/index.d.ts",
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm5/index.js",
+  "es2015": "./dist/esm/index.js",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
+      "node": "./dist/cjs/index.js",
       "require": "./dist/cjs/index.js",
-      "import": "./dist/es/index.js",
-      "default": "./dist/es/index.js"
+      "import": "./dist/esm/index.js",
+      "default": "./dist/es5/index.js"
     },
     "./internal/*": {
       "types": "./dist/types/internal/*.d.ts",
+      "node": "./dist/cjs/internal/*.js",
       "require": "./dist/cjs/internal/*.js",
-      "import": "./dist/es/internal/*.js",
-      "default": "./dist/es/internal/*.js"
+      "import": "./dist/esm/internal/*.js",
+      "default": "./dist/es5/internal/*.js"
     },
     "./*": {
       "types": "./dist/types/*.d.ts",
+      "node": "./dist/cjs/*.js",
       "require": "./dist/cjs/*.js",
-      "import": "./dist/es/*.js",
-      "default": "./dist/es/*.js"
+      "import": "./dist/esm/*.js",
+      "default": "./dist/es5/*.js"
     },
     "./package.json": "./package.json"
   },
