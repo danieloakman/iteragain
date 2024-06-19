@@ -4,10 +4,7 @@
   "description": "Javascript Iterable/Iterator/Generator-function utilities.",
   "sideEffects": false,
   "scripts": {
-    "build": "concurrently \"pnpm run build:cjs\" \"pnpm run build:es\" \"pnpm run build:types\"",
-    "build:cjs": "tsc -p tsconfig.json",
-    "build:es": "tsc -p tsconfig.es.json",
-    "build:types": "tsc -p tsconfig.types.json",
+    "build": "concurrently \"tsc -p tsconfig.json\" \"tsc -p tsconfig.es5.json\" \"tsc -p tsconfig.esm.json\" \"tsc -p tsconfig.types.json\"",
     "clean": "rimraf dist iteragain*.tgz",
     "asyncify": "ts-node ./scripts/asyncify.ts",
     "asyncify:watch": "ts-node ./scripts/asyncify.ts -w",
