@@ -62,26 +62,31 @@
     "typedoc-plugin-rename-defaults": "^0.7.0",
     "typescript": "^5.4.5"
   },
-  "main": "./dist/es/index.js",
-  "types": "./dist/es/index.d.ts",
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm5/index.js",
+  "es2015": "./dist/esm/index.js",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
+      "node": "./dist/cjs/index.js",
       "require": "./dist/cjs/index.js",
-      "import": "./dist/es/index.js",
-      "default": "./dist/es/index.js"
+      "import": "./dist/esm/index.js",
+      "default": "./dist/es5/index.js"
     },
     "./internal/*": {
       "types": "./dist/types/internal/*.d.ts",
+      "node": "./dist/cjs/internal/*.js",
       "require": "./dist/cjs/internal/*.js",
-      "import": "./dist/es/internal/*.js",
-      "default": "./dist/es/internal/*.js"
+      "import": "./dist/esm/internal/*.js",
+      "default": "./dist/es5/internal/*.js"
     },
     "./*": {
       "types": "./dist/types/*.d.ts",
+      "node": "./dist/cjs/*.js",
       "require": "./dist/cjs/*.js",
-      "import": "./dist/es/*.js",
-      "default": "./dist/es/*.js"
+      "import": "./dist/esm/*.js",
+      "default": "./dist/es5/*.js"
     },
     "./package.json": "./package.json"
   },
