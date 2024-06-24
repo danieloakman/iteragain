@@ -166,7 +166,7 @@ describe('internal', function () {
       );
       const isNullish = (v: any): v is null | undefined => v == null || v === undefined;
       equal(
-        iter(['a', , 'b', 3, null, /asd/])
+        iter(['a', undefined, 'b', 3, null, /asd/])
           .filter(v => !isNullish(v))
           .filter(v => v instanceof RegExp)
           .toArray(),
