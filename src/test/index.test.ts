@@ -158,6 +158,20 @@ describe('internal', function () {
       const arr: (A | B)[] = [{ a: 1 }, { b: 2 }, { a: 3 }, { b: 4 }];
       equal(iter(arr).filter(isA).toArray(), [{ a: 1 }, { a: 3 }]);
       equal(iter(['a', undefined]).filter(Boolean).toArray(), ['a']);
+      equal(
+        iter(['a', 1, 2, 'b'])
+          .filter(v => typeof v === 'string')
+          .toArray(),
+        ['a', 'b'],
+      );
+      const isNullish = (v: any): v is null | undefined => v == null || v === undefined;
+      equal(
+        iter(['a', undefined, 'b', 3, null, /asd/])
+          .filter(v => !isNullish(v))
+          .filter(v => v instanceof RegExp)
+          .toArray(),
+        [/asd/],
+      );
     });
 
     it('filterMap', async function () {
