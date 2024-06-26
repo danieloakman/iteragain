@@ -561,11 +561,14 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     while (n-- > 0 && !this.iterator.next().done);
   }
 
-  /** Collects all values from this iterator, then shuffles the order of it's values. */
-  shuffle(): ExtendedIterator<T> {
+  /**
+   * Collects all values from this iterator, then shuffles the order of it's values.
+   * @param seed A seed between 0 and 1.
+   */
+  shuffle(seed = Math.random()): ExtendedIterator<T> {
     const values = this.toArray();
     for (let i = values.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const j = Math.floor(seed * (i + 1));
       [values[i], values[j]] = [values[j], values[i]];
     }
     return new ExtendedIterator(toIterator(values));
