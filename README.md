@@ -15,6 +15,10 @@ This package can be used like in Python with standalone functions like [map](htt
 
 You can see the full list of modules and the documentation on everything [here](https://danieloakman.github.io/iteragain).
 
+## Changelog
+
+View the full list of changes [here](./CHANGELOG.md). 
+
 ## Code examples
 
 ### A performance benefit over using Array's higher-order methods
