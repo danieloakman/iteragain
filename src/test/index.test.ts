@@ -215,8 +215,14 @@ describe('internal', function () {
 
     it('concat', async function () {
       equal(iter([1, 2, 3]).concat([4, 5, 6]).toArray(), [1, 2, 3, 4, 5, 6]);
-      // const a = iter([1, 2, 3]).concat(['1']).concat([[1]]);
-      //    ^?
+      equal(
+        iter([1, 2, 3])
+          .concat(['1'])
+          .concat([[1]])
+          .toArray(),
+        [1, 2, 3, '1', [1]],
+      );
+      equal(iter([-2, -1]).concat(range(3)).toArray(), [-2, -1, 0, 1, 2]);
     });
 
     it('prepend', async function () {
