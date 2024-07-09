@@ -45,3 +45,4 @@ jobs:
           # TODO: Set `prerelease: true` if the tag is not a stable release.
           files: |
             package.tgz
+            CHANGELOG.md
