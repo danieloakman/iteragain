@@ -1,0 +1,28 @@
+{
+  "name": "@danoaky/iteragain",
+  "version": "4.1.0",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "node": "./dist/cjs/index.js",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/es5/index.js"
+    },
+    "./internal/*": {
+      "types": "./dist/types/internal/*.d.ts",
+      "node": "./dist/cjs/internal/*.js",
+      "require": "./dist/cjs/internal/*.js",
+      "import": "./dist/esm/internal/*.js",
+      "default": "./dist/es5/internal/*.js"
+    },
+    "./*": {
+      "types": "./dist/types/*.d.ts",
+      "node": "./dist/cjs/*.js",
+      "require": "./dist/cjs/*.js",
+      "import": "./dist/esm/*.js",
+      "default": "./dist/es5/*.js"
+    },
+    "./package.json": "./package.json"
+  }
+}
