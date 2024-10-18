@@ -4,17 +4,13 @@ on:
   push:
     tags: ['v*.*.*']
 
-# Define strategy and matrix at the top level
-strategy:
-  matrix:
-    node-version: [20]
-    pnpm-version: [9]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Reference the top-level strategy
-    strategy: ${{ toJson(strategy) }}
+    strategy:
+      matrix:
+        node-version: [20]
+        pnpm-version: [9]
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -41,8 +37,10 @@ jobs:
   github-release:
     needs: build
     runs-on: ubuntu-latest
-    # Reference the top-level strategy
-    strategy: ${{ toJson(strategy) }}
+    strategy:
+      matrix:
+        node-version: [20]
+        pnpm-version: [9]
     permissions:
       contents: write
     steps:
@@ -65,8 +63,10 @@ jobs:
   npm-publish:
     needs: build
     runs-on: ubuntu-latest
-    # Reference the top-level strategy
-    strategy: ${{ toJson(strategy) }}
+    strategy:
+      matrix:
+        node-version: [20]
+        pnpm-version: [9]
     permissions:
       contents: read
       id-token: write
@@ -93,8 +93,10 @@ jobs:
   jsr-publish:
     needs: build
     runs-on: ubuntu-latest
-    # Reference the top-level strategy
-    strategy: ${{ toJson(strategy) }}
+    strategy:
+      matrix:
+        node-version: [20]
+        pnpm-version: [9]
     permissions:
       contents: read
       id-token: write
