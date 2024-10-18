@@ -46,7 +46,7 @@
     "iterare": "^1.2.1",
     "iterplus": "^3.0.2",
     "ix": "^6.0.0",
-    "js-utils": "github:danieloakman/js-utils#node",
+    "js-utils": "https://github.com/danieloakman/js-utils/releases/download/v0.16.2/package.tgz",
     "lint-staged": "^15.2.7",
     "mocha": "10.4.0",
     "more-node-fs": "^2.0.2",
