@@ -53,8 +53,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       js-utils:
-        specifier: github:danieloakman/js-utils#node
-        version: https://codeload.github.com/danieloakman/js-utils/tar.gz/742f6e6969bdc1877d9662a5bbb7d78d7717ca0b
+        specifier: https://github.com/danieloakman/js-utils/releases/download/v0.16.2/package.tgz
+        version: https://github.com/danieloakman/js-utils/releases/download/v0.16.2/package.tgz
       lint-staged:
         specifier: ^15.2.7
         version: 15.2.7
@@ -741,6 +741,10 @@ packages:
       { integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw== }
     engines: { node: '>=0.11' }
 
+  dayjs@1.11.13:
+    resolution:
+      { integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg== }
+
   debug@4.3.4:
     resolution:
       { integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ== }
@@ -1312,10 +1316,9 @@ packages:
     resolution:
       { integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ== }
 
-  js-utils@https://codeload.github.com/danieloakman/js-utils/tar.gz/742f6e6969bdc1877d9662a5bbb7d78d7717ca0b:
-    resolution:
-      { tarball: https://codeload.github.com/danieloakman/js-utils/tar.gz/742f6e6969bdc1877d9662a5bbb7d78d7717ca0b }
-    version: 0.1.0
+  js-utils@https://github.com/danieloakman/js-utils/releases/download/v0.16.2/package.tgz:
+    resolution: { tarball: https://github.com/danieloakman/js-utils/releases/download/v0.16.2/package.tgz }
+    version: 0.16.2
 
   js-yaml@3.14.1:
     resolution:
@@ -2832,6 +2835,8 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.4
 
+  dayjs@1.11.13: {}
+
   debug@4.3.4(supports-color@8.1.1):
     dependencies:
       ms: 2.1.2
@@ -3292,7 +3297,9 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
-  js-utils@https://codeload.github.com/danieloakman/js-utils/tar.gz/742f6e6969bdc1877d9662a5bbb7d78d7717ca0b: {}
+  js-utils@https://github.com/danieloakman/js-utils/releases/download/v0.16.2/package.tgz:
+    dependencies:
+      dayjs: 1.11.13
 
   js-yaml@3.14.1:
     dependencies:
