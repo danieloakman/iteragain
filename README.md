@@ -1,10 +1,11 @@
-# [iteragain](https://www.npmjs.com/package/iteragain)
+# [iteragain](https://github.com/danieloakman/iteragain)
 
 [![Tests & Checks](https://github.com/danieloakman/iteragain/actions/workflows/tests.yml/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/tests.yml)
-[![Deploy Documentation](https://github.com/danieloakman/iteragain/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/pages/pages-build-deployment)
-[![Publish to NPM](https://github.com/danieloakman/iteragain/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/npm-publish.yml)
+![npm](https://img.shields.io/npm/v/iteragain)
+![tree-shakeable](https://img.shields.io/badge/tree--shakeable-yes-green)
+![minified-size](https://img.shields.io/bundlephobia/min/iteragain)
 
-Another Javascript library for iterating.
+Another Javascript library for iterating. Available on [npm.js](https://www.npmjs.com/package/iteragain) and [jsr.dev](https://jsr.dev/iteragain).
 
 Pure JavaScript, Iterable/Iterator/Generator-function utilities. No dependencies and shipped with types as is.
 
@@ -18,7 +19,7 @@ You can see the full list of modules and the documentation on everything [here](
 
 ## Changelog
 
-View the full list of changes [here](./CHANGELOG.md). 
+View the full list of changes [here](./CHANGELOG.md).
 
 ## Code examples
 
