@@ -10,3 +10,4 @@ src/**/*async*.ts
 *buildinfo
 .eslintcache
 docs
+*.tgz
