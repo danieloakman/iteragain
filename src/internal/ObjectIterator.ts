@@ -46,7 +46,7 @@ export class ObjectIterator<T extends Record<PropertyKey, any>> implements Itera
     return typeof value === 'object' && value !== null;
   }
 
-  protected push(obj: any) {
+  protected push(obj: any): void {
     for (const key of Object.keys(obj)) this.arr.push([key, obj[key], obj]);
   }
 }

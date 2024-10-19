@@ -63,11 +63,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** Implements this as an Iterable so it's allowed to be used with "for of" loops. */
-  [Symbol.iterator]() {
+  [Symbol.iterator](): this {
     return this;
   }
 
-  toString() {
+  toString(): string {
     return 'ExtendedIterator';
   }
 
@@ -364,7 +364,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param justSeen If true, will only test for uniqueness with the last value in the iterator and not all values.
    */
   unique(params: UniqueParams<T> = v => v): ExtendedIterator<T> {
-    const { iteratee = (v: T) => v, justSeen = false } = typeof params === 'function' ? { iteratee: params } : params;
+    const { iteratee = (v: T): T => v, justSeen = false } =
+      typeof params === 'function' ? { iteratee: params } : params;
     if (justSeen) {
       let lastValue: T;
       return this.filter(value => {
@@ -392,7 +393,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * Reverses this iterator's order. Note that in order to reverse, it will attempt to iterate fully once, which
    * could cause significant memory usage. So because of this, only use on finite iterators.
    */
-  reverse() {
+  reverse(): ExtendedIterator<T> {
     let next: IteratorResult<T>;
     const result: T[] = [];
     while (!(next = this.iterator.next()).done) result.unshift(next.value);
@@ -400,7 +401,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** @lazy Maps `key` from `T` in each value of this iterator. */
-  pluck<K extends keyof T>(key: K) {
+  pluck<K extends keyof T>(key: K): ExtendedIterator<T[K]> {
     return this.filterMap(value => value[key]);
   }
 
@@ -416,7 +417,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** Consumes this iterator and returns the number of values/items in it. */
-  length() {
+  length(): number {
     return this.reduce((acc, _) => acc + 1, 0);
   }
 
@@ -461,7 +462,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** Iterate over this iterator using the `array.prototype.forEach` style of method. */
-  forEach(callback: Callback<T>) {
+  forEach(callback: Callback<T>): void {
     let next: IteratorResult<T>;
     while (!(next = this.iterator.next()).done) callback(next.value);
   }
@@ -683,7 +684,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   }
 
   /** Shorthand for `new Set(this)`. */
-  toSet() {
+  toSet(): Set<T> {
     return new Set(this);
   }
 
@@ -691,7 +692,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * Shorthand for `new Map<K, V>(this)`. The type of this iterator must extend `any[]` for this to work. And you may
    * also need to pass in your own values for the generics: e.g. `iterator.toMap<string, number>();`
    */
-  toMap<K extends string | number = T extends any[] ? T[0] : never, V = T extends any[] ? T[1] : never>() {
+  toMap<K extends string | number = T extends any[] ? T[0] : never, V = T extends any[] ? T[1] : never>(): Map<K, V> {
     return new Map<K, V>(this as any);
   }
 }

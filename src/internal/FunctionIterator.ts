@@ -9,7 +9,7 @@ export class FunctionIterator<TFunc extends (...args: any[]) => any, TSentinel =
     protected sentinel?: TSentinel,
   ) {}
 
-  [Symbol.iterator]() {
+  [Symbol.iterator](): this {
     return this;
   }
 

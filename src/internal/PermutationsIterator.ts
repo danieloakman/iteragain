@@ -14,7 +14,8 @@ export class PermutationsIterator<T, Size extends number> implements IterableIte
   constructor(iterator: Iterator<T>, size?: Size) {
     this.pool = toArray(iterator);
     this.size = size ?? (this.pool.length as Size);
-    if (this.size > this.pool.length) this.next = () => ({ done: true, value: undefined });
+    if (this.size > this.pool.length)
+      this.next = (): IteratorResult<Tuple<T, Size>> => ({ done: true, value: undefined });
     this.indices = toArray(new RangeIterator(0, this.pool.length));
     this.cycles = toArray(new RangeIterator(this.pool.length, this.pool.length - this.size, -1));
   }

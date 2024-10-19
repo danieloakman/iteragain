@@ -15,12 +15,12 @@ export class CombinationsIterator<T, Size extends number> implements IterableIte
   ) {
     this.pool = toArray(iterator);
     this.n = this.pool.length;
-    if (this.n < this.size) this.next = () => ({ done: true, value: undefined });
+    if (this.n < this.size) this.next = (): IteratorResult<Tuple<T, Size>> => ({ done: true, value: undefined });
     this.indices = this.withReplacement ? new Array(this.size).fill(0) : Array.from({ length: this.size }, (_, i) => i);
     this.indices[this.indices.length - 1]--; // So that the first combination will start at the correct spot.
   }
 
-  protected get value() {
+  protected get value(): Tuple<T, Size> {
     return this.indices.map(i => this.pool[i]) as Tuple<T, Size>;
   }
 
