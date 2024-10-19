@@ -23,8 +23,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - name: Install Dependencies 📥
-        run: |
-          pnpm i
+        run: pnpm i
       - name: Build 🛠️
         run: pnpm build
       - name: Upload Artifacts
@@ -86,6 +85,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+      - name: Install Dependencies 📥
+        run: pnpm i
       - name: Publish to npm
         run: npm publish
         env:
@@ -111,5 +112,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies 📥
+        run: pnpm i
       - name: Publish to JSR
         run: npx jsr publish
