@@ -1,6 +1,7 @@
 # [iteragain](https://github.com/danieloakman/iteragain)
 
 [![Tests & Checks](https://github.com/danieloakman/iteragain/actions/workflows/tests.yml/badge.svg)](https://github.com/danieloakman/iteragain/actions/workflows/tests.yml)
+[![Release & Publish](https://github.com/danieloakman/iteragain/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/danieloakman/iteragain/actions/workflows/release.yml)
 ![npm](https://img.shields.io/npm/v/iteragain)
 ![tree-shakeable](https://img.shields.io/badge/tree--shakeable-yes-green)
 ![minified-size](https://img.shields.io/bundlephobia/min/iteragain)
