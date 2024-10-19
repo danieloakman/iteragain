@@ -1,5 +1,5 @@
 {
   "name": "@danoaky/iteragain",
-  "version": "4.1.3",
+  "version": "4.1.4",
   "exports": "./src/index.ts"
 }
