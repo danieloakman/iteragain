@@ -35,7 +35,10 @@ export function groupBy<
   T extends IteratorOrIterable<any>,
   K extends KeyIdentifier<IterSource<T>> = Iteratee<IterSource<T>, IterSource<T>>,
 >(arg: T, key?: K): IterableIterator<[KeyIdentifiersValue<IterSource<T>, K>, IterSource<T>[]]>;
-export function groupBy(arg: IteratorOrIterable<any>, key: KeyIdentifier<any> = v => v) {
+export function groupBy(
+  arg: IteratorOrIterable<any>,
+  key: KeyIdentifier<any> = v => v,
+): IterableIterator<[any, any[]]> {
   return new GroupByIterator(toIterator(arg), key);
 }
 

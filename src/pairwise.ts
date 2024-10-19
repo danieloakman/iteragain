@@ -9,7 +9,7 @@ import PairwiseIterator from './internal/PairwiseIterator';
  * iter([1,2,3]).pairwise().toArray() // [[1,2], [2,3]]
  * iter([1]).pairwise().toArray() // []
  */
-export function pairwise<T>(arg: IteratorOrIterable<T>) {
+export function pairwise<T>(arg: IteratorOrIterable<T>): IterableIterator<[T, T]> {
   return new PairwiseIterator(toIterator(arg));
 }
 

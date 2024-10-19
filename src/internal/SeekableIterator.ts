@@ -59,7 +59,7 @@ export class SeekableIterator<T> implements IterableIterator<T> {
   }
 
   /** Add `value` to the `cache`. */
-  private add(value: T) {
+  private add(value: T): void {
     this.cache.push(value);
     if (this.cache.length > this.maxLength) this.cache.shift();
   }

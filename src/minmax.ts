@@ -12,7 +12,7 @@ export function minmax<T extends IteratorOrIterable<unknown>>(
 export function minmax(...args: any[]): unknown {
   if (!args.length || typeof args[0] === 'function') return (it: IteratorOrIterable<unknown>) => minmax(it, args[0]);
   const it = toIterator(args[0]);
-  const iteratee: Iteratee<unknown, number> = args[1] ?? ((x: unknown) => x);
+  const iteratee: Iteratee<unknown, number> = args[1] ?? ((x: unknown): unknown => x);
   let next = it.next();
   let min = { value: next.value, comparison: iteratee(next.value) };
   let max = { value: next.value, comparison: iteratee(next.value) };
