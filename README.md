@@ -6,7 +6,7 @@
 ![tree-shakeable](https://img.shields.io/badge/tree--shakeable-yes-green)
 ![minified-size](https://img.shields.io/bundlephobia/min/iteragain)
 
-Another Javascript library for iterating. Available on [npm.js](https://www.npmjs.com/package/iteragain) and [jsr.dev](https://jsr.dev/iteragain).
+Another Javascript library for iterating. Available on [npm.js](https://www.npmjs.com/package/iteragain) and [jsr.io](https://jsr.io/@danoaky/iteragain).
 
 Pure JavaScript, Iterable/Iterator/Generator-function utilities. No dependencies and shipped with types as is.
 
