@@ -23,7 +23,7 @@
   },
   "overrides": [
     {
-      "files": ["src/**/*.test.ts", "src/internal/**/*.ts", "src/benchmark/**/*.ts"],
+      "files": ["src/**/*.test.ts", "src/benchmark/**/*.ts"],
       "rules": {
         "@typescript-eslint/explicit-function-return-type": "off"
       }
