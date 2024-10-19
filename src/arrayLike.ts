@@ -15,7 +15,7 @@ export function arrayLike<T>(arg: IteratorOrIterable<T>): readonly T[] {
   const it = seekable(arg);
   // eslint-disable-next-line no-undef
   return new Proxy([], {
-    get(target, prop) {
+    get(target, prop): unknown {
       if (prop === 'length') return it.elements.length;
       else if (prop === Symbol.iterator) {
         it.seek(0);
@@ -31,22 +31,22 @@ export function arrayLike<T>(arg: IteratorOrIterable<T>): readonly T[] {
       }
       return undefined;
     },
-    has: (_, prop) => {
+    has(_, prop): boolean {
       return prop in it.elements;
     },
-    ownKeys: () => {
+    ownKeys(): string[] {
       return Object.keys(it.elements).concat('length');
     },
-    getOwnPropertyDescriptor: (_, prop) => {
+    getOwnPropertyDescriptor(_, prop): PropertyDescriptor | undefined {
       return Object.getOwnPropertyDescriptor(it.elements, prop);
     },
-    set: (_, prop) => {
+    set(_: unknown, prop: string): boolean {
       throw new TypeError(`Cannot assign to read only property '${prop.toString()}' of ArrayLikeIterator.`);
     },
-    deleteProperty: (_, prop) => {
+    deleteProperty(_: unknown, prop: string): boolean {
       throw new TypeError(`Cannot delete property '${prop.toString()}' of ArrayLikeIterator.`);
     },
-    defineProperty: (_, prop) => {
+    defineProperty(_: unknown, prop: string): boolean {
       throw new TypeError(`Cannot define property '${prop.toString()}' of ArrayLikeIterator.`);
     },
   });

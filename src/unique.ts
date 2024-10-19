@@ -18,8 +18,8 @@ export function unique<T extends IteratorOrIterable<unknown>>(
 export function unique(...args: any[]): ItOrCurriedIt<unknown> {
   if (typeof args[0] === 'function' || !args.length) return it => unique(it, args[0]);
   const it = toIterator(args[0]);
-  args[1] = args[1] ?? ((v: unknown) => v);
-  const { iteratee = (v: unknown) => v, justSeen = false } =
+  args[1] = args[1] ?? ((v: unknown): unknown => v);
+  const { iteratee = (v: unknown): unknown => v, justSeen = false } =
     typeof args[1] === 'function' ? { iteratee: args[1] } : args[1];
   if (justSeen) {
     let lastValue: unknown;

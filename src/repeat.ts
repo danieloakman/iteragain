@@ -5,7 +5,7 @@ import RepeatIterator from './internal/RepeatIterator';
  * @param value The value to repeat.
  * @param times The number of times to repeat `value` (default: Infinity).
  */
-export function repeat<T>(value: T, times = Infinity) {
+export function repeat<T>(value: T, times = Infinity): IterableIterator<T> {
   return new RepeatIterator(value, times);
 }
 

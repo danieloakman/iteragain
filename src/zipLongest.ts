@@ -10,7 +10,7 @@ export function zipLongest<A, B, C>(
   c: IteratorOrIterable<C>,
 ): IterableIterator<[A, B, C]>;
 export function zipLongest(...args: IteratorOrIterable<any>[]): IterableIterator<any[]>;
-export function zipLongest(...args: IteratorOrIterable<any>[]) {
+export function zipLongest(...args: IteratorOrIterable<any>[]): IterableIterator<any[]> {
   return new ZipLongestIterator(args.map(toIterator));
 }
 

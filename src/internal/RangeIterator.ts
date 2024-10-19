@@ -30,7 +30,7 @@ export class RangeIterator implements IterableIterator<number> {
     else if (params.length > 1) [start, stop, step] = params;
     if (typeof step !== 'number') step = Math.sign(stop - start);
     const stepSign = Math.sign(step);
-    if (stepSign === 0) this.next = () => ({ done: true, value: undefined });
+    if (stepSign === 0) this.next = (): IteratorResult<number> => ({ done: true, value: undefined });
 
     this.start = this.i = start;
     this.stop = stop;
@@ -41,7 +41,7 @@ export class RangeIterator implements IterableIterator<number> {
   }
 
   /** The length of this range of numbers. */
-  get length() {
+  get length(): number {
     return this._length;
   }
 
@@ -83,12 +83,12 @@ export class RangeIterator implements IterableIterator<number> {
 
   // slice(start: number, end?: number) {}
 
-  toString() {
+  toString(): string {
     return `range(${this.start}, ${this.stop}, ${this.step})`;
   }
 
   /** Iterates and collects all values into an Array. */
-  toArray() {
+  toArray(): number[] {
     return toArray(this);
   }
 }

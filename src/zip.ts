@@ -10,7 +10,7 @@ export function zip<A, B, C>(
   c: IteratorOrIterable<C>,
 ): IterableIterator<[A, B, C]>;
 export function zip(...args: IteratorOrIterable<any>[]): IterableIterator<any[]>;
-export function zip(...args: IteratorOrIterable<any>[]) {
+export function zip(...args: IteratorOrIterable<any>[]): IterableIterator<any[]> {
   return new ZipIterator(args.map(toIterator));
 }
 

@@ -12,7 +12,7 @@ export function max<T extends IteratorOrIterable<unknown>>(
 export function max(...args: any[]): unknown {
   if (!args.length || typeof args[0] === 'function') return (it: IteratorOrIterable<unknown>) => max(it, args[0]);
   const it = toIterator(args[0]);
-  const iteratee: Iteratee<unknown, number> = args[1] ?? ((x: unknown) => x);
+  const iteratee: Iteratee<unknown, number> = args[1] ?? ((x: unknown): unknown => x);
   let next = it.next();
   let result = { value: next.value, comparison: iteratee(next.value) };
   while (!(next = it.next()).done) {
