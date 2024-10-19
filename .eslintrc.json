@@ -20,5 +20,13 @@
     "no-duplicate-imports": "error",
     "no-else-return": "error",
     "@typescript-eslint/explicit-function-return-type": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.test.ts", "src/internal/**/*.ts", "src/benchmark/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off"
+      }
+    }
+  ]
 }
