@@ -682,6 +682,7 @@ describe('internal', function () {
       equal(iter([1, 2, 3]).join(), '1,2,3');
       equal(iter([1, 2, 3]).join(''), '123');
       equal(iter([1, 2, 3]).join('-'), '1-2-3');
+      equal(iter([]).join('-'), '');
     });
 
     it('find', async function () {

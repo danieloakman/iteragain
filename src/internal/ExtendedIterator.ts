@@ -486,7 +486,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param separator The separator to use between each value (default: ',').
    */
   join(separator = ','): string {
-    return this.reduce((str, v) => (str + separator + v) as any) as string;
+    return (this.reduce((str, v) => (str + separator + v) as any) ?? '') as string;
   }
 
   /**
