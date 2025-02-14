@@ -39,7 +39,7 @@ jobs:
           pnpm lint
           pnpm coverage
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: coverage-report
