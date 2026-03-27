@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
-import { walkdirSync } from 'more-node-fs';
 import { join } from 'path';
-import { readFileSync, writeFileSync } from 'fs';
-import iter from '../src/iter';
+import { readFileSync } from 'fs';
 import { format } from 'prettier';
 
 const PRETTIER_CONFIG = JSON.parse(readFileSync(join(__dirname, '../.prettierrc'), 'utf8'));
@@ -15,19 +13,19 @@ function genUnformattedTest(testNames: string[]): string {
   });
   `.trim();
 }
-function genTest(testNames: string[]): string {
+function genTest(testNames: string[]): Promise<string> {
   return format(genUnformattedTest(testNames), { parser: 'typescript', ...PRETTIER_CONFIG });
 }
 
-(async function main() {
+if (import.meta.main) {
   if (process.argv.length < 3) {
     console.error('Usage: new:test <group/test/name>');
     process.exit(1);
   }
 
   const testNames = process.argv[2].split(/\/|\\/);
-  const testFile = readFileSync(join(__dirname, '../test/index.test.ts'), { encoding: 'utf-8' });
+  const testFile = readFileSync(join(__dirname, '../src/pluck.test.ts'), { encoding: 'utf-8' });
   const newTest = genTest(testNames);
   console.log(newTest);
   // TODO: add newTest to testFile in correct order.
-})();
+}
