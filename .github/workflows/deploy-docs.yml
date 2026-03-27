@@ -15,25 +15,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: oven-sh/setup-bun@v2
+      - name: Cache node_modules
+        uses: actions/cache@v4
         with:
-          version: 8
+          path: node_modules
+          key: ${{ runner.os }}-bun-node-modules-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-node-modules-
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
 
       - name: Install dependencies 🛠️
-        run: pnpm install
+        run: bun install --frozen-lockfile
 
       - name: Build docs 🏗️
-        run: pnpm run docs:build
+        run: bun run docs:build
 
       - name: Deploy docs 🚀
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-          pnpm run docs:deploy
+          bun run docs:deploy
 
       - uses: actions/upload-artifact@v4
         if: failure()
