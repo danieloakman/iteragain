@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { consume, pipe, range, tap } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { consume, pipe, range, tap } from '.';
 it('consume', async function () {
   const arr: number[] = [];
   equal(consume(tap(range(3), n => arr.push(n))), undefined);

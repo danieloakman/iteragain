@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { map, min, pipe, range, shuffle } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { map, min, pipe, range, shuffle } from '.';
 it('min', async function () {
   equal(min(range(10)), 0);
   equal(

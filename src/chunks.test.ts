@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { chunks, pipe, range, toArray } from '..';
+import { equal } from './internal/test-utils';
+import { chunks, pipe, range, toArray } from '.';
 it('chunks', async function () {
   equal([...chunks([1, 2, 3, 4, 5], 2)], [[1, 2], [3, 4], [5]]);
   equal(pipe(range(1, 11), chunks(3, -1), toArray), [

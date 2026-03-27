@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { iter, pipe, range, tee, toArray, zip } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { iter, pipe, range, tee, toArray, zip } from '.';
 it('tee', async function () {
   // this.timeout(60000);
   let [a, b] = tee([1, 2, 3], 2).map(v => iter(v));

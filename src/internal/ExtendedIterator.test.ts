@@ -1,5 +1,5 @@
 import { describe, it } from 'bun:test';
-import { equal, notEqual, assert, throws } from '../test-utils';
+import { equal, notEqual, assert, throws } from './test-utils';
 import { compress, isIterable, isIterator, iter, pipe, range, toArray, zip } from '..';
 
 describe('ExtendedIterator', function () {

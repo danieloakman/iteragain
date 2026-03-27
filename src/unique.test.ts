@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { pipe, toArray, unique } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { pipe, toArray, unique } from '.';
 it('unique', async function () {
   equal([...unique([1, 1, 3, 3, 2, 2])], [1, 3, 2]);
   equal([...unique('AAAABBBCCDAABBB')].join(''), 'ABCD');

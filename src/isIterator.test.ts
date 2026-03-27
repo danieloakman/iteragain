@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { isIterator } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { isIterator } from '.';
 it('isIterator', async function () {
   assert(
     isIterator(
@@ -9,6 +9,6 @@ it('isIterator', async function () {
       })(),
     ),
   );
-  assert(isIterator({ next() {} }));
+  assert(isIterator({ next() { } }));
   assert(!isIterator(null));
 });

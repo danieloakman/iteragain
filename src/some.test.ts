@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { some } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { some } from '.';
 it('some', async function () {
   equal(
     some([1, 2, 3], n => n > 2),

@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { range, take } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { range, take } from '.';
 it('take', async function () {
   const arr = range(10).toArray();
   equal(take(arr, 3), [0, 1, 2]);

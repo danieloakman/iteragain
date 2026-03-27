@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { enumerate } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { enumerate } from '.';
 it('enumerate', async function () {
   equal(
     [...enumerate([{ a: 1 }, { b: 2 }])],

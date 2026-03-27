@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { every, pipe, range } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { every, pipe, range } from '.';
 it('every', async function () {
   equal(
     every(range(10), n => n < 10),

@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { pairwise, range } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { pairwise, range } from '.';
 it('pairwise', async function () {
   equal(
     [...pairwise(range(10))],

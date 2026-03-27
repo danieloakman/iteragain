@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { filter, flatten, forEach, map, pipe, range, toArray } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { filter, flatten, forEach, map, pipe, range, toArray } from '.';
 it('flatten', async function () {
   equal([...flatten([[1], [2, 3, 4], [5, [[[[[[6]]]]]]]])], [1, 2, 3, 4, 5, 6]);
   equal([...flatten([[1], [2, 3], [4, 5]])], [1, 2, 3, 4, 5]);

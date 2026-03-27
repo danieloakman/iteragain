@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { isIterator, toArray, toIterator } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { isIterator, toArray, toIterator } from '.';
 it('toIterator', async function () {
   const it1 = toIterator([1, 2, 3]);
   assert(isIterator(it1));
@@ -13,8 +13,8 @@ it('toIterator', async function () {
       toIterator(
         (
           (i = 0) =>
-          () =>
-            i++
+            () =>
+              i++
         )(),
         3,
       ),
@@ -26,8 +26,8 @@ it('toIterator', async function () {
       toIterator(
         (
           (n = 1) =>
-          () =>
-            (n = n * 2)
+            () =>
+              (n = n * 2)
         )(),
         1024,
       ),

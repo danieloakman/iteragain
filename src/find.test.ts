@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { count, find, map, pipe, range } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { count, find, map, pipe, range } from '.';
 it('find', async function () {
   equal(
     find(range(10), n => n === 5),

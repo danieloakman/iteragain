@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { findIndex, pipe, range } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { findIndex, pipe, range } from '.';
 it('findIndex', async function () {
   equal(
     findIndex(range(10), n => n === 5),

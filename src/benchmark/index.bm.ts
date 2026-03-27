@@ -2,7 +2,7 @@ import { setupSuite } from './bm-util';
 
 const suite = setupSuite({ name: __filename.split(/[\\/]/).pop() });
 import ExtendedIterator from '../internal/ExtendedIterator';
-import { map, filter, toIterator, toArray } from '..';
+import { map, filter, toIterator, toArray } from '.';
 import { IteratorWithOperators } from 'iterare/lib/iterate';
 import { from } from 'rxjs';
 import { map as rsjsMap, filter as rxjsFilter /* , skip */ } from 'rxjs/operators';
@@ -74,7 +74,7 @@ suite.add('rxjs', () => {
       // filter(n => n < 200),
       rsjsMap(n => n.toString()),
     )
-    .subscribe(() => {});
+    .subscribe(() => { });
 });
 suite.add('ixjs', () => {
   ixIt
@@ -84,7 +84,7 @@ suite.add('ixjs', () => {
       ixOps.filter(n => n % 2 !== 0),
       ixOps.map(n => n.toString()),
     )
-    .forEach(() => {});
+    .forEach(() => { });
 });
 
 // Testing that arrayLike saves time if the iterator is only partially iterated over:

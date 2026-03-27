@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { pipe, quantify, range } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { pipe, quantify, range } from '.';
 it('quantify', async function () {
   equal(
     quantify(range(10), n => n % 2 === 0),

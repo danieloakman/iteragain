@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { pipe, range, reduce } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { pipe, range, reduce } from '.';
 it('reduce', async function () {
   equal(
     reduce(range(10), (acc, n) => acc + n),

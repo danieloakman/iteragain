@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { map, pipe, range, resume } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { map, pipe, range, resume } from '.';
 it('resume', async function () {
   let it = resume(range(2), 1);
   equal([...it, ...it, ...it], [0, 1, 0, 1]);

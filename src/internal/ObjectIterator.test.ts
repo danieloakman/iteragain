@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, throws } from '../test-utils';
+import { equal, throws } from './test-utils';
 import ObjectIterator from './ObjectIterator';
 
 it(

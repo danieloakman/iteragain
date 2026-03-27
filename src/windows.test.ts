@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { filter, pipe, range, toArray, windows } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { filter, pipe, range, toArray, windows } from '.';
 it('windows', async function () {
   equal(
     [...windows([1, 2, 3, 4, 5], 3, 1)],

@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { toArray, unzip, zip } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { toArray, unzip, zip } from '.';
 it('unzip', async function () {
   equal(
     unzip([

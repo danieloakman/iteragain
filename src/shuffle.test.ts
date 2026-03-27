@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { includes, iter, range, shuffle, toArray } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { includes, iter, range, shuffle, toArray } from '.';
 it('shuffle', async function () {
   const shuffled = [...shuffle(range(10))];
   equal(shuffled.length, 10);

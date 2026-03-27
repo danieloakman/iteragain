@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { isIterable } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { isIterable } from '.';
 it('isIterable', async function () {
   assert(isIterable([1, 2, 3]));
   assert(isIterable('abc'));

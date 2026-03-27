@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { flatMap, pipe, repeat, toArray } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { flatMap, pipe, repeat, toArray } from '.';
 it('flatMap', async function () {
   const a = [1, 2, [3]].flatMap(n => n);
   equal([...flatMap([1, 2, [3]], n => n)], a);

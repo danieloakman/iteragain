@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { map, pipe, pluck, range, take } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { map, pipe, pluck, range, take } from '.';
 it('pluck', async function () {
   equal([...pluck([{ a: 1 }, { a: 2 }, { a: 3 }], 'a')], [1, 2, 3]);
   equal(

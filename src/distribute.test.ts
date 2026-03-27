@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { distribute, pipe, range, toArray } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { distribute, pipe, range, toArray } from '.';
 it('distribute', async function () {
   equal(
     [...distribute(range(3), 3)].map(v => toArray(v)),

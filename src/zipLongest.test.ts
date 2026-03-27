@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { zipLongest } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { zipLongest } from '.';
 it('zipLongest', async function () {
   equal(
     [...zipLongest([1, 2, 3], ['4', '5', '6'])],

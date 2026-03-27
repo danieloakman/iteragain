@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { count, map, pipe, range, spy } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { count, map, pipe, range, spy } from '.';
 it('spy', async function () {
   const [value, it] = spy(range(10));
   equal(value, [0]);

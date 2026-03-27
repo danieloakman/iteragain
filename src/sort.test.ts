@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { pipe, range, shuffle, sort, toArray } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { pipe, range, shuffle, sort, toArray } from '.';
 it('sort', async function () {
   equal([...sort([3, 1, 2])], [1, 2, 3]);
   equal([...sort([3, 1, 2], (a, b) => b - a)], [3, 2, 1]);

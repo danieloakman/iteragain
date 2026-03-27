@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { count, dropWhile, pipe, range, take, toArray } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { count, dropWhile, pipe, range, take, toArray } from '.';
 it('dropWhile', async function () {
   equal([...dropWhile(range(10), n => n < 5)], [5, 6, 7, 8, 9]);
   equal(

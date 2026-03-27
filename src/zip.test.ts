@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './test-utils';
-import { zip } from '..';
+import { equal, expectType, assert, throws } from './internal/test-utils';
+import { zip } from '.';
 it('zip', async function () {
   equal(
     [...zip([1, 2, 3], ['4', '5', '6'])],
