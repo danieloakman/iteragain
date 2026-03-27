@@ -94,7 +94,7 @@
     "asyncify:clean": "ts-node ./scripts/asyncify.ts -c",
     "lint": "eslint src",
     "format": "prettier --write **.ts",
-    "test": "bun test src/**/*.test.ts",
+    "test": "bun test ./src",
     "check": "tsc -p tsconfig.test.json",
     "check:watch": "bun run check --watch",
     "coverage": "bun run test --coverage",
