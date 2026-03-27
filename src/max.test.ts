@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal, expectType } from './internal/test-utils';
 import { map, max, pipe, range, shuffle } from '.';
 it('max', async function () {
   equal(max(range(10)), 9);

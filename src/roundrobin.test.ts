@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal } from './internal/test-utils';
 import { roundrobin } from '.';
 it('roundrobin', async function () {
   equal([...roundrobin([1, 2, 3], [4, 5, 6])], [1, 4, 2, 5, 3, 6]);

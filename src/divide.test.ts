@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal, expectType } from './internal/test-utils';
 import { divide, map, pipe, range, toArray } from '.';
 it('divide', async function () {
   equal(

@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal, expectType, assert } from './internal/test-utils';
 import { filter, forEach, pipe, range, shuffle } from '.';
 it('forEach', async function () {
   const arr: number[] = [];

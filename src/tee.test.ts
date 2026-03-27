@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal } from './internal/test-utils';
 import { iter, pipe, range, tee, toArray, zip } from '.';
 it('tee', async function () {
   // this.timeout(60000);

@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal, assert } from './internal/test-utils';
 import { count, find, map, pipe, range } from '.';
 it('find', async function () {
   equal(

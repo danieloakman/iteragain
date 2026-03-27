@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal, assert, throws } from './internal/test-utils';
 import { isIterator, toArray, toIterator } from '.';
 it('toIterator', async function () {
   const it1 = toIterator([1, 2, 3]);

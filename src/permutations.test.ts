@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal, assert } from './internal/test-utils';
 import { map, permutations, pipe, some } from '.';
 it('permutations', async function () {
   const result1 = [...permutations([1, 2, 3], 3)];

@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal, assert } from './internal/test-utils';
 import { includes, iter, range, shuffle, toArray } from '.';
 it('shuffle', async function () {
   const shuffled = [...shuffle(range(10))];

@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
-import { filter, map, pipe, range, toArray } from '.';
+import { equal } from './internal/test-utils';
+import { filter, pipe, range, toArray } from '.';
 it('filter', async function () {
   equal([...filter(range(10), n => n % 2 === 0)], [0, 2, 4, 6, 8]);
   type A = { a: number };

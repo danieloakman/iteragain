@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal } from './internal/test-utils';
 import { map, range, reverse } from '.';
 it('reverse', async function () {
   equal([...reverse(range(10))], [...range(9, -1)]);

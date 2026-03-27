@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal } from './internal/test-utils';
 import { consume, pipe, range, tap } from '.';
 it('consume', async function () {
   const arr: number[] = [];

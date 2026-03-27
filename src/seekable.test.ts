@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal, expectType } from './internal/test-utils';
 import type SeekableIterator from './internal/SeekableIterator';
 import { count, filter, pipe, range, seekable } from '.';
 it('seekable', async function () {

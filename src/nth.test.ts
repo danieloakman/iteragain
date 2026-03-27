@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal, assert } from './internal/test-utils';
 import { filter, flatMap, nth, pipe, range, shuffle, toIterator } from '.';
 it('nth', async function () {
   equal(nth(range(10), 3), 3);

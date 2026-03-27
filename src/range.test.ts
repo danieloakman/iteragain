@@ -1,6 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
-import { length, range, take } from '.';
+import { equal, assert, throws } from './internal/test-utils';
+import { range, take } from '.';
 it('range', async function () {
   equal([...range(5, 10, 2)], [5, 7, 9]);
   equal([...range(5, 10)], [5, 6, 7, 8, 9]);

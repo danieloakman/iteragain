@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType, assert, throws } from './internal/test-utils';
+import { equal, expectType } from './internal/test-utils';
 import { map, pipe, range, toArray } from '.';
 it('map', async function () {
   const result = [...map(range(10), n => n * n)];
