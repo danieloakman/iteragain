@@ -2,7 +2,7 @@ node_modules
 dist
 **.d.ts
 **.js
-.nyc_output
+coverage
 src/**/*Async*.ts
 src/**/*async*.ts
 *.html
