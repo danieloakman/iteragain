@@ -7,14 +7,14 @@ scripts
 src
 .eslintcache
 .eslintrc.*
-.nycrc*
+bunfig.toml
 .gitignore
 .npmignore
 .nvmrc
 .prettierignore
 .prettierrc
 tsconfig*
-.nyc_output
+coverage
 .nojekyll
 README.es.md
 .github

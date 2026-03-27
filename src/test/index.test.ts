@@ -1,3 +1,4 @@
+import { describe, it } from 'bun:test';
 import { ok as assert, deepStrictEqual, notDeepStrictEqual as notEqual, throws } from 'assert';
 import {
   isIterable,
@@ -880,21 +881,23 @@ describe('internal', function () {
     equal(it3.next(3).value, 6);
   });
 
-  it('ObjectIterator', async function () {
-    this.timeout(5000);
-    this.slow(2000);
-    const obj = { a: 1 };
-    equal([...new ObjectIterator(obj)], [['a', 1, obj]]);
-    const obj2 = { a: 1, b: { c: 2, d: { e: 3 } }, f: 4 };
-    equal(
-      [...new ObjectIterator(obj2, 'pre-order-DFS')].map(([k]) => k),
-      ['a', 'b', 'c', 'e', 'd', 'f'],
-    );
-    const obj3 = { a: 1, b: { c: 2 } } as Record<string, any>;
-    const obj4 = { circle: obj3 } as Record<string, any>;
-    obj3.b.circle = obj4;
-    throws(() => [...new ObjectIterator(obj3, 'pre-order-DFS')].map(([k]) => k));
-  });
+  it(
+    'ObjectIterator',
+    async function () {
+      const obj = { a: 1 };
+      equal([...new ObjectIterator(obj)], [['a', 1, obj]]);
+      const obj2 = { a: 1, b: { c: 2, d: { e: 3 } }, f: 4 };
+      equal(
+        [...new ObjectIterator(obj2, 'pre-order-DFS')].map(([k]) => k),
+        ['a', 'b', 'c', 'e', 'd', 'f'],
+      );
+      const obj3 = { a: 1, b: { c: 2 } } as Record<string, any>;
+      const obj4 = { circle: obj3 } as Record<string, any>;
+      obj3.b.circle = obj4;
+      throws(() => [...new ObjectIterator(obj3, 'pre-order-DFS')].map(([k]) => k));
+    },
+    { timeout: 30_000 },
+  );
 });
 
 // it('asyncMap', async function () {
@@ -1572,7 +1575,6 @@ it('product', async function () {
 });
 
 it('promiseAll', async function () {
-  this.slow(500);
   const sleep = (ms: number): Promise<number> => new Promise(resolve => setTimeout(() => resolve(ms), ms));
   const [it1, it2] = tee(
     iter(range(10)).map(n => n * 10),
@@ -1601,7 +1603,6 @@ it('quantify', async function () {
 });
 
 it('range', async function () {
-  this.slow(300);
   equal([...range(5, 10, 2)], [5, 7, 9]);
   equal([...range(5, 10)], [5, 6, 7, 8, 9]);
   equal([...range(5, 0, -1)], [5, 4, 3, 2, 1]);

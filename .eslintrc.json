@@ -4,8 +4,7 @@
   "plugins": ["@typescript-eslint"],
   "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
   "env": {
-    "node": true,
-    "mocha": true
+    "node": true
   },
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",

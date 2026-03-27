@@ -4,7 +4,7 @@ dist
 **.js
 **.map
 .vscode/**/*.ts
-.nyc_output
+coverage
 src/**/*Async*.ts
 src/**/*async*.ts
 *buildinfo

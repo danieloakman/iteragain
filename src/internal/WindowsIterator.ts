@@ -3,14 +3,16 @@ export class WindowsIterator<T> implements IterableIterator<T[]> {
   protected prev: T[] = [];
   protected nextResult = { done: false, value: undefined } as IteratorResult<T>;
   /** The number of elements inbetween windows. */
-  protected readonly unused = this.offset - this.length;
+  protected readonly unused: number;
 
   constructor(
     protected iterator: Iterator<T>,
     protected length: number,
     protected offset: number,
     protected fill?: T,
-  ) {}
+  ) {
+    this.unused = this.offset - this.length;
+  }
 
   [Symbol.iterator](): IterableIterator<T[]> {
     return this;
