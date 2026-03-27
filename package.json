@@ -1,37 +1,17 @@
 {
   "name": "iteragain",
   "version": "4.1.6",
-  "description": "Javascript Iterable/Iterator/Generator-function utilities.",
-  "sideEffects": false,
-  "scripts": {
-    "build": "concurrently \"tsc -p tsconfig.json\" \"tsc -p tsconfig.es5.json\" \"tsc -p tsconfig.esm.json\" \"tsc -p tsconfig.types.json\"",
-    "clean": "rimraf dist iteragain*.tgz",
-    "asyncify": "ts-node ./scripts/asyncify.ts",
-    "asyncify:watch": "ts-node ./scripts/asyncify.ts -w",
-    "asyncify:clean": "ts-node ./scripts/asyncify.ts -c",
-    "lint": "eslint src",
-    "format": "prettier --write **.ts",
-    "test": "bun test",
-    "test:debug": "bun --inspect test",
-    "check": "tsc -p tsconfig.test.json",
-    "check:watch": "bun run check --watch",
-    "coverage": "bun test --coverage",
-    "bm": "ts-node src/benchmark/index.bm.ts",
-    "bm:prof": "node -r ts-node/register --prof src/benchmark/index.bm.ts",
-    "new:iterator": "ts-node ./scripts/new-iterator.ts",
-    "new:function": "ts-node ./scripts/new-function.ts",
-    "new:test": "ts-node ./scripts/new-test.ts",
-    "docs:build": "typedoc --plugin typedoc-plugin-remove-references --includeVersion --entryPointStrategy expand src/",
-    "docs:deploy": "pnpm run docs:build && pnpm gh-pages -d docs --nojekyll -u \"Daniel Oakman <42539848+danieloakman@users.noreply.github.com>\"",
-    "v:patch": "pnpm version patch -f -m \"Upgrade package version to v%s\"",
-    "v:minor": "pnpm version minor -f -m \"Upgrade package version to v%s\"",
-    "v:major": "pnpm version major -f -m \"Upgrade package version to v%s\"",
-    "prepare": "husky",
-    "preversion": "bun run check && bun run lint && bun run coverage",
-    "postversion": "git push --follow-tags"
+  "author": "Daniel (Oakman) Brown",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danieloakman/iteragain.git"
   },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm5/index.js",
   "devDependencies": {
+    "@danoaky/js-utils": "^0.30.0",
     "@types/benchmark": "^2.1.5",
+    "@types/bun": "^1.3.11",
     "@types/node": "^22.13.5",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
@@ -45,7 +25,6 @@
     "iterare": "^1.2.1",
     "iterplus": "^3.0.2",
     "ix": "^6.0.0",
-    "js-utils": "https://github.com/danieloakman/js-utils/releases/download/v0.16.2/package.tgz",
     "jsr": "^0.13.3",
     "lint-staged": "^15.4.3",
     "more-node-fs": "^2.0.2",
@@ -59,10 +38,6 @@
     "typedoc-plugin-rename-defaults": "^0.7.2",
     "typescript": "^5.7.3"
   },
-  "types": "./dist/esm/index.d.ts",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm5/index.js",
-  "es2015": "./dist/esm/index.js",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
@@ -87,15 +62,11 @@
     },
     "./package.json": "./package.json"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/danieloakman/iteragain.git"
-  },
-  "author": "Daniel Oakman",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/danieloakman/iteragain/issues"
   },
+  "description": "Javascript Iterable/Iterator/Generator-function utilities.",
+  "es2015": "./dist/esm/index.js",
   "homepage": "https://www.npmjs.com/package/iteragain",
   "keywords": [
     "iterator",
@@ -118,9 +89,39 @@
     "utility",
     "util"
   ],
+  "license": "ISC",
   "lint-staged": {
     "*.ts": [
       "eslint --cache --fix"
     ]
-  }
+  },
+  "scripts": {
+    "build": "concurrently \"tsc -p tsconfig.json\" \"tsc -p tsconfig.es5.json\" \"tsc -p tsconfig.esm.json\" \"tsc -p tsconfig.types.json\"",
+    "clean": "rimraf dist iteragain*.tgz",
+    "asyncify": "ts-node ./scripts/asyncify.ts",
+    "asyncify:watch": "ts-node ./scripts/asyncify.ts -w",
+    "asyncify:clean": "ts-node ./scripts/asyncify.ts -c",
+    "lint": "eslint src",
+    "format": "prettier --write **.ts",
+    "test": "bun test",
+    "test:debug": "bun --inspect test",
+    "check": "tsc -p tsconfig.test.json",
+    "check:watch": "bun run check --watch",
+    "coverage": "bun test --coverage",
+    "bm": "ts-node src/benchmark/index.bm.ts",
+    "bm:prof": "node -r ts-node/register --prof src/benchmark/index.bm.ts",
+    "new:iterator": "ts-node ./scripts/new-iterator.ts",
+    "new:function": "ts-node ./scripts/new-function.ts",
+    "new:test": "ts-node ./scripts/new-test.ts",
+    "docs:build": "typedoc --plugin typedoc-plugin-remove-references --includeVersion --entryPointStrategy expand src/",
+    "docs:deploy": "bun run docs:build && bun gh-pages -d docs --nojekyll -u \"Daniel Oakman <42539848+danieloakman@users.noreply.github.com>\"",
+    "v:patch": "bun version patch -f -m \"Upgrade package version to v%s\"",
+    "v:minor": "bun version minor -f -m \"Upgrade package version to v%s\"",
+    "v:major": "bun version major -f -m \"Upgrade package version to v%s\"",
+    "prepare": "husky",
+    "preversion": "bun run check && bun run lint && bun run coverage",
+    "postversion": "git push --follow-tags"
+  },
+  "sideEffects": false,
+  "types": "./dist/esm/index.d.ts"
 }
