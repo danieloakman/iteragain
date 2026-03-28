@@ -44,6 +44,7 @@ import TeedIterator from './TeedIterator';
 import count from '../count';
 import FlatMapIterator from './FlatMapIterator';
 import GroupByIterator from './GroupByIterator';
+import { promiseAll } from '../promiseAll';
 
 const enumerator =
   <T>(count = 0) =>
@@ -673,9 +674,9 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
     return result;
   }
 
-  /** Calls `Promise.all` on all collected values. */
-  promiseAll(): Promise<Awaited<T>[]> {
-    return Promise.all(this.toArray()) as Promise<Awaited<T>[]>;
+  /** Calls `Promise.all` on all collected values, optionally limiting concurrent in-flight promises. */
+  promiseAll({ concurrency = Infinity }: { concurrency?: number } = {}): Promise<Awaited<T>[]> {
+    return promiseAll(this, { concurrency });
   }
 
   /** Calls `Promise.race` on all collected values. */
