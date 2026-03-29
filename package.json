@@ -102,9 +102,9 @@
     "bm:prof": "node -r ts-node/register --prof src/benchmark/index.bm.ts",
     "docs:build": "typedoc --plugin typedoc-plugin-remove-references --includeVersion --entryPointStrategy expand src/",
     "docs:deploy": "bun run docs:build && bun gh-pages -d docs --nojekyll -u \"Daniel Oakman <42539848+danieloakman@users.noreply.github.com>\"",
-    "v:patch": "bun version patch -f -m \"Upgrade package version to v%s\"",
-    "v:minor": "bun version minor -f -m \"Upgrade package version to v%s\"",
-    "v:major": "bun version major -f -m \"Upgrade package version to v%s\"",
+    "v:patch": "npm version patch -f -m \"Upgrade package version to v%s\"",
+    "v:minor": "npm version minor -f -m \"Upgrade package version to v%s\"",
+    "v:major": "npm version major -f -m \"Upgrade package version to v%s\"",
     "preversion": "bun run check && bun run lint && bun run coverage",
     "postversion": "git push --follow-tags"
   },
