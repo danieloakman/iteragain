@@ -12,45 +12,56 @@ describe('promiseAll', () => {
     equal(await promiseAll(map(it1, sleep)), toArray(it2));
   });
 
-  it('concurrency 1', async () => {
-    let active = 0;
-    let maxActive = 0;
-    const n = 4;
-    const ms = 100;
-    const sleep = (ms: number): Promise<number> =>
-      new Promise(resolve => {
-        active++;
-        maxActive = Math.max(maxActive, active);
-        setTimeout(() => {
-          active--;
-          resolve(ms);
-        }, ms);
-      });
-    const expected = iter(range(n)).map(() => ms).toArray();
-    const it = iter(range(n)).map(() => sleep(ms));
-    const result = await promiseAll(it, { concurrency: 1 });
-    expect(result).toEqual(expected);
-    expect(maxActive).toBe(1);
+  it('concurrency', async () => {
+    const ms = 2;
+    for (const { concurrency, n } of [
+      {
+        concurrency: 1,
+        n: 4,
+      },
+      {
+        concurrency: 2,
+        n: 4,
+      },
+      {
+        concurrency: 3,
+        n: 4,
+      },
+      {
+        concurrency: 4,
+        n: 4,
+      },
+      {
+        concurrency: 5,
+        n: 4,
+      },
+      {
+        concurrency: Infinity,
+        n: 10,
+      },
+    ]) {
+      let active = 0;
+      let maxActive = 0;
+      const sleep = (ms: number): Promise<number> =>
+        new Promise(resolve => {
+          active++;
+          maxActive = Math.max(maxActive, active);
+          setTimeout(() => {
+            active--;
+            resolve(ms);
+          }, ms);
+        });
+      const expected = iter(range(n))
+        .map(() => ms)
+        .toArray();
+      const it = iter(range(n)).map(() => sleep(ms));
+      const result = await promiseAll(it, { concurrency });
+      expect(result).toEqual(expected);
+      expect(maxActive).toBe(Math.min(concurrency, n));
+    }
   });
 
-  it('concurrency 2', async () => {
-    let active = 0;
-    let maxActive = 0;
-    const n = 4;
-    const ms = 100;
-    const sleep = (ms: number): Promise<number> =>
-      new Promise(resolve => {
-        active++;
-        maxActive = Math.max(maxActive, active);
-        setTimeout(() => {
-          active--;
-          resolve(ms);
-        }, ms);
-      });
-    const expected = iter(range(n)).map(() => ms).toArray();
-    const it = iter(range(n)).map(() => sleep(ms));
-    const result = await promiseAll(it, { concurrency: 2 });
-    expect(result).toEqual(expected);
-    expect(maxActive).toBe(2);
+  it('concurrency 0', () => {
+    expect(() => promiseAll(iter(range(10)), { concurrency: 0 })).toThrow('Concurrency must be positive');
   });
 });
