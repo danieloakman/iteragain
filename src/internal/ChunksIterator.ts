@@ -9,7 +9,9 @@ export class ChunksIterator<T, Size extends number> implements IterableIterator<
     protected iterator: Iterator<T>,
     protected length: Size,
     protected fill?: T | undefined,
-  ) {}
+  ) {
+    if (length <= 0) throw new RangeError('length must be greater than 0');
+  }
 
   [Symbol.iterator](): IterableIterator<Tuple<T, Size>> {
     return this;

@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal, expectType } from './internal/test-utils';
+import { equal, expectType, throws } from './internal/test-utils';
 import { filter, pipe, range, toArray, windows } from '.';
 it('windows', async function () {
   equal(
@@ -42,4 +42,6 @@ it('windows', async function () {
       [8, -1],
     ],
   );
+  throws(() => [...windows([1, 2, 3], 0, 1)], RangeError);
+  throws(() => [...windows([1, 2, 3], 2, 0)], RangeError);
 });

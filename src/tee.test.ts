@@ -11,6 +11,11 @@ it('tee', async function () {
   equal(a.toArray(), [4, 9]);
   equal(b.toArray(), [6]);
   equal([...tee([1, 2, 3], 1)[0]], [1, 2, 3]);
+  {
+    const [a, b] = tee([undefined, 1, undefined, 2], 2).map(v => iter(v));
+    equal(a.toArray(), [undefined, 1, undefined, 2]);
+    equal(b.toArray(), [undefined, 1, undefined, 2]);
+  }
   equal(
     pipe(range(3), tee(3), ([it1, it2, it3]) => zip(it3, it2, it1), toArray),
     [

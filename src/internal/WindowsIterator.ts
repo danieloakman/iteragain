@@ -11,6 +11,8 @@ export class WindowsIterator<T> implements IterableIterator<T[]> {
     protected offset: number,
     protected fill?: T,
   ) {
+    if (length <= 0) throw new RangeError('length must be greater than 0');
+    if (offset <= 0) throw new RangeError('offset must be greater than 0');
     this.unused = this.offset - this.length;
   }
 

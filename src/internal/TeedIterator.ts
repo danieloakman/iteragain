@@ -12,11 +12,11 @@ export class TeedIterator<T> implements IterableIterator<T> {
   }
 
   next(): IteratorResult<T> {
-    this.seekable.seek(this.indices[this.i] + 1);
-    const value = this.seekable.elements[this.indices[this.i]];
-    if (value === undefined) return { done: true, value: undefined };
-    this.indices[this.i]++;
-    return { done: false, value };
+    const index = this.indices[this.i]!;
+    this.seekable.seek(index + 1);
+    if (index >= this.seekable.elements.length) return { done: true, value: undefined };
+    this.indices[this.i]!++;
+    return { done: false, value: this.seekable.elements[index]! };
   }
 }
 

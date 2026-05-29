@@ -40,4 +40,13 @@ it('seekable', async function () {
     ),
     undefined,
   );
+  {
+    const it = seekable([undefined, 1, undefined]);
+    equal(
+      [it.next().value, it.next().value, it.next().value, it.next().value],
+      [undefined, 1, undefined, undefined],
+    );
+    it.seek(0);
+    equal([it.next().value, it.next().value, it.next().value], [undefined, 1, undefined]);
+  }
 });

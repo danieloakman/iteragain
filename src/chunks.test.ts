@@ -1,5 +1,5 @@
 import { it } from 'bun:test';
-import { equal } from './internal/test-utils';
+import { equal, throws } from './internal/test-utils';
 import { chunks, pipe, range, toArray } from '.';
 it('chunks', async function () {
   equal([...chunks([1, 2, 3, 4, 5], 2)], [[1, 2], [3, 4], [5]]);
@@ -9,4 +9,5 @@ it('chunks', async function () {
     [7, 8, 9],
     [10, -1, -1],
   ]);
+  throws(() => [...chunks([1, 2, 3], 0)], RangeError);
 });

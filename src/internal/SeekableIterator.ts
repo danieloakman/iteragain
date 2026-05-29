@@ -29,12 +29,14 @@ export class SeekableIterator<T> implements IterableIterator<T> {
 
   public next(...args: any[]): IteratorResult<T> {
     if (this.done) return { done: true, value: undefined };
-    const cachedValue = this.cache[this.i++];
-    if (cachedValue !== undefined) return { done: false, value: cachedValue };
+    if (this.i < this.cache.length) return { done: false, value: this.cache[this.i++]! };
     const next = this.iterator.next(...(args as any));
-    if (next.done) this.iteratorDone = true;
-    else this.add(next.value);
-    return next;
+    if (next.done) {
+      this.iteratorDone = true;
+      return next;
+    }
+    this.add(next.value);
+    return { done: false, value: this.cache[this.i++]! };
   }
 
   /**

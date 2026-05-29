@@ -18,7 +18,8 @@ export class CycleIterator<T> implements IterableIterator<T> {
 
   next(...args: any[]): IteratorResult<T> {
     const next = this.iterator.next(...(args as any));
-    if (next.done && this.times-- > 0) {
+    if (next.done) {
+      if (!this.values.length || this.times-- <= 0) return next;
       this.iterator = toIterator(this.values.splice(0, this.values.length));
       return this.next(...(args as any));
     }
