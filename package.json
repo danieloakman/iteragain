@@ -93,7 +93,7 @@
     "asyncify:watch": "ts-node ./scripts/asyncify.ts -w",
     "asyncify:clean": "ts-node ./scripts/asyncify.ts -c",
     "lint": "eslint src",
-    "format": "prettier --write **.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
     "test": "bun test ./src",
     "check": "tsc -p tsconfig.test.json",
     "check:watch": "bun run check --watch",
@@ -109,5 +109,5 @@
     "postversion": "git push --follow-tags"
   },
   "sideEffects": false,
-  "types": "./dist/esm/index.d.ts"
+  "types": "./dist/types/index.d.ts"
 }
