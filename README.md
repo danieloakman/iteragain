@@ -131,7 +131,7 @@ for (const n of arr) {
 const collected = toArray(arr);
 ```
 
-## Inpired by
+## Inspired by
 
 [iterplus](https://www.npmjs.com/package/iterplus), [iterare](https://www.npmjs.com/package/iterare), [lodash](https://www.npmjs.com/package/lodash), [rxjs](https://www.npmjs.com/package/rxjs), [ixjs](https://www.npmjs.com/package/ix) and the Python [itertools](https://docs.python.org/3/library/itertools.html) and [more-itertools](https://pypi.org/project/more-itertools/) modules. See benchmark section for performance against some of these.
 
