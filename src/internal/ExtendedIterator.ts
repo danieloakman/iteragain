@@ -17,6 +17,13 @@ import {
   KeyIdentifiersValue,
   UniqueParams,
 } from '../types';
+import type { UnzipExtendedResult } from './unzipTypes';
+import {
+  MAX_EMPTY_ERROR,
+  MINMAX_EMPTY_ERROR,
+  MIN_EMPTY_ERROR,
+  REDUCE_EMPTY_ERROR,
+} from './emptyIteratorError';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
 import FilterIterator from './FilterIterator';
@@ -153,11 +160,11 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * in the returned tuple contains the nth element of each value in this iterator. The length of the returned tuple is
    * determined by the length of the first value in this iterator.
    */
-  unzip(): ExtendedIterator<T>[] {
+  unzip(): UnzipExtendedResult<T> {
     const [head] = this.peek();
     const n = Array.isArray(head) ? head.length : 1;
-    if (n < 2) return [this];
-    return this.tee(n).map((it, i) => it.map(v => (v as any)[i]));
+    if (n < 2) return [this] as unknown as UnzipExtendedResult<T>;
+    return this.tee(n).map((it, i) => it.map(v => (v as any)[i])) as UnzipExtendedResult<T>;
   }
 
   /** @lazy Aggregates this iterator and any number of others into one. Stops when one of the iterables is empty. */
@@ -369,10 +376,12 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
       typeof params === 'function' ? { iteratee: params } : params;
     if (justSeen) {
       let lastValue: T;
+      let hasLastValue = false;
       return this.filter(value => {
         value = iteratee(value);
-        if (!lastValue || value !== lastValue) {
+        if (!hasLastValue || value !== lastValue) {
           lastValue = value;
+          hasLastValue = true;
           return true;
         }
         return false;
@@ -397,7 +406,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   reverse(): ExtendedIterator<T> {
     let next: IteratorResult<T>;
     const result: T[] = [];
-    while (!(next = this.iterator.next()).done) result.unshift(next.value);
+    while (!(next = this.iterator.next()).done) result.push(next.value);
+    result.reverse();
     return new ExtendedIterator(toIterator(result));
   }
 
@@ -412,7 +422,14 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   reduce<R>(reducer: (accumulator: T | R, value: T) => R): R;
   reduce<R>(reducer: (accumulator: R | T, value: T) => R, initialValue?: R): R {
     let next: IteratorResult<T>;
-    let accumulator = initialValue ?? this.iterator.next().value;
+    if (arguments.length < 2) {
+      const first = this.iterator.next();
+      if (first.done) throw new TypeError(REDUCE_EMPTY_ERROR);
+      let accumulator: R | T = first.value;
+      while (!(next = this.iterator.next()).done) accumulator = reducer(accumulator as R, next.value);
+      return accumulator as R;
+    }
+    let accumulator = initialValue as R;
     while (!(next = this.iterator.next()).done) accumulator = reducer(accumulator, next.value);
     return accumulator;
   }
@@ -430,6 +447,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   /** Returns the minimum value from this iterator. */
   min(iteratee: Iteratee<T, number> = v => v as unknown as number): T {
     let next = this.iterator.next();
+    if (next.done) throw new TypeError(MIN_EMPTY_ERROR);
     let min = { value: next.value, comparison: iteratee(next.value) };
     while (!(next = this.iterator.next()).done) {
       const comparison = iteratee(next.value);
@@ -441,6 +459,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   /** Returns the maximum value from this iterator. */
   max(iteratee: Iteratee<T, number> = v => v as unknown as number): T {
     let next = this.iterator.next();
+    if (next.done) throw new TypeError(MAX_EMPTY_ERROR);
     let max = { value: next.value, comparison: iteratee(next.value) };
     while (!(next = this.iterator.next()).done) {
       const comparison = iteratee(next.value);
@@ -452,6 +471,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   /** Returns the minimum and maximum from this iterator as a tuple: `[min, max]`. */
   minmax(iteratee: Iteratee<T, number> = v => v as unknown as number): [T, T] {
     let next = this.iterator.next();
+    if (next.done) throw new TypeError(MINMAX_EMPTY_ERROR);
     let min = { value: next.value, comparison: iteratee(next.value) };
     let max = { value: next.value, comparison: iteratee(next.value) };
     while (!(next = this.iterator.next()).done) {
@@ -487,7 +507,12 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
    * @param separator The separator to use between each value (default: ',').
    */
   join(separator = ','): string {
-    return (this.reduce((str, v) => (str + separator + v) as any) ?? '') as string;
+    const first = this.iterator.next();
+    if (first.done) return '';
+    let result = `${first.value as any}`;
+    let next: IteratorResult<T>;
+    while (!(next = this.iterator.next()).done) result += separator + next.value;
+    return result;
   }
 
   /**
@@ -570,7 +595,7 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   shuffle(seed: number = Math.random()): ExtendedIterator<T> {
     const values = this.toArray();
     for (let i = values.length - 1; i > 0; i--) {
-      const j = Math.floor(seed * (i + 1));
+      const j = Math.min(i, Math.max(0, Math.floor(seed * (i + 1))));
       [values[i], values[j]] = [values[j], values[i]];
     }
     return new ExtendedIterator(toIterator(values));

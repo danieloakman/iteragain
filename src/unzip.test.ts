@@ -2,12 +2,13 @@ import { it } from 'bun:test';
 import { equal } from './internal/test-utils';
 import { toArray, unzip, zip } from '.';
 it('unzip', async function () {
+  const rows: [string, number][] = [
+    ['a', 1],
+    ['b', 2],
+    ['c', 3],
+  ];
   equal(
-    unzip([
-      ['a', 1],
-      ['b', 2],
-      ['c', 3],
-    ]).map(toArray),
+    unzip(rows).map(toArray),
     [
       ['a', 'b', 'c'],
       [1, 2, 3],
@@ -17,6 +18,5 @@ it('unzip', async function () {
     ['a', 'b'],
     [1, 2],
   ]);
-  // @ts-expect-error
-  equal([...unzip([0, 1, 2])[0]], [0, 1, 2]);
+  equal([...unzip([0, 1, 2])[0]!], [0, 1, 2]);
 });

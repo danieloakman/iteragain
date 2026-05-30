@@ -1,4 +1,5 @@
 import type { IterSource, Iteratee, IteratorOrIterable } from './types';
+import { MINMAX_EMPTY_ERROR } from './internal/emptyIteratorError';
 import toIterator from './toIterator';
 
 /** Returns the minimum and maximum from the input iterator as a tuple: `[min, max]`. */
@@ -14,6 +15,7 @@ export function minmax(...args: any[]): unknown {
   const it = toIterator(args[0]);
   const iteratee: Iteratee<unknown, number> = args[1] ?? ((x: unknown): unknown => x);
   let next = it.next();
+  if (next.done) throw new TypeError(MINMAX_EMPTY_ERROR);
   let min = { value: next.value, comparison: iteratee(next.value) };
   let max = { value: next.value, comparison: iteratee(next.value) };
   while (!(next = it.next()).done) {

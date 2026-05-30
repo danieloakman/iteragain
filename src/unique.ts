@@ -23,10 +23,12 @@ export function unique(...args: any[]): ItOrCurriedIt<unknown> {
     typeof args[1] === 'function' ? { iteratee: args[1] } : args[1];
   if (justSeen) {
     let lastValue: unknown;
+    let hasLastValue = false;
     return new FilterIterator(it, value => {
       value = iteratee(value);
-      if (!lastValue || value !== lastValue) {
+      if (!hasLastValue || value !== lastValue) {
         lastValue = value;
+        hasLastValue = true;
         return true;
       }
       return false;

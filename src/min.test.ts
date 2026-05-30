@@ -1,5 +1,6 @@
 import { it } from 'bun:test';
-import { equal } from './internal/test-utils';
+import { equal, throws } from './internal/test-utils';
+import { MIN_EMPTY_ERROR } from './internal/emptyIteratorError';
 import { map, min, pipe, range, shuffle } from '.';
 it('min', async function () {
   equal(min(range(10)), 0);
@@ -16,4 +17,5 @@ it('min', async function () {
     ),
     '-50',
   );
+  throws(() => min([]), TypeError, MIN_EMPTY_ERROR);
 });

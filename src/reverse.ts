@@ -10,7 +10,8 @@ export function reverse<T>(arg: IteratorOrIterable<T>): IterableIterator<T> {
   let next: IteratorResult<T>;
   const it = toIterator(arg);
   const result: T[] = [];
-  while (!(next = it.next()).done) result.unshift(next.value);
+  while (!(next = it.next()).done) result.push(next.value);
+  result.reverse();
   return toIterableIterator(result);
 }
 

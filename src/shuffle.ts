@@ -11,7 +11,7 @@ export function shuffle<T extends IteratorOrIterable<any>>(
 ): IterableIterator<IterSource<T>> {
   const values = toArray(arg);
   for (let i = values.length - 1; i > 0; i--) {
-    const j = Math.floor(seed * (i + 1));
+    const j = Math.min(i, Math.max(0, Math.floor(seed * (i + 1))));
     [values[i], values[j]] = [values[j], values[i]];
   }
   return values[Symbol.iterator]();

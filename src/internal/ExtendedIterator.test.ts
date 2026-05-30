@@ -1,5 +1,11 @@
 import { describe, it } from 'bun:test';
 import { equal, notEqual, assert, throws } from './test-utils';
+import {
+  MAX_EMPTY_ERROR,
+  MINMAX_EMPTY_ERROR,
+  MIN_EMPTY_ERROR,
+  REDUCE_EMPTY_ERROR,
+} from './emptyIteratorError';
 import { compress, isIterable, isIterator, iter, pipe, range, toArray, zip } from '..';
 
 describe('ExtendedIterator', function () {
@@ -104,6 +110,8 @@ describe('ExtendedIterator', function () {
     equal(iter([1, 2, 3]).reduce(sum, 0), 6);
     equal(iter([1, 2, 3, 4]).reduce(sum), 10);
     equal(iter([1, 2, 3]).reduce(sum, ''), '123');
+    equal(iter<number[]>([]).reduce(sum, 0), 0);
+    throws(() => iter([]).reduce(sum), TypeError, REDUCE_EMPTY_ERROR);
   });
 
   it('quantify', async function () {
@@ -116,17 +124,20 @@ describe('ExtendedIterator', function () {
   it('min', async function () {
     equal(iter([1, 2, 3]).min(), 1);
     equal(iter('123a0A').min(), '0');
+    throws(() => iter([]).min(), TypeError, MIN_EMPTY_ERROR);
   });
 
   it('max', async function () {
     equal(iter([1, 2, 3]).max(), 3);
     equal(iter('123a0A').max(), 'a');
+    throws(() => iter([]).max(), TypeError, MAX_EMPTY_ERROR);
   });
 
   it('minmax', async function () {
     equal(iter([1, 2, 3]).minmax(), [1, 3]);
     equal(iter('123a0A').minmax(), ['0', 'a']);
     equal(iter(['1', 0, '2']).minmax(), [0, '2']);
+    throws(() => iter([]).minmax(), TypeError, MINMAX_EMPTY_ERROR);
   });
 
   it('concat', async function () {
@@ -342,14 +353,11 @@ describe('ExtendedIterator', function () {
       iter([
         ['a', 1],
         ['b', 2],
-      ])
+      ] as [string, number][])
         .unzip()
         .map(v => v.toArray()),
       [
-        // TODO: look into this
-        // @ts-expect-error
         ['a', 'b'],
-        // @ts-expect-error
         [1, 2],
       ],
     );

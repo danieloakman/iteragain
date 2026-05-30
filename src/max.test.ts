@@ -1,5 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType } from './internal/test-utils';
+import { equal, expectType, throws } from './internal/test-utils';
+import { MAX_EMPTY_ERROR } from './internal/emptyIteratorError';
 import { map, max, pipe, range, shuffle } from '.';
 it('max', async function () {
   equal(max(range(10)), 9);
@@ -18,4 +19,5 @@ it('max', async function () {
     ),
     [9, '81'],
   );
+  throws(() => max([]), TypeError, MAX_EMPTY_ERROR);
 });

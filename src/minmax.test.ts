@@ -1,5 +1,6 @@
 import { it } from 'bun:test';
-import { equal, expectType } from './internal/test-utils';
+import { equal, expectType, throws } from './internal/test-utils';
+import { MINMAX_EMPTY_ERROR } from './internal/emptyIteratorError';
 import { map, minmax, pipe, range, shuffle } from '.';
 it('minmax', async function () {
   equal(minmax(range(10)), [0, 9]);
@@ -18,4 +19,5 @@ it('minmax', async function () {
     ),
     ['0', '2500'],
   );
+  throws(() => minmax([]), TypeError, MINMAX_EMPTY_ERROR);
 });
