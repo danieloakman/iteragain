@@ -1,0 +1,4 @@
+kind: Fixed
+body: >-
+  Fix `reduce` (without initial value), `min`, `max`, and `minmax` on empty iterators to throw instead of returning `undefined`
+time: 2026-05-31T07:01:05.000000000+10:00

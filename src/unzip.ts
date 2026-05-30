@@ -10,7 +10,7 @@ import map from './map';
  * returned tuple is determined by the length of the first value in the input iterator.
  */
 export function unzip<Row>(arg: IteratorOrIterable<Row>): UnzipResult<Row> {
-  const [[head], it] = spy(arg);
+  const [[head], it] = sypy(arg);
   const n = Array.isArray(head) ? head.length : 1;
   if (n < 2) return [it] as UnzipResult<Row>;
   return tee(it, n).map((it, i) => map(it, v => (v as any)[i])) as UnzipResult<Row>;

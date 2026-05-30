@@ -1,0 +1,3 @@
+kind: Changed
+body: Improve `reverse` performance by collecting values with `push` and reversing in place instead of `unshift`
+time: 2026-05-31T07:01:06.000000000+10:00

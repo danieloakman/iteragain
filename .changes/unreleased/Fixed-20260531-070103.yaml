@@ -1,0 +1,3 @@
+kind: Fixed
+body: Fix `permutations(iterable)` one-argument form incorrectly returning a curried function instead of an iterator
+time: 2026-05-31T07:01:03.000000000+10:00

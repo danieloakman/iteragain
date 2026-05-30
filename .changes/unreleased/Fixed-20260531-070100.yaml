@@ -1,0 +1,3 @@
+kind: Fixed
+body: Fix infinite loops when `cycle` receives an empty iterable, or when `chunks`/`windows` are given invalid zero lengths
+time: 2026-05-31T07:01:00.000000000+10:00
