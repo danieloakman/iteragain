@@ -1,4 +1,0 @@
-kind: Fixed
-body: >-
-  Align top-level `package.json` `types` entry with exports, fix README typo, and expand `format` script to cover `src/**/*.ts`
-time: 2026-05-31T07:01:08.000000000+10:00

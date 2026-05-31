@@ -1,4 +1,0 @@
-kind: Fixed
-body: >-
-  Fix `unique({ justSeen: true })` not collapsing consecutive falsy duplicates such as `0`, `""`, and `false`
-time: 2026-05-31T07:01:02.000000000+10:00
