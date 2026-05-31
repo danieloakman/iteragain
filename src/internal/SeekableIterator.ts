@@ -6,7 +6,10 @@ import type { Tuple } from '../types';
  */
 export class SeekableIterator<T> implements IterableIterator<T> {
   protected cache: T[] = [];
+  /** Absolute index of the next value `next()` will return. */
   protected i = 0;
+  /** Absolute index of `cache[0]`. Increments when the cache evicts its oldest entry. */
+  protected base = 0;
   protected iteratorDone = false;
 
   constructor(
@@ -19,8 +22,7 @@ export class SeekableIterator<T> implements IterableIterator<T> {
   }
 
   get done(): boolean {
-    // If the iterator is done, then determine if `i` is at the end of the cache.
-    return this.iteratorDone ? !this.cache.length || this.i >= this.cache.length : false;
+    return this.iteratorDone ? !this.cache.length || this.i >= this.base + this.cache.length : false;
   }
 
   [Symbol.iterator](): IterableIterator<T> {
@@ -29,14 +31,16 @@ export class SeekableIterator<T> implements IterableIterator<T> {
 
   public next(...args: any[]): IteratorResult<T> {
     if (this.done) return { done: true, value: undefined };
-    if (this.i < this.cache.length) return { done: false, value: this.cache[this.i++]! };
+    if (this.i < this.base + this.cache.length) {
+      return { done: false, value: this.cache[this.i++ - this.base]! };
+    }
     const next = this.iterator.next(...(args as any));
     if (next.done) {
       this.iteratorDone = true;
       return next;
     }
     this.add(next.value);
-    return { done: false, value: this.cache[this.i++]! };
+    return { done: false, value: this.cache[this.i++ - this.base]! };
   }
 
   /**
@@ -44,9 +48,9 @@ export class SeekableIterator<T> implements IterableIterator<T> {
    * starting from the end of the internal cache (e.g. -1 is the last element).
    */
   public seek(i: number): void {
-    if (i < 0) i = this.cache.length + i;
+    if (i < 0) i = this.base + this.cache.length + i;
     if (i > this.i) while (this.i < i && !this.done) this.next();
-    else if (i < this.i) this.i = i;
+    else if (i < this.i) this.i = Math.max(i, this.base);
   }
 
   /**
@@ -63,7 +67,10 @@ export class SeekableIterator<T> implements IterableIterator<T> {
   /** Add `value` to the `cache`. */
   private add(value: T): void {
     this.cache.push(value);
-    if (this.cache.length > this.maxLength) this.cache.shift();
+    if (this.cache.length > this.maxLength) {
+      this.cache.shift();
+      this.base++;
+    }
   }
 }
 

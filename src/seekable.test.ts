@@ -49,4 +49,26 @@ it('seekable', async function () {
     it.seek(0);
     equal([it.next().value, it.next().value, it.next().value], [undefined, 1, undefined]);
   }
+  {
+    const it = seekable(range(10), 3);
+    equal(
+      [it.next().value, it.next().value, it.next().value, it.next().value],
+      [0, 1, 2, 3],
+    );
+    for (let i = 4; i < 6; i++) it.next();
+    equal(it.elements, [3, 4, 5]);
+    it.seek(0);
+    equal([it.next().value, it.next().value, it.next().value], [3, 4, 5]);
+    it.seek(-1);
+    equal(it.peek(), [5]);
+    equal(it.next().value, 5);
+  }
+  {
+    const it = seekable(range(10), 2);
+    it.next();
+    it.next();
+    it.next();
+    it.seek(0);
+    equal([it.next().value, it.next().value], [1, 2]);
+  }
 });
