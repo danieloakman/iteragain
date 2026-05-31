@@ -7,13 +7,10 @@ it('unzip', async function () {
     ['b', 2],
     ['c', 3],
   ];
-  equal(
-    unzip(rows).map(toArray),
-    [
-      ['a', 'b', 'c'],
-      [1, 2, 3],
-    ],
-  );
+  equal(unzip(rows).map(toArray), [
+    ['a', 'b', 'c'],
+    [1, 2, 3],
+  ]);
   equal(unzip(zip('abc', [1, 2])).map(toArray), [
     ['a', 'b'],
     [1, 2],

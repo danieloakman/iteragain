@@ -18,12 +18,7 @@ import {
   UniqueParams,
 } from '../types';
 import type { UnzipExtendedResult } from './unzipTypes';
-import {
-  MAX_EMPTY_ERROR,
-  MINMAX_EMPTY_ERROR,
-  MIN_EMPTY_ERROR,
-  REDUCE_EMPTY_ERROR,
-} from './emptyIteratorError';
+import { MAX_EMPTY_ERROR, MINMAX_EMPTY_ERROR, MIN_EMPTY_ERROR, REDUCE_EMPTY_ERROR } from './emptyIteratorError';
 import toIterator from '../toIterator';
 import ConcatIterator from './ConcatIterator';
 import FilterIterator from './FilterIterator';

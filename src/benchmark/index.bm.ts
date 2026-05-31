@@ -74,7 +74,7 @@ suite.add('rxjs', () => {
       // filter(n => n < 200),
       rsjsMap(n => n.toString()),
     )
-    .subscribe(() => { });
+    .subscribe(() => {});
 });
 suite.add('ixjs', () => {
   ixIt
@@ -84,7 +84,7 @@ suite.add('ixjs', () => {
       ixOps.filter(n => n % 2 !== 0),
       ixOps.map(n => n.toString()),
     )
-    .forEach(() => { });
+    .forEach(() => {});
 });
 
 // Testing that arrayLike saves time if the iterator is only partially iterated over:

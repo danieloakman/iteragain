@@ -7,8 +7,8 @@ it('FunctionIterator', async function () {
   const it = new FunctionIterator(
     (
       (n = 0) =>
-        () =>
-          n++ * 2
+      () =>
+        n++ * 2
     )(),
     100 as const,
   );
@@ -17,10 +17,10 @@ it('FunctionIterator', async function () {
   const it2 = iter(
     (
       (t = 0) =>
-        (n?: number) => {
-          if (typeof n === 'number') t += n;
-          return t;
-        }
+      (n?: number) => {
+        if (typeof n === 'number') t += n;
+        return t;
+      }
     )(),
   ).map(n => n + 10);
   equal(it2.next(1).value, 11);

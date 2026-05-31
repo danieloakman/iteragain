@@ -1,11 +1,6 @@
 import { describe, it } from 'bun:test';
 import { equal, notEqual, assert, throws } from './test-utils';
-import {
-  MAX_EMPTY_ERROR,
-  MINMAX_EMPTY_ERROR,
-  MIN_EMPTY_ERROR,
-  REDUCE_EMPTY_ERROR,
-} from './emptyIteratorError';
+import { MAX_EMPTY_ERROR, MINMAX_EMPTY_ERROR, MIN_EMPTY_ERROR, REDUCE_EMPTY_ERROR } from './emptyIteratorError';
 import { compress, isIterable, isIterator, iter, pipe, range, toArray, zip } from '..';
 
 describe('ExtendedIterator', function () {

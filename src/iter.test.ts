@@ -19,7 +19,7 @@ it('iter', async function () {
     ],
   );
   // Probably won't end up handling this, as it would slow down `iter` a bit.
-  throws(() => iter({ next() { } }).toArray());
+  throws(() => iter({ next() {} }).toArray());
   /** @returns post-order-DFS traversal of `obj` by using the `reviver` cb of `JSON.parse`. */
   function jsonStrParse(obj: any): [string, any][] {
     const result: any[] = [];

@@ -22,5 +22,8 @@ it('reduce', async function () {
     '0123456789',
   );
   throws(() => reduce([] as number[], (acc, n) => acc + n), TypeError, REDUCE_EMPTY_ERROR);
-  equal(reduce([] as number[], (acc, n) => acc + n, 0), 0);
+  equal(
+    reduce([] as number[], (acc, n) => acc + n, 0),
+    0,
+  );
 });

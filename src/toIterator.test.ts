@@ -13,8 +13,8 @@ it('toIterator', async function () {
       toIterator(
         (
           (i = 0) =>
-            () =>
-              i++
+          () =>
+            i++
         )(),
         3,
       ),
@@ -26,8 +26,8 @@ it('toIterator', async function () {
       toIterator(
         (
           (n = 1) =>
-            () =>
-              (n = n * 2)
+          () =>
+            (n = n * 2)
         )(),
         1024,
       ),

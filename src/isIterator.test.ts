@@ -9,6 +9,6 @@ it('isIterator', async function () {
       })(),
     ),
   );
-  assert(isIterator({ next() { } }));
+  assert(isIterator({ next() {} }));
   assert(!isIterator(null));
 });

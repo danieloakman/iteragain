@@ -11,9 +11,7 @@ import toIterator from './toIterator';
  * @param arg The input iterator.
  * @param size The size of each permutation, must be greater than 0 and less than or equal to the length of the input
  */
-export function permutations<T extends IteratorOrIterable<any>>(
-  arg: T,
-): IterableIterator<Tuple<IterSource<T>, number>>;
+export function permutations<T extends IteratorOrIterable<any>>(arg: T): IterableIterator<Tuple<IterSource<T>, number>>;
 export function permutations<T extends IteratorOrIterable<any>, Size extends number>(
   size: Size,
 ): (arg: T) => IterableIterator<Tuple<IterSource<T>, Size>>;
