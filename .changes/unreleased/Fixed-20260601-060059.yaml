@@ -1,0 +1,3 @@
+kind: Fixed
+body: Fix seekable bounded cache eviction returning wrong values or undefined after maxLength is exceeded
+time: 2026-06-01T06:00:59.781744072+10:00
