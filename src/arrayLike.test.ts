@@ -4,7 +4,7 @@ import { arrayLike } from './arrayLike';
 import { iter, range } from './';
 
 describe('arrayLike', () => {
-  it('basic functionality', async function () {
+  it('should grow length lazily and expose indexed values from a mapped iterator', async function () {
     const arr = arrayLike(iter(range(100)).map(n => n * 2));
     equal(arr.length, 0);
     equal(arr[0], 0);
@@ -13,6 +13,11 @@ describe('arrayLike', () => {
     equal(arr[50], 100);
     equal(arr.length, 51);
     equal(arr[25], 50);
+  });
+
+  it('should support slice, negative indexing, in operator, and object keys', async function () {
+    const arr = arrayLike(iter(range(100)).map(n => n * 2));
+    equal(arr[50], 100);
     equal(
       arr.slice(0, 5).map(n => n * 2),
       [0, 4, 8, 12, 16],
@@ -20,13 +25,21 @@ describe('arrayLike', () => {
     assert(!(100 in arr));
     assert(25 in arr);
     equal(arr[-1], 100);
-    // @ts-expect-error
-    throws(() => (arr[0] = 5));
     equal(arr['something' as unknown as number], undefined);
     assert(Object.keys(arr).includes('25'));
+  });
+
+  it('should reject assignment, deletion, and redefinition', async function () {
+    const arr = arrayLike(iter(range(100)).map(n => n * 2));
+    equal(arr[0], 0);
+    // @ts-expect-error
+    throws(() => (arr[0] = 5));
     // @ts-expect-error
     throws(() => delete arr[0]);
     throws(() => Object.defineProperty(arr, 0, { value: 5 }));
+  });
+
+  it('should materialize range iterators into array-like values', async function () {
     const arr2 = arrayLike(range(100, 110));
     equal(arr2.length, 0);
     equal([...arr2], [...range(100, 110)]);

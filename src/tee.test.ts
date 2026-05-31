@@ -1,29 +1,39 @@
-import { it } from 'bun:test';
+import { describe, it } from 'bun:test';
 import { equal } from './internal/test-utils';
 import { iter, pipe, range, tee, toArray, zip } from '.';
-it('tee', async function () {
-  // this.timeout(60000);
-  let [a, b] = tee([1, 2, 3], 2).map(v => iter(v));
-  a = a.map(x => x * x);
-  b = b.map(x => x + x);
-  equal(a.take(), [1]);
-  equal(b.take(2), [2, 4]);
-  equal(a.toArray(), [4, 9]);
-  equal(b.toArray(), [6]);
-  equal([...tee([1, 2, 3], 1)[0]], [1, 2, 3]);
-  {
+
+describe('tee', () => {
+  it('should fork an iterator and allow independent consumption', async function () {
+    // this.timeout(60000);
+    let [a, b] = tee([1, 2, 3], 2).map(v => iter(v));
+    a = a.map(x => x * x);
+    b = b.map(x => x + x);
+    equal(a.take(), [1]);
+    equal(b.take(2), [2, 4]);
+    equal(a.toArray(), [4, 9]);
+    equal(b.toArray(), [6]);
+  });
+
+  it('should return a single fork when n is 1', async function () {
+    equal([...tee([1, 2, 3], 1)[0]], [1, 2, 3]);
+  });
+
+  it('should preserve undefined values across forks', async function () {
     const [a, b] = tee([undefined, 1, undefined, 2], 2).map(v => iter(v));
     equal(a.toArray(), [undefined, 1, undefined, 2]);
     equal(b.toArray(), [undefined, 1, undefined, 2]);
-  }
-  equal(
-    pipe(range(3), tee(3), ([it1, it2, it3]) => zip(it3, it2, it1), toArray),
-    [
-      [0, 0, 0],
-      [1, 1, 1],
-      [2, 2, 2],
-    ],
-  );
+  });
+
+  it('should work with zip in a pipe', async function () {
+    equal(
+      pipe(range(3), tee(3), ([it1, it2, it3]) => zip(it3, it2, it1), toArray),
+      [
+        [0, 0, 0],
+        [1, 1, 1],
+        [2, 2, 2],
+      ],
+    );
+  });
   // const suite = setupSuite('tee');
   // const SIZE = 1e1;
   // suite.add('no clear', () => {
