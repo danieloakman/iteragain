@@ -3,7 +3,7 @@ import toIterator from '../toIterator';
 import isIterable from '../isIterable';
 import isIterator from '../isIterator';
 
-/** Maps and flattens an iterator by a depth of 1. */
+/** Maps and flattens an iterator by a depth of 1. String values returned from `iteratee` are not split into characters. */
 export class FlatMapIterator<T, R> implements IterableIterator<R> {
   protected inner: Iterator<R> | null = null;
 

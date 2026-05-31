@@ -5,6 +5,15 @@ import toIterator from './toIterator';
 /**
  * Maps the input iterator to a new value `R` and flattens any resulting iterables or iterators by a depth of 1.
  * Behaves the same as `Array.prototype.flatMap`.
+ *
+ * **Strings returned from `iteratee` are not flattened** into characters. Return an array (e.g. `[...str]`) when you
+ * want character-level results.
+ *
+ * @example
+ * ```js
+ * [...flatMap(['123'], str => str)]; // ['123']
+ * [...flatMap(['123'], str => [...str])]; // ['1', '2', '3']
+ * ```
  */
 export function flatMap<T extends IteratorOrIterable<unknown>, R>(
   arg: T,

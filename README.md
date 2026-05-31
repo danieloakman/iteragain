@@ -131,6 +131,20 @@ for (const n of arr) {
 const collected = toArray(arr);
 ```
 
+### `flatten` and `flatMap` do not flatten strings
+
+Nested strings are treated as atomic values, matching `Array.prototype.flat` / `Array.prototype.flatMap` and Lodash `flatten`. A string returned from `flatMap` is one element, not a sequence of characters.
+
+```js
+import { flatten, flatMap } from 'iteragain';
+
+[...flatten(['abc'])]; // ['abc']
+[...flatten('abc')]; // ['a', 'b', 'c'] — the root input is iterated as a string iterable, not flattened as a nested value
+
+[...flatMap(['123'], str => str)]; // ['123']
+[...flatMap(['123'], str => [...str])]; // ['1', '2', '3'] — spread into an array to split characters
+```
+
 ## Inspired by
 
 [iterplus](https://www.npmjs.com/package/iterplus), [iterare](https://www.npmjs.com/package/iterare), [lodash](https://www.npmjs.com/package/lodash), [rxjs](https://www.npmjs.com/package/rxjs), [ixjs](https://www.npmjs.com/package/ix) and the Python [itertools](https://docs.python.org/3/library/itertools.html) and [more-itertools](https://pypi.org/project/more-itertools/) modules. See benchmark section for performance against some of these.

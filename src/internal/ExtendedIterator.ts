@@ -136,6 +136,10 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   /**
    * @lazy
    * Flatten this iterator by a known depth or deeply.
+   *
+   * Strings encountered while flattening nested values are treated as atomic and are not split into characters
+   * (same as `Array.prototype.flat` / Lodash `flatten`).
+   *
    * @param depth The number of levels to flatten (default: Infinity, i.e. deeply).
    */
   flatten(depth: 1): ExtendedIterator<FlattenDepth1<T>>;
@@ -540,6 +544,8 @@ export class ExtendedIterator<T> implements IterableIterator<T> {
   /**
    * Maps this iterator to a new value `R` and flattens any resulting iterables or iterators by a depth of 1.
    * Behaves the same as `Array.prototype.flatMap`.
+   *
+   * Strings returned from `iteratee` are not flattened into characters; return an array (e.g. `[...str]`) instead.
    */
   flatMap<R>(iteratee: Iteratee<T, R | IteratorOrIterable<R>>): ExtendedIterator<R> {
     return new ExtendedIterator(new FlatMapIterator(this.iterator, iteratee) as any);

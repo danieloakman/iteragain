@@ -2,7 +2,7 @@ import isIterable from '../isIterable';
 import isIterator from '../isIterator';
 import toIterator from '../toIterator';
 
-/** Flattens an iterator `depth` number of levels. */
+/** Flattens an iterator `depth` number of levels. Nested string values are left intact (not split into characters). */
 export class FlattenIterator implements IterableIterator<any> {
   protected inner: Iterator<any> | null = null;
 

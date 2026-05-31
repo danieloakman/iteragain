@@ -13,6 +13,17 @@ import toIterator from './toIterator';
 
 /**
  * Flattens an iterator or iterable.
+ *
+ * **Strings are not flattened.** Any string encountered while flattening nested iterables is treated as a single
+ * atomic value (same as `Array.prototype.flat` / Lodash `flatten`). To split a string into characters, spread it
+ * into an array first (e.g. `[...str]`) or iterate the string directly as the root input.
+ *
+ * @example
+ * ```js
+ * [...flatten(['abc'])]; // ['abc']
+ * [...flatten('abc')]; // ['a', 'b', 'c'] — root string is iterated, not flattened as a nested value
+ * ```
+ *
  * @param arg The iterator or iterable to flatten.
  * @param depth The number of levels to flatten (default: Infinity, i.e. deeply).
  */
