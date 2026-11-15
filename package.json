@@ -37,23 +37,32 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "node": "./dist/cjs/index.js",
-      "require": "./dist/cjs/index.js",
+      "node": {
+        "import": "./dist/node/index.js",
+        "require": "./dist/cjs/index.js"
+      },
       "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
       "default": "./dist/es5/index.js"
     },
     "./internal/*": {
       "types": "./dist/types/internal/*.d.ts",
-      "node": "./dist/cjs/internal/*.js",
-      "require": "./dist/cjs/internal/*.js",
+      "node": {
+        "import": "./dist/esm/internal/*.js",
+        "require": "./dist/cjs/internal/*.js"
+      },
       "import": "./dist/esm/internal/*.js",
+      "require": "./dist/cjs/internal/*.js",
       "default": "./dist/es5/internal/*.js"
     },
     "./*": {
       "types": "./dist/types/*.d.ts",
-      "node": "./dist/cjs/*.js",
-      "require": "./dist/cjs/*.js",
+      "node": {
+        "import": "./dist/node/*.js",
+        "require": "./dist/cjs/*.js"
+      },
       "import": "./dist/esm/*.js",
+      "require": "./dist/cjs/*.js",
       "default": "./dist/es5/*.js"
     },
     "./package.json": "./package.json"
@@ -87,7 +96,7 @@
   ],
   "license": "ISC",
   "scripts": {
-    "build": "concurrently \"tsc -p tsconfig.json\" \"tsc -p tsconfig.es5.json\" \"tsc -p tsconfig.esm.json\" \"tsc -p tsconfig.types.json\"",
+    "build": "concurrently \"tsc -p tsconfig.json\" \"tsc -p tsconfig.es5.json\" \"tsc -p tsconfig.esm.json\" \"tsc -p tsconfig.types.json\" && node scripts/write-node-esm-wrappers.mjs",
     "clean": "rimraf dist iteragain*.tgz",
     "asyncify": "ts-node ./scripts/asyncify.ts",
     "asyncify:watch": "ts-node ./scripts/asyncify.ts -w",
