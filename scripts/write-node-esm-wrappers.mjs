@@ -36,8 +36,11 @@ function generateWrapper(basename, relCjs) {
     lines.push(`export const ${n} = mod.${n};`);
   }
   if (hasDefaultAssign) {
-    const def =
-    named.includes(basename) ? `mod.${basename}` : named.length === 1 ? `mod.${named[0]}` : `mod.default`;
+    const def = named.includes(basename)
+      ? `mod.${basename}`
+      : named.length === 1
+        ? `mod.${named[0]}`
+        : `mod.default`;
     lines.push(`export default ${def};`);
   }
   return lines.join('\n') + '\n';
