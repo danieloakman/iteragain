@@ -1,3 +1,0 @@
-kind: Fixed
-body: Add Node ESM wrapper entry points for package subpaths so default imports (`iteragain/range`, `iteragain/iter`) work in Node ESM and TypeScript nodenext while keeping CJS for `require`
-time: 2026-11-16T10:53:33.866157686+11:00

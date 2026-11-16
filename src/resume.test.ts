@@ -4,12 +4,12 @@ import { map, pipe, range, resume } from '.';
 
 describe('resume', () => {
   it('should restart from a given index after exhaustion', async function () {
-    let it = resume(range(2), 1);
+    const it = resume(range(2), 1);
     equal([...it, ...it, ...it], [0, 1, 0, 1]);
   });
 
   it('should restart from the beginning by default', async function () {
-    let it = resume(range(2));
+    const it = resume(range(2));
     equal([...it], [0, 1]);
   });
 

@@ -73,7 +73,7 @@ describe('range', () => {
   });
 
   it('should be iterable multiple times', async function () {
-    let r = range(3);
+    const r = range(3);
     equal([...r, ...r], [0, 1, 2, 0, 1, 2]);
   });
 
